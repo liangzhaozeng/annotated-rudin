@@ -1,0 +1,398 @@
+% ============================================================
+%  Chapter 2 -- Perfect Sets and Connected Sets, 2.43-2.47
+% ============================================================
+\rsection{Perfect Sets}
+
+\begin{signpost}[Two results, one of them a warning]
+Theorem 2.43 is a second, self-contained proof that $\R$ is uncountable, using
+compactness instead of Cantor's diagonal --- and unlike 2.14 it needs no
+discussion of binary expansions.
+
+\smallskip
+Section 2.44 is the real business. The Cantor set is the standing
+counterexample of the subject: compact, perfect, uncountable, yet containing no
+interval and (as Chapter 11 will show) of measure zero. Every intuition of the
+form ``a set that big must contain an interval'' dies here. Expect to meet it
+again in Exercises 2.17--2.18, in Exercise 6.6 (integration against the Cantor
+set), and in Chapter 11.
+\end{signpost}
+
+\ritem{2.43}{Theorem}
+\emph{Let $P$ be a nonempty perfect set in $\R^k$. Then $P$ is uncountable.}
+
+\begin{proof}
+Since $P$ has limit points, $P$ must be infinite. Suppose $P$ is countable, and
+denote the points of $P$ by $\mathbf{x}_1,\mathbf{x}_2,\mathbf{x}_3,\dots$. We
+shall construct a countable collection $\{V_n\}$ of neighborhoods, as
+follows.\kn{The strategy is Cantor's diagonal in disguise: assume a list of all
+of $P$, then trap a point that the list misses. Where 2.14 built the missing
+object digit by digit, here it is caught by a nested sequence of compact sets
+--- and 2.36 guarantees something survives.}
+
+Let $V_1$ be any neighborhood of $\mathbf{x}_1$. If $V_1$ consists of all
+$\mathbf{y} \in \R^k$ such that $|\mathbf{y}-\mathbf{x}_1| < r$, then the
+closure $\overline{V}_1$ of $V_1$ is the set of all $\mathbf{y} \in \R^k$ such
+that $|\mathbf{y}-\mathbf{x}_1| \le r$.
+
+Suppose $V_n$ has been constructed, so that $V_n \cap P$ is not empty. Since
+every point of $P$ is a limit point of $P$, there is a neighborhood $V_{n+1}$
+such that (i) $\overline{V}_{n+1} \subset V_n$, (ii)
+$\mathbf{x}_n \notin \overline{V}_{n+1}$, (iii) $V_{n+1} \cap P$ is not
+empty.\kn{Clause (ii) is the diagonal step --- it evicts the $n$th listed point
+at stage $n$. Clause (iii) is where \emph{perfect} is used: because
+$\mathbf{x}$ is a limit point of $P$, there are always more points of $P$
+nearby to keep the construction alive.} By (iii), $V_{n+1}$ satisfies our
+induction hypothesis, and the construction can proceed.
+
+Put $K_n = \overline{V}_n \cap P$. Since $\overline{V}_n$ is closed and
+bounded, $\overline{V}_n$ is compact. Since $\mathbf{x}_n \notin K_{n+1}$, no
+point of $P$ lies in $\bigcap_{n=1}^\infty K_n$. Since $K_n \subset P$, this
+implies that $\bigcap_{n=1}^\infty K_n$ is empty. But each $K_n$ is nonempty,
+by (iii), and $K_n \supset K_{n+1}$, by (i); this contradicts the Corollary to
+Theorem 2.36.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[thin] (0,0) circle (20mm);
+  \draw[thin] (5,3) circle (11mm);
+  \draw[thin] (8,5) circle (5.5mm);
+  % evicted points
+  \node[ptfill, minimum size=2.6pt] at (-13,-7) {};
+  \node[lbl, anchor=east] at (-23,-7) {$\mathbf{x}_1$: inside $V_1$,};
+  \node[lbl, anchor=east] at (-23,-10.5) {evicted by $V_2$};
+  \draw[thin] (-22,-7.5) -- (-15,-7);
+  \node[ptfill, minimum size=2.6pt] at (-1,-2) {};
+  \draw[thin] (-1,-4) -- (6,-22.5);
+  \node[lbl, anchor=north] at (8,-23.5) {$\mathbf{x}_2$: inside $V_2$, evicted by $V_3$};
+  % survivor
+  \node[ptopen] at (9,6) {};
+  \draw[thin] (11,7.5) -- (26,13);
+  \node[lbl, anchor=west] at (27,15) {something of $P$ survives};
+  \node[lbl, anchor=west] at (27,11.5) {every stage (2.36) ---};
+  \node[lbl, anchor=west] at (27,8) {yet the list was supposed};
+  \node[lbl, anchor=west] at (27,4.5) {to contain all of $P$};
+  % circle labels
+  \node[mlbl, anchor=south east] at (-11,13) {$V_1$};
+  \node[mlbl, anchor=south east] at (0,9) {$V_2$};
+  \node[mlbl] at (8,1.7) {$V_3$};
+\end{tikzpicture}
+\end{center}
+\figcap{Stage $n{+}1$ shrinks inside stage $n$ and evicts the $n$th listed
+point; perfectness keeps each stage nonempty. Compactness forces a survivor,
+which the list therefore missed --- Cantor's diagonal, drawn with balls
+instead of digits.}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=27mm] (c0) at (0,22)
+    {suppose $P$ countable:\\list as $\mathbf{x}_1,\mathbf{x}_2,\dots$};
+  \node[rmbox, text width=29mm] (c1) at (44,22)
+    {build $V_{n+1} \subset V_n$:\\evicts $\mathbf{x}_n$, meets $P$};
+  \node[rmbox, text width=27mm] (c2) at (87,22)
+    {$K_n = \overline{V}_n \cap P$:\\compact, nested, $\ne\emptyset$};
+  \draw[rmarrow] (c0) -- (c1);
+  \draw[rmarrow] (c1) -- node[lbl, anchor=south, inner sep=2.5pt]
+    {\;} (c2);
+  \node[rmbox, text width=27mm] (c3) at (87,0)
+    {2.36: $\bigcap K_n \ne \emptyset$};
+  \draw[rmarrow] (c2) -- (c3);
+  \node[rmbox, text width=29mm] (c4) at (44,0)
+    {but every $\mathbf{x}_n$ evicted:\\$\bigcap K_n \cap P = \emptyset$};
+  \draw[rmarrow] (c2) -- (c4);
+  \node[rmbox, text width=26mm] (c5) at (0,0) {contradiction};
+  \draw[rmarrow] (c4) -- (c5);
+  \draw[rmarrow] (c3) -- (c4);
+\end{tikzpicture}
+\end{center}
+\figcap{The flow: the list drives the construction, perfectness keeps every
+stage alive, and compactness (2.36) collides with total eviction.}
+
+\ritem{}{Corollary}
+\emph{Every interval $[a,b]$ $(a<b)$ is uncountable. In particular, the set of
+all real numbers is uncountable.}
+
+\ritem{2.44}{The Cantor Set}
+The set which we are now going to construct shows that there exist perfect sets
+in $\R^1$ which contain no segment.
+
+Let $E_0$ be the interval $[0,1]$. Remove the segment
+$\bigl(\tfrac13,\tfrac23\bigr)$, and let $E_1$ be the union of the intervals
+\[ \Bigl[0,\tfrac13\Bigr], \qquad \Bigl[\tfrac23,1\Bigr]. \]
+Remove the middle thirds of these intervals, and let $E_2$ be the union of the
+intervals
+\[ \Bigl[0,\tfrac19\Bigr], \quad \Bigl[\tfrac29,\tfrac39\Bigr], \quad
+   \Bigl[\tfrac69,\tfrac79\Bigr], \quad \Bigl[\tfrac89,1\Bigr]. \]
+Continuing in this way, we obtain a sequence of compact sets $E_n$ such that
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item $E_1 \supset E_2 \supset E_3 \supset \cdots$;
+  \item $E_n$ is the union of $2^n$ intervals, each of length $3^{-n}$.
+\end{enumerate}
+The set
+\[ P = \bigcap_{n=1}^{\infty} E_n \]
+is called the \emph{Cantor set}. $P$ is clearly compact, and Theorem 2.36 shows
+that $P$ is not empty.
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \def\W{82}
+  % E0
+  \draw[seg] (0,0) -- (\W,0);
+  \node[lbl, anchor=east] at (-3,0) {$E_0$};
+  \node[mlbl, anchor=north] at (0,-2) {$0$};
+  \node[mlbl, anchor=north] at (\W,-2) {$1$};
+  % E1
+  \foreach \a/\b in {0/1, 2/3}{
+    \draw[seg] ({\a*\W/3},-7) -- ({\b*\W/3},-7);}
+  \node[lbl, anchor=east] at (-3,-7) {$E_1$};
+  % E2
+  \foreach \a/\b in {0/1, 2/3, 6/7, 8/9}{
+    \draw[seg] ({\a*\W/9},-14) -- ({\b*\W/9},-14);}
+  \node[lbl, anchor=east] at (-3,-14) {$E_2$};
+  % E3
+  \foreach \a in {0,2,6,8,18,20,24,26}{
+    \draw[seg] ({\a*\W/27},-21) -- ({(\a+1)*\W/27},-21);}
+  \node[lbl, anchor=east] at (-3,-21) {$E_3$};
+  % E4
+  \foreach \a in {0,2,6,8,18,20,24,26,54,56,60,62,72,74,78,80}{
+    \draw[draw=RuInk, line width=1.2pt]
+      ({\a*\W/81},-27) -- ({(\a+1)*\W/81},-27);}
+  \node[lbl, anchor=east] at (-3,-27) {$E_4$};
+  \node[lbl, anchor=east] at (-3,-33) {$\vdots$};
+  \node[lbl, anchor=west] at (\W+4,-14) {$2^n$ pieces,};
+  \node[lbl, anchor=west] at (\W+4,-18) {each $3^{-n}$ long};
+\end{tikzpicture}
+\end{center}
+\figcap{Removing middle thirds. Total length removed is
+$\sum 2^{n-1}3^{-n} = 1$, so ``nothing'' is left --- yet what remains is
+uncountable.}
+
+No segment of the form
+\begin{equation}
+  \Bigl(\frac{3k+1}{3^m},\ \frac{3k+2}{3^m}\Bigr) \tag{2.24}
+\end{equation}
+where $k$ and $m$ are positive integers, has a point in common with $P$. Since
+every segment $(\alpha,\beta)$ contains a segment of the form (2.24), if
+\[ 3^{-m} < \frac{\beta-\alpha}{6}, \]
+$P$ contains no segment.
+
+To show that $P$ is perfect, it is enough to show that $P$ contains no isolated
+point. Let $x \in P$, and let $S$ be any segment containing $x$. Let $I_n$ be
+that interval of $E_n$ which contains $x$. Choose $n$ large enough, so that
+$I_n \subset S$. Let $x_n$ be an endpoint of $I_n$, such that $x_n \ne x$.
+
+It follows from the construction of $P$ that $x_n \in P$. Hence $x$ is a limit
+point of $P$, and $P$ is perfect.\kn{The endpoints are the key: they are never
+removed at any later stage, because removal always takes an \emph{open} middle
+third. So every $x \in P$ has other points of $P$ arbitrarily close --- the
+endpoints of the shrinking interval containing it.}
+
+One of the most interesting properties of the Cantor set is that it provides us
+with an example of an uncountable set of measure zero (the concept of measure
+will be discussed in Chap.\ 11).
+
+\begin{deeper}[Everything the Cantor set breaks]
+It is worth listing what $P$ demonstrates, because each item contradicts a
+plausible belief.
+
+\smallskip
+\textbf{Uncountable but containing no interval.} By 2.43 it is uncountable,
+being perfect and nonempty; yet it contains no segment. So ``uncountable''
+carries no implication of thickness.
+
+\smallskip
+\textbf{Total length zero.} The removed intervals have total length
+$\frac13 + \frac29 + \frac{4}{27} + \cdots = 1$. What remains has measure zero
+(Chapter 11) --- an uncountable set of measure zero.
+
+\smallskip
+\textbf{Every point is a limit of \emph{other} points, yet no point has
+neighbours in bulk.} $P$ is perfect, so no isolated points; but it is also
+nowhere dense, so its closure has empty interior. Both at once.
+
+\smallskip
+\textbf{It is not a curiosity.} $P$ is homeomorphic to $\{0,1\}^\N$, which is
+why 2.14 and 2.43 measure the same thing --- a point of $P$ is exactly a choice
+of ``left third or right third'' at every stage, i.e.\ a $0$--$1$ sequence.
+That correspondence also makes the uncountability immediate without 2.43.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % level 0
+  \draw[seg] (0,16) -- (36,16);
+  % level 1
+  \draw[seg] (0,8) -- (12,8);   \draw[seg] (24,8) -- (36,8);
+  \draw[thin] (16,15) -- (7,9.5);   \node[mlbl, anchor=east] at (11,13) {$0$};
+  \draw[thin] (20,15) -- (29,9.5);  \node[mlbl, anchor=west] at (25.5,13) {$1$};
+  % level 2
+  \draw[seg] (0,0) -- (4,0);   \draw[seg] (8,0) -- (12,0);
+  \draw[seg] (24,0) -- (28,0); \draw[seg] (32,0) -- (36,0);
+  \draw[thin] (4.5,7) -- (2,1.5);   \node[mlbl, anchor=east] at (3,5) {$0$};
+  \draw[thin] (7.5,7) -- (10,1.5);  \node[mlbl, anchor=west] at (9,5) {$1$};
+  \draw[thin] (28.5,7) -- (26,1.5); \node[mlbl, anchor=east] at (27,5) {$0$};
+  \draw[thin] (31.5,7) -- (34,1.5); \node[mlbl, anchor=west] at (33,5) {$1$};
+  \node[mlbl] at (18,-4) {$\vdots$};
+  \node[lbl, anchor=west] at (44,10) {a point of $P$ $=$ an infinite};
+  \node[lbl, anchor=west] at (44,6.5) {path $=$ its address, e.g.\ $0,1,1,0,\dots$};
+  \node[lbl, anchor=west] at (44,3) {--- exactly a $0$--$1$ sequence (2.14)};
+\end{tikzpicture}
+\end{center}
+\figcap{Left third or right third, forever: the surviving intervals form a
+binary tree, and a point of $P$ is an infinite path through it.}
+\end{deeper}
+
+\rsection{Connected Sets}
+
+\begin{signpost}[Two definitions and one theorem]
+The shortest section in the chapter, and it exists for the intermediate value
+theorem (4.23), which will follow in one line from Theorem 4.22: continuous
+images of connected sets are connected.
+
+\smallskip
+The only subtlety is that ``connected'' is defined via \emph{separated} sets,
+not disjoint ones. Remark 2.46 is there to stop you conflating the two, and
+2.47 shows that on the line the whole notion collapses to something familiar:
+connected means interval.
+\end{signpost}
+
+\ritem{2.45}{Definition}
+Two subsets $A$ and $B$ of a metric space $X$ are said to be \emph{separated}
+if both $A \cap \overline{B}$ and $\overline{A} \cap B$ are empty, i.e., if no
+point of $A$ lies in the closure of $B$ and no point of $B$ lies in the closure
+of $A$.
+
+A set $E \subset X$ is said to be \emph{connected} if $E$ is not a union of two
+nonempty separated sets.
+
+\ritem{2.46}{Remark}
+Separated sets are of course disjoint, but disjoint sets need not be separated.
+For example, the interval $[0,1]$ and the segment $(1,2)$ are not separated,
+since $1$ is a limit point of $(1,2)$. However, the segments $(0,1)$ and
+$(1,2)$ are separated.
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % disjoint but not separated
+  \draw[axis] (-3,8) -- (76,8);
+  \draw[seg] (6,8) -- (34,8);
+  \node[ptfill, minimum size=2.6pt] at (6,8) {};
+  \node[ptfill, minimum size=2.6pt] at (34,8) {};
+  \draw[seg] (34,8) -- (62,8);
+  \node[ptopen] at (34,8) {};
+  \node[ptopen] at (62,8) {};
+  \node[mlbl, anchor=north] at (6,6.4) {$0$};
+  \node[mlbl, anchor=north] at (34,6.4) {$1$};
+  \node[mlbl, anchor=north] at (62,6.4) {$2$};
+  \node[lbl, anchor=west] at (80,8) {disjoint, \emph{not} separated};
+  % separated
+  \draw[axis] (-3,-8) -- (76,-8);
+  \draw[seg] (6,-8) -- (34,-8);
+  \node[ptopen] at (6,-8) {}; \node[ptopen] at (34,-8) {};
+  \draw[seg] (34,-8) -- (62,-8);
+  \node[ptopen] at (34,-8) {}; \node[ptopen] at (62,-8) {};
+  \node[mlbl, anchor=north] at (34,-9.6) {$1$};
+  \node[lbl, anchor=west] at (80,-8) {separated};
+\end{tikzpicture}
+\end{center}
+\figcap{The difference is whether the shared boundary point belongs to one of
+the sets. Closures must miss each other, not merely the sets themselves.}
+
+\begin{pitfall}[Separated is stronger than disjoint, and the gap matters]
+If ``connected'' were defined by disjointness, \emph{every} set with more than
+one point would be disconnected --- split $[0,1]$ into $[0,\frac12]$ and
+$(\frac12,1]$ and you have two disjoint nonempty pieces. The definition would
+be useless.
+
+Requiring the \emph{closures} to miss is what rules this out: $\frac12$ lies in
+the closure of the second piece, so the split is not a separation. In effect,
+separated sets are ones that do not touch even in the limit.
+\end{pitfall}
+
+The connected subsets of the line have a particularly simple structure:
+
+\ritem{2.47}{Theorem}
+\emph{A subset $E$ of the real line $\R^1$ is connected if and only if it has
+the following property: If $x \in E$, $y \in E$, and $x < z < y$, then
+$z \in E$.}
+
+\begin{proof}
+If there exist $x \in E$, $y \in E$, and some $z \in (x,y)$ such that
+$z \notin E$, then $E = A_z \cup B_z$ where
+\[ A_z = E \cap (-\infty,z), \qquad B_z = E \cap (z,\infty). \]
+Since $x \in A_z$ and $y \in B_z$, $A$ and $B$ are nonempty. Since
+$A_z \subset (-\infty,z)$ and $B_z \subset (z,\infty)$, they are separated.
+Hence $E$ is not connected.
+
+To prove the converse, suppose $E$ is not connected. Then there are nonempty
+separated sets $A$ and $B$ such that $A \cup B = E$. Pick $x \in A$,
+$y \in B$, and assume (without loss of generality) that $x < y$. Define
+\[ z = \sup\bigl(A \cap [x,y]\bigr). \]
+By Theorem 2.28, $z \in \overline{A}$; hence $z \notin B$. In particular,
+$x \le z < y$.\kn{Chapter 1 again. The supremum exists by 1.19, lands in
+$\overline A$ by 2.28, and therefore avoids $B$ because $A$ and $B$ are
+separated --- that is the one place separation is spent. Every step of this
+converse is an application of something already proved.}
+
+If $z \notin A$, it follows that $x < z < y$ and $z \notin E$.
+
+If $z \in A$, then $z \notin \overline{B}$, hence there exists $z_1$ such that
+$z < z_1 < y$ and $z_1 \notin B$. Then $x < z_1 < y$ and $z_1 \notin E$.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (-2,0) -- (98,0);
+  \node[ptfill, minimum size=2.6pt] at (8,0) {};
+  \node[mlbl, anchor=north] at (8,-2) {$x\in A$};
+  \node[ptfill, minimum size=2.6pt] at (90,0) {};
+  \node[mlbl, anchor=north] at (90,-2) {$y\in B$};
+  \draw[seg] (8,0) -- (46,0);
+  \node[lbl, anchor=north] at (27,-3.5) {$A\cap[x,y]$};
+  \draw[guide] (46,-7) -- (46,12);
+  \node[lbl, anchor=south] at (46,12) {$z=\sup\bigl(A\cap[x,y]\bigr)$};
+  \node[ptopen] at (54,0) {};
+  \node[mlbl, anchor=north] at (54,-2) {$z_1$};
+  \node[lbl, anchor=west] at (58,10.5) {$z\in\overline{A}$, so $z\notin B$:};
+  \node[lbl, anchor=west] at (58,7) {either $z\notin E$ already, or room};
+  \node[lbl, anchor=west] at (58,3.5) {just past $z$ misses $B$ too};
+\end{tikzpicture}
+\end{center}
+\figcap{The same seam picture as Definition 1.8, one chapter later: the
+supremum lands in $\overline{A}$ and hence off $B$, and a point missing from
+$E$ is found at or just past the seam.}
+
+\begin{unpack}[Connected on the line means interval]
+The property in 2.47 --- if two points are in $E$, everything between them is
+too --- is exactly the definition of an interval, in the general sense that
+includes $\emptyset$, single points, half-lines and $\R$ itself. So the theorem
+reads: \emph{the connected subsets of $\R$ are precisely the intervals.}
+
+\smallskip
+That is worth holding because it makes the intermediate value theorem
+(4.23) transparent. If $f$ is continuous
+on $[a,b]$ then $f([a,b])$ is connected (4.22), hence an interval by 2.47,
+hence contains every value between $f(a)$ and $f(b)$ --- the intermediate value
+theorem. Chapter 1's Theorem 1.21 on $n$th roots was a hand-rolled special case
+of exactly this, as the note there observed.
+
+\smallskip
+Note also that connectedness, unlike openness, is intrinsic: like compactness
+it survives change of ambient space, since 2.45 refers only to closures within
+$E$'s own metric.
+\end{unpack}
+
+\begin{recap}[Chapter 2 in one paragraph]
+Countability sorts infinite sets into two sizes, and $\Q$ and $\R$ land on
+opposite sides (2.13, 2.43). Metric spaces distill $\R^k$ down to its distance
+function, and open, closed and limit point are the vocabulary that distance
+alone supports (2.15--2.30). Compactness --- every open cover admits a finite
+subcover --- is the property that turns local facts into global ones, and in
+$\R^k$ it is exactly closed-and-bounded (2.41), a fact that rests on
+completeness through the nested-interval theorems (2.38--2.40) and on nothing
+else. Perfect sets are uncountable (2.43), and the Cantor set shows how thin
+one can be (2.44). Connected subsets of the line are precisely the intervals
+(2.47). Chapter 4 will spend all of it: continuity gets defined by inverse
+images of open sets, compactness becomes boundedness and attainment of extrema,
+and connectedness becomes the intermediate value theorem.
+\end{recap}

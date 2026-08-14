@@ -1,0 +1,303 @@
+% ============================================================
+%  Chapter 4 -- Continuous Functions, 4.5-4.12
+% ============================================================
+\rsection{Continuous Functions}
+
+\begin{signpost}[Three definitions converging]
+Continuity arrives here in its $\varepsilon$--$\delta$ form (4.5), is linked
+to limits (4.6) and hence to sequences (through 4.2), and is then recast as
+the inverse-image condition (4.8). All three are the same property; each has
+its use. $\varepsilon$--$\delta$ verifies concrete examples (4.11);
+sequences refute; 4.8 proves theorems --- it is the only form in which the
+compactness and connectedness arguments of the next two sections can even be
+stated. The section's quiet workhorses are 4.7 (compositions) and the
+assembly line of 4.9--4.11, which manufactures the continuity of every
+rational function once and for all.
+\end{signpost}
+
+\ritem{4.5}{Definition}
+Suppose $X$ and $Y$ are metric spaces, $E \subset X$, $p \in E$, and $f$ maps
+$E$ into $Y$. Then $f$ is said to be \emph{continuous at $p$} if for every
+$\varepsilon > 0$ there exists a $\delta > 0$ such that
+\[ d_Y(f(x),f(p)) < \varepsilon \]
+for all points $x \in E$ for which $d_X(x,p) < \delta$.
+
+If $f$ is continuous at every point of $E$, then $f$ is said to be
+\emph{continuous on $E$}.
+
+It should be noted that $f$ has to be defined at the point $p$ in order to be
+continuous at $p$. (Compare this with the remark following Definition
+4.1.)\kw{The two definitions differ in exactly two characters: 4.5 requires
+$p \in E$ where 4.1 required $p$ to be a limit point, and 4.5 drops the
+$0 <$ from the distance condition --- the point $p$ itself is now tested, and
+the target is $f(p)$, not a free $q$. Keep the ledger straight: limits
+ignore $p$; continuity is \emph{about} $p$.}
+
+If $p$ is an isolated point of $E$, then our definition implies that every
+function $f$ which has $E$ as its domain of definition is continuous at $p$.
+For, no matter which $\varepsilon > 0$ we choose, we can pick $\delta > 0$ so
+that the only point $x \in E$ for which $d_X(x,p) < \delta$ is $x = p$; then
+\[ d_Y(f(x),f(p)) = 0 < \varepsilon. \]\kn{Not a pathology but a consistency
+check: at an isolated point there is no approach to make, so nothing to fail.
+It is also why 4.6 needs its extra hypothesis --- at an isolated point the
+limit in 4.6 is undefined (4.1 demands a limit point) while continuity holds
+vacuously. Every sequence-in-$\Z$, for instance, is a continuous function.}
+
+\ritem{4.6}{Theorem}
+\emph{In the situation given in Definition 4.5, assume also that $p$ is a
+limit point of $E$. Then $f$ is continuous at $p$ if and only if
+$\lim_{x\to p} f(x) = f(p)$.}
+
+\begin{proof}
+This is clear if we compare Definitions 4.1 and 4.5.
+\end{proof}
+
+We now turn to compositions of functions. A brief statement of the following
+theorem is that a continuous function of a continuous function is continuous.
+
+\ritem{4.7}{Theorem}
+\emph{Suppose $X$, $Y$, $Z$ are metric spaces, $E \subset X$, $f$ maps $E$
+into $Y$, $g$ maps the range of $f$, $f(E)$, into $Z$, and $h$ is the mapping
+of $E$ into $Z$ defined by}
+\[ h(x) = g(f(x)) \qquad (x \in E). \]
+\emph{If $f$ is continuous at a point $p \in E$ and if $g$ is continuous at
+the point $f(p)$, then $h$ is continuous at $p$.}
+
+This function $h$ is called the \emph{composition} or the \emph{composite} of
+$f$ and $g$. The notation
+\[ h = g \circ f \]
+is frequently used in this context.
+
+\begin{proof}
+Let $\varepsilon > 0$ be given. Since $g$ is continuous at $f(p)$, there
+exists $\eta > 0$ such that
+\[ d_Z(g(y),g(f(p))) < \varepsilon \quad\text{if } d_Y(y,f(p)) < \eta
+   \text{ and } y \in f(E). \]
+Since $f$ is continuous at $p$, there exists $\delta > 0$ such that
+\[ d_Y(f(x),f(p)) < \eta \quad\text{if } d_X(x,p) < \delta \text{ and }
+   x \in E. \]
+It follows that
+\[ d_Z(h(x),h(p)) = d_Z(g(f(x)),g(f(p))) < \varepsilon \]
+if $d_X(x,p) < \delta$ and $x \in E$. Thus $h$ is continuous at
+$p$.\kn{A relay race, run backwards from the goal: the final tolerance
+$\varepsilon$ is handed to $g$, which quotes its price $\eta$; that price
+becomes the tolerance handed to $f$, which quotes $\delta$. Chains of
+quantifiers always compose in this order --- last function first --- and the
+middle quantity $\eta$ is bought from one contract and spent on the other.
+The same relay reappears whenever composed processes must be estimated
+(e.g.\ 7.12).}
+\end{proof}
+
+\ritem{4.8}{Theorem}
+\emph{A mapping $f$ of a metric space $X$ into a metric space $Y$ is
+continuous on $X$ if and only if $f^{-1}(V)$ is open in $X$ for every open
+set $V$ in $Y$.}
+
+(Inverse images are defined in Definition 2.2.) This is a very useful
+characterization of continuity.
+
+\begin{proof}
+Suppose $f$ is continuous on $X$ and $V$ is an open set in $Y$. We have to
+show that every point of $f^{-1}(V)$ is an interior point of $f^{-1}(V)$. So,
+suppose $p \in X$ and $f(p) \in V$. Since $V$ is open, there exists
+$\varepsilon > 0$ such that $y \in V$ if $d_Y(f(p),y) < \varepsilon$; and
+since $f$ is continuous at $p$, there exists $\delta > 0$ such that
+$d_Y(f(x),f(p)) < \varepsilon$ if $d_X(x,p) < \delta$. Thus
+$x \in f^{-1}(V)$ as soon as $d_X(x,p) < \delta$.
+
+Conversely, suppose $f^{-1}(V)$ is open in $X$ for every open set $V$ in $Y$.
+Fix $p \in X$ and $\varepsilon > 0$, let $V$ be the set of all $y \in Y$ such
+that $d_Y(y,f(p)) < \varepsilon$. Then $V$ is open; hence $f^{-1}(V)$ is
+open; hence there exists $\delta > 0$ such that $x \in f^{-1}(V)$ as soon as
+$d_X(p,x) < \delta$. But if $x \in f^{-1}(V)$, then $f(x) \in V$, so that
+$d_Y(f(x),f(p)) < \varepsilon$.
+
+This completes the proof.
+\end{proof}
+
+\begin{proofwalk}[How the proof flows]
+  \item \textbf{See the two vocabularies.} Continuity speaks in
+        $\varepsilon$--$\delta$; openness speaks in interior points, i.e.\ in
+        balls. The theorem claims they say the same thing, so the proof must
+        be a two-way translation, and each direction is found by matching
+        ball to ball.
+  \item \textbf{Forward.} To show $f^{-1}(V)$ open, stand at $p \in
+        f^{-1}(V)$. Openness of $V$ supplies an $\varepsilon$-ball inside $V$
+        around $f(p)$; continuity at $p$ converts it into a $\delta$-ball
+        around $p$ that $f$ sends into it. That $\delta$-ball certifies $p$
+        interior. Note the order: $V$ speaks first, continuity answers.
+  \item \textbf{Backward.} To verify continuity at $p$ for a given
+        $\varepsilon$, \emph{manufacture} the open set to pull back: the
+        $\varepsilon$-ball $V$ about $f(p)$ --- open by 2.19. The hypothesis
+        opens $f^{-1}(V)$, and any $\delta$-ball inside it around $p$ is
+        exactly the $\delta$ that continuity demanded.
+  \item \textbf{Audit.} Each direction uses its hypothesis once, on the
+        ball handed over by the other side; 2.19 (balls are open) is the only
+        outside fact. The theorem is a change of coordinates, not a
+        computation --- and note it is stated for $f$ on all of $X$, using
+        Remark 4.12's licence to forget ambient sets.
+\end{proofwalk}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % X side
+  \draw[thin] plot[smooth cycle, tension=0.8]
+    coordinates {(0,2) (22,-2) (34,6) (28,20) (6,20)};
+  \node[lbl, anchor=south west] at (-2,20) {$X$};
+  \fill[black!10] plot[smooth cycle, tension=0.8]
+    coordinates {(8,5) (20,3) (24,11) (13,15)};
+  \draw[guide] plot[smooth cycle, tension=0.8]
+    coordinates {(8,5) (20,3) (24,11) (13,15)};
+  \node[lbl] at (16,1) {$f^{-1}(V)$};
+  \node[ptfill, minimum size=2.4pt] at (15,9) {};
+  \draw[thin] (15,9) circle (3mm);
+  \node[mlbl, anchor=south] at (15,12.5) {$\delta$};
+  \node[mlbl, anchor=north east] at (14.6,8.6) {$p$};
+  % arrow
+  \draw[vec] (38,9) -- (50,9);
+  \node[mlbl, anchor=south] at (44,10.5) {$f$};
+  % Y side
+  \draw[thin] plot[smooth cycle, tension=0.8]
+    coordinates {(54,2) (76,-2) (88,6) (82,20) (60,20)};
+  \node[lbl, anchor=south east] at (90,20) {$Y$};
+  \fill[black!10] plot[smooth cycle, tension=0.8]
+    coordinates {(62,5) (74,3) (78,11) (67,15)};
+  \draw[guide] plot[smooth cycle, tension=0.8]
+    coordinates {(62,5) (74,3) (78,11) (67,15)};
+  \node[lbl] at (70,1) {$V$ open};
+  \node[ptfill, minimum size=2.4pt] at (69,9) {};
+  \draw[thin] (69,9) circle (3mm);
+  \node[mlbl, anchor=south] at (69,12.5) {$\varepsilon$};
+  \node[mlbl, anchor=north east] at (68.6,8.6) {$f(p)$};
+\end{tikzpicture}
+\end{center}
+\figcap{Theorem 4.8: whatever ball fits inside $V$ at $f(p)$, continuity
+supplies a ball at $p$ mapping into it --- so $f^{-1}(V)$ is all interior.
+The dashed regions correspond under $f$; the balls are the currency
+exchanged.}
+
+\ritem{}{Corollary}
+\emph{A mapping $f$ of a metric space $X$ into a metric space $Y$ is
+continuous if and only if $f^{-1}(C)$ is closed in $X$ for every closed set
+$C$ in $Y$.}
+
+This follows from the theorem, since a set is closed if and only if its
+complement is open, and since $f^{-1}(E^c) = [f^{-1}(E)]^c$ for every
+$E \subset Y$.\kn{The complement identity is exactly the third displayed law
+in the box at 2.2 --- inverse images respect complements, images do not. Here
+is the promised payoff: no image-based version of 4.8 exists, and the
+asymmetry noted in Chapter 2 becomes the reason this whole chapter runs on
+$f^{-1}$.}
+
+We now turn to complex-valued and vector-valued functions, and to functions
+defined on subsets of $\R^k$.
+
+\ritem{4.9}{Theorem}
+\emph{Let $f$ and $g$ be complex continuous functions on a metric space $X$.
+Then $f+g$, $fg$, and $f/g$ are continuous on $X$.}
+
+In the last case, we must of course assume that $g(x) \ne 0$, for all
+$x \in X$.
+
+\begin{proof}
+At isolated points of $X$ there is nothing to prove. At limit points, the
+statement follows from Theorems 4.4 and 4.6.
+\end{proof}
+
+\ritem{4.10}{Theorem}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=3pt, topsep=3pt]
+  \item \emph{Let $f_1,\dots,f_k$ be real functions on a metric space $X$,
+        and let $\mathbf{f}$ be the mapping of $X$ into $\R^k$ defined by}
+        \begin{equation}
+          \mathbf{f}(x) = (f_1(x),\dots,f_k(x)) \qquad (x \in X); \tag{4.7}
+        \end{equation}
+        \emph{then $\mathbf{f}$ is continuous if and only if each of the
+        functions $f_1,\dots,f_k$ is continuous.}
+  \item \emph{If $\mathbf{f}$ and $\mathbf{g}$ are continuous mappings of $X$
+        into $\R^k$, then $\mathbf{f}+\mathbf{g}$ and
+        $\mathbf{f}\cdot\mathbf{g}$ are continuous on $X$.}
+\end{enumerate}
+The functions $f_1,\dots,f_k$ are called the \emph{components} of
+$\mathbf{f}$. Note that $\mathbf{f}+\mathbf{g}$ is a mapping into $\R^k$,
+whereas $\mathbf{f}\cdot\mathbf{g}$ is a real function on $X$.
+
+\begin{proof}
+Part (a) follows from the inequalities
+\[ |f_j(x)-f_j(y)| \le |\mathbf{f}(x)-\mathbf{f}(y)| =
+   \left\{\sum_{i=1}^{k} |f_i(x)-f_i(y)|^2\right\}^{1/2}, \]
+for $j = 1,\dots,k$. Part (b) follows from (a) and Theorem 4.9.\kn{The same
+two-sided squeeze as 3.4(a): each component error is at most the vector
+error, and the vector error is at most $\sqrt k$ times the worst component.
+Coordinatewise reduction, third appearance --- it will carry Chapter 9's
+entire differential calculus.}
+\end{proof}
+
+\ritem{4.11}{Examples}
+If $x_1,\dots,x_k$ are the coordinates of the point $\mathbf{x} \in \R^k$,
+the functions $\phi_i$ defined by
+\begin{equation}
+  \phi_i(\mathbf{x}) = x_i \qquad (\mathbf{x} \in \R^k) \tag{4.8}
+\end{equation}
+are continuous on $\R^k$, since the inequality
+\[ |\phi_i(\mathbf{x})-\phi_i(\mathbf{y})| \le |\mathbf{x}-\mathbf{y}| \]
+shows that we may take $\delta = \varepsilon$ in Definition 4.5.
+
+The functions $\phi_i$ are sometimes called the \emph{coordinate functions}.
+
+Repeated application of Theorem 4.9 then shows that every \emph{monomial}
+\begin{equation}
+  x_1^{n_1}x_2^{n_2}\cdots x_k^{n_k} \tag{4.9}
+\end{equation}
+where $n_1,\dots,n_k$ are nonnegative integers, is continuous on $\R^k$. The
+same is true of constant multiples of (4.9), since constants are evidently
+continuous. It follows that every \emph{polynomial} $P$, given by
+\begin{equation}
+  P(\mathbf{x}) = \sum c_{n_1\dots n_k}x_1^{n_1}\cdots x_k^{n_k}
+  \qquad (\mathbf{x} \in \R^k), \tag{4.10}
+\end{equation}
+is continuous on $\R^k$. Here the coefficients $c_{n_1\dots n_k}$ are complex
+numbers, $n_1,\dots,n_k$ are nonnegative integers, and the sum in (4.10) has
+finitely many terms.
+
+Furthermore, every \emph{rational function} in $x_1,\dots,x_k$, that is,
+every quotient of two polynomials of the form (4.10), is continuous on $\R^k$
+wherever the denominator is different from zero.\kn{An assembly line, and the
+economical way to prove continuity ever after: two atoms (constants and
+coordinates, the latter with the cleanest possible modulus,
+$\delta = \varepsilon$) and three combining rules (sum, product, quotient
+from 4.9; composition from 4.7). Almost no continuity proof after this page
+touches $\varepsilon$ again --- functions are built out of continuous parts.
+Chapter 8 extends the reach to power series, where the sums become
+infinite and uniformity must be paid for.}
+
+From the triangle inequality one sees easily that
+\begin{equation}
+  \bigl||\mathbf{x}|-|\mathbf{y}|\bigr| \le |\mathbf{x}-\mathbf{y}|
+  \qquad (\mathbf{x},\mathbf{y} \in \R^k). \tag{4.11}
+\end{equation}
+Hence the mapping $\mathbf{x} \to |\mathbf{x}|$ is a continuous real function
+on $\R^k$.
+
+If now $\mathbf{f}$ is a continuous mapping from a metric space $X$ into
+$\R^k$, and if $\phi$ is defined on $X$ by setting
+$\phi(p) = |\mathbf{f}(p)|$, it follows, by Theorem 4.7, that $\phi$ is a
+continuous real function on $X$.
+
+\ritem{4.12}{Remark}
+We defined the notion of continuity for functions defined on a subset $E$ of
+a metric space $X$. However, the complement of $E$ in $X$ plays no role
+whatever in this definition (note that the situation was somewhat different
+for limits of functions). Accordingly, we lose nothing of interest by
+discarding the complement of the domain of $f$. This means that we may just
+as well talk only about continuous mappings of one metric space into another,
+rather than of mappings of subsets. This simplifies statements and proofs of
+some theorems. We have already made use of this principle in Theorems 4.8 to
+4.10, and will continue to do so in the following section on
+compactness.\kd{This is 2.16's observation --- every subset is a metric space
+--- earning its keep, and it is subtler than it looks. Continuity of
+$f|_E$ is measured \emph{inside} $E$: the function $f(x) = 1$ for rational
+$x$, $0$ otherwise, is wildly discontinuous on $\R$, yet its restriction to
+$\Q$ is constant, hence continuous. ``Continuous on $E$'' in Rudin always
+means continuous as a function on the metric space $E$ --- the same
+relativity as ``open in $E$'' (2.29--2.30), managed the same way: name the
+space.}

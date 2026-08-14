@@ -1,0 +1,320 @@
+% ============================================================
+%  APPENDIX TO CHAPTER 4 -- EXERCISES S4.1-S4.25
+%  Imported from Tao I/II, ECNU, USTC, Yu Pin.  Not Rudin's.
+% ============================================================
+\ssection{Appendix exercises}
+
+\begin{roadmap}[How these differ from Rudin's twenty-six]
+Rudin's own twenty-six exercises, which build \emph{his} machinery --- the
+uniform-continuity chain, the $\rho_E$ toolbox, the counterexample gallery
+--- end the chapter proper. These twenty-five come from the four comparison
+texts and fill the other half of the subject.
+
+\medskip
+\raggedright
+\textbf{Group I (1--6): limits and asymptotics.} Computational problems in the
+$o$/$\sim$ language of Supplement B, plus three rigidity problems --- a
+periodic function that dies at infinity is dead everywhere, and its
+relatives. Nothing in Rudin's set resembles these.
+
+\smallskip
+\textbf{Group II (7--11): monotonicity, inverses, functional equations.}
+Where order replaces compactness. Exercise 9 (Cauchy's functional equation)
+and 10 are the standard route from ``continuous at one point'' to
+``continuous, and linear.''
+
+\smallskip
+\textbf{Group III (12--16): what the intermediate value theorem really
+gives.} The discrete mean value property, the universal chord theorem, and a
+contraction mapping five chapters before Rudin needs one (9.23).
+
+\smallskip
+\textbf{Group IV (17--21): uniform continuity as a working tool.} Prove the
+criteria of Supplement E, then use them. Compare with Rudin's 4.8--4.13,
+which prove the same facts one at a time by hand.
+
+\smallskip
+\textbf{Group V (22--25): structure.} Oscillation, prescribed discontinuity
+sets, path-connectedness, and one spectacular payoff of ``continuous plus
+dense determines everything'' --- a proof of the Cayley--Hamilton theorem
+that uses no algebra beyond the diagonalisable case.
+
+\medskip
+\textbf{Marked $\star$:} harder, or requiring a result from a later chapter.
+\end{roadmap}
+
+\begin{enumerate}[label=\textbf{S4.\arabic*.}, leftmargin=3.4em, itemsep=9pt,
+                  topsep=8pt, labelsep=0.5em]
+
+% ---------------- Group I ----------------
+\item Let $f$ be periodic on $\R^1$ with $\lim_{x\to+\infty} f(x) = 0$.
+Prove that $f$ is identically zero. No continuity is
+assumed.\kn{Fix $x$ and push it to infinity by its own period: $f(x) =
+f(x+nT)$ for every $n$, and the right side tends to $0$. The whole content
+is that periodicity lets one evaluate a function arbitrarily far out
+\emph{without moving it}. Compare Rudin's Exercise 4.4: there density does
+the transporting, here periodicity does.}
+\provenance{ECNU \cjk{习题}{Ex} 3.3 \#7; USTC Ch.\ 1 suppl.\ \#13.}
+
+\item Suppose $f$ is defined on $(0,+\infty)$, satisfies $f(x^2) = f(x)$ for
+all $x$, and $\lim_{x\to0^+} f(x) = \lim_{x\to+\infty} f(x) = f(1)$. Prove
+that $f$ is constant.\kn{Iterate the hypothesis backwards: $f(x) =
+f(x^{1/2}) = f(x^{1/4}) = \cdots = f(x^{1/2^n})$, and $x^{1/2^n} \to 1$ for
+every $x>0$. The two limit hypotheses are there only to handle $x$ where
+the iteration escapes. This is the shape of every functional-equation
+rigidity argument: find the orbit, find its limit point, evaluate there.}
+\provenance{ECNU \cjk{总练习题}{review} 3 \#13.}
+
+\item $\star$~Let $f$ be defined on $(a,+\infty)$ and bounded on every finite interval
+$(a,b)$, and suppose $\lim_{x\to+\infty}\bigl[f(x+1)-f(x)\bigr] = A$. Prove
+that $\lim_{x\to+\infty} f(x)/x = A$.\kn{The continuous Stolz--Ces\`aro
+theorem. Write $f(x) = f(x_0) + \sum_{k<n}\bigl[f(x_0+k+1)-f(x_0+k)\bigr]$
+where $x = x_0 + n$ with $x_0$ in a fixed unit window, then average: the
+increments are eventually near $A$, and the finitely many early ones are
+diluted by $1/x$. It is 3.20's averaging idea run on a continuous variable.}
+\provenance{ECNU \cjk{总练习题}{review} 3 \#14; Yu Pin, HW5 A9$^*$ (p.\,127),
+where it is attributed to Cauchy rather than to Stolz.}
+
+\item Show that $f(x) = x\sin x$ is unbounded on $(0,+\infty)$ but is
+\emph{not} an infinitely large quantity as $x \to +\infty$; that is,
+$\lim_{x\to+\infty} f(x) \ne \infty$.\kn{Two sequences settle it: $x_n =
+2n\pi$ gives $f = 0$, while $x_n = 2n\pi + \pi/2$ gives $f \to +\infty$.
+The point of Supplement B's S4.8 --- ``unbounded'' is a statement about the
+range, ``tends to infinity'' is a statement about the tail, and only the
+second forbids returning.}
+\provenance{ECNU bk.\ p.\,60; USTC Ex.\ 1.2.12.}
+
+\item Using equivalent infinitesimals, evaluate
+$\displaystyle\lim_{x\to0}\frac{\tan x - \sin x}{\sin^3 x}$ and
+$\displaystyle\lim_{x\to0}\frac{\sqrt{1+x^2}-1}{1-\cos x}$. Then explain
+precisely why substituting $\tan x \sim x$ and $\sin x \sim x$ into the
+numerator of the first gives the wrong answer $0$.\kn{Answers $\tfrac12$ and
+$1$. The explanation is the content of the pitfall at S4.7: each equivalence
+is accurate to first order, the subtraction annihilates exactly the first
+order, and what survives lives at third order where neither equivalence says
+anything. Factor first --- $\tan x - \sin x = \sin x(1-\cos x)/\cos x$ ---
+and every factor may then be replaced.}
+\provenance{ECNU \cjk{例}{Ex} 2 and note, bk.\ p.\,59.}
+
+\item Find all asymptotes of the curve $y = x^3/(x^2+2x-3)$, and prove that
+your oblique asymptote satisfies the definition (the distance from
+$\bigl(x,f(x)\bigr)$ to the line tends to $0$).\kn{Long division is the
+whole computation; the definition check is the observation that the distance
+to $y=ax+b$ is $|f(x)-ax-b|/\sqrt{1+a^2}$, a fixed multiple of the vertical
+gap. Worth doing once to see that ``vertical gap'' and ``perpendicular
+distance'' differ only by that constant --- which is why the limits defining
+$a$ and $b$ may be taken vertically.}
+\provenance{ECNU \cjk{例}{Ex} 6, bk.\ pp.\,61--62.}
+
+% ---------------- Group II ----------------
+\item Let $f$ be continuous and one-to-one on an interval $I$. Prove that
+$f$ is strictly monotone on $I$. Deduce that a continuous injection of
+$[a,b]$ into $\R^1$ has a continuous inverse, without invoking
+compactness.\kn{Suppose not: then some $u<v<w$ has $f(v)$ outside the
+interval with endpoints $f(u)$ and $f(w)$. Apply the intermediate value
+theorem on $[u,v]$ and on $[v,w]$ to produce two points with the same value.
+The deduction is S4.13. Contrast Rudin 4.17, which gets the same conclusion
+from compactness and works in any metric space --- neither theorem contains
+the other.}
+\provenance{Tao I, Ex.\ 9.8.3; USTC \cjk{定理}{Thm} 3; Yu Pin, Thm 54.}
+
+\item Prove that there exists a function $f : \R^1 \to \R^1$ that is
+discontinuous at every point while $|f|$ is continuous at every
+point.\kn{Modify Dirichlet: $f = 1$ on the rationals, $-1$ elsewhere. Then
+$|f| \equiv 1$. The lesson is that $|\cdot|$ destroys information --- the
+implication ``$f$ continuous $\Rightarrow |f|$ continuous'' has no converse,
+and every proof that passes to absolute values gives something away.}
+\provenance{USTC Ex.\ 2.1.5.}
+
+\item Suppose $f : \R^1 \to \R^1$ satisfies $f(x+y) = f(x) + f(y)$ for all
+$x,y$, and is continuous at the single point $0$. Prove that $f$ is
+continuous on all of $\R^1$ and that $f(x) = f(1)\,x$.\kn{Cauchy's
+functional equation. Continuity everywhere follows because $f(x+h)-f(x) =
+f(h)$ --- the equation makes the increment independent of position, so
+continuity at one point is continuity everywhere. Then the equation forces
+$f(q) = f(1)q$ for rational $q$ by induction, and Rudin's Exercise 4.4
+(agreement on a dense set) finishes it. Without \emph{some} regularity the
+conclusion is false, but the counterexamples need a Hamel basis and hence
+the axiom of choice.}
+\provenance{ECNU \cjk{总练习题}{review} 4 \#9.}
+
+\item Let $f$ be defined on $\R^1$, continuous at the two points $0$ and
+$1$ only (as far as is assumed), and satisfy $f(x^2) = f(x)$ for all $x$.
+Prove that $f$ is constant.\kn{Sharper than S4.2: continuity at exactly two
+points suffices. Note $f$ is even, so it is enough to work on $x \ge 0$;
+for $x>0$ the iteration $x^{1/2^n} \to 1$ uses continuity at $1$, and
+$f(0) = \lim_{x\to0}f(x)$ uses continuity at $0$. Observe which points the
+iteration funnels into --- those are exactly the points where continuity is
+required.}
+\provenance{ECNU \cjk{总练习题}{review} 4 \#10.}
+
+\item Determine, with proof, which of the following are possible for a
+continuous real function: domain $[0,1]$ with range $(0,\infty)$; domain
+$[0,1]$ with range $(0,1)$; domain $[0,1]$ with range
+$[0,1]\cup[2,4]$; domain $(0,1)$ with range $[2,\infty)$.\kn{Four probes of
+the same two theorems. The first three are impossible --- 4.15 makes the
+image compact, hence closed and bounded, and 4.22 makes it connected, hence
+an interval. The fourth is possible; construct one. A good check on whether
+you know what compactness and connectedness each contribute.}
+\provenance{USTC Ex.\ 2.2.10.}
+
+% ---------------- Group III ----------------
+\item Let $f$ be continuous on $[a,b]$ and let $x_1,\dots,x_n \in [a,b]$.
+Prove that there is a $\xi \in [a,b]$ with
+\[ f(\xi) = \frac{f(x_1)+\cdots+f(x_n)}{n} . \]
+More generally, prove the same for any weighted average
+$\sum q_i f(x_i)$ with $q_i > 0$ and $\sum q_i = 1$.\kn{The average lies
+between $\min_i f(x_i)$ and $\max_i f(x_i)$, both of which are attained
+values of $f$; now apply the intermediate value theorem between the two
+points where they are attained. This is the discrete ancestor of the mean
+value theorem for integrals (6.x) and of the notion of a barycentre.}
+\provenance{ECNU \cjk{习题}{Ex} 4.2 \#19; USTC Ex.\ 2.2.7.}
+
+\item \emph{(Universal chord theorem.)} Let $f$ be continuous on $[0,1]$
+with $f(0) = f(1)$. Prove that for every positive integer $n$ there is a
+$\xi \in [0,1-1/n]$ with
+\[ f\Bigl(\xi + \frac1n\Bigr) = f(\xi). \]
+Show by example that the conclusion can fail for a chord length that is not
+of the form $1/n$.\kn{Put $F(x) = f(x+1/n) - f(x)$ on $[0,1-1/n]$ and sum:
+$F(0) + F(1/n) + \cdots + F\bigl((n-1)/n\bigr) = f(1)-f(0) = 0$. A finite
+list of reals summing to zero either is all zeros or contains both signs, so
+$F$ has a zero by 4.23. The telescoping sum is the whole idea, and it is
+why only reciprocal lengths work.}
+\provenance{ECNU \cjk{总练习题}{review} 4 \#8; USTC Ch.\ 2 suppl.\ \#5.}
+
+\item Prove that for every positive integer $n$ the equation
+\[ x^n + x^{n-1} + \cdots + x = 1 \]
+has exactly one positive root $x_n$; prove that $(x_n)$ converges, and find
+its limit.\kn{Existence and uniqueness from 4.23 plus strict increase of the
+left side on $(0,\infty)$. For the limit, note $x_n \in (\tfrac12,1)$ and
+that the sum telescopes: $x(1-x^n)/(1-x) = 1$. Show $(x_n)$ is decreasing and
+bounded below, then pass to the limit in the closed form to get $\tfrac12$.
+A clean synthesis of Chapters 3 and 4.}
+\provenance{USTC Ch.\ 2 suppl.\ \#9.}
+
+\item \emph{(Contraction mapping on an interval.)} Let $f$ map $[a,b]$ into
+$[a,b]$ and suppose there is a constant $k$ with $0<k<1$ such that
+\[ |f(x)-f(y)| \le k|x-y| \qquad (x,y \in [a,b]). \]
+Prove that $f$ has a unique fixed point $x_0$, and that for every starting
+value $x_1 \in [a,b]$ the sequence $x_{n+1} = f(x_n)$ converges to
+$x_0$.\kn{Uniqueness is immediate from the inequality. For existence, do not
+use 4.23 --- use the iteration: $|x_{n+1}-x_n| \le k^{n-1}|x_2-x_1|$ makes
+$(x_n)$ Cauchy by comparison with a geometric series (3.26), and 3.11 gives
+the limit, which is a fixed point by continuity. This is Rudin's 9.23 in one
+dimension, and the proof is identical --- worth doing now so that 9.23 is
+recognition rather than novelty. Compare Rudin's Exercise 4.14, which gets a
+fixed point from the intermediate value theorem alone but no iteration.}
+\provenance{USTC Ch.\ 2 suppl.\ \#8.}
+
+\item $\star$~\emph{(Croft.)} Let $f$ be continuous on $\R^1$ and suppose that for every
+$\delta > 0$,
+\[ \lim_{n\to\infty} f(n\delta) = 0 . \]
+Prove that $\lim_{x\to+\infty} f(x) = 0$.\kn{Surprisingly hard, and the
+tool is Baire (Rudin's Exercise 3.22). Suppose the conclusion fails; build
+closed sets $F_N = \{\delta \ge 1 : |f(n\delta)| \le \varepsilon \text{ for
+all } n \ge N\}$, whose union is $[1,\infty)$, so one has interior; then the
+dilates $\{n\delta : \delta \in I,\ n \ge N\}$ of an interval $I$ eventually
+cover a half-line. The moral: a hypothesis quantified over \emph{every}
+$\delta$ is a category hypothesis in disguise.}
+\provenance{Yu Pin, HW5 problem G (p.\,129).}
+
+% ---------------- Group IV ----------------
+\item Prove the sequential criterion S4.15: $f$ is uniformly continuous on
+$E$ if and only if $d\bigl(f(p_n),f(q_n)\bigr) \to 0$ for every pair of
+sequences in $E$ with $d(p_n,q_n) \to 0$. Then use it to show that $\sin(1/x)$
+is not uniformly continuous on $(0,1)$ and that $x^2$ is not uniformly
+continuous on $\R^1$.\kn{The forward direction is a substitution. For the
+converse, negate uniform continuity: some $\varepsilon$ has, for each
+$\delta = 1/n$, a pair $p_n,q_n$ within $1/n$ whose images are
+$\varepsilon$ apart --- the failing pair builds itself. For the examples take
+$1/(2n\pi)$ against $1/(2n\pi + \pi/2)$, and $n$ against $n+1/n$.}
+\provenance{Tao I, Prop.\ 9.9.8; ECNU \cjk{例}{Ex} 10--11.}
+
+\item Prove the gluing lemma S4.16, and use it with Theorem 4.19 to show
+that $\sqrt x$ is uniformly continuous on $[0,+\infty)$. Show likewise that
+$\cos\sqrt x$ is uniformly continuous there.\kn{Split at $1$: on $[0,1]$ use
+compactness, on $[1,\infty)$ use $|\sqrt x - \sqrt y| = |x-y|/(\sqrt x +
+\sqrt y) \le \tfrac12|x-y|$. Note that $\sqrt x$ is uniformly continuous
+although its derivative is unbounded near $0$ --- so ``bounded derivative''
+is sufficient for uniform continuity but far from necessary.}
+\provenance{ECNU \cjk{例}{Ex} 12 and \cjk{习题}{Ex} 4.2 \#12, \#20.}
+
+\item Let $f$ be continuous on $[a,+\infty)$ and suppose
+$\lim_{x\to+\infty} f(x)$ exists and is finite. Prove that $f$ is bounded on
+$[a,+\infty)$ and uniformly continuous there. Must $f$ attain a maximum?
+\kn{Both halves are the gluing pattern: the limit hypothesis makes $f$
+nearly constant past some $M$, and $[a,M]$ is compact. So a hypothesis at
+infinity substitutes for compactness of the domain. The last question is
+no: $f(x) = 1 - 1/x$ on $[1,\infty)$ has supremum $1$, never attained.}
+\provenance{ECNU \cjk{习题}{Ex} 4.2 \#6, \#16.}
+
+\item Prove that if $f$ and $g$ are uniformly continuous and \emph{bounded}
+on $E$, then $fg$ is uniformly continuous on $E$; and show by example that
+boundedness cannot be dropped. Which of $f+g$, $\max(f,g)$, $g \circ f$ are
+uniformly continuous without extra hypotheses?\kn{Split the product:
+$|f(p)g(p) - f(q)g(q)| \le |f(p)|\,|g(p)-g(q)| + |g(q)|\,|f(p)-f(q)|$ --- the
+identical decomposition as at 3.3(c). For the counterexample $f = g = x$ on
+$\R^1$. Sum, max and composition all survive with no extra hypotheses.}
+\provenance{Tao II, Ex.\ 2.3.4--2.3.6.}
+
+\item Prove S4.17: a uniformly continuous $f : E \to \R^k$ has a limit at
+every point of $\overline E$, and therefore extends uniquely to a
+uniformly continuous function on $\overline E$. Show that $\sin(1/x)$ on
+$(0,1)$ has no such extension, and identify which hypothesis it
+violates.\kn{Uniform continuity sends Cauchy sequences to Cauchy sequences
+(Rudin's Exercise 4.11), completeness converts those to limits, and S4.1
+promotes ``every sequence converges'' to ``the limit exists.'' Uniqueness is
+Rudin's Exercise 4.4. The example is merely continuous, not uniformly ---
+by S4.15 with $p_n, q_n$ as in exercise 17.}
+\provenance{Tao I, Cor.\ 9.9.14; generalises Rudin's Exercise 4.13.}
+
+% ---------------- Group V ----------------
+\item Define the oscillation $\omega_f(p)$ as in S4.4. Prove that $f$ is
+continuous at $p$ if and only if $\omega_f(p) = 0$, that $\{x : \omega_f(x)
+\ge \varepsilon\}$ is closed for each $\varepsilon > 0$, and hence that the
+set of discontinuities of \emph{any} $f$ is a countable union of closed
+sets. Deduce, using Exercise 3.22, that no function is continuous at every
+rational and discontinuous at every irrational.\kn{The last part is the
+converse question to Rudin's Exercise 4.18 (Thomae), and the answer is that
+the two cases are not symmetric. If such an $f$ existed, $\Q$ would be a
+countable intersection of dense open sets, and intersecting further with the
+complements of the individual rationals would exhibit $\varnothing$ as such
+an intersection --- contradicting Baire.}
+\provenance{Yu Pin, Lemmas 131--132; Tao I, Ex.\ 9.3.4.}
+
+\item Let $A \subset \R^1$ be countable. Construct a monotonically
+increasing $f : \R^1 \to \R^1$ whose set of discontinuities is exactly
+$A$.\kn{The exact converse of 4.30, and Rudin's Remark 4.31 sketches the
+construction: enumerate $A = \{a_1,a_2,\dots\}$ and put $f(x) =
+\sum_{a_n < x} 2^{-n}$. Convergence is comparison with a geometric series;
+the jump at $a_n$ is exactly $2^{-n}$; continuity elsewhere follows because
+the tail beyond $N$ contributes less than $2^{-N}$. Together with 4.30 this
+characterises the possible discontinuity sets of monotone functions
+completely --- a rare instance of a sharp answer.}
+\provenance{Yu Pin, HW4 problem E (p.\,110); cf.\ Tao I, Ex.\ 9.8.5.}
+
+\item $\star$~\emph{(Cayley--Hamilton by continuity.)} For $A$ an $n \times n$ complex
+matrix let $P_A(X) = \det(XI - A)$. Prove: (a) if $A$ is diagonalisable then
+$P_A(A) = 0$; (b) the map $A \mapsto P_A(A)$ is continuous on the space of
+matrices with the norm $\|\cdot\|$; (c) every $A$ is a limit of
+diagonalisable matrices; (d) therefore $P_A(A) = 0$ for every $A$.\kn{The
+best advertisement in this chapter for Rudin's Exercise 4.4. Part (a) is
+one line in an eigenbasis; (b) holds because the entries of $P_A(A)$ are
+polynomials in the entries of $A$; (c) perturbs the eigenvalues of an upper
+triangular form to make them distinct. Then a purely algebraic theorem falls
+out of ``two continuous maps agreeing on a dense set are equal'' --- with
+the density supplied by linear algebra and the rigidity by Chapter 4.}
+\provenance{Yu Pin, winter problem set U (pp.\,331--332).}
+
+\item Prove that a path-connected set is connected, and that the closure of
+\[ S = \bigl\{\,(x,\sin(1/x)) : 0 < x \le 1\,\bigr\} \]
+is connected but not path-connected.\kn{The first part is 4.22 applied to
+the path. For the second, $\overline S$ adds the segment $\{0\}\times[-1,1]$;
+connectedness holds because the closure of a connected set is connected,
+while a path from the segment into $S$ would have to traverse infinitely
+many oscillations in finite time --- make that precise by showing its first
+coordinate cannot leave $0$. Rudin's favourite pathology at 4.27(d) turns
+out to separate two notions of connectedness he never distinguishes.}
+\provenance{Tao II, Ex.\ 2.4.7--2.4.9.}
+
+\end{enumerate}

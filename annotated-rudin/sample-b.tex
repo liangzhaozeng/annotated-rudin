@@ -1,0 +1,740 @@
+\documentclass[11pt,twoside]{article}
+
+\usepackage[
+  paperwidth=8.5in, paperheight=11in,
+  twoside,
+  inner=0.95in, outer=2.85in,
+  top=1.0in, bottom=1.0in,
+  marginparwidth=2.2in, marginparsep=0.2in,
+  headsep=16pt
+]{geometry}
+
+\usepackage{annotated}
+\usepackage[colorlinks=true, allcolors=RuInk]{hyperref}
+
+\linespread{1.05}
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{1.4em}
+
+\renewcommand{\leftmark}{Chapter 1 \;\textbullet\; The Real and Complex Number Systems}
+\renewcommand{\rightmark}{The Annotated Rudin}
+
+\begin{document}
+
+% ============================================================
+\thispagestyle{empty}
+\vspace*{1.5in}
+\begin{center}
+{\sffamily\Huge\bfseries\color{RuInk} The Annotated Rudin}\\[10pt]
+{\sffamily\large\color{RuGrey} \emph{Principles of Mathematical Analysis}, Third Edition}\\[4pt]
+{\sffamily\large\color{RuGrey} Walter Rudin, with a running commentary}\\[40pt]
+{\sffamily\normalsize\bfseries\color{RuInk} STYLE SAMPLE \textperiodcentered\ ADDITIVE \textperiodcentered\ B/W PRINT}\\[6pt]
+{\sffamily\small\color{RuGrey} Chapter 1, \S\S1.1--1.11 and 1.19--1.21}
+\end{center}
+\vfill
+\begin{center}
+\begin{minipage}{0.8\textwidth}
+\small\color{RuGrey}
+Rudin's text appears here complete and unaltered --- his sentences, his
+paragraph breaks, his numbering. Nothing has been paraphrased away. The
+annotation is strictly additive: numbered markers in his prose key to notes in
+the outer margin, and longer commentary sits in ruled boxes between his
+paragraphs, where it can be skipped without breaking his argument.
+\end{minipage}
+\end{center}
+\newpage
+
+% ============================================================
+\thispagestyle{empty}
+\section*{How to read this book}
+
+Everything set in the main column below is Rudin, verbatim. You can read it
+straight through and never look at an annotation. The annotation layer sits in
+two places, both outside his text.
+
+\medskip
+\noindent
+\textbf{Margin notes.} A small superscript number in Rudin's text --- like
+this\kn{The marker is the only mark added to his page, and it is the same for
+every tier so his line spacing is undisturbed. The number out here tells you
+what kind of note it is.} --- keys to a numbered note in the outer margin. Since
+the book prints in black and white, the \emph{tier} of a note is carried by how
+its number is set:
+
+\medskip
+\begin{tabular}{@{}p{0.15\textwidth}p{0.78\textwidth}@{}}
+\tierplain{7} & \textbf{Plain number --- unpacking.} What the sentence is
+actually saying, where a formula came from, an omitted algebraic step.\\[5pt]
+\tierdeep{7} & \textbf{Outlined number --- going deeper.} Context beyond the
+course: what breaks in general, which later theorem this sets up. Skippable.\\[5pt]
+\tierwarn{7} & \textbf{Reversed number --- warning.} A specific belief students
+form here that is false, or a place where Rudin's wording will mislead you.
+\end{tabular}
+
+\medskip
+\noindent
+\textbf{Interleaved boxes.} When a note runs longer than a margin will hold, it
+becomes a box between Rudin's paragraphs, framed by the same three tiers: a
+\textbf{solid} left rule for unpacking, a \textbf{dashed} left rule for going
+deeper, and rules \textbf{top and bottom} with a black tab for a warning.
+
+\medskip
+\noindent
+\textbf{Structural commentary.} Two further boxes carry no mathematics at all.
+They explain the book rather than its contents --- why a chapter exists, why
+Rudin ordered it as he did, why a section that looks like a detour is not one.
+
+\begin{roadmap}[Heavy frame, black title bar]
+Opens and closes every chapter. Says what the chapter is for, how it is
+organized and why in that order, and which parts are load-bearing versus
+bookkeeping. Where Rudin has explained his own choices --- usually in the
+Preface --- these boxes quote him rather than guess.
+\end{roadmap}
+
+\begin{signpost}[Thin frame, inline heading]
+Opens a section. Shorter: why this material sits at this point, what Rudin is
+setting up, and what to hold on to while reading it.
+\end{signpost}
+
+\newpage
+
+% ============================================================
+\begin{roadmap}[Why this chapter exists]
+Analysis is the study of limits, and a limit is a promise that some process
+arrives somewhere. The rationals break that promise: you can write down a
+sequence of rationals closing in on $\sqrt2$ with nothing at the end of it.
+Every theorem in this book --- convergence, continuity, the intermediate value
+theorem, the existence of integrals --- would be false or vacuous over $\Q$.
+
+\medskip
+So before any analysis can begin, one fact must be secured: \emph{there is a
+number system with no gaps}. Chapter 1 secures it, and does nothing else. Its
+entire output is Theorem 1.19, plus enough consequences (1.20, 1.21) to show the
+theorem was worth having.
+\end{roadmap}
+
+\begin{roadmap}[How it is organized, and why in that order]
+Rudin's arrangement is deliberate, and he explains it in the Preface. The
+obvious order would be to construct $\R$ from $\Q$ first and then do analysis on
+it. He refuses, on the grounds that beginning with the construction is
+``pedagogically unsound (though logically correct)'' because ``most students
+simply fail to appreciate the need for doing this.'' The chapter is therefore
+built to make you \emph{feel the need before paying the cost}:
+
+\medskip
+\centering
+\begin{tikzpicture}[scale=0.92, transform shape, node distance=5mm]
+\node[rmbox, text width=22mm] (a) {\textbf{1.1--1.2}\\exhibit the gap\\in $\Q$};
+\node[rmbox, text width=22mm, right=of a] (b) {\textbf{1.5--1.18}\\vocabulary:\\order, field};
+\node[rmbox, text width=22mm, right=of b] (c) {\textbf{1.19}\\assert $\R$\\(proof deferred)};
+\node[rmbox, text width=22mm, right=of c] (d) {\textbf{1.20--1.21}\\cash it out\\at once};
+\draw[rmarrow] (a) -- (b); \draw[rmarrow] (b) -- (c); \draw[rmarrow] (c) -- (d);
+\end{tikzpicture}
+
+\medskip
+\raggedright
+Three consequences of this choice are worth knowing in advance.
+
+\smallskip
+\textbf{The construction is missing on purpose.} Theorem 1.19 is stated and not
+proved; the Dedekind-cut construction sits in the appendix, to be read ``whenever
+the time seems ripe.'' Nothing later depends on having read it.
+
+\smallskip
+\textbf{The abstraction comes before the object.} Rudin defines ordered sets
+(1.5--1.11) and fields (1.12--1.18) \emph{in general} before naming $\R$. This
+looks like a detour and is not: it lets him characterise $\R$ by properties
+rather than by construction, and it means $\C$ and $\R^k$ inherit the same
+axioms later without a second round of proofs. He says so himself at 1.13(c) ---
+``once we do this, we will not need to do it again.''
+
+\smallskip
+\textbf{The tail of the chapter is bookkeeping.} Everything after 1.21 --- the
+extended reals, $\C$, Euclidean spaces, Schwarz's inequality --- is notation
+being laid in for later chapters, not argument. Read it once and move on.
+\end{roadmap}
+
+\newpage
+
+% ============================================================
+\begin{center}
+{\sffamily\LARGE\bfseries\color{RuInk} Chapter 1}\\[6pt]
+{\sffamily\Large\bfseries\color{RuInk} THE REAL AND COMPLEX NUMBER SYSTEMS}
+\end{center}
+
+\rsection{Introduction}
+
+\noindent
+A satisfactory discussion of the main concepts of analysis (such as convergence,
+continuity, differentiation, and integration) must be based on an accurately
+defined number concept. We shall not, however, enter into any discussion of the
+axioms that govern the arithmetic of the integers, but assume familiarity with
+the rational numbers (i.e., the numbers of the form $m/n$ where $m$ and $n$ are
+integers and $n \ne 0$).\kn{Rudin is choosing a starting line, and he defends
+the choice in the Preface: beginning with a construction of $\R$ is
+``pedagogically unsound (though logically correct)'' because ``most students
+simply fail to appreciate the need for doing this.'' So the construction is
+exiled to the appendix, and $\R$ will arrive in 1.19 as an assertion. This
+sentence marks everything he is willing to take for granted.}
+
+The rational number system is inadequate for many purposes, both as a field and
+as an ordered set. (These terms will be defined in Definitions 1.6 and 1.12.)
+For instance, there is no rational $p$ such that $p^2 = 2$. (We shall prove this
+presently.) This leads to the introduction of so-called ``irrational numbers''
+which are often written as infinite decimal expansions and are considered to be
+``approximated'' by the corresponding finite decimals. Thus the sequence
+\[ 1,\ 1.4,\ 1.41,\ 1.414,\ 1.4142,\ \dots \]
+``tends to $\sqrt 2$.''\kw{The scare quotes are doing real work. ``Tends to'' is
+undefined until Definition 3.1, and the thing it tends to is undefined until
+Theorem 1.19. Rudin is pointing at a circularity he is about to break, not
+relying on one.} But unless the irrational number $\sqrt 2$ has been clearly
+defined, the question must arise: Just what is it that this sequence ``tends
+to''?
+
+This sort of question can be answered as soon as the so-called ``real number
+system'' is constructed.
+
+\ritem{1.1}{Example}
+We now show that the equation
+\begin{equation}
+  p^2 = 2 \tag{1.1}
+\end{equation}
+is not satisfied by any rational $p$. If there were such a $p$, we could write
+$p = m/n$ where $m$ and $n$ are integers that are not both even.\kn{Why we may
+assume this: put $p$ in lowest terms. If $m$ and $n$ were both even we could
+cancel a factor of $2$ and repeat, and the process must stop because $|m|$
+strictly decreases. That appeal to ``must stop'' is well-ordering, so the step
+is not quite free.} Let us assume this is done. Then (1.1) implies
+\begin{equation}
+  m^2 = 2n^2, \tag{1.2}
+\end{equation}
+This shows that $m^2$ is even. Hence $m$ is even (if $m$ were odd, $m^2$ would
+be odd), and so $m^2$ is divisible by $4$. It follows that the right side of
+(1.2) is divisible by $4$, so that $n^2$ is even, which implies that $n$ is
+even.
+
+The assumption that (1.1) holds thus leads to the conclusion that both $m$ and
+$n$ are even, contrary to our choice of $m$ and $n$. Hence (1.1) is impossible
+for rational $p$.
+
+We now examine this situation a little more closely. Let $A$ be the set of all
+positive rationals $p$ such that $p^2 < 2$ and let $B$ consist of all positive
+rationals $p$ such that $p^2 > 2$. We shall show that \emph{$A$ contains no
+largest number and $B$ contains no smallest}.\kn{This, and not the irrationality
+of $\sqrt2$, is the real content of \S1.1. Irrationality says
+$\sqrt2 \notin \Q$. This says $\Q$ has a \emph{gap} where $\sqrt 2$ should be
+--- a structural defect, and the one Definition 1.10 will name.}
+
+More explicitly, for every $p$ in $A$ we can find a rational $q$ in $A$ such
+that $p < q$, and for every $p$ in $B$ we can find a rational $q$ in $B$ such
+that $q < p$.
+
+To do this, we associate with each rational $p > 0$ the number
+\begin{equation}
+  q = p - \frac{p^2-2}{p+2} = \frac{2p+2}{p+2}. \tag{1.3}
+\end{equation}
+Then
+\begin{equation}
+  q^2 - 2 = \frac{2(p^2-2)}{(p+2)^2}. \tag{1.4}
+\end{equation}
+If $p$ is in $A$, then $p^2 - 2 < 0$, (1.3) shows that $q > p$ and (1.4) shows
+that $q^2 < 2$. Thus $q$ is in $A$.
+
+If $p$ is in $B$, then $p^2 - 2 > 0$, (1.3) shows that $0 < q < p$, and (1.4)
+shows that $q^2 > 2$. Thus $q$ is in $B$.
+
+\begin{unpack}[Where (1.3) comes from]
+Rudin produces this formula with no derivation, and it is the first place in the
+book where a reader stalls. It is not Newton's method. Ask instead: which map
+$p \mapsto q$ has $\sqrt2$ as a \emph{fixed point}? Try the simplest shape, a
+ratio of linear terms $q = (ap+b)/(cp+d)$. Setting $q = p$ gives
+$p(cp+d) = ap+b$, and we want that to collapse to $p^2 = 2$. The
+smallest-integer solution is $q = (2p+2)/(p+2)$: it gives $p^2 + 2p = 2p+2$,
+that is, $p^2 = 2$.
+
+Why it moves $p$ toward $\sqrt2$ without crossing it becomes visible once you
+factor the error:
+\[
+  q - \sqrt2 \;=\; \frac{2-\sqrt2}{p+2}\,\bigl(p - \sqrt2\bigr).
+\]
+For $p>0$ the multiplier lies strictly between $0$ and
+$(2-\sqrt2)/2 \approx 0.29$. That it is \emph{positive} keeps $q$ on the same
+side of $\sqrt2$ as $p$ --- Rudin's ``$q$ is in $A$'' and ``$q$ is in $B$.'' That
+it is \emph{less than one} makes the error shrink, so $q$ is strictly better
+than $p$ and no member of $A$ can be largest.
+
+Equation (1.4) is worth checking rather than accepting:
+$(2p+2)^2 - 2(p+2)^2 = (4p^2+8p+4)-(2p^2+8p+8) = 2p^2-4$.
+\end{unpack}
+
+\begin{deeper}[A contraction, eight chapters early]
+That factorisation says $p \mapsto (2p+2)/(p+2)$ shrinks the distance to
+$\sqrt2$ by a factor of at most $0.29$ every step --- exactly the hypothesis of
+the contraction principle, Theorem 9.23, which Rudin later uses to prove the
+inverse function theorem. Chapter 1 runs the argument by hand before the general
+theorem exists.
+
+Iterating from $p_0 = 1$ gives $1, \tfrac43, \tfrac{10}{7}, \tfrac{24}{17},
+\tfrac{58}{41}, \dots$, the convergents of $\sqrt2 = [1;2,2,2,\dots]$. Newton's
+method on $f(p) = p^2-2$ would give $p \mapsto (p^2+2)/(2p)$ instead: faster,
+but it always lands \emph{above} $\sqrt2$, so it would prove ``$B$ has no
+smallest'' and say nothing about $A$. Rudin's map does both halves at once.
+\end{deeper}
+
+\ritem{1.2}{Remark}
+The purpose of the above discussion has been to show that the rational number
+system has certain gaps, in spite of the fact that between any two rationals
+there is another: if $r < s$, then $r < (r+s)/2 < s$.\kn{Density and
+completeness are independent properties, and this sentence is the first warning
+of it. $\Q$ is dense in itself yet riddled with holes; $\Z$ has no holes in the
+relevant sense yet is nowhere dense. Neither property implies the other.} The
+real number system fills these gaps. This is the principal reason for the
+fundamental role which it plays in analysis.
+
+In order to elucidate its structure, as well as that of the complex numbers, we
+start with a brief discussion of the general concepts of \emph{ordered set} and
+\emph{field}.
+
+Here is some of the standard set-theoretic terminology that will be used
+throughout this book.
+
+\ritem{1.3}{Definitions}
+If $A$ is any set (whose elements may be numbers or any other objects), we write
+$x \in A$ to indicate that $x$ is a member (or an element) of $A$. If $x$ is not
+a member of $A$, we write $x \notin A$.
+
+The set which contains no element will be called the \emph{empty set}. If a set
+has at least one element, it is called \emph{nonempty}.
+
+If $A$ and $B$ are sets, and if every element of $A$ is an element of $B$, we
+say that $A$ is a \emph{subset} of $B$, and we write $A \subset B$, or
+$B \supset A$.\kw{Rudin's $\subset$ permits equality --- it is what most modern
+texts write $\subseteq$. He writes ``proper subset'' when he means strict
+containment. Read every $\subset$ in this book as $\subseteq$, or you will
+misread hypotheses for the next 300 pages.} If, in addition, there is an element
+of $B$ which is not in $A$, then $A$ is said to be a \emph{proper subset} of
+$B$. Note that $A \subset A$ for every set $A$.
+
+If $A \subset B$ and $B \subset A$, we write $A = B$. Otherwise, $A \ne B$.
+
+\ritem{1.4}{Definition}
+Throughout Chap.\ 1, the set of all rational numbers will be denoted by $\Q$.
+
+\rsection{Ordered Sets}
+
+\begin{signpost}[Why this section is here]
+Nothing in this section mentions $\R$, and on a first reading it feels like an
+unmotivated detour into abstraction. It is not. Rudin has just shown that $\Q$
+fails in a specific way, and he now needs language precise enough to \emph{name}
+that failure --- because the name will become the defining property of $\R$ in
+1.19. Definitions 1.5 to 1.7 are only scaffolding; 1.8 and 1.10 are the payload.
+If you read one thing here, read Definition 1.10, and notice that it is exactly
+what Example 1.9(a) showed $\Q$ does not have.
+\end{signpost}
+
+\ritem{1.5}{Definition}
+Let $S$ be a set. An \emph{order} on $S$ is a relation, denoted by $<$, with the
+following two properties:
+\begin{enumerate}[label=(\roman*), leftmargin=2.2em, itemsep=2pt, topsep=4pt]
+  \item If $x \in S$ and $y \in S$, then one and only one of the statements
+        \[ x < y, \qquad x = y, \qquad y < x \]
+        is true.\kn{Trichotomy. ``One and only one'' packs in two separate
+        demands: at least one holds, so the order is \emph{total}; and at most
+        one holds, so $<$ is irreflexive and antisymmetric. Drop totality and
+        you get a partial order, where suprema can fail to exist for reasons
+        having nothing to do with gaps.}
+  \item If $x, y, z \in S$, if $x < y$ and $y < z$, then $x < z$.
+\end{enumerate}
+The statement ``$x < y$'' may be read as ``$x$ is less than $y$'' or ``$x$ is
+smaller than $y$'' or ``$x$ precedes $y$''.
+
+It is often convenient to write $y > x$ in place of $x < y$.
+
+The notation $x \le y$ indicates that $x < y$ or $x = y$, without specifying
+which of these two is to hold. In other words, $x \le y$ is the negation of
+$x > y$.\kd{That last sentence is a small theorem, not a definition: ``$x<y$ or
+$x=y$'' is equivalent to ``not $x>y$'' precisely because of trichotomy in (i).
+In a partial order the two come apart, which is why $\le$ is normally taken as
+the primitive notion there.}
+
+\ritem{1.6}{Definition}
+An \emph{ordered set} is a set $S$ in which an order is defined.
+
+For example, $\Q$ is an ordered set if $r < s$ is defined to mean that $s - r$
+is a positive rational number.
+
+\ritem{1.7}{Definition}
+Suppose $S$ is an ordered set, and $E \subset S$. If there exists a
+$\beta \in S$ such that $x \le \beta$ for every $x \in E$, we say that $E$ is
+\emph{bounded above}, and call $\beta$ an \emph{upper bound} of $E$.\kn{$\beta$
+is drawn from $S$, and need not lie in $E$. This is exactly why the next
+definition has content: the upper bounds come from the ambient set, so a set can
+be bounded above by elements sitting far away from it.}
+
+Lower bounds are defined the same way (with $\ge$ in place of $\le$).
+
+\ritem{1.8}{Definition}
+Suppose $S$ is an ordered set, $E \subset S$, and $E$ is bounded above. Suppose
+there exists an $\alpha \in S$ with the following properties:
+\begin{enumerate}[label=(\roman*), leftmargin=2.2em, itemsep=2pt, topsep=4pt]
+  \item $\alpha$ is an upper bound of $E$.
+  \item If $\gamma < \alpha$ then $\gamma$ is not an upper bound of
+        $E$.\kn{This is the clause you will actually use, and it is stated
+        contrapositively. The working form: for every $\gamma < \alpha$ there
+        is an $x \in E$ with $x > \gamma$. In $\R$, equivalently: for every
+        $\varepsilon > 0$ there is $x \in E$ with $x > \alpha - \varepsilon$.
+        Reach for that sentence every time a proof opens ``let
+        $\alpha = \sup E$.''}
+\end{enumerate}
+Then $\alpha$ is called the \emph{least upper bound} of $E$ [that there is at
+most one such $\alpha$ is clear from (ii)] or the \emph{supremum} of $E$, and we
+write
+\[ \alpha = \sup E. \]
+
+The \emph{greatest lower bound}, or \emph{infimum}, of a set $E$ which is
+bounded below is defined in the same manner: The statement
+\[ \alpha = \inf E \]
+means that $\alpha$ is a lower bound of $E$ and that no $\beta$ with
+$\beta > \alpha$ is a lower bound of $E$.
+
+\begin{unpack}[Why the least upper bound and not the largest element]
+Because the largest element usually does not exist, and the supremum is the
+repair. Take $E_1 = \{\, r \in \Q : r < 0 \,\}$. It has no largest element: for
+any $r<0$ there is $r/2$ with $r < r/2 < 0$. But the set of its upper bounds ---
+everything ${}\ge 0$ --- does have a smallest one, namely $0$.
+
+The manoeuvre is to move the question from $E$, where the answer is often
+``none,'' to the set of upper bounds of $E$, where it is often ``yes.'' Rudin's
+bracketed aside is the payoff: uniqueness follows immediately from (ii), so
+speaking of ``the'' supremum is legitimate.
+\end{unpack}
+
+\ritem{1.9}{Examples}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=5pt, topsep=4pt]
+  \item Consider the sets $A$ and $B$ of Example 1.1 as subsets of the ordered
+        set $\Q$. The set $A$ is bounded above. In fact, the upper bounds of $A$
+        are exactly the members of $B$.\kd{Not \emph{exactly}, and Rudin is
+        being loose. Every $\beta \in B$ bounds $A$, and no member of $A$ does.
+        But one must also rule out a positive rational with $\beta^2 = 2$, and
+        that is impossible only by Example 1.1. The claim holds, but it leans on
+        the irrationality result proved a page earlier.} Since $B$ contains no
+        smallest member, $A$ has no least upper bound in $\Q$.
+
+        Similarly, $B$ is bounded below: the set of all lower bounds of $B$
+        consists of $A$ and of all $r \in \Q$ with $r \le 0$. Since $A$ has no
+        largest member, $B$ has no greatest lower bound in $\Q$.
+  \item If $\alpha = \sup E$ exists, then $\alpha$ may or may not be a member of
+        $E$. For instance, let $E_1$ be the set of all $r \in \Q$ with $r < 0$.
+        Let $E_2$ be the set of all $r \in \Q$ with $r \le 0$. Then
+        \[ \sup E_1 = \sup E_2 = 0, \]
+        and $0 \notin E_1$, $0 \in E_2$.\kn{Both suprema exist \emph{in $\Q$}.
+        Part (a) fails not because $\Q$ is too small in general but because of
+        where that particular gap sits. Whether $\sup E$ lies in $E$ is a
+        separate question from whether $\sup E$ exists, and running the two
+        together is the most common first-week error.}
+  \item Let $E$ consist of all numbers $1/n$, where $n = 1,2,3,\dots$. Then
+        $\sup E = 1$, which is in $E$, and $\inf E = 0$, which is not in $E$.
+\end{enumerate}
+
+\ritem{1.10}{Definition}
+An ordered set $S$ is said to have the \emph{least-upper-bound property} if the
+following is true:
+
+If $E \subset S$, $E$ is not empty, and $E$ is bounded above, then $\sup E$
+exists in $S$.\kw{Both hypotheses are load-bearing, and dropping either breaks
+the definition rather than merely weakening it. In $\R$: every real is an upper
+bound of $\emptyset$, so $\emptyset$ has no \emph{least} one; and $\Z$ is
+unbounded above, so it has none either. Any proof that produces a supremum owes
+you a check of both.}
+
+Example 1.9(a) shows that $\Q$ does not have the least-upper-bound property.
+
+We shall now show that there is a close relation between greatest lower bounds
+and least upper bounds, and that every ordered set with the least-upper-bound
+property also has the greatest-lower-bound property.
+
+\ritem{1.11}{Theorem}
+\emph{Suppose $S$ is an ordered set with the least-upper-bound property,
+$B \subset S$, $B$ is not empty, and $B$ is bounded below. Let $L$ be the set of
+all lower bounds of $B$. Then}
+\[ \alpha = \sup L \]
+\emph{exists in $S$ and $\alpha = \inf B$.}
+
+\emph{In particular, $\inf B$ exists in $S$.}
+
+\begin{proof}
+Since $B$ is bounded below, $L$ is not empty. Since $L$ consists of exactly
+those $y \in S$ which satisfy the inequality $y \le x$ for every $x \in B$, we
+see that every $x \in B$ is an upper bound of $L$.\kn{This single sentence is
+the whole idea. We are handed a hypothesis about suprema and asked for an
+infimum, so we must find a set whose \emph{supremum} is the infimum we want.
+$L$ is that set: $B$ presses down on it from above, and the two meet at one
+point.} Thus $L$ is bounded above. Our hypothesis about $S$ implies therefore
+that $L$ has a supremum in $S$; call it $\alpha$.
+
+If $\gamma < \alpha$ then (see Definition 1.8) $\gamma$ is not an upper bound of
+$L$, hence $\gamma \notin B$.\kn{Compressed to the point of opacity. Unpacked:
+$\gamma$ failing to be an upper bound of $L$ produces some $y \in L$ with
+$y > \gamma$. Since $y$ is a lower bound of $B$, every $x \in B$ satisfies
+$x \ge y > \gamma$. So $\gamma$ itself cannot belong to $B$.} It follows that
+$\alpha \le x$ for every $x \in B$. Thus $\alpha \in L$.
+
+If $\alpha < \beta$ then $\beta \notin L$, since $\alpha$ is an upper bound of
+$L$.
+
+We have shown that $\alpha \in L$ but $\beta \notin L$ if $\beta > \alpha$. In
+other words, $\alpha$ is a lower bound of $B$, but $\beta$ is not if
+$\beta > \alpha$. This means that $\alpha = \inf B$.
+\end{proof}
+
+\begin{deeper}[Why this is not a triviality]
+The argument runs equally well in reverse, so for ordered sets the
+least-upper-bound property and the greatest-lower-bound property are
+\emph{equivalent}. That is why Rudin never states a separate greatest-lower-bound
+axiom for $\R$: Theorem 1.19 gives him one and Theorem 1.11 hands him the other.
+
+Every later appearance of $\inf$ rests on this --- lower Riemann--Stieltjes sums
+in 6.2, $\liminf$ in 3.16, the distance from a point to a set in the exercises.
+It is a two-paragraph theorem that the rest of the book quietly leans on.
+\end{deeper}
+
+\rskip{\S\S1.12--1.18, on fields and ordered fields, are omitted from this
+sample only}
+
+\rsection{The Real Field}
+
+\begin{signpost}[The hinge of the chapter]
+Everything so far has been preparation, and everything after is consequence.
+This section contains the one theorem the chapter was written to state.
+
+\smallskip
+Watch what Rudin does with it. He states 1.19, declines to prove it, and then
+immediately proves 1.20 and 1.21 --- results he could have extracted from the
+construction ``with very little extra effort,'' as he says. He derives them from
+the least-upper-bound property instead, on purpose: he wants you to see the
+property doing work before you see where it came from. Read 1.20 and 1.21 less
+as facts about $\R$ than as two worked demonstrations of how a supremum is
+used.
+\end{signpost}
+
+\noindent
+We now state the existence theorem which is the core of this chapter.
+
+\ritem{1.19}{Theorem}
+\emph{There exists an ordered field $\R$ which has the least-upper-bound
+property.}
+
+\emph{Moreover, $\R$ contains $\Q$ as a subfield.}
+
+The second statement means that $\Q \subset \R$ and that the operations of
+addition and multiplication in $\R$, when applied to members of $\Q$, coincide
+with the usual operations on rational numbers; also, the positive rational
+numbers are positive elements of $\R$.\kn{``Subfield'' is a stronger claim than
+``subset.'' It says the copy of $\Q$ sitting inside $\R$ has the arithmetic and
+the order it had before --- so nothing you already know about rationals is
+invalidated by the enlargement.}
+
+The proof of Theorem 1.19 is rather long and a bit tedious and is therefore
+presented in an Appendix to Chap.\ 1. The proof actually constructs $\R$ from
+$\Q$.\kd{Worth pausing on. Everything in the next ten chapters is a consequence
+of this one theorem plus the field and order axioms. If you accept 1.19, you
+never need the appendix; if you doubt it, the appendix settles it by exhibiting
+$\R$ as the set of Dedekind cuts of $\Q$. Either way the rest of the book is
+unaffected, which is why Rudin can safely postpone it.}
+
+The next theorem could be extracted from this construction with very little
+extra effort. However, we prefer to derive it from Theorem 1.19 since this
+provides a good illustration of what one can do with the least-upper-bound
+property.
+
+\ritem{1.20}{Theorem}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=3pt, topsep=3pt]
+  \item \emph{If $x \in \R$, $y \in \R$, and $x > 0$, then there is a positive
+        integer $n$ such that}
+        \[ nx > y. \]
+  \item \emph{If $x \in \R$, $y \in \R$, and $x < y$, then there exists a
+        $p \in \Q$ such that $x < p < y$.}
+\end{enumerate}
+Part (a) is usually referred to as the \emph{archimedean property} of $\R$. Part
+(b) may be stated by saying that $\Q$ is \emph{dense} in $\R$: Between any two
+real numbers there is a rational one.\kw{Part (a) is a theorem, not an axiom,
+and it is not automatic. There are ordered fields in which it fails --- fields
+containing an element larger than every integer. Such fields cannot have the
+least-upper-bound property, and (a) is precisely the proof of that.}
+
+\begin{proof}
+(a) Let $A$ be the set of all $nx$, where $n$ runs through the positive
+integers. If (a) were false, then $y$ would be an upper bound of $A$. But then
+$A$ has a least upper bound in $\R$. Put $\alpha = \sup A$. Since $x > 0$,
+$\alpha - x < \alpha$, and $\alpha - x$ is not an upper bound of $A$.\kn{Here is
+clause (ii) of Definition 1.8 in its working form, and this is the move to
+remember: to extract information from a supremum, step back from it by a
+positive amount and use the fact that you are no longer an upper bound.} Hence
+$\alpha - x < mx$ for some positive integer $m$. But then
+$\alpha < (m+1)x \in A$, which is impossible, since $\alpha$ is an upper bound
+of $A$.
+
+(b) Since $x < y$, we have $y - x > 0$, and (a) furnishes a positive integer $n$
+such that
+\[ n(y-x) > 1. \]
+Apply (a) again, to obtain positive integers $m_1$ and $m_2$ such that
+$m_1 > nx$, $m_2 > -nx$. Then
+\[ -m_2 < nx < m_1. \]
+Hence there is an integer $m$ (with $-m_2 \le m \le m_1$) such that
+\[ m - 1 \le nx < m. \]
+If we combine these inequalities, we obtain
+\[ nx < m \le 1 + nx < ny. \]
+Since $n > 0$, it follows that
+\[ x < \frac{m}{n} < y. \]
+This proves (b), with $p = m/n$.
+\end{proof}
+
+\begin{unpack}[The three moves in part (b)]
+Rudin gives the computation and not the plan. The plan is this: to fit a
+rational strictly between $x$ and $y$, first \emph{stretch} the gap until it is
+wider than $1$, then \emph{catch} an integer inside the stretched gap, then
+\emph{shrink} back.
+
+\smallskip
+\textbf{Stretch.} Part (a) with the roles $x \leadsto y-x$ and $y \leadsto 1$
+gives an $n$ with $n(y-x) > 1$. The interval $(nx, ny)$ now has length greater
+than $1$.
+
+\smallskip
+\textbf{Catch.} An interval of length greater than $1$ must contain an integer.
+Rudin proves this rather than asserting it, and that is what $m_1, m_2$ are for:
+they trap $nx$ between two integers, so the set of integers exceeding $nx$ is
+nonempty and bounded below, and therefore has a least element $m$. That gives
+$m-1 \le nx < m$. The existence of a \emph{least} such integer is well-ordering
+again --- the same principle used silently in 1.1. Rudin never states it as an
+axiom, but this step and the archimedean property both consume it.
+
+\smallskip
+\textbf{Shrink.} From $m \le 1 + nx$ and $1 < n(y-x)$ we get
+$m < nx + n(y-x) = ny$, and dividing by $n > 0$ puts $m/n$ strictly between $x$
+and $y$.
+\end{unpack}
+
+\medskip
+\noindent
+We shall now prove the existence of $n$th roots of positive reals. This proof
+will show how the difficulty pointed out in the Introduction (irrationality of
+$\sqrt 2$) can be handled in $\R$.
+
+\ritem{1.21}{Theorem}
+\emph{For every real $x>0$ and every integer $n>0$ there is one and only one
+positive real $y$ such that $y^n = x$.}
+
+This number $y$ is written $\sqrt[n]{x}$ or $x^{1/n}$.
+
+\begin{proof}
+That there is at most one such $y$ is clear, since $0 < y_1 < y_2$ implies
+$y_1^n < y_2^n$.
+
+Let $E$ be the set consisting of all positive real numbers $t$ such that
+$t^n < x$. If $t = x/(1+x)$ then $0 \le t < 1$. Hence $t^n \le t < x$. Thus
+$t \in E$, and $E$ is not empty.\kn{Two hypotheses of the \lub{} property are
+being discharged, and Rudin spends a sentence on each. This paragraph is
+nonemptiness; the next is boundedness. Both are required before $\sup E$ may be
+written down --- compare the warning at 1.10.}
+
+If $t > 1+x$ then $t^n \ge t > x$, so that $t \notin E$. Thus $1+x$ is an upper
+bound of $E$.
+
+Hence Theorem 1.19 implies the existence of
+\[ y = \sup E. \]
+
+To prove that $y^n = x$ we will show that each of the inequalities $y^n < x$ and
+$y^n > x$ leads to a contradiction.\kd{Note which half of Definition 1.8 each
+case attacks. Assuming $y^n < x$ will contradict ``$y$ is an \emph{upper
+bound}''; assuming $y^n > x$ will contradict ``$y$ is the \emph{least} upper
+bound.'' Both clauses get used exactly once, which is a reliable sign that $E$
+was chosen well.}
+
+The identity $b^n - a^n = (b-a)(b^{n-1} + b^{n-2}a + \cdots + a^{n-1})$ yields
+the inequality
+\[ b^n - a^n < (b-a)nb^{n-1} \]
+when $0 < a < b$.
+
+Assume $y^n < x$. Choose $h$ so that $0 < h < 1$ and
+\[ h < \frac{x-y^n}{n(y+1)^{n-1}}. \]
+Put $a = y$, $b = y+h$. Then
+\[ (y+h)^n - y^n < hn(y+h)^{n-1} < hn(y+1)^{n-1} < x - y^n. \]
+Thus $(y+h)^n < x$ and $y+h \in E$. Since $y+h > y$, this contradicts the fact
+that $y$ is an upper bound of $E$.
+
+Assume $y^n > x$. Put
+\[ k = \frac{y^n - x}{ny^{n-1}}. \]
+Then $0 < k < y$. If $t \ge y-k$, we conclude that
+\[ y^n - t^n \le y^n - (y-k)^n < kny^{n-1} = y^n - x. \]
+Thus $t^n > x$ and $t \notin E$. It follows that $y - k$ is an upper bound of
+$E$. But $y - k < y$, which contradicts the fact that $y$ is the least upper
+bound of $E$.
+
+Hence $y^n = x$, and the proof is complete.
+\end{proof}
+
+\begin{unpack}[Reverse-engineering the choice of $h$]
+Nobody guesses that $h$. It is found by writing the goal down and solving
+backwards, and Rudin has simply deleted the derivation.
+
+\smallskip
+\textbf{Goal.} Find $h>0$ with $(y+h)^n < x$; equivalently
+$(y+h)^n - y^n < x - y^n$, whose right-hand side is a fixed positive number
+because we assumed $y^n < x$.
+
+\smallskip
+\textbf{Bound the left side.} We cannot compute $(y+h)^n - y^n$, but the
+displayed inequality with $a = y$, $b = y+h$ bounds it by $hn(y+h)^{n-1}$. So it
+suffices to make $hn(y+h)^{n-1} \le x - y^n$.
+
+\smallskip
+\textbf{Get $h$ out of the exponent.} That inequality still has $h$ buried
+inside $(y+h)^{n-1}$ and cannot be solved as it stands. Kill it by agreeing in
+advance that $h < 1$; then $(y+h)^{n-1} < (y+1)^{n-1}$, a constant. This is the
+\emph{only} reason the condition $0 < h < 1$ appears --- it is bookkeeping, not
+mathematics.
+
+\smallskip
+\textbf{Solve.} It now suffices that $hn(y+1)^{n-1} < x - y^n$, that is,
+$h < (x-y^n)/\bigl(n(y+1)^{n-1}\bigr)$, which is Rudin's line. Both conditions
+on $h$ are upper bounds, so any $h$ below the smaller of the two works, and such
+an $h$ exists.
+
+\smallskip
+The second case is the same argument run downward, and $k$ is found the same
+way; there the constraint $k < y$ plays the role that $h < 1$ played here.
+\end{unpack}
+
+\begin{deeper}[What the proof is really doing]
+Strip the algebra and the argument reads: \emph{$t \mapsto t^n$ is continuous,
+so if $y^n$ were strictly below $x$ we could nudge $y$ upward and stay below
+$x$.} The choice of $h$ is a hand-rolled continuity estimate, written out
+because continuity is not available until 4.4 --- and the machinery of Chapter 4
+is not available until $\R$ exists, which is what we are in the middle of
+establishing.
+
+Once Chapter 4 is in place the same theorem falls out of the intermediate value
+theorem (4.23) in three lines. Rudin proves it here anyway because he needs
+$n$th roots long before then, and because it is the first genuine demonstration
+that the \lub{} property produces numbers $\Q$ could not.
+\end{deeper}
+
+\begin{pitfall}[Why $E$ is restricted to positive $t$]
+Without positivity the uniqueness claim is simply false: for $n = 2$, $x = 4$,
+both $2$ and $-2$ are roots. Rudin's ``one and only one \emph{positive} real''
+is doing real work, and the restriction on $E$ is what licenses the opening line
+of the proof, $0 < y_1 < y_2 \Rightarrow y_1^n < y_2^n$, which requires both
+numbers to be positive.
+\end{pitfall}
+
+\begin{recap}[Chapter 1 so far, in one paragraph]
+$\Q$ is unfit for analysis because a bounded set can fail to have a least upper
+bound (1.1). Name that failure (1.8--1.10), assert a field free of it (1.19),
+and the consequences follow at once: infima exist too (1.11), $\N$ is unbounded
+and $\Q$ is dense (1.20), and every positive real has every root (1.21). Nothing
+in the rest of the book uses more about $\R$ than this. When a later proof says
+``by completeness,'' it means 1.19 and nothing else.
+\end{recap}
+
+\end{document}

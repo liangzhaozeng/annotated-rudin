@@ -1,0 +1,402 @@
+% ============================================================
+%  annotated.sty -- house style for the Annotated Rudin
+%  PRINT EDITION: designed natively for black-and-white output.
+%  Box types are distinguished by rule style, tint, and label
+%  typography -- never by hue.
+% ============================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{annotated}[2026/08/09 Annotated Rudin house style, b/w print]
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage{amsmath,amssymb,amsthm,mathtools}
+\RequirePackage{xcolor}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{enumitem}
+\RequirePackage{booktabs}
+\RequirePackage{multicol}
+\RequirePackage{mathrsfs}   % \mathscr, for Rudin's script C(K) and L^2
+\RequirePackage{marginnote}
+% marginfix keeps a real margin column: consecutive notes are pushed
+% down instead of printing on top of one another, and overflow moves
+% to the next page rather than off the bottom.
+\RequirePackage{marginfix}
+\RequirePackage{tikz}
+\RequirePackage{microtype}
+\RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+
+% ------------------------------------------------------------
+%  CJK support, for the titles of the Chinese sources cited in
+%  the notes.  Wrapped in a guard so the build still succeeds
+%  (with the titles romanised) on a machine without the font.
+% ------------------------------------------------------------
+\RequirePackage{fontspec}
+\newif\ifru@cjk
+\IfFontExistsTF{Songti SC}{%
+  \newfontfamily\ru@cjkfont{Songti SC}\ru@cjktrue}{%
+  \IfFontExistsTF{PingFang SC}{%
+    \newfontfamily\ru@cjkfont{PingFang SC}\ru@cjktrue}{\ru@cjkfalse}}
+% \cjk{<hanzi>}{<romanised fallback>}
+\newcommand{\cjk}[2]{\ifru@cjk{\ru@cjkfont #1}\else #2\fi}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc,patterns}
+
+% ------------------------------------------------------------
+%  Greyscale palette.  Every value is a pure grey, so what you
+%  see on screen is exactly what the printer lays down.
+% ------------------------------------------------------------
+\definecolor{RuInk}   {gray}{0.00}   % body text
+\definecolor{RuGrey}  {gray}{0.42}   % margin notes, running heads
+\definecolor{RuRule}  {gray}{0.55}   % light rules
+\definecolor{RuTintA} {gray}{0.885}  % Rudin's own words
+\definecolor{RuTintB} {gray}{0.955}  % going deeper
+\definecolor{RuTintC} {gray}{0.93}   % roadmap
+
+\color{RuInk}
+
+% Narrow measure inside annotation boxes plus long hyphenated compounds
+% ("least-upper-bound") occasionally defeat the line breaker.  Let TeX
+% relax interword spacing on a final pass rather than overflow the box.
+\emergencystretch=1.6em
+\hyphenation{great-est-low-er-bound least-up-per-bound}
+
+% ------------------------------------------------------------
+%  Margin notes
+% ------------------------------------------------------------
+\renewcommand*{\marginfont}{\footnotesize\itshape\color{RuGrey}}
+\newcommand{\mnote}[1]{\marginnote{\raggedright #1}}
+
+% Label chip used at the top right of every annotation box
+\newcommand{\ru@chip}[1]{\sffamily\bfseries\scriptsize\color{RuInk}%
+  \MakeUppercase{#1}}
+
+% ------------------------------------------------------------
+%  RUDIN'S OWN WORDS
+%  Solid grey panel, reverse-video title chip.  The only boxes
+%  with a filled background dark enough to read as "panel".
+% ------------------------------------------------------------
+\newtcolorbox{rudinbox}[2][]{%
+  enhanced, breakable,
+  colback=RuTintA, colframe=RuInk,
+  boxrule=0pt, leftrule=2.2pt,
+  arc=0pt, outer arc=0pt,
+  left=10pt, right=10pt, top=9pt, bottom=8pt, boxsep=0pt,
+  before skip=12pt, after skip=10pt,
+  fonttitle=\bfseries\sffamily\footnotesize,
+  coltitle=white, colbacktitle=RuInk,
+  attach boxed title to top left={xshift=2.2pt, yshift=-6pt},
+  boxed title style={boxrule=0pt, arc=0pt, left=5pt, right=5pt,
+                     top=2pt, bottom=2pt},
+  title={#2}, #1}
+
+\newcommand{\rthm}[3]{%
+  \begin{rudinbox}{\textsc{#1} #2}%
+    \itshape #3
+  \end{rudinbox}}
+
+\renewenvironment{proof}[1][\proofname]{%
+  \par\vspace{2pt}\noindent\textbf{\small #1.}\hspace{0.4em}\ignorespaces}
+  {\hfill$\square$\par\vspace{4pt}}
+
+\newenvironment{rproof}{\begin{proof}[Rudin's proof]}{\end{proof}}
+
+% ------------------------------------------------------------
+%  UNPACKING -- tier 1.
+%  White ground, single heavy SOLID rule at the left.
+% ------------------------------------------------------------
+\newtcolorbox{unpack}[1][Unpacking this]{%
+  enhanced, breakable,
+  colback=white, colframe=RuInk,
+  boxrule=0pt, arc=0pt, outer arc=0pt,
+  borderline west={2.2pt}{0pt}{RuInk},
+  left=11pt, right=10pt, top=7pt, bottom=7pt, boxsep=0pt,
+  before skip=13pt, after skip=10pt,
+  overlay unbroken and first={%
+    \node[anchor=south east, inner sep=0pt]
+      at ([xshift=-1pt,yshift=1.5pt]frame.north east) {\ru@chip{#1}};}}
+
+% ------------------------------------------------------------
+%  GOING DEEPER -- tier 2.
+%  Faint tint, DASHED left rule, italic label.
+% ------------------------------------------------------------
+\newtcolorbox{deeper}[1][Going deeper]{%
+  enhanced, breakable,
+  colback=RuTintB, colframe=RuInk,
+  boxrule=0pt, arc=0pt, outer arc=0pt,
+  borderline west={2.2pt}{0pt}{RuInk, dash pattern=on 3.5pt off 2.5pt},
+  left=11pt, right=10pt, top=7pt, bottom=7pt, boxsep=0pt,
+  before skip=13pt, after skip=10pt,
+  overlay unbroken and first={%
+    \node[anchor=south east, inner sep=0pt]
+      at ([xshift=-1pt,yshift=1.5pt]frame.north east)
+      {\sffamily\bfseries\itshape\scriptsize\color{RuInk}#1};}}
+
+% ------------------------------------------------------------
+%  PITFALL.
+%  No side rule: a full-width BAND closed top and bottom, with
+%  a reverse-video label.  Unmistakable at a glance in mono.
+% ------------------------------------------------------------
+\newtcolorbox{pitfall}[1][Pitfall]{%
+  enhanced, breakable,
+  colback=white, colframe=RuInk,
+  boxrule=0pt, arc=0pt, outer arc=0pt,
+  borderline north={1.1pt}{0pt}{RuInk},
+  borderline south={1.1pt}{0pt}{RuInk},
+  left=2pt, right=2pt, top=9pt, bottom=7pt, boxsep=0pt,
+  before skip=14pt, after skip=11pt,
+  overlay unbroken and first={%
+    \node[anchor=south east, inner sep=1.5pt, fill=RuInk, text=white,
+          font=\sffamily\bfseries\scriptsize]
+      at ([xshift=0pt,yshift=3pt]frame.north east) {\MakeUppercase{#1}};}}
+
+% ------------------------------------------------------------
+%  ROADMAP / "What this chapter is for".
+%  Full frame, solid black title bar.  The structural anchor.
+% ------------------------------------------------------------
+\newtcolorbox{roadmap}[1][]{%
+  enhanced, breakable,
+  colback=white, colframe=RuInk,
+  boxrule=0.9pt, arc=0pt, outer arc=0pt,
+  left=13pt, right=13pt, top=11pt, bottom=11pt, boxsep=0pt,
+  before skip=14pt, after skip=13pt,
+  fonttitle=\bfseries\sffamily\small,
+  coltitle=white, colbacktitle=RuInk,
+  toptitle=3pt, bottomtitle=3pt,
+  title={\MakeUppercase{#1}}}
+
+% A lighter structural box for end-of-chapter recaps
+\newtcolorbox{recap}[1][]{%
+  enhanced, breakable,
+  colback=RuTintC, colframe=RuInk,
+  boxrule=0.9pt, arc=0pt, outer arc=0pt,
+  left=13pt, right=13pt, top=11pt, bottom=11pt, boxsep=0pt,
+  before skip=14pt, after skip=13pt,
+  fonttitle=\bfseries\sffamily\small,
+  coltitle=white, colbacktitle=RuInk,
+  toptitle=3pt, bottomtitle=3pt,
+  title={\MakeUppercase{#1}}}
+
+% ------------------------------------------------------------
+%  SIGNPOST -- section-level editorial commentary.
+%  Why this section sits here, what Rudin is doing structurally,
+%  what to hold on to.  Thin full frame, inline small-caps title;
+%  lighter than a roadmap, unmistakably not one of Rudin's own.
+% ------------------------------------------------------------
+\newtcolorbox{signpost}[1][]{%
+  enhanced, breakable,
+  colback=white, colframe=RuInk,
+  boxrule=0.4pt, arc=0pt, outer arc=0pt,
+  left=11pt, right=11pt, top=8pt, bottom=8pt, boxsep=0pt,
+  before skip=13pt, after skip=11pt,
+  before upper={\noindent{\sffamily\bfseries\footnotesize\MakeUppercase{#1}}%
+                \;\textbar\;\ignorespaces}}
+
+% ------------------------------------------------------------
+%  Proof walk-through: numbered commentary keyed to Rudin's lines
+% ------------------------------------------------------------
+\newenvironment{proofwalk}[1][Reading the proof]{%
+  \begin{unpack}[#1]\begin{enumerate}[leftmargin=1.5em, itemsep=5pt, topsep=1pt,
+    label=\textbf{\arabic*.}]}
+  {\end{enumerate}\end{unpack}}
+
+% ------------------------------------------------------------
+%  Keyed margin notes.
+%
+%  A bare superscript number goes into Rudin's text -- identical
+%  for all three tiers, so his page stays clean.  The TIER is
+%  carried by how the number is set in the margin:
+%
+%    plain      unpacking      (what this is saying)
+%    outlined   going deeper   (skippable on a first pass)
+%    reversed   warning        (a belief that will bite you)
+% ------------------------------------------------------------
+\newcounter{knote}
+
+\newcommand{\ru@numplain}[1]{{\sffamily\bfseries\color{RuInk}#1}}
+\newcommand{\ru@numbox}[1]{%
+  {\setlength{\fboxsep}{1.1pt}\setlength{\fboxrule}{0.4pt}%
+   \fbox{\sffamily\bfseries\color{RuInk}#1}}}
+\newcommand{\ru@numrev}[1]{%
+  {\setlength{\fboxsep}{1.4pt}%
+   \colorbox{RuInk}{\textcolor{white}{\sffamily\bfseries #1}}}}
+
+\newcommand{\ru@mark}{\textsuperscript{\normalfont\sffamily\bfseries\theknote}}
+
+% Public aliases, for typesetting specimen markers in a legend
+\newcommand{\tierplain}[1]{\ru@numplain{#1}}
+\newcommand{\tierdeep} [1]{\ru@numbox{#1}}
+\newcommand{\tierwarn} [1]{\ru@numrev{#1}}
+
+% Common note body.  \marginpar (rather than \marginnote) is what lets
+% marginfix stack notes without collision.
+%
+% CONSTRAINT: \kn, \kd, \kw may only be used in Rudin's running text.
+% \marginpar cannot escape a box, so a note inside unpack/deeper/
+% pitfall/roadmap/signpost fails with "Float(s) lost."  That is the
+% right constraint anyway -- annotations should not nest.  Inline the
+% remark into the surrounding box instead.
+\newcommand{\ru@note}[3]{%
+  \marginpar{\raggedright\footnotesize\normalfont
+    #1{\theknote}\;\itshape\color{#2}#3}}
+
+% tier 1 -- unpacking
+\newcommand{\kn}[1]{%
+  \stepcounter{knote}\ru@mark\ru@note{\ru@numplain}{RuGrey}{#1}}
+
+% tier 2 -- going deeper
+\newcommand{\kd}[1]{%
+  \stepcounter{knote}\ru@mark\ru@note{\ru@numbox}{RuGrey}{#1}}
+
+% tier 3 -- warning
+\newcommand{\kw}[1]{%
+  \stepcounter{knote}\ru@mark\ru@note{\ru@numrev}{RuInk}{#1}}
+
+% Minimum vertical gap between stacked notes
+\setlength{\marginparpush}{7pt}
+
+% ------------------------------------------------------------
+%  Rudin's own structure, reproduced as he sets it
+% ------------------------------------------------------------
+% His running section heads (INTRODUCTION, ORDERED SETS, ...)
+\newcommand{\rsection}[1]{%
+  \par\addvspace{17pt}
+  {\sffamily\bfseries\color{RuInk}\MakeUppercase{#1}}%
+  \par\vspace{1pt}\hrule height 0.4pt\par\addvspace{7pt}}
+
+% His numbered items, run-in bold as in the book: \ritem{1.8}{Definition}
+\newcommand{\ritem}[2]{%
+  \par\addvspace{7pt}\noindent\textbf{#1 #2.}\hspace{0.35em}\ignorespaces}
+
+% Marks a stretch of Rudin skipped in a sample or excerpt
+\newcommand{\rskip}[1]{%
+  \par\addvspace{11pt}
+  \noindent\hspace*{\fill}%
+  {\footnotesize\sffamily\color{RuGrey}[\,#1\,]}%
+  \hspace*{\fill}\par\addvspace{11pt}}
+
+% ------------------------------------------------------------
+%  Chapter opener
+% ------------------------------------------------------------
+\newcommand{\rchapter}[2]{%
+  \clearpage
+  \markboth{Chapter #1 \;\textbullet\; #2}{The Annotated Rudin}%
+  \thispagestyle{plain}%
+  \vspace*{4pt}
+  \begin{center}
+    {\sffamily\large\bfseries\color{RuInk} Chapter #1}\\[8pt]
+    {\sffamily\Large\bfseries\color{RuInk}
+     \setlength{\baselineskip}{1.15\baselineskip}%
+     \MakeUppercase{#2}\par}
+  \end{center}
+  \vspace{2pt}
+  {\color{RuInk}\hrule height 1pt}
+  \vspace{10pt}
+  \addcontentsline{toc}{section}{\textbf{#1}\quad #2}}
+
+% ------------------------------------------------------------
+%  Headings
+% ------------------------------------------------------------
+\titleformat{\section}{\Large\bfseries\sffamily\color{RuInk}}{}{0pt}{}
+\titleformat{\subsection}{\large\bfseries\sffamily\color{RuInk}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{22pt}{9pt}
+\titlespacing*{\subsection}{0pt}{16pt}{6pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[LE,RO]{\footnotesize\sffamily\color{RuGrey}\thepage}
+\fancyhead[RE]{\footnotesize\sffamily\color{RuGrey}\leftmark}
+\fancyhead[LO]{\footnotesize\sffamily\color{RuGrey}\rightmark}
+
+% ------------------------------------------------------------
+%  Shorthands
+% ------------------------------------------------------------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\DeclareMathOperator{\sgn}{sgn}
+% Force upright: T1/lmr small-caps has no italic shape, and \lub is
+% often used inside emphasised text.
+\newcommand{\lub}{{\normalfont\textsc{lub}}}
+\newcommand{\rref}[1]{{\normalfont\textsc{#1}}}
+
+% ------------------------------------------------------------
+%  Line-art vocabulary for number-line and plane figures.
+%  Everything is pure black stroke on white so it survives a
+%  mono printer and a photocopier.
+% ------------------------------------------------------------
+\tikzset{
+  axis/.style     ={draw=RuInk, line width=0.5pt, -{Stealth[length=4pt]}},
+  seg/.style      ={draw=RuInk, line width=1.6pt},          % a set, drawn solid
+  segopen/.style  ={draw=RuInk, line width=1.6pt},          % ditto, open end
+  thin/.style     ={draw=RuInk, line width=0.4pt},
+  guide/.style    ={draw=RuInk, line width=0.3pt, dash pattern=on 1.2pt off 1.2pt},
+  ptfill/.style   ={circle, fill=RuInk, inner sep=0pt, minimum size=3.6pt},
+  ptopen/.style   ={circle, draw=RuInk, line width=0.5pt, fill=white,
+                    inner sep=0pt, minimum size=3.8pt},
+  ptgap/.style    ={circle, draw=RuInk, line width=0.5pt, dash pattern=on 1pt off 1pt,
+                    fill=white, inner sep=0pt, minimum size=4.6pt},
+  lbl/.style      ={font=\scriptsize\sffamily, inner sep=1.5pt},
+  mlbl/.style     ={font=\scriptsize, inner sep=1.5pt},
+  vec/.style      ={draw=RuInk, line width=0.7pt, -{Stealth[length=4.5pt]}},
+}
+
+% A figure box: centred, with a small caption underneath.
+\newcommand{\figcap}[1]{\par\vspace{2pt}{\centering\footnotesize\itshape
+  \color{RuGrey}#1\par}}
+
+% TikZ defaults for the roadmap diagrams -- pure line art
+\tikzset{
+  rmbox/.style={draw=RuInk, line width=0.5pt, fill=white, minimum height=13mm,
+                inner sep=4pt, align=center, font=\footnotesize\sffamily},
+  rmarrow/.style={-{Stealth[length=4.5pt]}, draw=RuInk, line width=0.5pt}}
+
+% ------------------------------------------------------------
+%  APPENDIX OPENER.  Opens an appendix of imported material for
+%  chapter #1.  Deliberately unlike \rchapter: double rule and a
+%  reverse-video tag, so no reader mistakes it for Rudin's book.
+% ------------------------------------------------------------
+\newcommand{\rappendix}[1]{%
+  \clearpage
+  \markboth{Appendix to Chapter #1}{The Annotated Rudin}%
+  \thispagestyle{plain}%
+  \vspace*{4pt}
+  \begin{center}
+    {\sffamily\Large\bfseries\color{RuInk}
+     Appendix to Chapter #1\par}
+  \end{center}
+  \vspace{5pt}
+  {\color{RuInk}\hrule height 1pt}
+  \vspace{1.6pt}
+  {\color{RuInk}\hrule height 0.4pt}
+  \vspace{10pt}
+  \addcontentsline{toc}{section}{\textbf{Appendix #1}}}
+
+% ------------------------------------------------------------
+%  SUPPLEMENTS -- material that is NOT in Rudin, imported from
+%  the comparison texts.  Everything here must be unmistakable
+%  at a glance, so the section head carries a reverse-video tag
+%  and a heavier rule than \rsection, and every item number is
+%  prefixed S.  Never use these for Rudin's own material.
+% ------------------------------------------------------------
+\newcommand{\ssection}[1]{%
+  \par\addvspace{18pt}%
+  \noindent\hspace*{\fill}\raisebox{0.4pt}{\colorbox{RuInk}{%
+    \sffamily\bfseries\scriptsize\color{white}\,NOT IN RUDIN\,}}%
+  \par\vspace{2.5pt}%
+  \noindent{\sffamily\bfseries\color{RuInk}\raggedright
+    \MakeUppercase{#1}\par}%
+  \vspace{2.5pt}\hrule height 0.9pt\par\addvspace{7pt}}
+
+% Supplement items: \sitem{S4.1}{Theorem}
+\newcommand{\sitem}[2]{%
+  \par\addvspace{7pt}\noindent\textbf{#1 #2.}\hspace{0.35em}\ignorespaces}
+
+% Where an imported statement comes from
+\newcommand{\provenance}[1]{%
+  \par\vspace{2pt}\noindent
+  {\footnotesize\color{RuGrey}\textsc{source:}~\itshape #1\par}%
+  \addvspace{3pt}}
+
+\endinput

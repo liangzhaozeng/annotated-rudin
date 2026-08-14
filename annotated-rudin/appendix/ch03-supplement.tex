@@ -1,0 +1,831 @@
+% ============================================================
+%  APPENDIX TO CHAPTER 3.  Material NOT in Rudin, imported from
+%  Tao I/II, ECNU, USTC, Yu Pin.  Numbered S3.n throughout.
+% ============================================================
+\rappendix{3}
+
+\begin{roadmap}[How to use this appendix]
+Nothing in this appendix is Rudin's text. It is imported from the four
+comparison texts and set apart at every level: the running head names the
+appendix, section heads carry a reverse-video tag, item numbers are prefixed
+\textbf{S}, and every statement names its source.
+
+\medskip
+\raggedright
+\textbf{Why import anything at all.} Rudin's Chapter 3 is the most complete
+chapter in the book, and most of what the other texts add is not missing
+theory but missing \emph{leverage}. He defines $\limsup$ as the supremum of
+the set of subsequential limits and never gives the formula one actually
+computes with. He proves the root and ratio tests and then remarks that both
+fail when the limit is $1$ --- without saying what to do next. He proves
+summation by parts but extracts no reusable bound from it. Each of those is
+one theorem away from being a tool.
+
+\medskip
+\textbf{What is here.}
+
+\smallskip
+\textbf{A. Upper and lower limits, finished.} The $\inf$-of-$\sup$s formula,
+the $\varepsilon$-characterisation, and the algebra --- subadditivity,
+products, reciprocals --- that Rudin's 3.19 only begins.
+
+\medskip
+\textbf{B. Past the root and ratio tests.} Raabe's test, which compares
+against the $p$-series instead of the geometric series; the classical series
+that forces it; and the reason the hierarchy of tests can never terminate.
+
+\medskip
+\textbf{C. Summation by parts, quantitatively.} Abel's lemma with an explicit
+constant, Abel's test with bounded rather than null weights, and the
+Dirichlet-kernel estimate that carries Chapter 3 into Fourier series.
+
+\medskip
+\textbf{D. Grouping and multiplying.} What inserting parentheses is allowed
+to do, and the form of the product theorem that holds for \emph{every}
+arrangement of the double array rather than the diagonal one.
+
+\medskip
+\textbf{E. Summation without an order.} Rudin's 3.55 says an absolutely
+convergent series may be reordered freely. Tao takes that as licence to drop
+the order entirely and sum over an index set --- after which double series
+and iterated sums are theorems rather than notation.
+
+\medskip
+\textbf{How to read it.} Section A pays for itself immediately --- read it
+with 3.16--3.19. Sections B--D are best read after 3.44 and 3.50
+respectively, and E after 3.55. The exercises are the last section.
+\end{roadmap}
+
+% ============================================================
+\ssection{Supplement A --- Upper and lower limits, finished}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 3]
+\raggedright
+\textbf{What Rudin does.} Definition 3.16 puts $E$ for the set of
+subsequential limits (in the extended reals) and defines
+$\limsup x_n = \sup E$. Theorem 3.17 then proves that $\limsup$ belongs to
+$E$ and that no larger number does, and 3.19 gives the one comparison
+$a_n \le b_n \Rightarrow \limsup a_n \le \limsup b_n$.
+
+\smallskip
+\textbf{The gap.} That definition is superb for proving things and useless
+for computing. To find $\limsup$ from it you would first have to find every
+subsequential limit --- which is harder than the original problem. The
+formula everyone actually uses, $\limsup x_n = \lim_n \sup_{k \ge n} x_k$,
+is never stated. Nor is the algebra: no subadditivity, no product rule, no
+reciprocal rule.
+
+\smallskip
+\textbf{Where the gap bites.} At 3.33 and 3.34, the root and ratio tests,
+which are stated in terms of $\limsup$ and therefore cannot be applied until
+one can evaluate a $\limsup$; at 3.39, the radius of convergence, where
+$1/\limsup\sqrt[n]{|c_n|}$ has to be computed for actual power series; and at
+3.37, whose proof compares two upper limits and needs exactly the algebra
+that 3.19 does not supply.
+
+\smallskip
+\textbf{What this section supplies.} The monotone formula, with the proof
+that it agrees with Rudin's definition; the two-clause
+$\varepsilon$-characterisation that every later $\limsup$ argument runs on;
+and the algebra, including the counterexample showing why the inequalities
+are one-directional.
+\end{roadmap}
+
+\sitem{S3.1}{Theorem}
+\emph{(The formula.) For any real sequence $(x_n)$,}
+\[ \limsup_{n\to\infty} x_n = \lim_{n\to\infty}\ \sup_{k \ge n} x_k,
+   \qquad
+   \liminf_{n\to\infty} x_n = \lim_{n\to\infty}\ \inf_{k \ge n} x_k, \]
+\emph{the two limits existing in the extended reals because the sequences
+$M_n = \sup_{k\ge n} x_k$ and $m_n = \inf_{k\ge n} x_k$ are monotone.}
+\provenance{ECNU \cjk{定理}{Thm} 7.9 (bk.\ p.\,158), which notes that many
+texts take this as the \emph{definition}; Rudin never states it.}
+\begin{proof}
+Since $\{x_k : k \ge n+1\} \subset \{x_k : k \ge n\}$, the suprema satisfy
+$M_{n+1} \le M_n$: the sequence $(M_n)$ decreases, so it has a limit $M$ in
+the extended reals. Write $E$ for Rudin's set of subsequential limits; we
+show $M = \sup E$.
+
+If $L \in E$, say $x_{n_j} \to L$, then $x_{n_j} \le M_n$ for every $j$ with
+$n_j \ge n$, so $L \le M_n$ for every $n$ and hence $L \le M$. Thus
+$\sup E \le M$.
+
+Conversely $M \in E$. Choose indices $n_1 < n_2 < \cdots$ so that
+$x_{n_k} > M_{n_k} - 1/k$, which is possible because $M_{n_k}$ is the
+supremum of the tail beginning at $n_k$. Since also $x_{n_k} \le M_{n_k}$
+and $M_{n_k} \to M$, we get $x_{n_k} \to M$. Hence $M \le \sup E$.
+\end{proof}
+
+\begin{proofwalk}[How the proof flows]
+  \item \textbf{Choose the method.} Two descriptions of one number are
+        given, so the proof is two inequalities. Neither side can be
+        computed, so each must be pinned by an approximation argument.
+  \item \textbf{Get monotonicity free.} Discarding terms can only lower a
+        supremum. That single observation is what makes $\lim M_n$ exist at
+        all --- by monotone convergence (3.14), with no boundedness needed
+        once $\pm\infty$ are allowed.
+  \item \textbf{One inequality by domination.} Every subsequential limit is
+        trapped below every tail supremum, so $\sup E \le M$. Nothing is
+        constructed here.
+  \item \textbf{The other by construction.} To show $M \le \sup E$ it is not
+        enough that $M$ bounds things --- $M$ must \emph{be} a subsequential
+        limit, so a subsequence converging to it has to be built. The
+        recipe is the defining property of a supremum: at stage $k$ pick a
+        term within $1/k$ of $M_{n_k}$.
+  \item \textbf{Audit.} The least-upper-bound property is spent once, in
+        step 4, to produce each $x_{n_k}$; monotone convergence once, in
+        step 2. Note which clause of Definition 1.8 does which job: ``upper
+        bound'' gives step 3, ``least'' gives step 4 --- the same division of
+        labour as in Rudin's 1.21.
+\end{proofwalk}
+
+\begin{unpack}[Why this is the version you compute with]
+$M_n$ is a decreasing sequence --- taking the supremum over a smaller tail
+cannot increase it --- and it is bounded below whenever $(x_n)$ is. So the
+limit exists by monotone convergence, with no reference to subsequences at
+all. To evaluate $\limsup$ you now do two things you know how to do: take a
+supremum, then take a monotone limit.
+
+Rudin's $E$-based definition and this one agree, and the agreement is worth
+seeing as two inequalities. Every subsequential limit is $\le M_n$ for all
+$n$, hence $\le \lim M_n$; and $\lim M_n$ is itself a subsequential limit,
+because for each $n$ one can pick an index $k_n \ge n$ with
+$x_{k_n} > M_n - 1/n$. The second half is where the work is, and it is the
+same construction as ECNU's proof that the largest cluster point exists.
+\end{unpack}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,0) -- (100,0);
+  \draw[axis] (0,0) -- (0,42);
+  \draw[guide] (2,26) -- (95,26);
+  \draw[guide] (2,10) -- (95,10);
+  \foreach \n/\v in {1/34, 2/6, 3/30, 4/8, 5/28, 6/9, 7/27, 8/9.5,
+                     9/26.5, 10/9.8, 11/26.2, 12/9.9, 13/26.1, 14/9.95}{
+    \node[ptfill, minimum size=2.4pt] at ({6.4*\n},\v) {};}
+  % sup staircase, with risers
+  \draw[thin] (6.4,34) -- (19.2,34) -- (19.2,30) -- (32,30) -- (32,28)
+    -- (44.8,28) -- (44.8,27) -- (57.6,27) -- (57.6,26.5) -- (70.4,26.5)
+    -- (70.4,26.2) -- (89.6,26.2);
+  % inf staircase, with risers
+  \draw[thin] (12.8,6) -- (25.6,6) -- (25.6,8) -- (38.4,8) -- (38.4,9)
+    -- (51.2,9) -- (51.2,9.5) -- (64,9.5) -- (64,9.8) -- (76.8,9.8)
+    -- (76.8,9.9) -- (89.6,9.9);
+  \node[mlbl, anchor=west] at (96,26) {$\limsup$};
+  \node[mlbl, anchor=west] at (96,10) {$\liminf$};
+  \node[lbl, anchor=west] at (30,38) {$M_n=\sup_{k\ge n}x_k$ falls};
+  \node[lbl, anchor=west] at (30,2.6) {$m_n=\inf_{k\ge n}x_k$ rises};
+\end{tikzpicture}
+\end{center}
+\figcap{The two staircases. Discarding a term can only lower a supremum and
+raise an infimum, so $M_n$ decreases and $m_n$ increases; their limits are
+the upper and lower limits. The picture also shows why the sequence converges
+exactly when the staircases meet.}
+
+\sitem{S3.2}{Theorem}
+\emph{($\varepsilon$-characterisation.) $\bar A = \limsup x_n$ if and only if
+for every $\varepsilon>0$: (i) $x_n < \bar A + \varepsilon$ for all
+sufficiently large $n$, and (ii) $x_n > \bar A - \varepsilon$ for infinitely
+many $n$. Equivalently: every $\alpha > \bar A$ is exceeded only finitely
+often, and every $\beta < \bar A$ is exceeded infinitely often.}
+\provenance{ECNU \cjk{定理}{Thm} 7.7 and 7.7$'$ (bk.\ p.\,157). Rudin's
+3.17(b) is condition (i) alone.}
+\begin{proof}
+Let $\bar A = \limsup x_n$ and use S3.1. Given $\varepsilon>0$, the numbers
+$M_n$ decrease to $\bar A$, so $M_N < \bar A + \varepsilon$ for some $N$, and
+then $x_n \le M_N < \bar A+\varepsilon$ for all $n \ge N$: that is (i). And
+$M_n \ge \bar A$ for every $n$, so $\sup_{k \ge n} x_k > \bar A - \varepsilon$,
+which produces some $k \ge n$ with $x_k > \bar A-\varepsilon$; as $n$ is
+arbitrary there are infinitely many such $k$, which is (ii).
+
+Conversely, suppose $A$ satisfies (i) and (ii). By (i), $M_N \le
+A+\varepsilon$ for some $N$, so $\bar A \le A + \varepsilon$; by (ii),
+$M_n > A - \varepsilon$ for every $n$, so $\bar A \ge A - \varepsilon$. As
+$\varepsilon$ was arbitrary, $\bar A = A$ by the $\varepsilon$-principle
+(S1.9).
+\end{proof}
+
+\noindent
+Rudin's 3.17 says $\limsup$ belongs to $E$ and that nothing above it does.
+The $\varepsilon$-form is the same content converted into the two statements
+one actually verifies.\kn{Read the pair as ``eventually below, infinitely
+often nearly above.'' Almost every $\limsup$ argument in later chapters ---
+the root test at 3.33, the radius of convergence at 3.39 --- uses exactly
+these two clauses, one to get an upper bound that eventually holds and one to
+find infinitely many terms witnessing sharpness.}
+
+\sitem{S3.3}{Theorem}
+\emph{(Algebra of upper and lower limits.) For bounded real sequences,}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item $\liminf x_n = -\limsup(-x_n)$;
+  \item $\limsup(x_n+y_n) \le \limsup x_n + \limsup y_n$, \emph{with
+        equality whenever $\lim x_n$ exists;}
+  \item $\liminf x_n + \liminf y_n \le \liminf(x_n+y_n)$;
+  \item \emph{if $x_n, y_n > 0$, then}
+        $(\liminf x_n)(\liminf y_n) \le \liminf(x_ny_n)$;
+  \item \emph{if $\liminf x_n > 0$, then}
+        $\limsup(1/x_n) = 1/\liminf x_n$.
+\end{enumerate}
+\provenance{ECNU \cjk{定理}{Thm} 7.8, \cjk{例}{Ex} 2, and
+\cjk{习题}{Ex} 7.2 \#2 (bk.\ pp.\,158--159).}
+\begin{proof}
+All five follow from S3.1 together with elementary facts about suprema over a
+common tail.
+
+(a) $\inf_{k\ge n}(-x_k) = -\sup_{k \ge n} x_k$; let $n \to \infty$.
+
+(b) $\sup_{k\ge n}(x_k+y_k) \le \sup_{k\ge n}x_k + \sup_{k\ge n}y_k$, since
+each term on the left is dominated by the right side; let $n \to \infty$. If
+$x_n \to x$ then applying the inequality to $y_n = (x_n+y_n) + (-x_n)$ gives
+$\limsup y_n \le \limsup(x_n+y_n) + \limsup(-x_n) = \limsup(x_n+y_n) - x$,
+which is the reverse inequality.
+
+(c) Apply (b) to $-x_n$ and $-y_n$ and use (a).
+
+(d) For positive terms, $\inf_{k\ge n}(x_ky_k) \ge
+(\inf_{k\ge n}x_k)(\inf_{k\ge n}y_k)$; let $n\to\infty$.
+
+(e) If $\liminf x_n > 0$ then $x_k > 0$ for large $k$ and
+$\sup_{k\ge n}(1/x_k) = 1/\inf_{k\ge n}x_k$; let $n \to \infty$.
+\end{proof}
+
+\begin{pitfall}[The inequalities are one-directional, and that is the point]
+It is tempting to expect $\limsup(x_n+y_n) = \limsup x_n + \limsup y_n$. Take
+\[ x_n = (-1)^n, \qquad y_n = (-1)^{n+1} . \]
+Then $x_n + y_n = 0$ for every $n$, so the left side is $0$, while the right
+side is $1+1 = 2$. The two sequences achieve their upper limits on
+\emph{disjoint} sets of indices, and $\limsup$ cannot see that they never
+peak together.
+
+Equality is restored the moment one of the sequences converges, because a
+convergent sequence peaks everywhere at once. That is why Rudin can get away
+with 3.19 alone: he never adds two genuinely oscillating sequences. When you
+do --- in the root test applied to a product, say --- the inequality is all
+you have.
+\end{pitfall}
+
+% ============================================================
+\ssection{Supplement B --- Past the root and ratio tests}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 3]
+\raggedright
+\textbf{What Rudin does.} Theorems 3.33 and 3.34 give the root and ratio
+tests; the Remark after 3.35 observes that both are silent when the relevant
+limit equals $1$, illustrates with $\Sigma 1/n$ and $\Sigma 1/n^2$, and
+moves on.
+
+\smallskip
+\textbf{The gap.} The remark diagnoses a failure without saying what to do
+about it, and without explaining \emph{why} the failure is unavoidable. A
+reader is left with the impression that the borderline is a small blind spot
+rather than the entrance to an infinite hierarchy.
+
+\smallskip
+\textbf{Where the gap bites.} On every series that matters at the boundary.
+Rudin's own 3.28 --- $\Sigma 1/n^p$ --- sits exactly there, and he must
+reach it by a separate device, the condensation test 3.27. The
+hypergeometric series, the central example of nineteenth-century analysis,
+is invisible to both of his tests. And at 3.39 the radius of convergence of
+a power series is often decided precisely on the circle, where root and ratio
+give nothing.
+
+\smallskip
+\textbf{What this section supplies.} Raabe's test, which replaces the
+geometric yardstick by the $p$-series one and so resolves the whole borderline
+band; the classical series that forces it; and the reason no test can be
+last --- there is no slowest convergent series, so Rudin's remark is a
+structural fact rather than an omission.
+\end{roadmap}
+
+\sitem{S3.4}{Theorem}
+\emph{(Raabe's test.) Let $u_n > 0$. If there is $r > 1$ with}
+\[ n\Bigl(1 - \frac{u_{n+1}}{u_n}\Bigr) \ge r \qquad (n > N_0), \]
+\emph{then $\Sigma u_n$ converges. If $n\bigl(1 - u_{n+1}/u_n\bigr) \le 1$
+for all $n > N_0$, then $\Sigma u_n$ diverges. In particular, if the limit
+$r = \lim n\bigl(1-u_{n+1}/u_n\bigr)$ exists, then $r>1$ gives convergence
+and $r<1$ divergence.}
+\provenance{ECNU \cjk{拉贝判别法}{Raabe} \cjk{定理}{Thm} 12.10
+(\cjk{下}{vol.2} bk.\ pp.\,14--15).}
+\begin{proof}
+\emph{Convergence.} Suppose $n(1-u_{n+1}/u_n) \ge r > 1$ for $n>N_0$, so
+that $u_{n+1}/u_n \le 1 - r/n$. Fix $p$ with $1<p<r$. Bernoulli's inequality
+$(1+t)^p \ge 1+pt$, applied with $t=-1/n$, gives
+\[ \Bigl(\frac{n-1}{n}\Bigr)^{p} \;\ge\; 1 - \frac{p}{n} \;\ge\;
+   1 - \frac{r}{n} \;\ge\; \frac{u_{n+1}}{u_n} , \]
+that is $n^p u_{n+1} \le (n-1)^p u_n$. So the numbers $(n-1)^pu_n$ decrease
+for $n>N_0$ and are therefore bounded by some $C$, giving
+$u_n \le C/(n-1)^p$. Since $p>1$ the series $\Sigma (n-1)^{-p}$ converges
+(3.28), and the comparison test 3.25 finishes.
+
+\emph{Divergence.} If $n(1-u_{n+1}/u_n) \le 1$ then
+$u_{n+1}/u_n \ge 1-1/n = (n-1)/n$, so $nu_{n+1} \ge (n-1)u_n$ and the numbers
+$(n-1)u_n$ increase; hence $(n-1)u_n \ge c>0$ and $u_n \ge c/(n-1)$. Since
+$\Sigma 1/(n-1)$ diverges, so does $\Sigma u_n$.
+\end{proof}
+
+\begin{proofwalk}[How the proof flows]
+  \item \textbf{Choose the method.} The ratio test failed because it compares
+        with a geometric series. So compare with a $p$-series instead --- but
+        the hypothesis is about \emph{ratios}, so the comparison must be made
+        between ratios rather than between terms.
+  \item \textbf{Compute the target ratio.} For $v_n = n^{-p}$ the ratio is
+        $v_{n+1}/v_n = \bigl((n)/(n+1)\bigr)^{p}$, which Bernoulli bounds
+        below by $1-p/n$. So ``$u_{n+1}/u_n \le 1 - p/n$'' is exactly ``the
+        terms decay at least as fast as $n^{-p}$.''
+  \item \textbf{Buy room with $p<r$.} The hypothesis gives $r$; the
+        comparison needs a strict $p$ above $1$. Any $p$ between them works,
+        and this is the only place the strictness $r>1$ is used.
+  \item \textbf{Convert to a monotone quantity.} The ratio inequality says
+        precisely that $(n-1)^pu_n$ decreases. A decreasing positive sequence
+        is bounded, and boundedness is what the comparison test wants.
+  \item \textbf{Audit.} Bernoulli is spent once, in step 2; the strict
+        inequality $r>1$ once, in step 3; the convergence of the $p$-series
+        once, at the end. Run the same four steps with the inequalities
+        reversed and $p=1$ and the divergence half falls out --- which is why
+        the borderline case $r=1$ is settled by neither.
+\end{proofwalk}
+
+\begin{unpack}[What changed: the yardstick]
+The root and ratio tests compare $\Sigma u_n$ against a \emph{geometric}
+series. When $u_{n+1}/u_n \to 1$ the comparison is vacuous, because the
+geometric series with ratio $1$ is exactly the borderline.
+
+Raabe compares against the \emph{$p$-series} instead. Writing
+$u_{n+1}/u_n \approx 1 - r/n$ and comparing with $(1-1/n)^r$ shows that the
+quantity $n(1 - u_{n+1}/u_n)$ measures which power of $n$ the terms decay
+like: $r > 1$ means faster than $1/n$, and $r < 1$ slower. So the test is
+``compare with $\Sigma n^{-r}$'' with the comparison done through ratios
+rather than the terms themselves.
+
+That reframing tells you immediately what the next rung must be. Since the
+$p$-series is itself borderline at $p=1$, Raabe fails when $r=1$ --- and the
+next test compares against $\Sigma 1/\bigl(n(\log n)^{p}\bigr)$, which
+Rudin's own 3.29 has already introduced.
+\end{unpack}
+
+\begin{deeper}[The series that forces the issue, and why the ladder never ends]
+The standard example is
+\[ \sum_{n=1}^{\infty}
+   \Bigl[\frac{1 \cdot 3 \cdot 5 \cdots (2n-1)}
+              {2 \cdot 4 \cdot 6 \cdots (2n)}\Bigr]^{s}, \]
+whose ratio tends to $1$ for \emph{every} $s$, so ratio and root say nothing
+whatever. Raabe gives $r = s/2$, hence divergence for $s = 1$ and $s = 2$ and
+convergence for $s = 3$. The same computation settles the hypergeometric
+series $F(\alpha,\beta,\gamma,1)$, which converges precisely when
+$\gamma > \alpha + \beta$ --- historically the problem the whole hierarchy of
+tests was invented for.
+
+ECNU then states the moral, and it is worth taking seriously: one can always
+build a finer test, and the process never terminates, because \emph{there is
+no slowest convergent series}. Given any convergent $\Sigma a_n$ one can
+manufacture a convergent series whose terms dominate it eventually, so no
+single comparison series can serve as a universal boundary. Rudin's 3.35
+remark --- that when the ratio is $1$ ``the series may converge or diverge''
+--- is therefore not laziness but a structural fact.
+\end{deeper}
+
+\begin{deeper}[The integral test, and why Rudin cannot state it here]
+Both Chinese texts prove: if $f$ is nonnegative and decreasing on
+$[1,\infty)$, then $\Sigma f(n)$ and $\int_1^{\infty} f(x)\,dx$ converge
+together, via the sandwich
+$\sum_{k=2}^{n+1} f(k) \le \int_1^{n+1} f \le \sum_{k=1}^{n} f(k)$.
+
+It is the fastest route to the $p$-series and to the iterated-logarithm
+ladder $\Sigma 1/\bigl(n\log n (\log\log n)^p\bigr)$. Rudin gets both by
+\emph{Cauchy condensation} (3.27--3.29) instead, and he has no choice: the
+integral does not exist until Chapter 6, so a Chapter 3 integral test would
+be circular in his development. Come back to this box after 6.13, where the
+comparison becomes available --- and notice that condensation and the
+integral test are the same idea, one summing over dyadic blocks and the other
+over unit intervals.
+\end{deeper}
+
+% ============================================================
+\ssection{Supplement C --- Summation by parts, quantitatively}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 3]
+\raggedright
+\textbf{What Rudin does.} Theorem 3.41 is the partial summation formula, and
+he uses it once, immediately, to prove 3.42 --- if the partial sums of
+$\Sigma a_n$ are bounded and $b_n \downarrow 0$ then $\Sigma a_nb_n$
+converges --- from which 3.43 (alternating series) and 3.44 follow.
+
+\smallskip
+\textbf{The gap.} The formula is consumed on the spot. No \emph{bound} is
+extracted from it, and no second theorem: Rudin has the Dirichlet test but
+not the Abel test, which trades the hypotheses the other way round.
+
+\smallskip
+\textbf{Where the gap bites.} At 3.44, where $\Sigma z^n/n^{\alpha}$ on
+$|z|=1$ is handled by the Dirichlet route because the Abel route is
+unavailable; and, more seriously, in Chapter 7, where the uniform versions of
+these tests are wanted and a uniform conclusion needs an explicit constant,
+not merely a convergence statement.
+
+\smallskip
+\textbf{What this section supplies.} The bound --- Abel's lemma, with the
+constant $3$ --- from which Rudin's 3.42 and its missing twin both follow in
+a line; and the Dirichlet kernel estimate, which is the standard bridge from
+this chapter to Fourier series and which 3.44 stops just short of.
+\end{roadmap}
+
+\sitem{S3.5}{Theorem}
+\emph{(Abel's lemma.) Let $(\varepsilon_k)$ be monotone, let
+$\sigma_k = v_1+\cdots+v_k$, and suppose $|\sigma_k| \le A$ for
+$k \le n$. Put $\varepsilon = \max_k |\varepsilon_k|$. Then}
+\[ \Bigl|\sum_{k=1}^{n} \varepsilon_k v_k\Bigr| \le 3\varepsilon A . \]
+\provenance{ECNU \cjk{阿贝尔引理}{Abel's lemma} (\cjk{下}{vol.2}
+bk.\ pp.\,21--22).}
+\begin{proof}
+Partial summation (3.41) gives
+\[ \sum_{k=1}^{n} \varepsilon_k v_k
+   = \sum_{k=1}^{n-1} (\varepsilon_k - \varepsilon_{k+1})\sigma_k
+     + \varepsilon_n \sigma_n . \]
+Because $(\varepsilon_k)$ is monotone, the differences
+$\varepsilon_k - \varepsilon_{k+1}$ all have one sign, so
+\[ \sum_{k=1}^{n-1} |\varepsilon_k-\varepsilon_{k+1}|
+   = |\varepsilon_1 - \varepsilon_n| \le 2\varepsilon . \]
+Bounding every $|\sigma_k|$ by $A$ therefore gives
+$\bigl|\sum \varepsilon_kv_k\bigr| \le 2\varepsilon A + \varepsilon A
+= 3\varepsilon A$.
+\end{proof}
+
+\noindent
+The proof is Rudin's 3.41 followed by one observation: because
+$(\varepsilon_k)$ is monotone, the differences
+$\varepsilon_k - \varepsilon_{k+1}$ all have the same sign, so
+$\sum_k |\varepsilon_k - \varepsilon_{k+1}| = |\varepsilon_1 -
+\varepsilon_n| \le 2\varepsilon$, and the boundary terms contribute
+$\varepsilon A$ more.\kn{This is exactly the telescope Rudin performs inside
+the proof of 3.42, extracted and given a name. Rudin's version is consumed
+on the spot to prove one convergence theorem; as a standalone inequality it
+is reusable, and it is what the uniform-convergence versions in Chapter 7
+run on.}
+
+\sitem{S3.6}{Theorem}
+\emph{(Abel's test.) If $(a_n)$ is monotone and \textbf{bounded} --- not
+necessarily null --- and $\Sigma b_n$ converges, then $\Sigma a_nb_n$
+converges.}
+\provenance{ECNU \cjk{定理}{Thm} 12.15 (\cjk{下}{vol.2} bk.\ p.\,22).}
+\begin{proof}
+Being monotone and bounded, $(a_n)$ converges, say to $a$; put
+$b_n = a_n - a$, so $(b_n)$ is monotone with $b_n \to 0$. Then
+\[ \sum a_nc_n = a\sum c_n + \sum b_nc_n . \]
+The first series converges by hypothesis. For the second, the partial sums of
+$\Sigma c_n$ are bounded --- a convergent sequence is bounded --- and
+$b_n \downarrow 0$, so Rudin's 3.42 applies. Hence $\Sigma a_nc_n$
+converges.
+\end{proof}
+
+\begin{deeper}[Two tests, and which hypothesis each spends]
+Rudin's 3.42 is the \emph{Dirichlet} test: partial sums of $\Sigma b_n$
+merely bounded, but $a_n \downarrow 0$. Abel's test trades those hypotheses:
+$\Sigma b_n$ must actually converge, but $(a_n)$ need only be monotone and
+bounded. Neither implies the other, and both fall out of Abel's lemma.
+
+\smallskip
+\begin{tabular}{@{}p{0.3\linewidth}p{0.3\linewidth}p{0.3\linewidth}@{}}
+\toprule
+& \textbf{Dirichlet (Rudin 3.42)} & \textbf{Abel (S3.6)} \\
+\midrule
+on $\Sigma b_n$   & partial sums bounded & converges \\
+on $(a_n)$        & monotone, $\to 0$    & monotone, bounded \\
+typical use       & $\Sigma \frac{\sin nx}{n}$ & multiplying a convergent
+series by a damping factor \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+Rudin never states Abel's form, and its absence is felt at 3.44, where he
+handles $\Sigma z^n/n^{\alpha}$ on $|z|=1$ by the Dirichlet route.
+\end{deeper}
+
+\sitem{S3.7}{Theorem}
+\emph{(The Dirichlet kernel bound.) For $x \in (0,2\pi)$,}
+\[ \frac12 + \sum_{k=1}^{n}\cos kx
+   = \frac{\sin\bigl((n+\tfrac12)x\bigr)}{2\sin(x/2)} , \]
+\emph{so the partial sums of $\Sigma\cos kx$ are bounded on any interval
+$[\delta, 2\pi-\delta]$. Consequently, if $a_1 \ge a_2 \ge \cdots$ with
+$a_n \to 0$, then $\Sigma a_n \cos nx$ and $\Sigma a_n \sin nx$ converge for
+every $x \in (0,2\pi)$.}
+\provenance{ECNU \cjk{例}{Ex} 3 (\cjk{下}{vol.2} bk.\ pp.\,22--23).}
+\begin{proof}
+For $x \in (0,2\pi)$ we have $\sin(x/2) \ne 0$. The product formula
+$2\cos kx\,\sin(x/2) = \sin\bigl((k+\tfrac12)x\bigr) -
+\sin\bigl((k-\tfrac12)x\bigr)$ makes the sum telescope:
+\[ 2\sin\tfrac{x}{2}\Bigl[\tfrac12 + \sum_{k=1}^{n}\cos kx\Bigr]
+   = \sin\tfrac{x}{2} + \sin\bigl((n+\tfrac12)x\bigr) - \sin\tfrac{x}{2}
+   = \sin\bigl((n+\tfrac12)x\bigr), \]
+which is the identity. Hence
+$\bigl|\sum_{k\le n}\cos kx\bigr| \le 1/\bigl(2|\sin(x/2)|\bigr) + \tfrac12$,
+a bound independent of $n$ and finite for each fixed
+$x \in (0,2\pi)$. With $a_n \downarrow 0$, Rudin's 3.42 gives convergence of
+$\Sigma a_n\cos nx$; the same telescoping with $\sin$ in place of $\cos$
+bounds the partial sums of $\Sigma \sin kx$ and settles that series too.
+\end{proof}
+
+\noindent
+This is the standard bridge from Chapter 3 to Fourier series: it makes
+$\Sigma (\sin nx)/n$ and $\Sigma (\cos nx)/n$ convergent everywhere on
+$(0,2\pi)$, none of which follows from absolute convergence, since
+$\Sigma 1/n$ diverges.\kn{The identity is proved by multiplying the left side
+by $2\sin(x/2)$ and telescoping the products
+$2\cos kx\sin(x/2) = \sin((k+\frac12)x) - \sin((k-\frac12)x)$. Note where the
+bound degrades: the denominator $2\sin(x/2)$ tends to $0$ as $x \to 0$, so
+the partial sums are bounded on each $[\delta,2\pi-\delta]$ but not
+uniformly on $(0,2\pi)$ --- which is exactly the phenomenon Chapter 7 will
+call non-uniform convergence.}
+
+% ============================================================
+\ssection{Supplement D --- Grouping and multiplying}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 3]
+\raggedright
+\textbf{What Rudin does.} Definition 3.48 defines the product of two series
+by the anti-diagonals $c_n = \sum_k a_kb_{n-k}$, motivated by power series;
+3.49 shows the product of two conditionally convergent series can diverge;
+3.50 (Mertens) proves convergence to $AB$ when one factor is absolutely
+convergent.
+
+\smallskip
+\textbf{The gap.} Two operations on series are performed silently throughout
+the chapter and never licensed. \emph{Grouping} --- inserting parentheses ---
+is used inside the condensation proof at 3.27 and in the Remark after 3.44,
+but never stated as a theorem, so a reader has no way to know it is legal
+while rearrangement is not. And the choice of the anti-diagonal ordering at
+3.48 is presented as forced by power series, leaving open what happens under
+any other arrangement of the same products.
+
+\smallskip
+\textbf{Where the gap bites.} At 3.49 especially, where the divergence of a
+product looks like a pathology of multiplication rather than the price of
+insisting on one particular traversal of a doubly-indexed array.
+
+\smallskip
+\textbf{What this section supplies.} The grouping theorem with its
+one-directional caveat, so that the legal manipulation is cleanly separated
+from the illegal one; and Cauchy's theorem, that under absolute convergence
+\emph{every} arrangement of the array converges to $AB$ --- which puts 3.50
+and 3.49 in their proper places.
+\end{roadmap}
+
+\sitem{S3.8}{Theorem}
+\emph{(Grouping.) Inserting parentheses in a convergent series ---
+that is, passing to any subsequence of the partial sums by grouping
+consecutive terms --- changes neither convergence nor the sum.}
+\provenance{ECNU \cjk{定理}{Thm} 12.4 (\cjk{下}{vol.2} bk.\ pp.\,4--5).}
+\begin{proof}
+Let $s_n$ be the partial sums of the original series and let the parentheses
+end at indices $n_1 < n_2 < \cdots$. The partial sums of the grouped series
+are exactly $s_{n_1}, s_{n_2}, \dots$ --- a subsequence of $(s_n)$. A
+subsequence of a convergent sequence converges to the same limit (3.6(a)).
+\end{proof}
+
+\begin{pitfall}[Grouping is one-directional, unlike rearrangement]
+The grouped partial sums form a \emph{subsequence} of $(s_n)$, and a
+subsequence of a convergent sequence converges to the same limit --- that is
+the whole proof. The converse fails:
+\[ (1-1) + (1-1) + (1-1) + \cdots = 0 \]
+converges while $1 - 1 + 1 - 1 + \cdots$ diverges. So parentheses may be
+\emph{inserted} into a convergent series but not \emph{removed} from one.
+
+Keep this distinct from the rearrangement theorem 3.54. Rearranging changes
+the order of the terms and can change the sum of a conditionally convergent
+series to anything at all; grouping preserves the order and is always safe in
+the direction stated. Rudin never states the grouping theorem, although he
+uses it --- in the condensation proof at 3.27 and in the Remark after 3.44.
+\end{pitfall}
+
+\sitem{S3.9}{Theorem}
+\emph{(Cauchy's product theorem, any arrangement.) If $\Sigma u_n = A$ and
+$\Sigma v_n = B$ both converge absolutely, then the series formed from all
+products $u_iv_j$, each taken once, \textbf{in any order whatever},
+converges absolutely to $AB$.}
+\provenance{ECNU \cjk{柯西定理}{Cauchy's thm} 12.14 (\cjk{下}{vol.2}
+bk.\ pp.\,19--21).}
+\begin{proof}
+Let $(w_k)$ enumerate the products $u_iv_j$ in any order. Any finite
+collection of them involves indices $i,j \le N$ for some $N$, so
+\[ \sum_{k \le K} |w_k| \;\le\;
+   \Bigl(\sum_{i\le N}|u_i|\Bigr)\Bigl(\sum_{j\le N}|v_j|\Bigr)
+   \;\le\; \Bigl(\sum_i |u_i|\Bigr)\Bigl(\sum_j |v_j|\Bigr) . \]
+The partial sums of $\Sigma|w_k|$ are bounded, so $\Sigma w_k$ converges
+absolutely; by 3.55 its sum is the same for every enumeration. Evaluate it
+along the square ordering, in which the partial sum after the $N$th shell is
+exactly $A_NB_N$, and $A_NB_N \to AB$ by 3.3(c).
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % square / shell ordering
+  \foreach \i in {0,7,...,28}{\foreach \j in {0,7,...,28}{
+    \node[ptfill, minimum size=1.6pt] at (\i,\j) {};}}
+  \node[ptopen] at (0,0) {};
+  \draw[rmarrow] (7,-1.4) -- (7,7) -- (-1.4,7);
+  \draw[rmarrow] (14,-1.4) -- (14,14) -- (-1.4,14);
+  \draw[rmarrow] (21,-1.4) -- (21,21) -- (-1.4,21);
+  \node[lbl, anchor=north] at (14,-4.5) {square (shell) order};
+  \node[mlbl, anchor=north east] at (-1,-1) {$u_1v_1$};
+  % diagonal ordering
+  \begin{scope}[xshift=58mm]
+  \foreach \i in {0,7,...,28}{\foreach \j in {0,7,...,28}{
+    \node[ptfill, minimum size=1.6pt] at (\i,\j) {};}}
+  \foreach \d in {7,14,21,28}{
+    \draw[rmarrow] (0,\d) -- (\d,0);}
+  \node[lbl, anchor=north] at (14,-4.5) {diagonal order (Rudin's $c_n$)};
+  \node[mlbl, anchor=north east] at (-1,-1) {$u_1v_1$};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\figcap{Two ways to enumerate the same array of products $u_iv_j$. Along
+shells the partial sums are exactly $A_nB_n$, which is why the square order
+proves the theorem; along anti-diagonals they are Rudin's $C_n$, which is
+the order that makes the product a \emph{series} in the sense of 3.48.
+Absolute convergence is what makes the two agree.}
+
+\begin{deeper}[How this relates to Mertens (3.50)]
+The two theorems point in opposite directions. Rudin's 3.50 fixes the
+diagonal ordering --- the one that matters for power series --- and weakens
+the hypothesis: only \emph{one} factor need converge absolutely. S3.9 keeps
+the stronger hypothesis, both absolutely convergent, and buys freedom of
+arrangement.
+
+The proof of S3.9 is the cleaner of the two, because the square ordering
+makes the partial sums \emph{exactly} $A_nB_n$ rather than approximately so;
+all the difficulty in Mertens' theorem comes from the diagonal ordering
+cutting the array along a line the factors do not respect. Seen this way,
+Example 3.49 --- where the Cauchy product of two conditionally convergent
+series diverges --- is not a pathology but the expected price of insisting on
+the diagonal.
+\end{deeper}
+
+% ============================================================
+\ssection{Supplement E --- Summation without an order}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 3]
+\raggedright
+\textbf{What Rudin does.} Theorem 3.54 shows a conditionally convergent
+series can be rearranged to any prescribed value, and 3.55 shows an
+absolutely convergent one cannot: every rearrangement has the same sum.
+
+\smallskip
+\textbf{The gap.} 3.55 is stated as a stability property --- the sum survives
+reordering --- rather than as what it actually is: a licence to forget the
+ordering altogether. Rudin never draws that conclusion, so a series remains,
+for him, a function on $\N$, and anything indexed differently must be
+converted to one by hand.
+
+\smallskip
+\textbf{Where the gap bites.} At 3.48, where the product of two series has to
+be \emph{defined} by choosing a traversal of a square array, and at 3.49,
+where the choice turns out to matter. Later, in Chapter 8, power series are
+multiplied and rearranged repeatedly, and each manipulation is justified
+afresh.
+
+\smallskip
+\textbf{What this section supplies.} Tao's reading of 3.55: for absolutely
+summable families the sum is a function of the \emph{index set}, so it may be
+defined with no order at all. Double series and iterated sums then become
+theorems --- Fubini for series --- rather than notational accidents.
+\end{roadmap}
+
+\sitem{S3.10}{Definition}
+\emph{(Sums over arbitrary index sets.) Let $X$ be a set and
+$f : X \to \R$. If $X$ is countable, choose a bijection $g : \N \to X$ and
+put $\sum_{x \in X} f(x) = \sum_{n=0}^{\infty} f(g(n))$, provided the latter
+converges absolutely; the value does not depend on $g$. If $X$ is
+uncountable, the same definition applies once one knows that
+$\{x : f(x) \ne 0\}$ is at most countable.}
+\provenance{Tao I, \S8.2, Def.\ 8.2.1--8.2.4 and Lemma 8.2.5
+(bk.\ pp.\,187--189).}
+
+\begin{unpack}[What Rudin's 3.55 becomes]
+Rudin proves that an absolutely convergent series may be rearranged freely
+(3.55) and that a conditionally convergent one may be rearranged to any sum
+whatever (3.54). Tao reads the first as a licence: since the value is
+independent of the enumeration, \emph{the ordering was never part of the
+data}. A series is then a function on an index set, and $\sum_{x\in X}f(x)$
+is well defined with no order in sight.
+
+The dividend is that families indexed by things other than $\N$ --- pairs,
+grids, arbitrary countable sets --- need no separate theory. Rudin has to
+manufacture an ordering to define the Cauchy product at 3.48 (his $c_n$ are
+the anti-diagonals), and Example 3.49's failure is precisely the price of
+that manufactured ordering.
+\end{unpack}
+
+\sitem{S3.11}{Lemma}
+\emph{If $\sum_{x\in X} f(x)$ is absolutely convergent, then
+$\{x \in X : f(x) \ne 0\}$ is at most countable --- however large $X$ is.}
+\provenance{Tao I, Lemma 8.2.5 (bk.\ p.\,188).}
+
+\noindent
+So an absolutely summable family over an uncountable index set is really a
+series in disguise.\kn{The proof is the standard countability argument in
+Rudin's own idiom: for each $n$ the set where $|f| > 1/n$ must be finite,
+or the sum would exceed any bound; a countable union of finite sets is
+countable. Compare Exercise S2.18 in the Chapter 2 appendix --- disjoint
+intervals are countable for the same reason.}
+
+\sitem{S3.12}{Theorem}
+\emph{(Fubini for series.) If $f : \N \times \N \to \R$ has
+$\sum_{(n,m)} f(n,m)$ absolutely convergent, then}
+\[ \sum_{n=0}^{\infty}\Bigl(\sum_{m=0}^{\infty} f(n,m)\Bigr)
+   = \sum_{(n,m) \in \N\times\N} f(n,m)
+   = \sum_{m=0}^{\infty}\Bigl(\sum_{n=0}^{\infty} f(n,m)\Bigr). \]
+\provenance{Tao I, Thm 8.2.2 (bk.\ p.\,188). Rudin states nothing about
+iterated sums in Chapter 3.}
+\begin{proof}
+Write $S$ for the unordered sum, which exists by S3.10. Given
+$\varepsilon>0$, absolute convergence supplies a finite set
+$F \subset \N\times\N$ with $\sum_{(n,m)\notin F} |f(n,m)| < \varepsilon$;
+choose $N$ with $F \subset [0,N]^2$.
+
+Each inner sum $g(n) = \sum_m f(n,m)$ converges absolutely, and
+$\sum_{n>N} |g(n)| \le \sum_{n>N}\sum_m |f(n,m)| < \varepsilon$. Comparing
+$\sum_{n \le N} g(n)$ with $S$, the terms they fail to share all lie outside
+$F$, so the two differ by at most $\varepsilon$. Hence
+$\bigl|\sum_{n\le N}g(n) - S\bigr| \le \varepsilon$ and, adding the tail
+estimate, $\bigl|\sum_{n} g(n) - S\bigr| \le 2\varepsilon$. As $\varepsilon$
+was arbitrary, $\sum_n g(n) = S$; the argument with the roles of $n$ and $m$
+exchanged gives the other iterated sum.
+\end{proof}
+
+\begin{deeper}[Why this is the theorem the Cauchy product wanted]
+S3.9 said that an absolutely convergent double array may be summed in any
+arrangement. S3.12 says the two most useful arrangements --- by rows and by
+columns --- also agree with each other and with the unordered sum. Together
+they are the complete story of the array $u_iv_j$, of which Rudin's 3.50 is
+the single diagonal slice.
+
+Absolute convergence is not decoration here. The standard counterexample sets
+$f(n,n) = 1$, $f(n,n+1) = -1$, and $f = 0$ elsewhere: summing along rows
+gives $0$ every time, hence $0$; summing along columns gives $1$ then $0$
+forever, hence $1$. Nothing is infinite or badly behaved --- every row and
+every column is a finite sum --- and still the two iterated sums differ,
+because the family is not absolutely summable. Rudin's Exercise 3.25 asks for
+this phenomenon in a different guise.
+
+Chapter 8 will need this theorem to multiply and rearrange power series, and
+Chapter 11 will need its integral analogue.
+\end{deeper}
+
+\sitem{S3.13}{Theorem}
+\emph{(Means, and the ratio-to-root corollary.) Let $a_n \to a$. Then}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item $\dfrac{a_1+\cdots+a_n}{n} \to a$ \emph{(Ces\`aro);}
+  \item \emph{if moreover $a_n > 0$, then}
+        $\sqrt[n]{a_1a_2\cdots a_n} \to a$;
+  \item \emph{consequently, if $b_n>0$ and $b_{n+1}/b_n \to a$, then}
+        $\sqrt[n]{b_n} \to a$.
+\end{enumerate}
+\provenance{ECNU \cjk{总练习题}{review} 2 \#3--\#4 (bk.\ p.\,39); USTC
+Ch.\ 1 suppl.\ \#6--\#11 (bk.\ pp.\,38--39).}
+\begin{proof}
+(a) Given $\varepsilon>0$ choose $N$ with $|a_k - a| < \varepsilon/2$ for
+$k>N$. For $n>N$,
+\[ \Bigl|\frac{1}{n}\sum_{k\le n}a_k - a\Bigr|
+   \le \frac{1}{n}\sum_{k \le N}|a_k-a| + \frac{\varepsilon}{2}, \]
+and the first term tends to $0$ as $n\to\infty$ with $N$ fixed, so it is
+below $\varepsilon/2$ eventually.
+
+(b) If $a>0$, apply (a) to $\log a_n$ and exponentiate, using continuity of
+$\exp$. If $a=0$, given $\varepsilon>0$ we have $0<a_k<\varepsilon$ for
+$k>N$, and the geometric mean is at most
+$\bigl(\prod_{k\le N}a_k\bigr)^{1/n}\varepsilon^{(n-N)/n} \to \varepsilon$.
+
+(c) Put $a_1 = b_1$ and $a_k = b_k/b_{k-1}$ for $k \ge 2$, so that
+$a_1a_2\cdots a_n = b_n$ and $a_n \to a$. Now (b) gives
+$\sqrt[n]{b_n} \to a$.
+\end{proof}
+
+\begin{deeper}[The corollary that explains Rudin's 3.37]
+Part (c) is the exact statement behind Rudin's Theorem 3.37,
+\[ \liminf \frac{c_{n+1}}{c_n} \le \liminf \sqrt[n]{c_n}
+   \le \limsup \sqrt[n]{c_n} \le \limsup \frac{c_{n+1}}{c_n}, \]
+whose corollary he states as ``the root test is stronger than the ratio
+test.'' Read through (c): the root test sees a \emph{geometric mean} of the
+ratios, and geometric means are gentler than the sequence they average ---
+they converge whenever it does, and sometimes when it does not. Rudin's
+Example 3.35, where the ratios oscillate between $2$ and $1/8$ while the
+roots converge, is exactly a case where the mean is tamer than its terms.
+
+Applying (c) to $b_n = n^n/n!$ gives $\lim n/\sqrt[n]{n!} = e$ in one line,
+and (a) to $\sqrt[n]{n}$ gives
+$\lim \bigl(1+\sqrt2+\sqrt[3]{3}+\cdots+\sqrt[n]{n}\bigr)/n = 1$. Rudin has
+the Ces\`aro mean only as Exercise 3.14(a) and never states the geometric
+version.
+\end{deeper}
+
+\begin{pitfall}[One theorem you will look for and not find]
+The Stolz--Ces\`aro theorem --- the discrete l'Hospital rule, that
+$\lim (a_n - a_{n-1})/(b_n - b_{n-1}) = L$ forces $\lim a_n/b_n = L$ for
+$(b_n)$ strictly increasing and unbounded --- appears \textbf{in none of the
+four comparison texts}, and not in Rudin. All four give only the Ces\`aro
+special cases of S3.13.
+
+The continuous analogue does appear, as Yu Pin's problem A9$^*$ (p.\,127),
+where it is attributed to Cauchy rather than to Stolz; it is exercise S4.3 in
+the Chapter 4 appendix. If you want the discrete theorem you will have to
+prove it, and S3.13(a) is the case $b_n = n$.
+\end{pitfall}

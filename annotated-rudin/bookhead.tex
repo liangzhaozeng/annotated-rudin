@@ -1,0 +1,47 @@
+% ============================================================
+%  Shared preamble for all builds (whole book and per-chapter).
+%  Drivers: main.tex, main-ch01.tex, main-ch02.tex
+% ============================================================
+
+\usepackage[
+  paperwidth=8.5in, paperheight=11in,
+  twoside,
+  inner=0.95in, outer=2.85in,
+  top=1.0in, bottom=1.0in,
+  marginparwidth=2.2in, marginparsep=0.2in,
+  headsep=16pt
+]{geometry}
+
+\usepackage{annotated}
+% Rudin's equation numbers are set with \tag, so several displays share an
+% equation counter value and hyperref would mint the same destination name
+% twice.  hypertexnames=false makes it use unique internal names instead.
+\usepackage[colorlinks=true, allcolors=RuInk, hypertexnames=false]{hyperref}
+
+\linespread{1.05}
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{1.4em}
+
+% Title page, parameterised by the chapter-coverage line and its subtitle.
+\newcommand{\rutitlepage}[2]{%
+\thispagestyle{empty}
+\vspace*{1.5in}
+\begin{center}
+{\sffamily\Huge\bfseries\color{RuInk} The Annotated Rudin}\\[12pt]
+{\sffamily\large\color{RuGrey} \emph{Principles of Mathematical Analysis}, Third Edition}\\[4pt]
+{\sffamily\large\color{RuGrey} Walter Rudin}\\[36pt]
+{\sffamily\normalsize\color{RuInk}\bfseries #1}\\[6pt]
+{\sffamily\small\color{RuGrey} #2}
+\end{center}
+\vfill
+\begin{center}
+\begin{minipage}{0.8\textwidth}
+\small\color{RuGrey}
+Rudin's text appears here complete and unaltered --- his sentences, his
+paragraph breaks, his numbering. Nothing has been paraphrased away. The
+annotation is strictly additive: numbered markers in his prose key to notes in
+the outer margin, and longer commentary sits in ruled boxes between his
+paragraphs, where it can be skipped without breaking his argument.
+\end{minipage}
+\end{center}
+\clearpage}

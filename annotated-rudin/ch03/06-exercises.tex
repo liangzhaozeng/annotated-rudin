@@ -1,0 +1,373 @@
+% ============================================================
+%  Chapter 3 -- Exercises 3.1-3.25
+% ============================================================
+\rsection{Exercises}
+
+\begin{roadmap}[How to use these]
+Chapter 3's exercise set contains two of the most important constructions in
+the book. \emph{3.23--3.24} build the \textbf{completion} of an arbitrary
+metric space out of Cauchy sequences --- Tao's construction of $\R$ itself,
+carried out here as an exercise, with 3.25 closing the circle by asking what
+the completion of $\Q$ is. \emph{3.22} is \textbf{Baire's theorem} in its
+general form, promised at Exercise 2.30.
+
+\medskip
+\raggedright
+\textbf{Technique builders.} \emph{3.3} and \emph{3.16--3.18} are the
+monotone-convergence workhorses: recursive sequences squeezed by 3.14, with
+3.16 being Newton's method for square roots and its blazing quadratic
+convergence. \emph{3.14} develops Ces\`aro means --- the first taste of
+summability theory, needed for Fourier series (8.15--8.16) and Tauberian
+arguments.
+
+\smallskip
+\textbf{Counterexample duty.} \emph{3.6--3.8} and \emph{3.11--3.12} sharpen
+the convergence tests; 3.11(b) and 3.12(b) are the pairs Rudin cited in the
+text to kill the ``boundary between convergence and divergence'' conjecture.
+
+\smallskip
+\textbf{Routine.} 3.1, 3.2, 3.9, 3.20 are quick checks; do them first.
+\end{roadmap}
+
+\begin{enumerate}[label=\textbf{3.\arabic*.}, leftmargin=3.0em, itemsep=9pt,
+                  topsep=8pt, labelsep=0.5em]
+
+\item Prove that convergence of $(s_n)$ implies convergence of $(|s_n|)$. Is
+the converse true?\kn{Reverse triangle inequality (Exercise 1.13):
+$\bigl||s_n|-|s|\bigr| \le |s_n-s|$. The converse fails at once:
+$s_n = (-1)^n$.}
+
+\item Calculate $\lim_{n\to\infty} (\sqrt{n^2+n}-n)$.\kn{Multiply and divide
+by the conjugate $\sqrt{n^2+n}+n$; the answer is $\tfrac12$. The moral:
+$\infty - \infty$ expressions are settled by algebra first, limit theorems
+second --- 3.3 applies only after the difference is rewritten as a quotient.}
+
+\item If $s_1 = \sqrt2$ and
+\[ s_{n+1} = \sqrt{2+\sqrt{s_n}} \qquad (n = 1,2,3,\dots), \]
+prove that $(s_n)$ converges, and that $s_n < 2$ for
+$n = 1,2,3,\dots$.\kn{The 3.14 template, used again in 3.16--3.18: prove
+boundedness ($s_n < 2$) and monotonicity together by induction, then monotone
+convergence hands you a limit. Only afterwards may you pass to the limit in
+the recursion to identify it --- existence must precede the algebra.}
+
+\item Find the upper and lower limits of the sequence $(s_n)$ defined by
+\[ s_1 = 0; \qquad s_{2m} = \frac{s_{2m-1}}{2}; \qquad
+   s_{2m+1} = \frac12 + s_{2m}. \]\kn{Track the two subsequences separately:
+the even-indexed terms crawl up toward $\tfrac12$, the odd ones toward $1$.
+So $E = \{\tfrac12, 1\}$, $\liminf = \tfrac12$, $\limsup = 1$ --- a sequence
+need not oscillate symmetrically about anything.}
+
+\item For any two real sequences $(a_n)$, $(b_n)$, prove that
+\[ \limsup_{n\to\infty} (a_n+b_n) \le
+   \limsup_{n\to\infty} a_n + \limsup_{n\to\infty} b_n, \]
+provided the sum on the right is not of the form
+$\infty-\infty$.\kw{Inequality, not equality --- and strictness is common:
+$a_n = (-1)^n$, $b_n = (-1)^{n+1}$ gives $0 < 2$. The two sequences need not
+peak at the same indices. (The excluded case is exactly the arithmetic left
+undefined at 1.23.) The working proof uses the tail-sup form from the box at
+3.17: $\sup_{n\ge N}(a_n+b_n) \le \sup_{n\ge N}a_n + \sup_{n\ge N}b_n$, then
+let $N\to\infty$.}
+
+\item Investigate the behavior (convergence or divergence) of $\Sigma a_n$ if
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item $a_n = \sqrt{n+1}-\sqrt n$;
+  \item $a_n = \dfrac{\sqrt{n+1}-\sqrt n}{n}$;
+  \item $a_n = (\sqrt[n]{n}-1)^n$;
+  \item $a_n = \dfrac{1}{1+z^n}$, for complex values of $z$.
+\end{enumerate}
+\kn{(a) telescopes to $\sqrt{N+1}-1$: diverges. (b) conjugate trick gives
+$a_n \sim \tfrac12 n^{-3/2}$: converges by comparison with 3.28. (c) root
+test: $\sqrt[n]{a_n} = \sqrt[n]{n}-1 \to 0$ by 3.20(c): converges. (d) splits
+by $|z|$: for $|z|>1$ comparison with $\Sigma|z|^{-n}$ converges; for
+$|z| \le 1$ the terms do not tend to $0$ (3.23) --- watch $|z|=1$, where
+$1+z^n$ can even vanish.}
+
+\item Prove that the convergence of $\Sigma a_n$ implies the convergence of
+\[ \sum_{n=1}^{\infty} \frac{\sqrt{a_n}}{n}, \]
+if $a_n \ge 0$.\kn{The trick to remember:
+$\sqrt{a_n}/n \le \tfrac12(a_n + 1/n^2)$ by the AM--GM inequality
+$xy \le \tfrac12(x^2+y^2)$ --- which is Schwarz 1.35 for $n=1$. Both halves
+converge, so comparison finishes it.}
+
+\item If $\Sigma a_n$ converges and if $(b_n)$ is monotonic and bounded,
+prove that $\Sigma a_nb_n$ converges.\kn{Summation by parts, but not quite
+3.42, whose hypothesis $b_n \to 0$ may fail here. Write $b_n = (b_n-b)+b$
+where $b = \lim b_n$ (exists by 3.14): the $b$-part converges by 3.47, and
+$(b_n-b)$ decreases (or increases) to $0$, so 3.42 handles the rest. Note the
+partial sums $A_n$ are bounded because $\Sigma a_n$ \emph{converges} --- a
+weaker demand than 3.42 makes.}
+
+\item Find the radius of convergence of each of the following power series:
+\begin{multicols}{2}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item $\displaystyle\sum n^3z^n$,
+  \item $\displaystyle\sum \frac{2^n}{n!}z^n$,
+  \item $\displaystyle\sum \frac{2^n}{n^2}z^n$,
+  \item $\displaystyle\sum \frac{n^3}{3^n}z^n$.
+\end{enumerate}
+\end{multicols}
+\kn{All four by 3.37's byproduct ($\lim c_{n+1}/c_n$, when it exists, is
+$\alpha$): (a) $R=1$ --- polynomial factors never move $R$, by 3.20(c);
+(b) $R=\infty$; (c) $R=\tfrac12$; (d) $R=3$.}
+
+\item Suppose that the coefficients of the power series $\Sigma a_nz^n$ are
+integers, infinitely many of which are distinct from zero. Prove that the
+radius of convergence is at most $1$.\kn{A nonzero integer has
+$|a_n| \ge 1$, so $\sqrt[n]{|a_n|} \ge 1$ infinitely often and
+$\alpha = \limsup \ge 1$. Integrality forces smallness to be impossible ---
+the same arithmetic leverage as in the irrationality proof 3.32.}
+
+\item Suppose $a_n > 0$, $s_n = a_1+\cdots+a_n$, and $\Sigma a_n$ diverges.
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=3pt, topsep=3pt]
+  \item Prove that $\displaystyle\sum \frac{a_n}{1+a_n}$ diverges.
+  \item Prove that
+        \[ \frac{a_{N+1}}{s_{N+1}} + \cdots + \frac{a_{N+k}}{s_{N+k}}
+           \ge 1 - \frac{s_N}{s_{N+k}} \]
+        and deduce that $\displaystyle\sum \frac{a_n}{s_n}$ diverges.
+  \item Prove that
+        \[ \frac{a_n}{s_n^2} \le \frac{1}{s_{n-1}} - \frac{1}{s_n} \]
+        and deduce that $\displaystyle\sum \frac{a_n}{s_n^2}$ converges.
+  \item What can be said about
+        \[ \sum \frac{a_n}{1+na_n} \qquad\text{and}\qquad
+           \sum \frac{a_n}{1+n^2a_n}\,? \]
+\end{enumerate}
+\kd{This is the divergent half of Rudin's ``no boundary'' claim after 3.29:
+by (b), $\Sigma a_n/s_n$ diverges yet its terms are smaller than $a_n$ by the
+unbounded factor $s_n$ --- every divergent series dominates a slower one. Part
+(b)'s display is a Cauchy-criterion violation served ready-made: fix $N$, let
+$k$ grow, and the blocks refuse to shrink because $s_{N+k}\to\infty$. Part
+(c) telescopes. In (d) the first can do either (try $a_n=1$ vs.\ $a_n$
+supported on sparse blocks); the second always converges, since
+$a_n/(1+n^2a_n) \le 1/n^2$.}
+
+\item Suppose $a_n > 0$ and $\Sigma a_n$ converges. Put
+\[ r_n = \sum_{m=n}^{\infty} a_m. \]
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=3pt, topsep=3pt]
+  \item Prove that
+        \[ \frac{a_m}{r_m} + \cdots + \frac{a_n}{r_n} > 1 - \frac{r_n}{r_m} \]
+        if $m < n$, and deduce that $\displaystyle\sum \frac{a_n}{r_n}$
+        diverges.
+  \item Prove that
+        \[ \frac{a_n}{\sqrt{r_n}} < 2(\sqrt{r_n}-\sqrt{r_{n+1}}) \]
+        and deduce that $\displaystyle\sum \frac{a_n}{\sqrt{r_n}}$
+        converges.
+\end{enumerate}
+\kd{The convergent half of ``no boundary'': by (b), dividing a convergent
+series by the vanishing factor $\sqrt{r_n}$ leaves it convergent --- every
+convergent series is dominated by a slower one. Together with 3.11(b) this
+kills the conjecture in both directions. The engine in both parts is the same:
+$r_n$ telescopes ($a_n = r_n - r_{n+1}$), and (b) is the algebraic identity
+$\frac{r_n-r_{n+1}}{\sqrt{r_n}} < 2(\sqrt{r_n}-\sqrt{r_{n+1}})$, i.e.\
+$\sqrt{r_n}+\sqrt{r_{n+1}} < 2\sqrt{r_n}$.}
+
+\item Prove that the Cauchy product of two absolutely convergent series
+converges absolutely.\kn{Compare $\sum_n|c_n|$ against
+$(\Sigma|a_n|)(\Sigma|b_n|)$: every partial sum of $|c_n|$ is trapped in a
+triangle of the array of $|a_kb_j|$, which sits inside a full rectangle. With
+3.50 this closes the multiplication story: absolute $\times$ absolute is
+absolute; absolute $\times$ conditional converges to the right value
+(Mertens); conditional $\times$ conditional can diverge (3.49).}
+
+\item If $(s_n)$ is a complex sequence, define its arithmetic means
+$\sigma_n$ by
+\[ \sigma_n = \frac{s_0 + s_1 + \cdots + s_n}{n+1} \qquad (n = 0,1,2,\dots). \]
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=3pt, topsep=3pt]
+  \item If $\lim s_n = s$, prove that $\lim \sigma_n = s$.
+  \item Construct a sequence $(s_n)$ which does not converge, although
+        $\lim \sigma_n = 0$.
+  \item Can it happen that $s_n > 0$ for all $n$ and that
+        $\limsup s_n = \infty$, although $\lim \sigma_n = 0$?
+  \item Put $a_n = s_n - s_{n-1}$ for $n \ge 1$. Show that
+        \[ s_n - \sigma_n = \frac{1}{n+1}\sum_{k=1}^{n} ka_k. \]
+        Assume that $\lim (na_n) = 0$ and that $(\sigma_n)$ converges. Prove
+        that $(s_n)$ converges. [This gives a converse of (a), but under the
+        additional assumption that $na_n \to 0$.]
+  \item Derive the last conclusion from a weaker hypothesis: Assume
+        $M < \infty$, $|na_n| \le M$ for all $n$, and
+        $\lim \sigma_n = \sigma$. Prove that $\lim s_n = \sigma$, by
+        completing the following outline:
+
+        If $m < n$, then
+        \[ s_n - \sigma_n = \frac{m+1}{n-m}(\sigma_n - \sigma_m)
+           + \frac{1}{n-m}\sum_{i=m+1}^{n} (s_n - s_i). \]
+        For these $i$,
+        \[ |s_n - s_i| \le \frac{(n-i)M}{i+1} \le \frac{(n-m-1)M}{m+2}. \]
+        Fix $\varepsilon > 0$ and associate with each $n$ the integer $m$ that
+        satisfies
+        \[ m \le \frac{n-\varepsilon}{1+\varepsilon} < m+1. \]
+        Then $(m+1)/(n-m) \le 1/\varepsilon$ and $|s_n - s_i| < M\varepsilon$.
+        Hence
+        \[ \limsup_{n\to\infty} |s_n - \sigma| \le M\varepsilon. \]
+        Since $\varepsilon$ was arbitrary, $\lim s_n = \sigma$.
+\end{enumerate}
+\kd{Ces\`aro summability, and a first look at an entire subject. Part (a) says
+averaging never destroys a limit; (b), with $s_n = (-1)^n$, says it can
+manufacture one --- so ``Ces\`aro sum'' genuinely extends ``sum,'' which is
+how Fourier series will be rescued at 8.15--8.16 (Fej\'er's idea). Parts (d)
+and (e) are \emph{Tauberian} theorems: conditions under which the extension
+collapses back to ordinary convergence. Hardy's condition $|na_n| \le M$ in
+(e) is the historical original. The two-parameter bookkeeping in the outline
+--- $m$ tied to $n$ through $\varepsilon$ --- is 3.31's freeze-and-release
+discipline pushed one level up.}
+
+\item Definition 3.21 can be extended to the case in which the $a_n$ lie in
+some fixed $\R^k$. Absolute convergence is defined as convergence of
+$\Sigma|\mathbf{a}_n|$. Show that Theorems 3.22, 3.23, 3.25(a), 3.33, 3.34,
+3.42, 3.45, 3.47, and 3.55 are true in this more general setting. (Only
+slight modifications are required in any of the proofs.)\kn{The checklist of
+which theory is metric and which is order-theoretic: everything driven by the
+Cauchy criterion and the triangle inequality survives in $\R^k$ verbatim. What
+is missing from the list matters too --- 3.24, 3.27, and comparison (b) need
+\emph{nonnegativity}, and the root/ratio tests survive only because they test
+the scalar series $\Sigma|\mathbf{a}_n|$.}
+
+\item Fix a positive number $\alpha$. Choose $x_1 > \sqrt\alpha$, and define
+$x_2, x_3, x_4, \dots$ by the recursion formula
+\[ x_{n+1} = \frac12\left(x_n + \frac{\alpha}{x_n}\right). \]
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=3pt, topsep=3pt]
+  \item Prove that $(x_n)$ decreases monotonically and that
+        $\lim x_n = \sqrt\alpha$.
+  \item Put $\varepsilon_n = x_n - \sqrt\alpha$, and show that
+        \[ \varepsilon_{n+1} = \frac{\varepsilon_n^2}{2x_n}
+           < \frac{\varepsilon_n^2}{2\sqrt\alpha}, \]
+        so that, setting $\beta = 2\sqrt\alpha$,
+        \[ \varepsilon_{n+1} < \beta\left(\frac{\varepsilon_1}{\beta}\right)^{2^n}
+           \qquad (n = 1,2,3,\dots). \]
+  \item This is a good algorithm for computing square roots, since the
+        recursion formula is simple and the convergence is extremely rapid.
+        For example, if $\alpha = 3$ and $x_1 = 2$, show that
+        $\varepsilon_1/\beta < 1/10$ and that therefore
+        \[ \varepsilon_5 < 4\cdot10^{-16}, \qquad
+           \varepsilon_6 < 4\cdot10^{-32}. \]
+\end{enumerate}
+\kn{Newton's method on $f(x) = x^2 - \alpha$, and the recursion Chapter 1's
+note on Example 1.1 promised: it always lands \emph{above} $\sqrt\alpha$
+(AM--GM), so the sequence is decreasing and 3.14 applies. Part (b) is
+quadratic convergence --- the error squares each step, doubling the correct
+digits --- against which the linear rate of 1.1's map $q = (2p+2)/(p+2)$, and
+of 3.17 below, can be measured.}
+
+\item Fix $\alpha > 1$. Take $x_1 > \sqrt\alpha$, and define
+\[ x_{n+1} = \frac{\alpha+x_n}{1+x_n} = x_n + \frac{\alpha-x_n^2}{1+x_n}. \]
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item Prove that $x_1 > x_3 > x_5 > \cdots$.
+  \item Prove that $x_2 < x_4 < x_6 < \cdots$.
+  \item Prove that $\lim x_n = \sqrt\alpha$.
+  \item Compare the rapidity of convergence of this process with the one
+        described in Exercise 3.16.
+\end{enumerate}
+\kn{The general-$\alpha$ version of Chapter 1's map (there $\alpha = 2$:
+$q = (2+p)/(1+p)$). Unlike Newton, it alternates sides of $\sqrt\alpha$, so
+the two subsequences must be handled separately by 3.14 and then reunited ---
+the strategy of 3.4. Convergence is linear: the error is multiplied by roughly
+$(\sqrt\alpha-1)/(\sqrt\alpha+1)$ each step, one new digit per few
+iterations, versus Newton's doubling.}
+
+\item Replace the recursion formula of Exercise 3.16 by
+\[ x_{n+1} = \frac{p-1}{p}x_n + \frac{\alpha}{p}x_n^{-p+1}, \]
+where $p$ is a fixed positive integer, and describe the behavior of the
+resulting sequences $(x_n)$.\kn{Newton for $f(x) = x^p - \alpha$: the limit is
+$\sqrt[p]{\alpha}$, with the same quadratic convergence and the same
+monotone-decrease-from-above proof. A numerical companion to Theorem 1.21,
+which proved the $p$th root exists; this computes it.}
+
+\item Associate to each sequence $a = (\alpha_n)$, in which $\alpha_n$ is $0$
+or $2$, the real number
+\[ x(a) = \sum_{n=1}^{\infty} \frac{\alpha_n}{3^n}. \]
+Prove that the set of all $x(a)$ is precisely the Cantor set described in
+Theorem 2.44.\kn{The address system of Chapter 2's binary-tree figure made
+exact: digit $\alpha_n$ chooses the left or right third at stage $n$, and the
+series is the point the nested thirds close on. Series notation turns the
+geometric description into a formula --- and makes the bijection with
+$\{0,2\}^\N \sim \{0,1\}^\N$ (hence uncountability, 2.14) immediate.}
+
+\item Suppose $(p_n)$ is a Cauchy sequence in a metric space $X$, and some
+subsequence $(p_{n_i})$ converges to a point $p \in X$. Prove that the full
+sequence $(p_n)$ converges to $p$.\kn{Split $d(p_n,p) \le d(p_n,p_{n_i}) +
+d(p_{n_i},p)$: the first half is small because the sequence is Cauchy, the
+second because the subsequence converges. Small but used constantly ---
+including in the very next two exercises, and it is how 3.11(b) could have
+been proved from 3.6(a) directly.}
+
+\item Prove the following analogue of Theorem 3.10(b): If $(E_n)$ is a
+sequence of closed, nonempty, and bounded sets in a \emph{complete} metric
+space $X$, if $E_n \supset E_{n+1}$, and if
+\[ \lim_{n\to\infty} \operatorname{diam} E_n = 0, \]
+then $\bigcap_{n=1}^\infty E_n$ consists of exactly one point.\kn{Compactness
+weakened to closed-and-bounded, compensated by completeness: pick
+$x_n \in E_n$; shrinking diameters make $(x_n)$ Cauchy, completeness gives
+the limit, closedness puts it in every $E_n$. Compare 2.36, where compactness
+did the work with no diameter hypothesis at all --- and note that here,
+unlike there, ``bounded'' can even be dropped once diameters shrink.}
+
+\item Suppose $X$ is a nonempty complete metric space, and $(G_n)$ is a
+sequence of dense open subsets of $X$. Prove Baire's theorem, namely, that
+$\bigcap_{n=1}^\infty G_n$ is not empty. (In fact, it is dense in $X$.)
+\emph{Hint:} Find a shrinking sequence of neighborhoods $E_n$ such that
+$\overline{E}_n \subset G_n$, and apply Exercise 3.21.\kd{The general Baire
+theorem, upgrading Exercise 2.30 from $\R^k$ to any complete metric space ---
+with 3.21 replacing compactness as the engine. The construction: density of
+$G_1$ gives a ball inside it; density of $G_2$ gives a smaller ball inside
+both, radius halved; iterate, and 3.21 yields a point surviving every stage.
+This theorem underlies uniform boundedness and the open mapping theorem in
+functional analysis, and Exercise 2.30's consequences (e.g.\ $\R$
+uncountable) now hold in every complete metric space without isolated
+points.}
+
+\item Suppose $(p_n)$ and $(q_n)$ are Cauchy sequences in a metric space $X$.
+Show that the sequence $(d(p_n,q_n))$ converges. \emph{Hint:} For any $m$,
+$n$,
+\[ d(p_n,q_n) \le d(p_n,p_m) + d(p_m,q_m) + d(q_m,q_n); \]
+it follows that
+\[ |d(p_n,q_n) - d(p_m,q_m)| \]
+is small if $m$ and $n$ are large.\kn{Note where the limit lives: the
+\emph{real} sequence $(d(p_n,q_n))$ is Cauchy, so it converges by 3.11(c) ---
+completeness of $\R$ --- even though $(p_n)$ and $(q_n)$ may converge to
+nothing in $X$. That asymmetry is exactly what the next exercise exploits.}
+
+\item Let $X$ be a metric space.
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=3pt, topsep=3pt]
+  \item Call two Cauchy sequences $(p_n)$, $(q_n)$ in $X$ \emph{equivalent} if
+        \[ \lim_{n\to\infty} d(p_n,q_n) = 0. \]
+        Prove that this is an equivalence relation.
+  \item Let $X^*$ be the set of all equivalence classes so obtained. If
+        $P \in X^*$, $Q \in X^*$, $(p_n) \in P$, $(q_n) \in Q$, define
+        \[ \Delta(P,Q) = \lim_{n\to\infty} d(p_n,q_n); \]
+        by Exercise 3.23, this limit exists. Show that the number
+        $\Delta(P,Q)$ is unchanged if $(p_n)$ and $(q_n)$ are replaced by
+        equivalent sequences, and hence that $\Delta$ is a distance function
+        in $X^*$.
+  \item Prove that the resulting metric space $X^*$ is complete.
+  \item For each $p \in X$, there is a Cauchy sequence all of whose terms are
+        $p$; let $P_p$ be the element of $X^*$ which contains this sequence.
+        Prove that
+        \[ \Delta(P_p,P_q) = d(p,q) \]
+        for all $p,q \in X$. In other words, the mapping $\varphi$ defined by
+        $\varphi(p) = P_p$ is an \emph{isometry} (i.e., a distance-preserving
+        mapping) of $X$ into $X^*$.
+  \item Prove that $\varphi(X)$ is dense in $X^*$, and that
+        $\varphi(X) = X^*$ if $X$ is complete. By (d), we may identify $X$
+        and $\varphi(X)$ and thus regard $X$ as embedded in the complete
+        metric space $X^*$. We call $X^*$ the \emph{completion} of $X$.
+\end{enumerate}
+\kd{The construction the appendix to Chapter 1 declined: a missing limit is
+\emph{represented by the sequences that reach for it}, with two sequences
+identified when they reach for the same thing. This is Cantor's route to $\R$
+and the one Tao's \emph{Analysis I} takes as its foundation (his Chapter 5:
+reals \emph{are} equivalence classes of rational Cauchy sequences). Note what
+makes it outrun Dedekind cuts, as the appendix's note anticipated: nothing
+here mentions order --- only $d$ --- so \emph{every} metric space acquires a
+completion, function spaces included. Part (c) has the construction's one
+subtlety: a Cauchy sequence \emph{of equivalence classes} is unwound by
+picking representatives and a diagonal argument, the 3.7-style chase again.}
+
+\item Let $X$ be the metric space whose points are the rational numbers, with
+the metric $d(x,y) = |x-y|$. What is the completion of this space? (Compare
+Exercise 3.24.)\kn{$\R$, of course --- and the point of asking is that the
+completion was built \emph{without} $\R$: 3.24 used only $\Q$'s own metric.
+Chapter 1 characterised $\R$ by order (least upper bounds); this exercise
+constructs it from distance. Same object, two foundations, and the
+uniqueness-up-to-isomorphism noted in Step 9 of the appendix is what
+guarantees they agree.}
+
+\end{enumerate}

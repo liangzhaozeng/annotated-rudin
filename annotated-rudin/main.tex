@@ -1,0 +1,52 @@
+% ============================================================
+%  THE ANNOTATED RUDIN -- whole-book build (all chapters).
+%  Per-chapter builds: main-ch01.tex, main-ch02.tex
+%  Build:  tectonic main.tex
+% ============================================================
+\documentclass[11pt,twoside]{article}
+\input{bookhead}
+\begin{document}
+\rutitlepage{CHAPTERS 1--4}{The Real and Complex Number Systems
+  \textperiodcentered\ Basic Topology \textperiodcentered\ Numerical
+  Sequences and Series \textperiodcentered\ Continuity}
+\input{front/how-to-read}
+\clearpage
+\pagestyle{fancy}
+\input{ch01/01-introduction}
+\input{ch01/02-ordered-sets}
+\input{ch01/03-fields}
+\input{ch01/04-real-field}
+\input{ch01/05-extended-reals}
+\input{ch01/06-complex-field}
+\input{ch01/07-euclidean}
+\input{ch01/08-appendix}
+\input{ch01/09-exercises}
+%  --- appendix ---
+\input{appendix/ch01-supplement}
+\input{appendix/ch01-exercises}
+\input{ch02/01-countable}
+\input{ch02/02-metric-spaces}
+\input{ch02/03-compact}
+\input{ch02/04-perfect-connected}
+\input{ch02/05-exercises}
+%  --- appendix ---
+\input{appendix/ch02-supplement}
+\input{appendix/ch02-exercises}
+\input{ch03/01-sequences}
+\input{ch03/02-cauchy-limsup}
+\input{ch03/03-series}
+\input{ch03/04-tests}
+\input{ch03/05-operations}
+\input{ch03/06-exercises}
+%  --- appendix ---
+\input{appendix/ch03-supplement}
+\input{appendix/ch03-exercises}
+\input{ch04/01-limits}
+\input{ch04/02-continuous}
+\input{ch04/03-compactness}
+\input{ch04/04-connect-disc}
+\input{ch04/05-exercises}
+%  --- appendices ---
+\input{appendix/ch04-supplement}
+\input{appendix/ch04-exercises}
+\end{document}

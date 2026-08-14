@@ -1,0 +1,18 @@
+# Deliberate departures from the retyped source PDF, restoring Rudin's
+# third edition.  Format:  LABEL | reason
+#
+# The source's own foreword concedes that new typos were probably introduced.
+# Every correction here is flagged to the reader in the text as well, by a
+# warning-tier margin note -- silent emendation would make "verbatim" empty.
+
+A1 | source drops the opening "If"; restored from Rudin 3rd ed.
+M1 | source drops "and $y \in F$"; restored from Rudin 3rd ed. (closure)
+
+# Unlabelled (not checked by the clause pass, recorded for honesty):
+# - Rudin 2.12, display (2.17): source has "x31, x22 .x13" (period for
+#   comma). Transcribed with the comma of Rudin's original.
+# - Rudin 2.45: source has "Two subsets A ad B"; transcribed "and".
+# - Rudin 3.5: source has "its limit is called it subsequential limit";
+#   transcribed "a subsequential limit" per Rudin's original.
+# - Rudin 3.42 proof: source has "We now that the first inequality";
+#   transcribed "We note that".

@@ -1,0 +1,467 @@
+% ============================================================
+%  Chapter 1 -- The Complex Field, 1.24-1.35
+% ============================================================
+\rsection{The Complex Field}
+
+\begin{signpost}[Equipment, with one exception]
+Nothing in this section is about $\R$, and nothing in it is hard. Rudin is
+stocking the shelves: Chapters 3, 7, 8 and 11 all work with complex sequences,
+complex series and complex-valued functions, and he wants $\C$ available with
+its arithmetic and its absolute value already proved.
+
+\smallskip
+The section has a definite shape. Definitions 1.24--1.29 build $\C$ and then
+recover the familiar notation $a+bi$; 1.30--1.33 introduce the conjugate and the
+absolute value and establish the triangle inequality; 1.34--1.35 prove the
+Schwarz inequality. Only two things here have downstream weight: \textbf{1.33(e)},
+the triangle inequality, which is used on almost every page of Chapters 3--7,
+and \textbf{1.35}, the Schwarz inequality, which is the engine behind the metric
+on $\R^k$ in the next section and reappears for integrals in Exercise 6.10 and
+for $\mathscr{L}^2$ functions in 11.35.
+
+\smallskip
+Watch one point of method. Rudin defines a complex number as an \emph{ordered
+pair}, verifies the field axioms by direct computation, and only then --- at
+1.27 --- introduces $i$. The mysterious square root of $-1$ is never assumed; it
+is produced. That ordering is the whole reason the construction is honest.
+\end{signpost}
+
+\ritem{1.24}{Definition}
+A \emph{complex number} is an ordered pair $(a,b)$ of real numbers. ``Ordered''
+means that $(a,b)$ and $(b,a)$ are regarded as distinct if $a \ne b$.
+
+Let $x = (a,b)$, $y = (c,d)$ be two complex numbers. We write $x = y$ if and
+only if $a = c$ and $b = d$. (Note that this definition is not entirely
+superfluous; think of equality of rational numbers, represented as quotients of
+integers.) We define
+\begin{align*}
+  x + y &= (a+c,\; b+d)\\
+  xy &= (ac-bd,\; ad+bc).
+\end{align*}
+
+\begin{unpack}[Where the multiplication rule comes from]
+The addition rule is the obvious one. The multiplication rule is not, and Rudin
+gives no motivation --- but it is forced, not chosen.
+
+Suppose you want $(a,b)$ to behave like $a + bi$ with $i^2 = -1$, while keeping
+the field axioms. Then
+\[ (a+bi)(c+di) = ac + adi + bci + bd\,i^2 = (ac - bd) + (ad+bc)i, \]
+which is exactly the displayed formula. So the definition is the multiplication
+$\C$ \emph{must} have if $i$ is to exist at all.
+
+Rudin declines to say this here, because saying it would presuppose $i$ --- the
+very thing he refuses to assume until 1.27. The formula is therefore written
+down bare, checked to satisfy the axioms in 1.25, and only afterwards revealed
+to mean what you expected. Read 1.24--1.29 as a single argument with the
+motivation deliberately withheld until the end.
+\end{unpack}
+
+\ritem{1.25}{Theorem}
+\emph{These definitions of addition and multiplication turn the set of all
+complex numbers into a field, with $(0,0)$ and $(1,0)$ in the role of $0$ and
+$1$.}
+
+\begin{proof}
+We simply verify the field axioms, as listed in Definition 1.12. (Of course, we
+use the field structure of $\R$.) Let $x = (a,b)$, $y = (c,d)$, $z = (e,f)$.
+
+\smallskip
+(A1) is clear.
+
+(A2) $x+y = (a+c,\,b+d) = (c+a,\,d+b) = y+x$.
+
+(A3) \begin{align*}
+  (x+y)+z &= (a+c,\,b+d)+(e,f)\\
+          &= (a+c+e,\; b+d+f)\\
+          &= (a,b)+(c+e,\,d+f) = x+(y+z).
+\end{align*}
+
+(A4) $x + 0 = (a,b)+(0,0) = (a,b) = x$.
+
+(A5) Put $-x = (-a,-b)$. Then $x + (-x) = (0,0) = 0$.
+
+\smallskip
+(M1) is clear.
+
+(M2) $xy = (ac-bd,\,ad+bc) = (ca-db,\,da+cb) = yx$.
+
+(M3) \begin{align*}
+  (xy)z &= (ac-bd,\,ad+bc)(e,f)\\
+        &= (ace-bde-adf-bcf,\; acf-bdf+ade+bce)\\
+        &= (a,b)(ce-df,\,cf+de) = x(yz).
+\end{align*}
+
+(M4) $1x = (1,0)(a,b) = (a,b) = x$.
+
+(M5) If $x \ne 0$ then $(a,b) \ne (0,0)$, which means that at least one of the
+real numbers $a$, $b$ is different from $0$. Hence $a^2+b^2 > 0$, by Proposition
+1.18(d),\kn{Exactly the leverage promised at 1.18(d). Squares are nonnegative
+and not both $a,b$ vanish, so $a^2+b^2>0$ --- and therefore the divisions below
+are legal. The construction of $\C$ depends on an order property of $\R$, which
+is worth noticing given that $\C$ itself cannot be ordered (Exercise 1.8).} and
+we can define
+\[ \frac1x = \left(\frac{a}{a^2+b^2},\; \frac{-b}{a^2+b^2}\right). \]
+Then
+\[ x \cdot \frac1x = (a,b)\left(\frac{a}{a^2+b^2},\;
+   \frac{-b}{a^2+b^2}\right) = (1,0) = 1. \]
+
+\smallskip
+(D) \begin{align*}
+  x(y+z) &= (a,b)(c+e,\,d+f)\\
+         &= (ac+ae-bd-bf,\; ad+af+bc+be)\\
+         &= (ac-bd,\,ad+bc)+(ae-bf,\,af+be)\\
+         &= xy + xz. \qedhere
+\end{align*}
+\end{proof}
+
+\begin{deeper}[Nothing here is deep, and that is the point]
+Every line is arithmetic in $\R$. That is precisely what makes the theorem
+worth stating: it shows the existence of $\C$ requires no new assumptions
+whatever --- given $\R$, the complex field comes free, as a set of pairs.
+
+Compare the situation for $\R$ itself, where Theorem 1.19 needed a page of
+Dedekind cuts. The difference is that $\C$ adds no \emph{completeness}; it only
+adds algebra. That algebra turns out to be enormously powerful --- 8.8 will show
+$\C$ is algebraically closed --- but it costs nothing to obtain.
+\end{deeper}
+
+\ritem{1.26}{Theorem}
+\emph{For any real numbers $a$ and $b$ we have}
+\[ (a,0)+(b,0) = (a+b,0), \qquad (a,0)(b,0) = (ab,0). \]
+
+The proof is trivial.
+
+Theorem 1.26 shows that the complex numbers of the form $(a,0)$ have the same
+arithmetic properties as the corresponding real numbers $a$. We can therefore
+identify $(a,0)$ with $a$. This identification gives us the real field as a
+subfield of the complex field.\kd{The same manoeuvre as Step 9 of the appendix,
+where $\Q$ is identified with the rational cuts $\Q^*$. In both cases a
+\emph{copy} of the smaller field sits inside the larger one, arithmetic and
+order preserved, and we agree to stop distinguishing the copy from the original.
+Rudin explicitly links the two identifications in Step 9; when you read the
+appendix, come back to this paragraph.}
+
+The reader may have noticed that we defined the complex numbers without any
+reference to the mysterious square root of $-1$. We now show that the notation
+$(a,b)$ is equivalent to the more customary $a+bi$.
+
+\ritem{1.27}{Definition}
+$i = (0,1)$.
+
+\ritem{1.28}{Theorem}
+$i^2 = -1$.
+
+\begin{proof}
+$i^2 = (0,1)(0,1) = (-1,0) = -1$.
+\end{proof}
+
+\ritem{1.29}{Theorem}
+\emph{If $a$ and $b$ are real, then $(a,b) = a+bi$.}
+
+\begin{proof}
+\begin{align*}
+  a + bi &= (a,0)+(b,0)(0,1)\\
+         &= (a,0)+(0,b) = (a,b). \qedhere
+\end{align*}
+\end{proof}
+
+\begin{unpack}[What 1.27--1.29 actually accomplish]
+Three lines of computation, and they retire a piece of folklore. The usual story
+is that $i$ is postulated --- an imaginary object adjoined by fiat because we
+wish $x^2+1$ had a root. Rudin's construction assumes no such thing. $\C$ is
+built from ordered pairs of reals, its arithmetic is defined outright, and then
+one particular pair, $(0,1)$, is observed to square to $-1$.
+
+So $i$ is not an assumption; it is a \emph{discovery} about a field that already
+existed. And 1.29 shows the pair notation and the $a+bi$ notation describe the
+same object, so you may use whichever is convenient --- pairs when checking
+axioms, $a+bi$ when computing.
+\end{unpack}
+
+\ritem{1.30}{Definition}
+If $a$, $b$ are real and $z = a+bi$, then the complex number $\bar z = a-bi$ is
+called the \emph{conjugate} of $z$. The numbers $a$ and $b$ are the \emph{real
+part} and the \emph{imaginary part} of $z$, respectively.
+
+We shall occasionally write
+\[ a = \operatorname{Re}(z), \qquad b = \operatorname{Im}(z). \]
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (-16,0) -- (34,0);  \node[lbl, anchor=west] at (34,0) {$\operatorname{Re}$};
+  \draw[axis] (0,-20) -- (0,22);  \node[lbl, anchor=south] at (0,22) {$\operatorname{Im}$};
+  % z
+  \draw[vec] (0,0) -- (22,14);
+  \node[ptfill] at (22,14) {};
+  \node[mlbl, anchor=south west] at (22,14) {$z=(a,b)=a+bi$};
+  \node[mlbl, anchor=south east] at (11,9) {$|z|$};
+  % conjugate
+  \draw[vec] (0,0) -- (22,-14);
+  \node[ptfill] at (22,-14) {};
+  \node[mlbl, anchor=north west] at (22,-14) {$\bar z=a-bi$};
+  \draw[guide] (22,14) -- (22,-14);
+  % components
+  \draw[guide] (0,14) -- (22,14);
+  \node[mlbl, anchor=east] at (-1,14) {$b$};
+  \node[mlbl, anchor=north] at (22,-0.5) {$a$};
+  \node[ptfill, minimum size=2.6pt] at (22,0) {};
+  % i
+  \node[ptfill, minimum size=2.6pt] at (0,8) {};
+  \node[mlbl, anchor=east] at (-1,8) {$i=(0,1)$};
+\end{tikzpicture}
+\end{center}
+\figcap{Conjugation is reflection in the real axis, and
+$|z|=\sqrt{a^2+b^2}$ is distance from the origin. Neither is a new assumption
+--- both are read off Definition 1.24.}
+
+\ritem{1.31}{Theorem}
+\emph{If $z$ and $w$ are complex, then}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{$\overline{z+w} = \bar z + \bar w$,}
+  \item \emph{$\overline{zw} = \bar z \cdot \bar w$,}
+  \item \emph{$z + \bar z = 2\operatorname{Re}(z)$,
+        $z - \bar z = 2i\operatorname{Im}(z)$,}
+  \item \emph{$z\bar z$ is real and positive (except when $z = 0$).}
+\end{enumerate}
+
+\begin{proof}
+(a), (b), and (c) are quite trivial. To prove (d), write $z = a+bi$, and note
+that $z\bar z = a^2+b^2$.
+\end{proof}
+
+\begin{deeper}[Conjugation is a field automorphism]
+Parts (a) and (b) say that $z \mapsto \bar z$ preserves both operations, and
+since $\bar{\bar z} = z$ it is a bijection. In the language of algebra,
+conjugation is an automorphism of $\C$ fixing $\R$ pointwise --- and it is the
+only nontrivial one.
+
+The practical use is a symmetry principle you will meet repeatedly: any
+polynomial identity with real coefficients that holds for $z$ also holds for
+$\bar z$. That is why non-real roots of real polynomials come in conjugate
+pairs, and why 8.8 (the algebraic completeness of $\C$) has the consequences it
+does for real polynomials.
+
+Part (d) is the one with immediate work to do: it is what makes Definition 1.32
+possible, since $z\bar z \ge 0$ is exactly the condition needed before taking a
+square root by 1.21.
+\end{deeper}
+
+\ritem{1.32}{Definition}
+If $z$ is a complex number, its \emph{absolute value} $|z|$ is the non-negative
+square root of $z\bar z$; that is, $|z| = (z\bar z)^{1/2}$.
+
+The existence (and uniqueness) of $|z|$ follows from Theorem 1.21 and part (d)
+of Theorem 1.31.\kn{Both citations are load-bearing, and note the gap they leave.
+For $z \ne 0$, 1.31(d) makes $z\bar z$ a positive real and 1.21 --- which
+requires a positive input --- returns its unique positive square root. For
+$z = 0$ we have $z\bar z = 0$, which 1.21 does not cover; that case is settled
+separately by the convention $|0| = 0$, recorded in 1.33(a). This is the first
+place the work of \S1.21 gets spent.}
+
+Note that when $x$ is real, then $\bar x = x$, hence $|x| = \sqrt{x^2}$. Thus
+$|x| = x$ if $x \ge 0$, $|x| = -x$ if $x < 0$.
+
+\ritem{1.33}{Theorem}
+\emph{Let $z$ and $w$ be complex numbers. Then}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{$|z| > 0$ unless $z = 0$, $|0| = 0$,}
+  \item \emph{$|\bar z| = |z|$,}
+  \item \emph{$|zw| = |z|\,|w|$,}
+  \item \emph{$|\operatorname{Re}(z)| \le |z|$,}
+  \item \emph{$|z+w| \le |z|+|w|$.}
+\end{enumerate}
+
+\begin{proof}
+(a) and (b) are trivial. Put $z = a+bi$, $w = c+di$, with $a,b,c,d$ real. Then
+\[ |zw|^2 = (ac-bd)^2+(ad+bc)^2 = (a^2+b^2)(c^2+d^2) = |z|^2|w|^2 \]
+or $|zw|^2 = (|z|\,|w|)^2$. Now (c) follows from the uniqueness assertion of
+Theorem 1.21.
+
+To prove (d), note that $a^2 \le a^2+b^2$, hence
+\[ |a| = \sqrt{a^2} \le \sqrt{a^2+b^2}. \]
+
+To prove (e), note that $\bar z w$ is the conjugate of $z\bar w$, so that
+$z\bar w + \bar z w = 2\operatorname{Re}(z\bar w)$. Hence
+\begin{align*}
+  |z+w|^2 &= (z+w)(\overline{z+w}) = z\bar z + z\bar w + \bar z w + w\bar w\\
+          &= |z|^2 + 2\operatorname{Re}(z\bar w) + |w|^2\\
+          &\le |z|^2 + 2|z\bar w| + |w|^2\\
+          &= |z|^2 + 2|z|\,|w| + |w|^2 = (|z|+|w|)^2.
+\end{align*}
+Now (e) follows by taking square roots.
+\end{proof}
+
+\begin{unpack}[The standard proof of a triangle inequality]
+The shape of this argument recurs throughout analysis, and it is worth extracting
+because you will need to reproduce it: to bound $|z+w|$, do not work with
+$|z+w|$ --- work with $|z+w|^2$, expand it as $(z+w)(\overline{z+w})$, bound the
+cross-term, and take square roots at the end.
+
+The cross-term is the only real step, and it goes in two moves: 1.31(c) turns
+$z\bar w + \bar z w$ into $2\operatorname{Re}(z\bar w)$, then (d) bounds
+$\operatorname{Re}$ by modulus and (c) factors it as $|z||w|$.
+
+The identical strategy proves 1.37(e) for $\R^k$ in the next section, with the
+Schwarz inequality playing the part of (d). Recognising the pattern once saves
+reading the second proof.
+\end{unpack}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[seg] (0,0) -- (26,5);
+  \draw[seg] (26,5) -- (34,24);
+  \draw[thin] (0,0) -- (34,24);
+  \node[ptfill, minimum size=2.4pt] at (0,0) {};
+  \node[ptfill, minimum size=2.4pt] at (26,5) {};
+  \node[ptfill, minimum size=2.4pt] at (34,24) {};
+  \node[mlbl, anchor=north] at (13,-1.2) {$|z|$};
+  \node[mlbl, anchor=west] at (32,13.4) {$|w|$};
+  \node[mlbl, anchor=south east] at (13,12.2) {$|z{+}w|$};
+  \node[mlbl, anchor=north] at (26,2.8) {$z$};
+  \node[mlbl, anchor=south] at (34,25.6) {$z{+}w$};
+  \node[mlbl, anchor=east] at (-1.6,0) {$0$};
+\end{tikzpicture}
+\end{center}
+\figcap{Part (e) is about an actual triangle: the straight route from $0$ to
+$z+w$ never beats the detour through $z$. Equality is the degenerate triangle
+--- $z$ and $w$ pointing the same way, which is exactly
+$\operatorname{Re}(z\bar w) = |z\bar w|$, the one inequality in the proof.}
+
+\begin{deeper}[Multiplication rotates and scales --- (c) drawn instead of computed]
+Part (c) also has a picture. Multiplying every point of the plane by $w$
+rotates it by the angle of $w$ and stretches it by the factor $|w|$: the
+triangle with vertices $0, w, zw$ is the triangle $0, 1, z$ so rotated and
+stretched.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (-4,0) -- (26,0);
+  \draw[axis] (0,-2) -- (0,30);
+  \fill[black!12] (0,0) -- (9,0) -- (18,9) -- cycle;
+  \draw[thin] (0,0) -- (9,0) -- (18,9) -- cycle;
+  \fill[pattern=north east lines, pattern color=black!45]
+    (0,0) -- (9,9) -- (9,27) -- cycle;
+  \draw[thin] (0,0) -- (9,9) -- (9,27) -- cycle;
+  \node[ptfill, minimum size=2.4pt] at (9,0) {};
+  \node[ptfill, minimum size=2.4pt] at (18,9) {};
+  \node[ptfill, minimum size=2.4pt] at (9,9) {};
+  \node[ptfill, minimum size=2.4pt] at (9,27) {};
+  \node[mlbl, anchor=north] at (9,-1.6) {$1$};
+  \node[mlbl, anchor=west] at (19.6,9) {$z$};
+  \node[mlbl, anchor=south west] at (11,7.4) {$w$};
+  \node[mlbl, anchor=west] at (10.6,27) {$zw$};
+  \node[mlbl, anchor=north east] at (-1,-0.4) {$0$};
+\end{tikzpicture}
+\end{center}
+\figcap{The shaded triangle $0,1,z$ and the hatched triangle $0,w,zw$ are
+similar, with ratio $|w|$. (Drawn for $z = 2+i$, $w = 1+i$; the similarity is
+general.)}
+
+\smallskip
+Part (c) is the stretch factor read off the picture: the side $0 \to zw$ is
+the side $0 \to z$ magnified by $|w|$, so $|zw| = |z||w|$. Rudin proves it by
+the $z\bar z$ computation instead, because the rotation--scaling description
+presupposes angles --- sines and cosines --- which do not officially exist
+until Chapter 8. The picture is why the computation was never in doubt; the
+computation is what makes the picture legal. Taking $w = \bar z$ folds the
+rotation flat onto the real axis: $z\bar z = |z|^2$ is this figure with the
+hatched triangle lying on its back.
+\end{deeper}
+
+\ritem{1.34}{Notation}
+If $x_1, \dots, x_n$ are complex numbers, we write
+\[ x_1 + x_2 + \cdots + x_n = \sum_{j=1}^n x_j. \]
+
+We conclude this section with an important inequality, usually known as the
+\emph{Schwarz inequality}.
+
+\ritem{1.35}{Theorem}
+\emph{If $a_1,\dots,a_n$ and $b_1,\dots,b_n$ are complex numbers, then}
+\[ \left|\sum_{j=1}^n a_j\bar b_j\right|^2 \le
+   \sum_{j=1}^n |a_j|^2 \sum_{j=1}^n |b_j|^2. \]
+
+\begin{proof}
+Put $A = \Sigma|a_j|^2$, $B = \Sigma|b_j|^2$, $C = \Sigma a_j\bar b_j$ (in all
+sums in this proof, $j$ runs over the values $1,\dots,n$). If $B = 0$, then
+$b_1 = \cdots = b_n = 0$, and the conclusion is trivial. Assume therefore that
+$B > 0$. By Theorem 1.31 we have
+\begin{align*}
+  \sum|Ba_j - Cb_j|^2
+    &= \sum(Ba_j-Cb_j)(\overline{Ba_j-Cb_j})\\
+    &= B^2\sum|a_j|^2 - B\bar C\sum a_j\bar b_j\\
+    &\qquad {}- BC\sum \bar a_j b_j + |C|^2\sum|b_j|^2\\
+    &= B^2A - B|C|^2\\
+    &= B(AB-|C|^2).
+\end{align*}
+Since each term in the first sum is nonnegative, we see that
+\[ B(AB - |C|^2) \ge 0. \]
+Since $B > 0$, it follows that $AB - |C|^2 \ge 0$. This is the desired
+inequality.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=30mm] (sq) at (0,20)
+    {$\sum|Ba_j-Cb_j|^2 \ge 0$\\ \textit{(squares are $\ge 0$)}};
+  \node[rmbox, text width=30mm] (ex) at (62,20)
+    {expand: it equals\\$B(AB-|C|^2)$};
+  \draw[rmarrow] (sq) -- node[lbl, anchor=south, inner sep=2.5pt]
+    {1.31, algebra} (ex);
+  \node[rmbox, text width=30mm] (dv) at (62,0)
+    {divide by $B>0$\\($B=0$: trivial case)};
+  \draw[rmarrow] (ex) -- (dv);
+  \node[rmbox, text width=24mm] (cc) at (0,0) {$|C|^2 \le AB$};
+  \draw[rmarrow] (dv) -- (cc);
+\end{tikzpicture}
+\end{center}
+\figcap{The proof as a flow diagram: one nonnegative square, expanded and
+collapsed. All the invention is in choosing \emph{which} square --- the box
+below recovers that choice.}
+
+\begin{unpack}[Where $Ba_j - Cb_j$ comes from]
+This is the second rabbit of the chapter, after the $h$ of 1.21, and like that
+one it is reverse-engineered rather than guessed.
+
+The only fact available is that a sum of squared moduli is nonnegative. So the
+proof must begin with $\sum|\,\cdot\,|^2 \ge 0$ for some cleverly chosen
+expression, and end with the desired inequality. Work backwards: we want
+$AB - |C|^2 \ge 0$, so we want the sum to evaluate to a positive multiple of
+$AB - |C|^2$.
+
+Try $\sum|\lambda a_j - \mu b_j|^2$ with constants to be chosen. Expanding gives
+\[ |\lambda|^2 A - \lambda\bar\mu\, \bar C - \bar\lambda\mu\, C + |\mu|^2 B . \]
+Choosing $\lambda = B$ (real) and $\mu = C$ makes the middle terms
+$-B\bar C C - BC\bar C = -2B|C|^2$ and the last term $|C|^2B$, so the whole
+collapses to $B^2A - B|C|^2 = B(AB - |C|^2)$. The factor $B$ is then stripped
+off using $B>0$.
+
+\smallskip
+So the choice is not inspired --- it is what you get by writing down the general
+quadratic and solving for the constants that make it collapse. The hypothesis
+$B > 0$ and the separate treatment of $B = 0$ exist purely because the division
+at the last step needs it.
+\end{unpack}
+
+\begin{deeper}[Equality, and what the inequality means]
+Equality holds precisely when $(a_j)$ and $(b_j)$ are \emph{linearly dependent}.
+That is Exercise 1.15, and the proof above shows why --- with a caveat about how
+it is usually stated. When $B>0$, equality forces $\sum|Ba_j-Cb_j|^2 = 0$, and a
+sum of nonnegative terms vanishes only if every term does, giving
+$Ba_j = Cb_j$ for all $j$: the two vectors are proportional. When $B = 0$ every
+$b_j$ vanishes, both sides of the inequality are $0$, and equality holds
+trivially --- but ``proportional'' now says nothing, since $Ba_j = Cb_j$ reduces
+to $0=0$. Linear dependence is the formulation that covers both cases.
+
+Geometrically, once 1.36 defines the inner product on $\R^k$, this says
+$|\mathbf{x}\cdot\mathbf{y}| \le |\mathbf{x}||\mathbf{y}|$, which is the
+statement that $\cos\theta$ lies between $-1$ and $1$. Rudin proves the
+inequality first and lets the geometry follow, rather than the reverse; the
+inequality is the substance and the picture is the illustration.
+
+Its reach is long. It gives the triangle inequality in $\R^k$ at 1.37(e), hence
+the metric that all of Chapter 2 is built on; it reappears for integrals in
+Exercise 6.10 --- H\"older's inequality, of which Rudin there remarks
+``Theorem 1.35 is a very special case'' --- and for $\mathscr{L}^2$ functions
+at 11.35, where it is the same statement about a different inner product.
+\end{deeper}

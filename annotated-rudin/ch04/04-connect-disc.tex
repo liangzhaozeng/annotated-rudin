@@ -1,0 +1,434 @@
+% ============================================================
+%  Chapter 4 -- Connectedness, Discontinuities, Monotonic
+%               Functions, Infinite Limits: 4.22-4.34
+% ============================================================
+\rsection{Continuity and Connectedness}
+
+\begin{signpost}[One theorem, one corollary, one warning]
+The connectedness investment of 2.45--2.47 pays out in a single exchange:
+continuous images of connected sets are connected (4.22), and since the
+connected subsets of $\R$ are exactly the intervals (2.47), the intermediate
+value theorem falls out in three citations (4.23). The warning is 4.24: the
+intermediate value \emph{property} does not characterise continuity ---
+$\sin(1/x)$ has it while being badly discontinuous. The converse a beginner
+expects is false.
+\end{signpost}
+
+\ritem{4.22}{Theorem}
+\emph{If $f$ is a continuous mapping of a metric space $X$ into a metric
+space $Y$, and if $E$ is a connected subset of $X$, then $f(E)$ is
+connected.}
+
+\begin{proof}
+Assume, on the contrary, that $f(E) = A \cup B$, where $A$ and $B$ are
+nonempty separated subsets of $Y$. Put $G = E \cap f^{-1}(A)$,
+$H = E \cap f^{-1}(B)$.
+
+Then $E = G \cup H$, and neither $G$ nor $H$ is empty.
+
+Since $A \subset \overline{A}$ (the closure of $A$), we have
+$G \subset f^{-1}(\overline{A})$; the latter set is closed, since $f$ is
+continuous; hence $\overline{G} \subset f^{-1}(\overline{A})$. It follows
+that $f(\overline{G}) \subset \overline{A}$. Since $f(H) = B$ and
+$\overline{A} \cap B$ is empty, we conclude that $\overline{G} \cap H$ is
+empty.
+
+The same argument shows that $G \cap \overline{H}$ is empty. Thus $G$ and $H$
+are separated. This is impossible if $E$ is connected.\kn{The same transport
+strategy as 4.14, run contrapositively: a separation of the image pulls back
+to a separation of the domain. The only technical point is that
+``separated'' involves \emph{closures}, and this is where the corollary to
+4.8 earns its place --- $f^{-1}(\overline A)$ is closed, so it swallows
+$\overline G$, keeping the pulled-back pieces apart. Images transport
+connectedness and compactness; inverse images transport openness and
+closedness. Keep the direction ledger straight.}
+\end{proof}
+
+\ritem{4.23}{Theorem}
+\emph{Let $f$ be a continuous real function on the interval $[a,b]$. If
+$f(a) < f(b)$ and if $c$ is a number such that $f(a) < c < f(b)$, then there
+exists a point $x \in (a,b)$ such that $f(x) = c$.}
+
+A similar result holds, of course, if $f(a) > f(b)$. Roughly speaking, the
+theorem says that a continuous real function assumes all intermediate values
+on an interval.
+
+\begin{proof}
+By Theorem 2.47, $[a,b]$ is connected; hence Theorem 4.22 shows that
+$f([a,b])$ is a connected subset of $\R^1$, and the assertion follows if we
+appeal once more to Theorem 2.47.\kn{Three citations and no computation:
+2.47 converts ``interval'' to ``connected,'' 4.22 pushes connectedness
+through $f$, and 2.47 converts back to ``interval'' --- which by definition
+contains everything between $f(a)$ and $f(b)$. Chapter 1's Theorem 1.21 was
+this argument done by hand, before any of the three tools existed; compare
+the box there. Exercise 4.14 (fixed points) is the standard application.}
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (-2,0) -- (78,0);
+  \draw[axis] (0,-2) -- (0,32);
+  % the curve
+  \draw[thin] plot[smooth, tension=0.9]
+    coordinates {(6,5) (18,14) (30,8) (44,22) (56,18) (68,27)};
+  \node[ptfill, minimum size=2.4pt] at (6,5) {};
+  \node[ptfill, minimum size=2.4pt] at (68,27) {};
+  \node[mlbl, anchor=north] at (6,-1.5) {$a$};
+  \node[mlbl, anchor=north] at (68,-1.5) {$b$};
+  \draw[guide] (6,5) -- (6,0);
+  \draw[guide] (68,27) -- (68,0);
+  % level c
+  \draw[guide] (0,16) -- (76,16);
+  \node[mlbl, anchor=east] at (-1.5,16) {$c$};
+  % crossings
+  \foreach \x in {21.5, 36.5, 52}{\node[ptopen, minimum size=2.8pt] at (\x,16) {};}
+  \node[lbl, anchor=south] at (37,29) {every level between $f(a)$ and $f(b)$};
+  \node[lbl, anchor=south] at (37,25.5) {is crossed --- possibly several times};
+\end{tikzpicture}
+\end{center}
+\figcap{The intermediate value theorem: a connected image cannot skip the
+level $c$. The theorem asserts at least one crossing and says nothing about
+how many, nor where.}
+
+\ritem{4.24}{Remark}
+At first glance, it might seem that Theorem 4.23 has a converse. That is, one
+might think that if for any two points $x_1 < x_2$ and for any number $c$
+between $f(x_1)$ and $f(x_2)$ there is a point $x$ in $(x_1,x_2)$ such that
+$f(x) = c$, then $f$ must be continuous.
+
+That this is not so may be concluded from Example 4.27(d).
+
+\rsection{Discontinuities}
+
+\begin{signpost}[A taxonomy, then a zoo]
+Failure of continuity comes in two grades. If both one-sided limits exist,
+the failure is a bookkeeping error --- a jump, or a wrong value --- and is
+called \emph{simple} (first kind). If a one-sided limit fails to exist, the
+function oscillates or scatters, and the discontinuity is of the second kind.
+Example 4.27 exhibits all the species; (a) and (b) are the standard
+pathologies built from $\Q$, and (d) is the oscillator that killed the
+converse of the intermediate value theorem in 4.24. The taxonomy exists for
+the next section: monotonic functions will be shown to admit only the first
+kind, and only countably many.
+\end{signpost}
+
+\noindent
+If $x$ is a point in the domain of definition of the function $f$ at which
+$f$ is not continuous, we say that $f$ is \emph{discontinuous at $x$}, or
+that $f$ has a \emph{discontinuity} at $x$. If $f$ is defined on an interval
+or on a segment, it is customary to divide discontinuities into two types.
+Before giving this classification, we have to define the \emph{right-hand}
+and the \emph{left-hand limits} of $f$ at $x$, which we denote by $f(x+)$ and
+$f(x-)$, respectively.
+
+\ritem{4.25}{Definition}
+Let $f$ be defined on $(a,b)$. Consider any point $x$ such that
+$a \le x < b$. We write
+\[ f(x+) = q \]
+if $f(t_n) \to q$ as $n \to \infty$, for all sequences $(t_n)$ in $(x,b)$
+such that $t_n \to x$. To obtain the definition of $f(x-)$, for
+$a < x \le b$, we restrict ourselves to sequences $(t_n)$ in $(a,x)$.
+
+It is clear that for any point $x$ of $(a,b)$, $\lim_{t\to x} f(t)$ exists if
+and only if
+\[ f(x+) = f(x-) = \lim_{t\to x} f(t). \]
+
+\ritem{4.26}{Definition}
+Let $f$ be defined on $(a,b)$. If $f$ is discontinuous at a point $x$, and if
+$f(x+)$ and $f(x-)$ exist, then $f$ is said to have a \emph{discontinuity of
+the first kind}, or a \emph{simple discontinuity}, at $x$. Otherwise the
+discontinuity is said to be \emph{of the second kind}.
+
+There are two ways in which a function can have a simple discontinuity:
+either $f(x+) \ne f(x-)$ [in which case the value $f(x)$ is immaterial], or
+$f(x+) = f(x-) \ne f(x)$.
+
+\ritem{4.27}{Examples}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=4pt, topsep=4pt]
+  \item Define
+        \[ f(x) = \begin{cases} 1 & (x \text{ rational}),\\
+           0 & (x \text{ irrational}). \end{cases} \]
+        Then $f$ has a discontinuity of the second kind at every point $x$,
+        since neither $f(x+)$ nor $f(x-)$ exists.\kn{The Dirichlet function,
+        and the standard witness that ``discontinuous everywhere'' is
+        possible. Both $\Q$ and its complement are dense (1.20(b) and
+        Exercise 1.1), so every one-sided approach can be made along either
+        set, producing both $0$ and $1$ as subsequential limits --- the
+        refutation direction of the bridge 4.2. It returns in Chapter 6 as
+        the function that is not Riemann-integrable (Exercise 6.4).}
+  \item Define
+        \[ f(x) = \begin{cases} x & (x \text{ rational}),\\
+           0 & (x \text{ irrational}). \end{cases} \]
+        Then $f$ is continuous at $x = 0$ and has a discontinuity of the
+        second kind at every other point.\kn{Continuity at exactly one point
+        --- worth a pause, since beginners often believe continuity
+        somewhere forces decency nearby. The squeeze $|f(x)| \le |x|$ gives
+        continuity at $0$ no matter how wild the values elsewhere.}
+  \item Define
+        \[ f(x) = \begin{cases} x+2 & (-3 < x < -2),\\
+           -x-2 & (-2 \le x < 0),\\ x+2 & (0 \le x < 1). \end{cases} \]
+        Then $f$ has a simple discontinuity at $x = 0$ and is continuous at
+        every other point of $(-3,1)$.
+  \item Define
+        \[ f(x) = \begin{cases} \sin\dfrac1x & (x \ne 0),\\[4pt]
+           0 & (x = 0). \end{cases} \]
+        Since neither $f(0+)$ nor $f(0-)$ exists, $f$ has a discontinuity of
+        the second kind at $x = 0$. We have not yet shown that $\sin x$ is a
+        continuous function. If we assume this result for the moment,
+        Theorem 4.7 implies that $f$ is continuous at every point
+        $x \ne 0$.\kd{The oscillator that closes 4.24: on any interval
+        $(0,\delta)$ it sweeps all of $[-1,1]$, so it has the full
+        intermediate value property, yet it is discontinuous at $0$. The
+        intermediate value property constrains what a function \emph{skips},
+        not how it \emph{settles} --- and settling is what continuity is.
+        Exercise 4.14's fixed-point result survives for such functions;
+        their integrability will be delicate in Chapter 6.}
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % ---- simple discontinuity (jump), from 4.27(c)
+  \draw[axis] (-2,0) -- (40,0);
+  \draw[axis] (0,-2) -- (0,24);
+  \draw[thin] (2,4) -- (16,11);
+  \node[ptopen] at (16,11) {};
+  \node[ptfill, minimum size=2.6pt] at (16,19) {};
+  \draw[thin] (16,19) -- (34,23);
+  \draw[guide] (16,0) -- (16,19);
+  \node[mlbl, anchor=north] at (16,-1.5) {$x$};
+  \node[mlbl, anchor=east] at (14.5,11) {$f(x-)$};
+  \node[mlbl, anchor=south east] at (15,19.5) {$f(x+)$};
+  \node[lbl, anchor=north] at (18,-6) {first kind: both one-sided};
+  \node[lbl, anchor=north] at (18,-9.5) {limits exist, disagree};
+  % ---- second kind: oscillation sin(1/x)
+  \begin{scope}[xshift=54mm]
+  \draw[axis] (-2,0) -- (42,0);
+  \draw[axis] (0,-2) -- (0,24);
+  \draw[guide] (0,21) -- (40,21);
+  \draw[guide] (0,3) -- (40,3);
+  \draw[thin] plot[smooth, tension=0.8] coordinates
+    {(3,12) (4,20.4) (5,3.6) (6.2,20.4) (7.6,3.6) (9.4,20.4) (11.6,3.6)
+     (14.4,20.4) (18,3.6) (23,20.4) (30,6) (40,9.5)};
+  \node[mlbl, anchor=north] at (3,-1.5) {$x$};
+  \draw[guide] (3,0) -- (3,3);
+  \node[lbl, anchor=north] at (20,-6) {second kind: oscillation};
+  \node[lbl, anchor=north] at (20,-9.5) {denser and denser, no limit};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\figcap{The two kinds. Left, a jump (4.27(c)): the function arrives at
+different platforms from the two sides. Right, $\sin(1/x)$ near $0$
+(4.27(d)): the one-sided limits do not exist at all, because every
+neighbourhood of $x$ sweeps the whole band.}
+
+\rsection{Monotonic Functions}
+
+\noindent
+We shall now study those functions which never decrease (or never increase)
+on a given segment.
+
+\ritem{4.28}{Definition}
+Let $f$ be real on $(a,b)$. Then $f$ is said to be \emph{monotonically
+increasing} on $(a,b)$ if $a < x < y < b$ implies $f(x) \le f(y)$. If the
+last inequality is reversed, we obtain the definition of a
+\emph{monotonically decreasing} function. The class of \emph{monotonic}
+functions consists of both the increasing and the decreasing functions.
+
+\ritem{4.29}{Theorem}
+\emph{Let $f$ be monotonically increasing on $(a,b)$. Then $f(x+)$ and
+$f(x-)$ exist at every point $x$ of $(a,b)$. More precisely,}
+\begin{equation}
+  \sup_{a<t<x} f(t) = f(x-) \le f(x) \le f(x+) = \inf_{x<t<b} f(t).
+  \tag{4.25}
+\end{equation}
+\emph{Furthermore, if $a < x < y < b$, then}
+\begin{equation}
+  f(x+) \le f(y-). \tag{4.26}
+\end{equation}
+\emph{Analogous results evidently hold for monotonically decreasing
+functions.}
+
+\begin{proof}
+By hypothesis, the set of numbers $f(t)$, where $a < t < x$, is bounded above
+by the number $f(x)$, and therefore has a least upper bound which we shall
+denote by $A$. Evidently $A \le f(x)$. We have to show that $A = f(x-)$.
+
+Let $\varepsilon > 0$ be given. It follows from the definition of $A$ as a
+least upper bound that there exists $\delta > 0$ such that $a < x-\delta < x$
+and
+\begin{equation}
+  A - \varepsilon < f(x-\delta) \le A. \tag{4.27}
+\end{equation}
+Since $f$ is monotonic, we have
+\begin{equation}
+  f(x-\delta) \le f(t) \le A \qquad (x-\delta < t < x). \tag{4.28}
+\end{equation}
+Combining (4.27) and (4.28), we see that
+\[ |f(t)-A| < \varepsilon \qquad (x-\delta < t < x). \]
+Hence $f(x-) = A$.\kn{The bounded-implies-sup pattern of the strategy index
+(pattern 3), in its function-limit costume: monotonicity makes the left
+values bounded, the supremum $A$ exists by 1.19, and clause (ii) of 1.8
+plants a term within $\varepsilon$; monotonicity then drags the whole
+approach into the gap --- exactly the mechanism of 3.14, with $t \uparrow x$
+in place of $n \to \infty$.}
+
+The second half of (4.25) is proved in precisely the same way.
+
+Next, if $a < x < y < b$, we see from (4.25) that
+\begin{equation}
+  f(x+) = \inf_{x<t<b} f(t) = \inf_{x<t<y} f(t). \tag{4.29}
+\end{equation}
+The last equality is obtained by applying (4.25) to $(a,y)$ in place of
+$(a,b)$. Similarly,
+\begin{equation}
+  f(y-) = \sup_{a<t<y} f(t) = \sup_{x<t<y} f(t). \tag{4.30}
+\end{equation}
+Comparison of (4.29) and (4.30) gives (4.26).
+\end{proof}
+
+\ritem{}{Corollary}
+\emph{Monotonic functions have no discontinuities of the second kind.}
+
+This corollary implies that every monotonic function is discontinuous at a
+countable set of points at most. Instead of appealing to the general theorem
+whose proof is sketched in Exercise 4.17, we give here a simple proof which
+is applicable to monotonic functions.
+
+\ritem{4.30}{Theorem}
+\emph{Let $f$ be monotonic on $(a,b)$. Then the set of points of $(a,b)$ at
+which $f$ is discontinuous is at most countable.}
+
+\begin{proof}
+Suppose, for the sake of definiteness, that $f$ is increasing, and let $E$ be
+the set of points at which $f$ is discontinuous.
+
+With every point $x$ of $E$ we associate a rational number $r(x)$ such that
+\[ f(x-) < r(x) < f(x+). \]
+Since $x_1 < x_2$ implies $f(x_1+) \le f(x_2-)$, we see that
+$r(x_1) \ne r(x_2)$ if $x_1 \ne x_2$.
+
+We have thus established a 1-1 correspondence between the set $E$ and a
+subset of the set of rational numbers. The latter, as we know, is
+countable.\kn{A counting proof with real geometry in it: by 4.29 every
+discontinuity of an increasing $f$ is a \emph{jump}, the jump intervals
+$(f(x-),f(x+))$ are pairwise disjoint by (4.26), and disjoint intervals can
+each be tagged with their own rational --- density of $\Q$ (1.20(b)) supplies
+the tag, countability of $\Q$ (2.13) does the counting. The same
+disjoint-intervals-are-countable argument proved Exercise 2.29. (Choosing
+$r(x)$ for each $x$ is another silent appeal to choice; here it can be
+avoided --- take the rational with least index in a fixed enumeration.)}
+\end{proof}
+
+\ritem{4.31}{Remark}
+It should be noted that the discontinuities of a monotonic function need not
+be isolated. In fact, given any countable subset $E$ of $(a,b)$, which may
+even be dense, we can construct a function $f$, monotonic on $(a,b)$,
+discontinuous at every point of $E$, and at no other point of $(a,b)$.
+
+To show this, let the points of $E$ be arranged in a sequence $(x_n)$,
+$n = 1,2,3,\dots$. Let $(c_n)$ be a sequence of positive numbers such that
+$\Sigma c_n$ converges. Define
+\begin{equation}
+  f(x) = \sum_{x_n<x} c_n \qquad (a < x < b). \tag{4.31}
+\end{equation}
+The summation is to be understood as follows: Sum over those indices $n$ for
+which $x_n < x$. If there are no points $x_n$ to the left of $x$, the sum is
+empty; following the usual convention, we define it to be zero. Since (4.31)
+converges absolutely, the order in which the terms are arranged is
+immaterial.\kd{Chapter 3's rearrangement theorem (3.55) quietly holding up
+the definition: the indices with $x_n < x$ arrive in no particular order, so
+the sum is well defined \emph{only because} the convergence is absolute. A
+conditionally convergent $(c_n)$ would make (4.31) meaningless. This jump
+function is the prototype for the integrators of Chapter 6 (Rudin points to
+6.16), where its jumps become point masses.}
+
+We leave the verification of the following properties of $f$ to the reader:
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item $f$ is monotonically increasing on $(a,b)$;
+  \item $f$ is discontinuous at every point of $E$; in fact,
+        \[ f(x_n+) - f(x_n-) = c_n. \]
+  \item $f$ is continuous at every other point of $(a,b)$.
+\end{enumerate}
+Moreover, it is not hard to see that $f(x-) = f(x)$ at all points of $(a,b)$.
+If a function satisfies this condition, we say that $f$ is \emph{continuous
+from the left}. If the summation in (4.31) were taken over all indices $n$
+for which $x_n \le x$, we would have $f(x+) = f(x)$ at every point of
+$(a,b)$; that is, $f$ would be \emph{continuous from the right}.
+
+Functions of this sort can also be defined by another method; for an example
+we refer to Theorem 6.16.
+
+\rsection{Infinite Limits and Limits at Infinity}
+
+\begin{signpost}[The extended reals, cashed in]
+Two definitions and a theorem, closing the chapter by making
+$\lim_{x\to\infty}$ and ``$f(t) \to +\infty$'' legitimate. The device is the
+one hinted at in 1.23: give $\pm\infty$ \emph{neighbourhoods}, and Definition
+4.1 restates itself with neighbourhoods in place of distances --- no new
+theory needed, and 4.34 lists which limit laws survive, with precisely the
+exceptions catalogued as undefined at 1.23.
+\end{signpost}
+
+\noindent
+To enable us to operate in the extended real number system, we shall now
+enlarge the scope of Definition 4.1 by reformulating it in terms of
+neighborhoods.
+
+For any real number $x$, we have already defined a neighborhood of $x$ to be
+any segment $(x-\delta,\,x+\delta)$.
+
+\ritem{4.32}{Definition}
+For any real $c$, the set of real numbers $x$ such that $x > c$ is called a
+\emph{neighborhood of $+\infty$} and is written $(c,+\infty)$. Similarly, the
+set $(-\infty,c)$ is a neighborhood of $-\infty$.
+
+\ritem{4.33}{Definition}
+Let $f$ be a real function defined on $E \subset \R$. We say that
+\[ f(t) \to A \text{ as } t \to x, \]
+where $A$ and $x$ are in the extended real number system, if for every
+neighborhood $U$ of $A$ there is a neighborhood $V$ of $x$ such that
+$V \cap E$ is not empty, and such that $f(t) \in U$ for all
+$t \in V \cap E$, $t \ne x$.\kn{One definition now covers nine cases ($x$
+and $A$ each finite, $+\infty$, or $-\infty$), because ``neighbourhood''
+absorbs the difference: an $\varepsilon$-ball around a real number, a ray
+beyond $c$ for $\pm\infty$. This is the topologist's trick --- rephrase
+metrically-stated definitions in terms of neighbourhoods and they generalise
+by themselves. Theorem 3.15's sequence version was the same move.}
+
+A moment's consideration will show that this coincides with Definition 4.1
+when $A$ and $x$ are real.
+
+The analogue of Theorem 4.4 is still true, and the proof offers nothing new.
+We state it, for the sake of completeness.
+
+\ritem{4.34}{Theorem}
+\emph{Let $f$ and $g$ be defined on $E \subset \R$. Suppose}
+\[ f(t) \to A, \qquad g(t) \to B \qquad\text{as } t \to x. \]
+\emph{Then}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item $f(t) \to A'$ \emph{implies} $A' = A$,
+  \item $(f+g)(t) \to A+B$,
+  \item $(fg)(t) \to AB$,
+  \item $(f/g)(t) \to A/B$,
+\end{enumerate}
+\emph{provided the right members of (b), (c), and (d) are defined.}
+
+Note that $\infty-\infty$, $0\cdot\infty$, $\infty/\infty$, and $A/0$ are not
+defined (see Definition 1.23).
+
+\begin{recap}[Chapter 4 in one paragraph]
+Continuity is one property in three costumes: $\varepsilon$--$\delta$ at a
+point (4.5), preservation of sequential limits (4.2 with 4.6), and open
+inverse images (4.8) --- the last being the form that proves theorems. What
+continuity transports is the content of the chapter: compactness pushes
+forward (4.14), and with it boundedness, attained extrema, continuous
+inverses, and uniform continuity (4.15--4.19); connectedness pushes forward
+(4.22), and with it the intermediate value theorem (4.23). The
+counterexamples 4.20, 4.21, 4.24 and 4.27 mark the exact boundaries: nothing
+survives the loss of compactness except by accident, and the intermediate
+value property is weaker than continuity. Monotonic functions are the tame
+class --- one-sided limits always exist (4.29), so only jumps occur, and only
+countably many (4.30), though possibly on a dense set (4.31). Chapter 6 will
+integrate against exactly such jump functions, and Chapter 5's derivative
+inherits every tool built here.
+\end{recap}

@@ -1,0 +1,576 @@
+% ============================================================
+%  Chapter 2 -- Compact Sets, 2.31-2.42
+% ============================================================
+\rsection{Compact Sets}
+
+\begin{signpost}[The centre of the chapter]
+Everything so far has been vocabulary. This section introduces the one property
+that does real work, and it arrives in a form that looks arbitrary: a set is
+compact if every open cover has a finite subcover.
+
+\smallskip
+\textbf{Why that definition.} Compactness is the hypothesis that converts
+``for each point there is some local fact'' into ``there is one fact for the
+whole set.'' Local statements come with a neighbourhood attached; a finite
+subcover lets you take a minimum over finitely many of them, and a minimum of
+finitely many positive numbers is positive (the move already used at 2.20 and
+2.24(c)). Every application in Chapter 4 --- boundedness 4.15, attainment 4.16,
+uniform continuity 4.19 --- is that one manoeuvre.
+
+\smallskip
+\textbf{The plan of the section.} 2.33--2.37 develop compactness abstractly, in
+any metric space. 2.38--2.40 then do the hard work of exhibiting compact sets
+in $\R^k$, culminating in ``every $k$-cell is compact.'' 2.41 collects the
+payoff: in $\R^k$, compact means closed and bounded. Note the division ---
+2.33--2.37 are general, 2.38--2.42 are about $\R^k$ and are \emph{false} in
+general metric spaces.
+\end{signpost}
+
+\ritem{2.31}{Definition}
+By an \emph{open cover} of a set $E$ in a metric space $X$ we mean a collection
+$\{G_\alpha\}$ of open subsets of $X$ such that $E \subset \bigcup_\alpha
+G_\alpha$.
+
+\ritem{2.32}{Definition}
+A subset $K$ of a metric space $X$ is said to be \emph{compact} if every open
+cover of $K$ contains a finite subcover.
+
+More explicitly, this requirement is that if $\{G_\alpha\}$ is an open cover of
+$K$, then there are finitely many indices $\alpha_1,\dots,\alpha_n$ such that
+\[ K \subset G_{\alpha_1} \cup \cdots \cup G_{\alpha_n}. \]
+
+The notion of compactness is of great importance in analysis, especially in
+connection with continuity (Chap.\ 4).\kw{Read the quantifiers carefully.
+\emph{Every} cover must admit a finite subcover --- exhibiting one cover that
+happens to have a finite subcover proves nothing. To show a set is \emph{not}
+compact it suffices to produce a single bad cover, which is why
+non-compactness is usually the easy direction.}
+
+It is clear that every finite set is compact. The existence of a large class of
+infinite compact sets in $\R^k$ will follow from Theorem 2.41.
+
+\begin{unpack}[What a cover looks like, and what fails]
+Two examples settle the intuition. Both are covers of a subset of the line by
+open intervals; one collapses to finitely many, the other cannot.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % ---- compact: [0,1]
+  \draw[axis] (-3,14) -- (62,14);
+  \draw[seg] (4,14) -- (48,14);
+  \node[ptfill, minimum size=2.6pt] at (4,14) {};
+  \node[ptfill, minimum size=2.6pt] at (48,14) {};
+  \node[mlbl, anchor=north] at (4,12.4) {$0$};
+  \node[mlbl, anchor=north] at (48,12.4) {$1$};
+  \foreach \a/\b/\h in {1/16/18, 12/30/21.5, 26/42/18, 38/52/21.5}{
+    \draw[thin] (\a,\h) -- (\b,\h);
+    \node[ptopen, minimum size=2.6pt] at (\a,\h) {};
+    \node[ptopen, minimum size=2.6pt] at (\b,\h) {};}
+  \node[lbl, anchor=west] at (66,19) {$[0,1]$: finitely many};
+  \node[lbl, anchor=west] at (66,15) {always suffice};
+
+  % ---- not compact: (0,1]
+  \draw[axis] (-3,-14) -- (62,-14);
+  \draw[seg] (4,-14) -- (48,-14);
+  \node[ptopen, minimum size=2.6pt] at (4,-14) {};
+  \node[ptfill, minimum size=2.6pt] at (48,-14) {};
+  \node[mlbl, anchor=north] at (4,-15.6) {$0$};
+  \node[mlbl, anchor=north] at (48,-15.6) {$1$};
+  \foreach \a/\h in {26/-10, 15/-6.5, 9.5/-3, 6.7/0.5}{
+    \draw[thin] (\a,\h) -- (52,\h);
+    \node[ptopen, minimum size=2.6pt] at (\a,\h) {};}
+  \node[lbl, anchor=west] at (66,-4) {$(0,1]$ covered by};
+  \node[lbl, anchor=west] at (66,-8) {$(1/n,\,2)$: no finite};
+  \node[lbl, anchor=west] at (66,-12) {subfamily reaches $0$};
+\end{tikzpicture}
+\end{center}
+\figcap{Compactness fails for $(0,1]$ because the cover creeps toward a missing
+endpoint. Any finite subfamily stops short.}
+
+\smallskip
+The failure is instructive: $(0,1]$ is bounded but not closed, and the cover
+exploits exactly the missing point. Theorem 2.41 will say that in $\R^k$ these
+are the only two ways compactness can fail.
+\end{unpack}
+
+We observed earlier (in Remark 2.29) that if $E \subset Y \subset X$, then $E$
+may be open relative to $Y$ without being open relative to $X$. The property of
+being open thus depends on the space in which $E$ is embedded. The same is true
+of the property of being closed.
+
+Compactness, however, behaves better, as we shall now see. To formulate the
+next theorem, let us say, temporarily, that $K$ is \emph{compact relative to
+$X$} if the requirements of Definition 2.32 are met.
+
+\ritem{2.33}{Theorem}
+\emph{Suppose $K \subset Y \subset X$. Then $K$ is compact relative to $X$ if
+and only if $K$ is compact relative to $Y$.}
+
+By virtue of this theorem we are able, in many situations, to regard compact
+sets as metric spaces in their own right, without paying any attention to any
+embedding space. In particular, although it makes little sense to talk of open
+spaces, or of closed spaces (every metric space $X$ is an open subset of
+itself, and is a closed subset of itself), it does make sense to talk of
+\emph{compact metric spaces}.\kn{This is why compactness is the better notion.
+``Open'' and ``closed'' are relative and must always be qualified; compactness
+is \emph{intrinsic} --- a property of $K$ with its own metric, independent of
+where $K$ happens to sit. That is what makes it usable as a hypothesis in
+Chapter 4, where the ambient space changes from line to line.}
+
+\begin{proof}
+Suppose $K$ is compact relative to $X$, and let $\{V_\alpha\}$ be a collection
+of sets, open relative to $Y$, such that $K \subset \bigcup_\alpha V_\alpha$.
+By Theorem 2.30, there are sets $G_\alpha$, open relative to $X$, such that
+$V_\alpha = Y \cap G_\alpha$, for all $\alpha$; and since $K$ is compact
+relative to $X$, we have
+\begin{equation}
+  K \subset G_{\alpha_1} \cup \cdots \cup G_{\alpha_n} \tag{2.22}
+\end{equation}
+for some choice of finitely many indices $\alpha_1,\dots,\alpha_n$. Since
+$K \subset Y$, (2.22) implies
+\begin{equation}
+  K \subset V_{\alpha_1} \cup \cdots \cup V_{\alpha_n}. \tag{2.23}
+\end{equation}
+This proves that $K$ is compact relative to $Y$.
+
+Conversely, suppose $K$ is compact relative to $Y$, let $\{G_\alpha\}$ be a
+collection of open subsets of $X$ which covers $K$, and put
+$V_\alpha = Y \cap G_\alpha$. Then (2.23) will hold for some choice of
+$\alpha_1,\dots,\alpha_n$; since $V_\alpha \subset G_\alpha$, (2.23) implies
+(2.22).
+
+This completes the proof.
+\end{proof}
+
+\ritem{2.34}{Theorem}
+\emph{Compact subsets of metric spaces are closed.}
+
+\begin{proof}
+Let $K$ be a compact subset of a metric space $X$. We shall prove that the
+complement of $K$ is an open subset of $X$.
+
+Suppose $p \in X$, $p \notin K$. If $q \in K$, let $V_q$ and $W_q$ be
+neighborhoods of $p$ and $q$, respectively, of radius less than
+$\frac12 d(p,q)$ [see Definition 2.18(a)]. Since $K$ is compact, there are
+finitely many points $q_1,\dots,q_n$ in $K$ such that
+\[ K \subset W_{q_1} \cup \cdots \cup W_{q_n} = W. \]
+If $V = V_{q_1} \cap \cdots \cap V_{q_n}$, then $V$ is a neighborhood of $p$
+which does not intersect $W$. Hence $V \subset K^c$, so that $p$ is an interior
+point of $K^c$. The theorem follows.\kn{Here is the manoeuvre the signpost
+promised, in its purest form. For each $q$ we get a \emph{local} separation ---
+two small balls, radius depending on $q$. Compactness reduces the infinitely
+many $q$ to finitely many, and only then may we intersect the $V_q$: an
+infinite intersection of neighbourhoods need not be a neighbourhood, exactly as
+2.25 showed.}
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \fill[black!8] plot[smooth cycle, tension=0.8]
+    coordinates {(34,4) (56,2) (66,16) (52,26) (34,22)};
+  \draw[thin] plot[smooth cycle, tension=0.8]
+    coordinates {(34,4) (56,2) (66,16) (52,26) (34,22)};
+  \node[lbl] at (50,14) {$K$};
+  \node[ptfill, minimum size=2.6pt] at (6,14) {};
+  \node[mlbl, anchor=east] at (4,14) {$p$};
+  \foreach \pt in {(36,10),(50,5),(63,15),(50,24)}{
+    \node[ptfill, minimum size=2pt] at \pt {};}
+  \draw[guide] (6,14) circle (11mm);
+  \node[lbl, anchor=south] at (6,26) {$V$};
+  \node[lbl, anchor=north] at (44,-1) {$W$: finitely many balls covering $K$};
+  \foreach \pt/\r in {(36,10)/7,(50,5)/8,(63,15)/8,(50,24)/8}{
+    \draw[thin] \pt circle (\r pt);}
+\end{tikzpicture}
+\end{center}
+\figcap{Each $q \in K$ is separated from $p$ by a pair of balls. Finitely many
+$W_q$ already cover $K$, so the matching finitely many $V_q$ may be intersected
+to give one ball around $p$ missing $K$.}
+
+\ritem{2.35}{Theorem}
+\emph{Closed subsets of compact sets are compact.}
+
+\begin{proof}
+Suppose $F \subset K \subset X$, $F$ is closed (relative to $X$), and $K$ is
+compact. Let $\{V_\alpha\}$ be an open cover of $F$. If $F^c$ is adjoined to
+$\{V_\alpha\}$, we obtain an open cover $\Omega$ of $K$.\kn{The trick of the
+proof, and it is worth remembering: to convert a cover of $F$ into a cover of
+the larger $K$, throw in the single open set $F^c$, which mops up everything
+outside $F$. It is legitimately open precisely because $F$ is closed --- 2.23.}
+Since $K$ is compact, there is a finite subcollection $\Phi$ of $\Omega$ which
+covers $K$, and hence $F$. If $F^c$ is a member of $\Phi$, we may remove it
+from $\Phi$ and still retain an open cover of $F$. We have thus shown that a
+finite subcollection of $\{V_\alpha\}$ covers $F$.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % K, with K\F hatched (covered by the single set F^c)
+  \fill[pattern=north east lines, pattern color=black!45, even odd rule]
+    plot[smooth cycle, tension=0.8]
+      coordinates {(0,4) (30,-2) (58,6) (52,26) (20,30) (-4,20)}
+    plot[smooth cycle, tension=0.8]
+      coordinates {(14,10) (34,8) (40,18) (24,22)};
+  \draw[thin] plot[smooth cycle, tension=0.8]
+    coordinates {(0,4) (30,-2) (58,6) (52,26) (20,30) (-4,20)};
+  % F itself
+  \fill[black!14] plot[smooth cycle, tension=0.8]
+    coordinates {(14,10) (34,8) (40,18) (24,22)};
+  \draw[thin] plot[smooth cycle, tension=0.8]
+    coordinates {(14,10) (34,8) (40,18) (24,22)};
+  % the given cover, over F only
+  \foreach \pt in {(18,12),(28,10),(35,16),(22,19)}{
+    \draw[thin] \pt circle (6.5pt);}
+  \node[mlbl] at (27,15) {$F$};
+  % labels
+  \node[lbl, anchor=west] at (64,24) {hatched: $F^c$, one open set,};
+  \node[lbl, anchor=west] at (64,20.5) {swallows all of $K$ outside $F$};
+  \node[lbl, anchor=west] at (64,12) {circles: the given cover};
+  \node[lbl, anchor=west] at (64,8.5) {$\{V_\alpha\}$, needed only on $F$};
+  \node[lbl, anchor=north] at (10,-4) {$K$ compact};
+  \draw[thin] (10,-2.5) -- (13,1.5);
+\end{tikzpicture}
+\end{center}
+\figcap{Adjoining the single open set $F^c$ turns a cover of $F$ into a cover
+of $K$; compactness of $K$ then hands back finitely many sets, and discarding
+$F^c$ leaves a finite cover of $F$.}
+
+\ritem{}{Corollary}
+\emph{If $F$ is closed and $K$ is compact, then $F \cap K$ is compact.}
+
+\begin{proof}
+Theorems 2.24(b) and 2.34 show that $F \cap K$ is closed; since
+$F \cap K \subset K$, Theorem 2.35 shows that $F \cap K$ is compact.
+\end{proof}
+
+\ritem{2.36}{Theorem}
+\emph{If $\{K_\alpha\}$ is a collection of compact subsets of a metric space
+$X$ such that the intersection of every finite subcollection of $\{K_\alpha\}$
+is nonempty, then $\bigcap K_\alpha$ is nonempty.}
+
+\begin{proof}
+Fix a member $K_1$ of $\{K_\alpha\}$ and put $G_\alpha = K_\alpha^c$. Assume
+that no point of $K_1$ belongs to every $K_\alpha$. Then the sets $G_\alpha$
+form an open cover of $K_1$; since $K_1$ is compact, there are finitely many
+indices $\alpha_1,\dots,\alpha_n$ such that
+$K_1 \subset G_{\alpha_1} \cup \cdots \cup G_{\alpha_n}$. But this means that
+\[ K_1 \cap K_{\alpha_1} \cap \cdots \cap K_{\alpha_n} \]
+is empty, in contradiction to our hypothesis.
+\end{proof}
+
+\ritem{}{Corollary}
+\emph{If $\{K_n\}$ is a countable collection of nonempty compact sets such that
+$K_n \supset K_{n+1}$ $(n = 1,2,3,\dots)$, then $\bigcap_{n=1}^\infty K_n$ is
+not empty.}
+
+\begin{deeper}[The finite intersection property is compactness turned inside out]
+2.36 is 2.32 with complements taken, and nothing more. ``Every open cover has a
+finite subcover'' says: if no finite subfamily of $\{G_\alpha\}$ covers $K$,
+then $\{G_\alpha\}$ does not cover $K$. Complementing every $G$ turns
+``covers'' into ``has empty intersection with,'' and the statement becomes
+2.36.
+
+The corollary is the form that gets used, and it answers the worry raised at
+Example 2.10(b)(iii), where nested nonempty sets had empty intersection. There
+the sets were the segments $(0,x)$ --- bounded but not closed, hence not
+compact. Compactness is exactly what forbids the nesting from escaping to
+nothing.
+
+Compare Theorem 2.38, the same statement for closed intervals proved directly
+from the least-upper-bound property, and Yu Pin's nested interval axiom in
+Chapter 1. Three routes to one fact, and Rudin uses whichever is cheapest at
+the point of need.
+\end{deeper}
+
+\ritem{2.37}{Theorem}
+\emph{If $E$ is an infinite subset of a compact set $K$, then $E$ has a limit
+point in $K$.}
+
+\begin{proof}
+If no point of $K$ were a limit point of $E$, then each $q \in K$ would have a
+neighborhood $V_q$ which contains at most one point of $E$ (namely, $q$, if
+$q \in E$). It is clear that no finite subcollection of $\{V_q\}$ can cover
+$E$; and the same is true of $K$, since $E \subset K$. This contradicts the
+compactness of $K$.
+\end{proof}
+
+\ritem{2.38}{Theorem}
+\emph{If $\{I_n\}$ is a sequence of intervals in $\R^1$, such that
+$I_n \supset I_{n+1}$ $(n = 1,2,3,\dots)$, then $\bigcap_{n=1}^\infty I_n$ is
+not empty.}
+
+\begin{proof}
+If $I_n = [a_n,b_n]$, let $E$ be the set of all $a_n$. Then $E$ is nonempty and
+bounded above (by $b_1$). Let $x$ be the sup of $E$. If $m$ and $n$ are
+positive integers, then
+\[ a_n \le a_{m+n} \le b_{m+n} \le b_m, \]
+so that $x \le b_m$ for each $m$. Since it is obvious that $a_m \le x$, we see
+that $x \in I_m$ for $m = 1,2,3,\dots$.\kn{This is Chapter 1 doing the work
+again --- the whole proof is ``take a supremum,'' which exists by 1.19. Every
+$b_m$ is an upper bound for the left endpoints, so the least upper bound $x$
+sits below all of them and above all the $a$'s. Note the closedness of the
+intervals is essential: for $I_n=(0,1/n)$ the same construction gives $x=0$,
+which lies in no $I_n$.}
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \foreach \n/\a/\b in {0/2/86, 1/12/74, 2/22/64, 3/30/57, 4/36/52}{
+    \pgfmathsetmacro\yy{-\n*6}
+    \draw[seg] (\a,\yy) -- (\b,\yy);
+    \node[ptfill, minimum size=2.4pt] at (\a,\yy) {};
+    \node[ptfill, minimum size=2.4pt] at (\b,\yy) {};}
+  \node[mlbl, anchor=east] at (0,0) {$I_1$};
+  \node[mlbl, anchor=east] at (10,-6) {$I_2$};
+  \node[mlbl, anchor=east] at (20,-12) {$I_3$};
+  \draw[guide] (43,3) -- (43,-30);
+  \node[ptfill, minimum size=3pt] at (43,-27) {};
+  \node[lbl, anchor=north] at (43,-30) {$x=\sup a_n$ lies in every $I_n$};
+  \node[lbl, anchor=west] at (90,-8) {endpoints};
+  \node[lbl, anchor=west] at (90,-12) {included};
+\end{tikzpicture}
+\end{center}
+\figcap{Left endpoints increase, right endpoints decrease, and $\sup a_n$ is
+caught between. Drop the endpoints and the common point can escape.}
+
+\ritem{2.39}{Theorem}
+\emph{Let $k$ be a positive integer. If $\{I_n\}$ is a sequence of $k$-cells
+such that $I_n \supset I_{n+1}$ $(n = 1,2,3,\dots)$, then
+$\bigcap_{n=1}^\infty I_n$ is not empty.}
+
+\begin{proof}
+Let $I_n$ consist of all points $\mathbf{x} = (x_1,\dots,x_k)$ such that
+\[ a_{n,j} \le x_j \le b_{n,j} \qquad (1 \le j \le k;\ n = 1,2,3,\dots), \]
+and put $I_{n,j} = [a_{n,j},\,b_{n,j}]$. For each $j$, the collection
+$\{I_{n,j}\}$ satisfies the hypotheses of Theorem 2.38. Hence there are real
+numbers $x_j^*$ $(1 \le j \le k)$ such that
+\[ a_{n,j} \le x_j^* \le b_{n,j} \qquad (1 \le j \le k;\ n = 1,2,3,\dots). \]
+Setting $\mathbf{x}^* = (x_1^*,\dots,x_k^*)$, we see that
+$\mathbf{x}^* \in I_n$ for $n = 1,2,3,\dots$. The theorem follows.\kn{The
+$k$-dimensional statement is $k$ separate one-dimensional statements, because a
+$k$-cell is a product of intervals and a point lies in it exactly when each
+coordinate lies in the corresponding interval. This coordinatewise reduction is
+used again in 2.40 and throughout Chapter 9.}
+\end{proof}
+
+\ritem{2.40}{Theorem}
+\emph{Every $k$-cell is compact.}
+
+\begin{proof}
+Let $I$ be a $k$-cell, consisting of all points
+$\mathbf{x} = (x_1,\dots,x_k)$ such that $a_j \le x_j \le b_j$
+$(1 \le j \le k)$. Put
+\[ \delta = \Bigl\{\sum_{1}^{k} (b_j-a_j)^2\Bigr\}^{1/2}. \]
+Then $|\mathbf{x}-\mathbf{y}| \le \delta$, if $\mathbf{x} \in I$,
+$\mathbf{y} \in I$.
+
+Suppose, to get a contradiction, that there exists an open cover
+$\{G_\alpha\}$ of $I$ which contains no finite subcover of $I$. Put
+$c_j = (a_j+b_j)/2$. The intervals $[a_j,c_j]$ and $[c_j,b_j]$ then determine
+$2^k$ $k$-cells $Q_i$ whose union is $I$. At least one of these sets $Q_i$,
+call it $I_1$, cannot be covered by any finite subcollection of $\{G_\alpha\}$
+(otherwise $I$ could be so covered). We next subdivide $I_1$ and continue the
+process. We obtain a sequence $(I_n)$ with the following properties:
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item $I \supset I_1 \supset I_2 \supset I_3 \supset \cdots$;
+  \item $I_n$ is not covered by any finite subcollection of $\{G_\alpha\}$;
+  \item If $\mathbf{x} \in I_n$ and $\mathbf{y} \in I_n$, then
+        $|\mathbf{x}-\mathbf{y}| \le 2^{-n}\delta$.
+\end{enumerate}
+By (a) and Theorem 2.39, there is a point $\mathbf{x}^*$ which lies in every
+$I_n$. For some $\alpha$, $\mathbf{x}^* \in G_\alpha$. Since $G_\alpha$ is
+open, there exists $r > 0$ such that $|\mathbf{y}-\mathbf{x}^*| < r$ implies
+that $\mathbf{y} \in G_\alpha$. If $n$ is so large that $2^{-n}\delta < r$
+(there is such an $n$, for otherwise $2^n \le \delta/r$ for all positive
+integers $n$, which is absurd since $\R$ is archimedean), then (c) implies that
+$I_n \subset G_\alpha$, which contradicts (b).
+
+This completes the proof.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=29mm] (a0) at (0,22)
+    {suppose: no finite\\subcover of $I$};
+  \node[rmbox, text width=29mm] (a1) at (45,22)
+    {halve all edges: one\\cell inherits the failure};
+  \node[rmbox, text width=27mm] (a2) at (89,22)
+    {nested $I_n$, diam\\$\le 2^{-n}\delta$, all bad};
+  \draw[rmarrow] (a0) -- (a1);
+  \draw[rmarrow] (a1) -- node[lbl, anchor=south, inner sep=2.5pt]
+    {repeat} (a2);
+  \node[rmbox, text width=27mm] (a3) at (89,0)
+    {$\mathbf{x}^* \in$ every $I_n$};
+  \draw[rmarrow] (a2) -- node[lbl, anchor=west, inner sep=3pt]
+    {2.39} (a3);
+  \node[rmbox, text width=31mm] (a4) at (45,0)
+    {$\mathbf{x}^* \in G_\alpha$ open;\\archimedes: $I_n \subset G_\alpha$};
+  \draw[rmarrow] (a3) -- (a4);
+  \node[rmbox, text width=28mm] (a5) at (0,0)
+    {$I_n$ covered by \emph{one}\\set --- contradiction};
+  \draw[rmarrow] (a4) -- (a5);
+\end{tikzpicture}
+\end{center}
+\figcap{The proof as a flow diagram. Completeness enters once (2.39, via
+2.38), the archimedean property once, and the contradiction is that one is
+finite.}
+
+\begin{unpack}[Bisection: the shape of the argument]
+This is the most important proof in the chapter, and its structure recurs
+throughout analysis. Assume the conclusion fails, then manufacture a nested
+sequence of ever-smaller pieces in which it keeps failing, and squeeze them
+onto a single point where the failure becomes absurd.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % stage 0
+  \draw[thin] (0,0) rectangle (26,26);
+  \node[lbl, anchor=north] at (13,-2) {$I$};
+  % stage 1
+  \begin{scope}[xshift=34mm]
+    \draw[thin] (0,0) rectangle (26,26);
+    \draw[thin] (13,0) -- (13,26); \draw[thin] (0,13) -- (26,13);
+    \fill[black!18] (13,0) rectangle (26,13);
+    \draw[thin] (13,0) rectangle (26,13);
+    \node[lbl, anchor=north] at (13,-2) {$I_1$: one quarter fails};
+  \end{scope}
+  % stage 2
+  \begin{scope}[xshift=68mm]
+    \draw[thin] (0,0) rectangle (26,26);
+    \draw[thin] (13,0) -- (13,26); \draw[thin] (0,13) -- (26,13);
+    \draw[thin] (19.5,0) -- (19.5,13); \draw[thin] (13,6.5) -- (26,6.5);
+    \fill[black!30] (19.5,0) rectangle (26,6.5);
+    \draw[thin] (19.5,0) rectangle (26,6.5);
+    \node[lbl, anchor=north] at (13,-2) {$I_2$, and so on};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\figcap{Halving each edge gives $2^k$ pieces; at least one inherits the
+failure. Diameters fall like $2^{-n}\delta$, so the nested pieces close on a
+point.}
+
+\smallskip
+Three ingredients, each traceable to Chapter 1.
+
+\smallskip
+\textbf{Something survives the nesting} --- Theorem 2.39, which rests on 2.38,
+which rests on the least-upper-bound property. This is where completeness
+enters, and it is the only place. Over $\Q$ the argument breaks here and
+$k$-cells are not compact.
+
+\smallskip
+\textbf{The pieces shrink to nothing} --- property (c). Diameters are halved
+each time.
+
+\smallskip
+\textbf{Shrinking beats any fixed radius} --- the archimedean property, which
+Rudin flags explicitly in parentheses. Without it $2^{-n}\delta$ might stay
+above $r$ forever.
+
+\smallskip
+Then the contradiction is immediate: $I_n$ fits inside the single set
+$G_\alpha$, so one set covers it, contradicting ``no finite subcollection
+covers $I_n$.'' One is finite.
+
+\smallskip
+Seen from the comparison at Definition 1.10: this proof \emph{is} the
+implication ``nested intervals $\Rightarrow$ Heine--Borel'' from the ECNU
+text's cycle of six equivalent completeness statements, specialised to cells.
+Bisection is the standard bridge between the two.
+\end{unpack}
+
+The equivalence of (a) and (b) in the next theorem is known as the
+\emph{Heine-Borel theorem}.
+
+\ritem{2.41}{Theorem}
+\emph{If a set $E$ in $\R^k$ has one of the following three properties, then it
+has the other two:}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{$E$ is closed and bounded.}
+  \item \emph{$E$ is compact.}
+  \item \emph{Every infinite subset of $E$ has a limit point in $E$.}
+\end{enumerate}
+
+\begin{proof}
+If (a) holds, then $E \subset I$ for some $k$-cell $I$, and (b) follows from
+Theorems 2.40 and 2.35. Theorem 2.37 shows that (b) implies (c). It remains to
+be shown that (c) implies (a).
+
+If $E$ is not bounded, then $E$ contains points $\mathbf{x}_n$ with
+\[ |\mathbf{x}_n| > n \qquad (n = 1,2,3,\dots). \]
+The set $S$ consisting of these points $\mathbf{x}_n$ is infinite and clearly
+has no limit point in $\R^k$, hence has none in $E$. Thus (c) implies that $E$
+is bounded.
+
+If $E$ is not closed, then there is a point $\mathbf{x}_0 \in \R^k$ which is a
+limit point of $E$ but not a point of $E$. For $n = 1,2,3,\dots$, there are
+points $\mathbf{x}_n \in E$ such that $|\mathbf{x}_n-\mathbf{x}_0| < 1/n$. Let
+$S$ be the set of these points $\mathbf{x}_n$. Then $S$ is infinite (otherwise
+$|\mathbf{x}_n-\mathbf{x}_0|$ would have a constant positive value, for
+infinitely many $n$), $S$ has $\mathbf{x}_0$ as a limit point, and $S$ has no
+other limit point in $\R^k$. For if $\mathbf{y} \ne \mathbf{x}_0$, then
+\begin{align*}
+  |\mathbf{x}_n-\mathbf{y}| &\ge |\mathbf{x}_0-\mathbf{y}|
+    - |\mathbf{x}_n-\mathbf{x}_0|\\
+  &\ge |\mathbf{x}_0-\mathbf{y}| - \frac1n
+    \ge \tfrac12|\mathbf{x}_0-\mathbf{y}|
+\end{align*}
+for all but finitely many $n$; this shows that $\mathbf{y}$ is not a limit
+point of $S$ (Theorem 2.20). Thus $S$ has no limit point in $E$; hence $E$ must
+be closed if (c) holds.
+\end{proof}
+
+We should remark, at this point, that (b) and (c) are equivalent in any metric
+space (Exercise 2.26), but that (a) does not, in general, imply (b) and (c).
+Examples are furnished by Exercise 2.16 and by the space $\mathscr{L}^2$, which
+is discussed in Chap.\ 11.
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=25mm] (a) at (0,0)  {(a) closed and\\bounded};
+  \node[rmbox, text width=24mm] (b) at (41,17) {(b) compact};
+  \node[rmbox, text width=27mm] (c) at (82,0)  {(c) infinite subsets\\have limit points};
+  \draw[rmarrow] (a) -- node[lbl, anchor=south east, inner sep=3pt] {2.40 + 2.35} (b);
+  \draw[rmarrow] (b) -- node[lbl, anchor=south west, inner sep=3pt] {2.37} (c);
+  \draw[rmarrow] (c) -- node[lbl, anchor=north, inner sep=3pt] {proved directly in 2.41} (a);
+\end{tikzpicture}
+\end{center}
+\figcap{The cycle proved in 2.41. In a general metric space the arrow
+(a)$\to$(b) is the one that breaks (Exercise 2.16, $\mathscr{L}^2$), while
+(b)$\Leftrightarrow$(c) survives everywhere (2.37 and Exercise 2.26).}
+
+\begin{deeper}[Where this sits among the completeness theorems]
+Rudin's remark deserves emphasis: \textbf{(a) is the odd one out}. ``Closed and
+bounded'' is not equivalent to compactness in a general metric space --- it is
+a fact about $\R^k$ specifically, and the whole apparatus 2.38--2.40 exists to
+establish it. Exercise 2.16 gives a closed bounded non-compact set inside $\Q$;
+in $\mathscr{L}^2$ the closed unit ball fails too.
+
+\smallskip
+This is also where Chapter 2 rejoins the discussion at Definition 1.10. Of the
+six equivalent formulations of completeness collected in the ECNU text, three
+appear in this chapter: \textbf{Heine--Borel} is (a)$\Leftrightarrow$(b) here,
+\textbf{Bolzano--Weierstrass} is 2.42, and the \textbf{nested interval}
+property is 2.38. Rudin proves each separately from the least-upper-bound
+property rather than deriving them from one another, so their equivalence never
+becomes visible. It is worth knowing that the four statements ---
+least-upper-bound, nested intervals, Heine--Borel, Bolzano--Weierstrass --- are
+interderivable, and that Rudin's ordering is a choice, not a necessity.
+
+\smallskip
+Tao (\emph{Analysis II}, 1.5) takes the opposite route: he defines compactness
+by sequences (every sequence has a convergent subsequence, Rudin's (c)) and
+proves the open-cover version afterwards. That ordering is friendlier, and it
+is why (c) is often the easier property to verify in practice --- but it does
+not generalise past metric spaces, whereas 2.32 does.
+\end{deeper}
+
+\ritem{2.42}{Theorem (Weierstrass)}
+\emph{Every bounded infinite subset of $\R^k$ has a limit point in $\R^k$.}
+
+\begin{proof}
+Being bounded, the set $E$ in question is a subset of a $k$-cell
+$I \subset \R^k$. By Theorem 2.40, $I$ is compact, and so $E$ has a limit point
+in $I$, by Theorem 2.37.
+\end{proof}

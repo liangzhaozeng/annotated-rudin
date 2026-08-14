@@ -1,0 +1,268 @@
+% ============================================================
+%  Chapter 1 -- Fields, 1.12-1.18
+% ============================================================
+\rsection{Fields}
+
+\begin{signpost}[Why this section is here]
+This is the second half of the vocabulary, and the less interesting half. An
+ordered set gave Rudin the language for \emph{gaps}; a field gives him the
+language for \emph{arithmetic}. $\R$ will be defined in 1.19 as an object having
+both, plus one extra property, so both notions must be on the table first.
+
+\smallskip
+Rudin tells you outright how to read 1.14--1.18: they are ``some of the familiar
+properties of $\Q$'' rederived from the axioms so that ``once we do this, we
+will not need to do it again for the real numbers and for the complex numbers.''
+That is the entire point. Nothing here will surprise you; the value is that
+every one of these facts is now available for $\R$, for $\C$, and for any other
+field, purchased once. Skim the proofs, note Definition 1.17, and move on ---
+but see the warning after 1.18, because the ordering axioms are where students
+later import assumptions that are not there.
+\end{signpost}
+
+\ritem{1.12}{Definition}
+A \emph{field} is a set $F$ with two operations, called \emph{addition} and
+\emph{multiplication}, which satisfy the following so-called ``field axioms''
+(A), (M), and (D):
+
+\smallskip
+\noindent\textbf{(A) Axioms for addition}
+\begin{enumerate}[label=(A\arabic*), leftmargin=3.1em, itemsep=2pt, topsep=3pt]
+  \item If $x \in F$ and $y \in F$, then their sum $x+y$ is in $F$.
+  \item Addition is commutative: $x + y = y + x$ for all $x, y \in F$.
+  \item Addition is associative: $(x+y)+z = x+(y+z)$ for all $x,y,z \in F$.
+  \item $F$ contains an element $0$ such that $0 + x = x$ for every $x \in F$.
+  \item To every $x \in F$ corresponds an element $-x \in F$ such that
+        \[ x + (-x) = 0. \]
+\end{enumerate}
+
+\smallskip
+\noindent\textbf{(M) Axioms for multiplication}
+\begin{enumerate}[label=(M\arabic*), leftmargin=3.1em, itemsep=2pt, topsep=3pt]
+  \item If $x \in F$ and $y \in F$, then their product $xy$ is in
+        $F$.\kw{\textbf{Source correction.} The retyped edition this book
+        follows drops ``and $y \in F$'' here, and drops the opening ``If'' from
+        (A1); its own foreword warns that new typos were likely introduced.
+        Both clauses are restored above from Rudin's third edition. Without
+        $y \in F$ the axiom does not say what it must --- that $F$ is
+        \emph{closed} under multiplication.}
+  \item Multiplication is commutative: $xy = yx$ for all $x, y \in F$.
+  \item Multiplication is associative: $(xy)z = x(yz)$ for all $x,y,z \in F$.
+  \item $F$ contains an element $1 \ne 0$ such that $1x = x$ for every
+        $x \in F$.\kn{The clause $1 \ne 0$ is not pedantry. Without it the
+        one-element set $\{0\}$ satisfies every other axiom, and then
+        Proposition 1.16(a) would make every element equal to $0$. Excluding it
+        is what keeps ``field'' from being vacuous.}
+  \item If $x \in F$ and $x \ne 0$ then there exists an element $1/x \in F$ such
+        that
+        \[ x \cdot (1/x) = 1. \]
+\end{enumerate}
+
+\smallskip
+\noindent\textbf{(D) The distributive law}
+\[ x(y+z) = xy + xz \]
+holds for all $x,y,z \in F$.\kd{(D) is the only axiom linking the two
+operations, and every proof below that mixes $+$ and $\cdot$ must route through
+it. Watch 1.16(a): the fact that $0x = 0$ --- which looks like arithmetic so
+basic it needs no proof --- is derivable \emph{only} because (D) exists.}
+
+\ritem{1.13}{Remarks}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=5pt, topsep=4pt]
+  \item One usually writes (in any field)
+        \begin{gather*}
+          x-y, \quad \frac{x}{y}, \quad x+y+z, \quad xyz,\\
+          x^2, \quad x^3, \quad 2x, \quad 3x, \dots
+        \end{gather*}
+        in place of
+        \begin{gather*}
+          x+(-y), \quad x\cdot\left(\frac{1}{y}\right), \quad (x+y)+z,
+          \quad (xy)z,\\
+          xx, \quad xxx, \quad x+x, \quad x+x+x, \dots
+        \end{gather*}
+  \item The field axioms clearly hold in $\Q$, the set of all rational numbers,
+        if addition and multiplication have their customary meaning. Thus $\Q$
+        is a field.
+  \item Although it is not our purpose to study fields (or any other algebraic
+        structures) in detail, it is worthwhile to prove that some of the
+        familiar properties of $\Q$ are consequences of the field axioms; once
+        we do this, we will not need to do it again for the real numbers and for
+        the complex numbers.
+\end{enumerate}
+
+\ritem{1.14}{Proposition}
+\emph{The axioms for addition imply the following statements.}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{If $x+y = x+z$ then $y = z$.}
+  \item \emph{If $x+y = x$ then $y = 0$.}
+  \item \emph{If $x+y = 0$ then $y = -x$.}
+  \item \emph{$-(-x) = x$.}
+\end{enumerate}
+Statement (a) is a cancellation law. Note that (b) asserts the uniqueness of the
+element whose existence is assumed in (A4), and that (c) does the same for
+(A5).
+
+\begin{proof}
+If $x+y = x+z$, the axioms (A) give
+\begin{align*}
+  y &= 0 + y = (-x+x)+y = -x + (x+y)\\
+    &= -x + (x+z) = (-x+x)+z = 0+z = z.
+\end{align*}
+This proves (a). Take $z = 0$ in (a) to obtain (b). Take $z = -x$ in (a) to
+obtain (c). Since $-x+x = 0$, (c) (with $-x$ in place of $x$) gives (d).
+\end{proof}
+
+\begin{unpack}[The pattern of all four proofs]
+Every step in that display is a single named axiom, and it is worth naming them
+once: $0+y = y$ is (A4); $0 = -x+x$ is (A5) with (A2); the regrouping is (A3).
+Nothing else is used --- in particular, no multiplication and no order.
+
+The economy of (b), (c), (d) is the point. Once cancellation (a) is available,
+the rest are not new arguments but \emph{substitutions} into it. Rudin's
+``take $z = 0$'' and ``take $z = -x$'' are complete proofs, and the habit of
+proving one general statement and specialising it repeatedly is one he will use
+constantly.
+
+\smallskip
+How is the chain for (a) \emph{found}, rather than checked? Work from the
+goal. You must delete $x$ from $x+y$; the only axiom that annihilates anything
+is (A5), so $-x$ must enter; the only license to bring it next to $x$ is
+regrouping, (A3); and once $-x+x$ becomes $0$, (A4) removes it. Each step is
+forced --- the axioms offer exactly one tool per obstacle, so the proof writes
+itself left to right once you know what must disappear. This is pattern 1 of
+the strategy index: with abstract objects, unwind the definitions, because
+there is nothing else to use.
+\end{unpack}
+
+\ritem{1.15}{Proposition}
+\emph{The axioms for multiplication imply the following statements.}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{If $x \ne 0$ and $xy = xz$ then $y = z$.}
+  \item \emph{If $x \ne 0$ and $xy = x$ then $y = 1$.}
+  \item \emph{If $x \ne 0$ and $xy = 1$ then $y = 1/x$.}
+  \item \emph{If $x \ne 0$ then $1/(1/x) = x$.}
+\end{enumerate}
+The proof is so similar to that of Proposition 1.14 that we omit it.\kn{This is
+Exercise 1.3. Copy the proof of 1.14 with $+ \to \cdot$, $0 \to 1$,
+$-x \to 1/x$, and carry the hypothesis $x \ne 0$ along; the axioms (M1)--(M5)
+match (A1)--(A5) exactly except for that restriction. The restriction is
+unavoidable: (M5) grants inverses only to nonzero elements, which is precisely
+why the multiplicative statements need a hypothesis the additive ones did not.}
+
+\ritem{1.16}{Proposition}
+\emph{The field axioms imply the following statements, for any $x,y,z \in F$.}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{$0x = 0$.}
+  \item \emph{If $x \ne 0$ and $y \ne 0$ then $xy \ne 0$.}
+  \item \emph{$(-x)y = -(xy) = x(-y)$.}
+  \item \emph{$(-x)(-y) = xy$.}
+\end{enumerate}
+
+\begin{proof}
+$0x + 0x = (0+0)x = 0x$. Hence Proposition 1.14(b) implies that $0x = 0$, and
+(a) holds.\kn{The trick in one line: manufacture an equation of the form
+$u + u = u$, then quote 1.14(b) to conclude $u = 0$. How is it found? Ask what
+the axioms \emph{know} about $0$: only (A4), $0 = 0+0$. So substitute that
+and distribute --- the sole fact about $0$ meets the sole axiom linking $+$
+to $\cdot$, and the proof is the only sentence one can write. First place (D)
+does any work.} Next, assume $x \ne 0$, $y \ne 0$, but
+$xy = 0$. Then
+\[
+  1 = \left(\frac1y\right)\left(\frac1x\right)xy
+    = \left(\frac1y\right)\left(\frac1x\right)0 = 0,
+\]
+a contradiction. Thus (b) holds.
+
+The first equality in (c) comes from
+\[ (-x)y + xy = (-x+x)y = 0y = 0, \]
+combined with Proposition 1.14(c); the other half of (c) is proved in the same
+way. Finally,
+\[ (-x)(-y) = -[x(-y)] = -[-(xy)] = xy \]
+by (c) and Proposition 1.14(d).
+\end{proof}
+
+\begin{deeper}[What (b) actually says]
+Part (b) is the statement that a field has \emph{no zero divisors}, and unlike
+the rest of this proposition it is not a formality. There are perfectly good
+rings where it fails: in the integers mod $6$, $2 \cdot 3 = 0$ with neither
+factor zero. What rules that out here is (M5) --- the existence of inverses ---
+and the proof shows exactly how: multiply by $1/x$ and $1/y$ and the supposed
+$xy = 0$ collapses $1$ to $0$, contradicting $1 \ne 0$ in (M4).
+
+This is why $\Z/6\Z$ is not a field while $\Z/5\Z$ is, and it is quietly
+required every time a later argument divides by a nonzero quantity.
+\end{deeper}
+
+\ritem{1.17}{Definition}
+An \emph{ordered field} is a field $F$ which is also an ordered set, such that
+\begin{enumerate}[label=(\roman*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item $x+y < x+z$ if $x,y,z \in F$ and $y < z$,
+  \item $xy > 0$ if $x \in F$, $y \in F$, $x > 0$, and $y > 0$.
+\end{enumerate}
+If $x > 0$, we call $x$ \emph{positive}; if $x < 0$, $x$ is
+\emph{negative}.\kn{Only two axioms, and they are the minimum needed to tie the
+order to the arithmetic: translation preserves order, and positives are closed
+under multiplication. Everything else you believe about inequalities ---
+1.18(a)--(e), and the whole of Chapter 1's estimating --- is derived from these
+two. Rudin is not listing convenient facts; he is exhibiting a complete basis.}
+
+For example, $\Q$ is an ordered field.
+
+All the familiar rules for working with inequalities apply in every ordered
+field: Multiplication by positive [negative] quantities preserves [reverses]
+inequalities, no square is negative, etc. The following proposition lists some of
+these.
+
+\ritem{1.18}{Proposition}
+\emph{The following statements are true in every ordered field.}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{If $x > 0$ then $-x < 0$, and vice versa.}
+  \item \emph{If $x > 0$ and $y < z$ then $xy < xz$.}
+  \item \emph{If $x < 0$ and $y < z$ then $xy > xz$.}
+  \item \emph{If $x \ne 0$ then $x^2 > 0$. In particular, $1 > 0$.}
+  \item \emph{If $0 < x < y$ then $0 < 1/y < 1/x$.}
+\end{enumerate}
+
+\begin{proof}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=4pt, topsep=3pt]
+  \item If $x > 0$ then $0 = -x+x > -x+0$, so that $-x < 0$. If $x < 0$ then
+        $0 = -x+x < -x+0$, so that $-x > 0$. This proves (a).
+  \item Since $z > y$, we have $z - y > y - y = 0$, hence $x(z-y) > 0$, and
+        therefore
+        \[ xz = x(z-y)+xy > 0 + xy = xy. \]
+  \item By (a), (b), and Proposition 1.16(c),
+        \[ -[x(z-y)] = (-x)(z-y) > 0, \]
+        so that $x(z-y) < 0$, hence $xz < xy$.
+  \item If $x > 0$, part (ii) of Definition 1.17 gives $x^2 > 0$. If $x < 0$,
+        then $-x > 0$, hence $(-x)^2 > 0$. But $x^2 = (-x)^2$ by Proposition
+        1.16(d). Since $1 = 1^2$, $1 > 0$.
+  \item If $y > 0$ and $v \le 0$, then $yv \le 0$. But $y \cdot (1/y) = 1 > 0$.
+        Hence $1/y > 0$. Likewise, $1/x > 0$. If we multiply both sides of the
+        inequality $x < y$ by the positive quantity $(1/x)(1/y)$, we obtain
+        $1/y < 1/x$.
+\end{enumerate}
+\end{proof}
+
+\begin{unpack}[The one move used in every part]
+Each proof converts an inequality into a statement about something being
+positive, applies an axiom, and converts back. Concretely: $y < z$ becomes
+$z - y > 0$ by (i) of 1.17, then (ii) applies, then (i) restores the inequality.
+
+That is the whole technique. It is worth watching in (b), where it is cleanest:
+$z>y \Rightarrow z-y>0 \Rightarrow x(z-y)>0 \Rightarrow xz > xy$. Part (c) is
+(b) applied to $-x$, and (e) is (b) applied with the positive multiplier
+$(1/x)(1/y)$. Only (d) does something different, splitting into cases on the
+sign of $x$.
+\end{unpack}
+
+\begin{pitfall}[Part (d) is the source of most of Chapter 1's leverage]
+$x^2 > 0$ for $x \ne 0$ looks too obvious to be worth stating. It is the reason
+$\C$ cannot be ordered (Exercise 1.8: $-1 = i^2$ would have to be both positive
+and negative), the reason $a^2 + b^2 > 0$ in the proof of (M5) for $\C$ at 1.25,
+and the reason $|z| = (z\bar z)^{1/2}$ makes sense at 1.32.
+
+The corollary $1 > 0$ deserves separate notice. It is not an axiom, and in a
+field with no order there is no sense in which $1$ exceeds $0$. Here it is
+\emph{derived}, from $1 = 1^2$ --- and once you have it, (i) of 1.17 gives
+$0 < 1 < 2 < 3 < \cdots$, so every ordered field contains a copy of $\N$ in the
+right order. That fact is used without comment in the proof of 1.20.
+\end{pitfall}

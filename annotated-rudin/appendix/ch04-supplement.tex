@@ -1,0 +1,1203 @@
+% ============================================================
+%  APPENDIX TO CHAPTER 4.  Material NOT in Rudin, imported from
+%  Tao I/II, ECNU, USTC, Yu Pin.  Numbered S4.n throughout.
+% ============================================================
+\rappendix{4}
+
+\begin{roadmap}[How to use this appendix]
+Nothing in this appendix is Rudin's text. It is imported from the four
+comparison texts and set apart at every level: the running head names the
+appendix, section heads carry a reverse-video tag, item numbers are prefixed
+\textbf{S}, and every statement names its source.
+
+\medskip
+\raggedright
+\textbf{Why import anything at all.} Rudin's Chapter 4 is a chapter about
+\emph{structure}: what continuity does to compactness and connectedness. He
+buys that generality by postponing every concrete function --- $\sin$, $\exp$,
+$\log$, $x^\alpha$ do not exist until Chapter 8 --- and by leaving the
+working criteria for limits and uniform continuity to the exercises. The
+Chinese and Tao texts make the opposite trade. Reading them alongside
+supplies five things Rudin's chapter genuinely lacks:
+
+\medskip
+\textbf{1. Criteria (A).} A Cauchy criterion for function limits; one
+definition of limit that specialises to all of Rudin's; a squeeze law; and
+oscillation, which measures \emph{how} discontinuous a function is at a point.
+
+\medskip
+\textbf{2. Asymptotics (B).} The $o$/$O$ calculus and equivalent
+infinitesimals --- the machinery every later computation runs on, and which
+Rudin never introduces at all.
+
+\medskip
+\textbf{3. The postponed limits (C).} $\lim_{x\to0}(\sin x)/x = 1$ and
+$\lim_{x\to\infty}(1+1/x)^x = e$, with the proofs the other books give.
+
+\medskip
+\textbf{4. Tools left in Rudin's exercises (D, E).} Inverse functions without
+compactness; the sequential criterion for uniform continuity; gluing;
+extension to the closure. Rudin asks for several of these as Exercises
+4.11--4.13; the other texts prove them in the running text and then use them.
+
+\medskip
+\textbf{5. Finer structure (F).} Rudin's two kinds of discontinuity refine to
+four; connectedness gains a path-connected cousin and a decomposition into
+components.
+
+\medskip
+\textbf{How to read it.} None of this is needed to follow Rudin, which is why
+it sits in an appendix rather than in his chapter. Sections C and D in
+particular are \emph{logically} out of order in his development --- they use
+functions he has not built yet --- and each says so where it matters. Read
+the appendix as a second pass over Chapter 4, or as the answer to ``how would
+I actually compute with this?'' The exercises begin on the last section.
+\end{roadmap}
+
+% ============================================================
+\ssection{Supplement A --- Criteria for limits that Rudin omits}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 4]
+\raggedright
+\textbf{What Rudin does.} Definition 4.1 defines $\lim_{x\to p}f(x)=q$ by
+$\varepsilon$-$\delta$, and 4.2 characterises it by sequences: $f(p_n)\to q$
+for every sequence $p_n \to p$ in $E$ with $p_n \ne p$.
+
+\smallskip
+\textbf{The gap.} Both forms presuppose the candidate $q$. Neither can be
+used to decide whether a limit \emph{exists} when no value suggests itself,
+and Rudin supplies no criterion that does --- no Cauchy condition, no
+squeeze, and no way of measuring how badly a limit fails to exist.
+
+\smallskip
+\textbf{Where the gap bites.} At Exercise 4.13, where a uniformly continuous
+function must be extended to the closure and the limit at each new point has
+to be produced from nothing; Rudin's hint amounts to proving a Cauchy
+criterion by hand in that special case. It bites again at 4.26--4.28, where
+discontinuities are classified but never quantified, so ``how discontinuous''
+has no answer.
+
+\smallskip
+\textbf{What this section supplies.} The Cauchy criterion for function
+limits; one definition of limit that specialises to all four of Rudin's; the
+squeeze law he uses but never states; and oscillation, which turns
+``continuous at $p$'' into the numerical statement $\omega_f(p)=0$ and makes
+the set of continuity points a computable object.
+\end{roadmap}
+
+\sitem{S4.1}{Theorem}
+\emph{(Cauchy criterion for function limits.) Let $X$ be a metric space, $E
+\subset X$, $p$ a limit point of $E$, and $f : E \to Y$ with $Y$ complete
+(for instance $Y = \R^k$). Then $\lim_{x\to p} f(x)$ exists if and only if:
+for every $\varepsilon > 0$ there is a $\delta > 0$ such that}
+\[ d_Y\bigl(f(x'),f(x'')\bigr) < \varepsilon \]
+\emph{for all $x',x'' \in E$ with $0 < d_X(x',p) < \delta$ and
+$0 < d_X(x'',p) < \delta$.}
+\provenance{ECNU \cjk{定理}{Thm} 3.11 (bk.\ p.\,52); USTC \cjk{定理}{Thm} 9
+(bk.\ pp.\,29--30). Rudin has no counterpart in Chapter 4.}
+
+\begin{proof}[Proof sketch]
+\emph{Necessity} is the triangle inequality: if $f(x) \to q$, take $\delta$
+for $\varepsilon/2$ and add.
+
+\emph{Sufficiency} routes through sequences, exactly as 4.2 does. Let
+$(p_n)$ be any sequence in $E \setminus \{p\}$ with $p_n \to p$. The condition
+makes $\bigl(f(p_n)\bigr)$ a Cauchy sequence, hence convergent by
+completeness (3.11). If $(p_n')$ is a second such sequence with a different
+limit, interleave the two into one sequence; its image is Cauchy, so all its
+subsequential limits agree, and the two limits coincide. Now 4.2 applies.
+\end{proof}
+
+\begin{deeper}[Why Rudin can do without it, and you cannot]
+Rudin never needs S4.1 because he almost never has to \emph{produce} a
+function limit: his theorems take a convergent hypothesis and transport it.
+The one place he does need it, he writes it out by hand --- Exercise 4.13,
+extending a uniformly continuous function to the closure, is precisely
+``Cauchy criterion + completeness'' done in a special case. Supplement E
+below (S4.15) states the general fact the exercise is a shadow of.
+
+Note what the criterion costs: completeness of the \emph{target}. Over $\Q$
+it is false, and the failure is the same one that motivates all of
+Chapter 1.
+\end{deeper}
+
+\sitem{S4.2}{Definition}
+\emph{(Limits along a subset.) Let $E \subset X$, let $p$ be adherent to $E$
+--- that is, $p \in \overline E$ --- and let $f$ be defined on $E$. Write}
+\[ \lim_{x\to p,\ x\in E} f(x) = q \]
+\emph{if for every $\varepsilon>0$ there is $\delta>0$ with
+$d\bigl(f(x),q\bigr) < \varepsilon$ for all $x \in E$ satisfying $d(x,p) <
+\delta$.}
+\provenance{Tao I, Def.\ 9.3.6 (bk.\ p.\,221), with adherent points
+Def.\ 9.1.8.}
+
+\begin{unpack}[One definition in place of Rudin's four]
+Tao's single notion specialises to everything Rudin defines separately.
+Fix a function $f$ on a set $D$ and a point $p$:
+
+\smallskip
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Take $E =$} & \textbf{and you get} \\
+\midrule
+$D \setminus \{p\}$        & Rudin's $\lim_{x\to p} f(x)$ (4.1) \\
+$D \cap (p,\infty)$        & the right-hand limit $f(p+)$ (4.25) \\
+$D \cap (-\infty,p)$       & the left-hand limit $f(p-)$ \\
+$D$ itself                 & continuity at $p$, when the value is $f(p)$ \\
+$D$, with $p = +\infty$    & $\lim_{x\to+\infty} f(x)$ (4.33) \\
+$D \cap A$                 & the limit of the restriction $f|_A$ (4.12) \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+The fourth row is the interesting one. Rudin's limit at $p$ is
+\emph{deleted}: $p$ is thrown out of the domain, which is why 4.1 requires
+$p$ to be a limit point and why $\lim_{x\to p}f(x)$ can differ from $f(p)$
+--- the whole content of Definition 4.5 and of the discontinuity
+classification. Tao's undeleted version with $E = D$ makes ``continuous at
+$p$'' literally the statement ``the limit along the domain is $f(p)$.'' The
+two conventions disagree, and each is chosen to make its own theorems
+cleanest; knowing which one is in force is a standing source of confusion
+between textbooks.
+\end{unpack}
+
+\sitem{S4.3}{Theorem}
+\emph{(Squeeze.) If $f \le g \le h$ on $E$ and}
+$\lim_{x\to p,\,x\in E} f = \lim_{x\to p,\,x\in E} h = L$,
+\emph{then} $\lim_{x\to p,\,x\in E} g = L$.
+\provenance{Tao I, Ex.\ 9.3.5; ECNU \cjk{定理}{Thm} 3.2 (bk.\ p.\,46).}
+\begin{proof}
+Let $(p_n)$ be any sequence in $E$ with $p_n \to p$. Then
+$f(p_n) \to L$ and $h(p_n) \to L$, and $f(p_n) \le g(p_n) \le h(p_n)$, so
+$g(p_n) \to L$ by the sequence squeeze (3.19 applied to
+$g(p_n)-f(p_n) \le h(p_n)-f(p_n)$). Since the sequence was arbitrary, 4.2
+gives the conclusion.
+\end{proof}
+
+\noindent
+Rudin proves the sequence version (3.19 is its cousin) and never states the
+function version, though he uses the reasoning freely.\kn{Cheap to prove and
+constantly needed --- Supplement C below cannot get off the ground without
+it. The mechanism is 4.2: pull back to sequences and use the sequence
+squeeze.}
+
+\sitem{S4.4}{Definition}
+\emph{(Oscillation.) For $f$ real and bounded near $p$, put}
+\[ \omega_f(p) = \lim_{r\to0^+}\ \Bigl[\ \sup_{d(x,p)<r} f(x)
+   \;-\; \inf_{d(x,p)<r} f(x)\ \Bigr]. \]
+\emph{The bracket decreases as $r$ decreases, so the limit exists.}
+\provenance{Tao I, Ex.\ 9.3.4 and Tao II, Ex.\ 2.2.9 (as
+$\limsup - \liminf$); Yu Pin, Lecture 21 Lemma 131 (p.\,224), who defines it
+for maps of metric spaces as $\omega(f,p) = \inf_{U \ni p}
+\operatorname{diam} f(U)$ over open $U$. USTC and ECNU introduce
+\cjk{振幅}{zhenfu} only later, for integrability.}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,0) -- (52,0);
+  \draw[seg] (4,5) .. controls (10,9) and (14,4) .. (18,7)
+             .. controls (22,10) and (23,9) .. (25,12);
+  \node[ptopen] at (25,12) {};
+  \node[ptfill, minimum size=2.2pt] at (25,22) {};
+  \draw[seg] (25,22) .. controls (28,25) and (31,21) .. (35,24)
+             .. controls (41,28) and (44,25) .. (48,29);
+  \draw[guide] (25,0) -- (25,31);
+  \node[mlbl, anchor=north] at (25,-1.4) {$p$};
+  \foreach \r/\yy in {12/33, 7/36.5, 3.5/40}{
+    \draw[thin, {Stealth[length=2.5pt]}-{Stealth[length=2.5pt]}]
+      (25-\r,\yy) -- (25+\r,\yy);}
+  \node[mlbl, anchor=west] at (39,40) {shrinking windows};
+  % bars
+  \draw[axis] (60,0) -- (60,34);
+  \foreach \x/\h/\lab in {66/26/{r_1}, 74/19/{r_2}, 82/15/{r_3}}{
+    \draw[thin] (\x-2.4,0) rectangle (\x+2.4,\h);
+    \node[mlbl, anchor=north] at (\x,-1.4) {$\lab$};}
+  \draw[guide] (61,10) -- (90,10);
+  \node[mlbl, anchor=west] at (90.6,10) {$\omega_f(p)$};
+  \node[mlbl, anchor=south] at (74,35) {$\sup-\inf$ on each window};
+\end{tikzpicture}
+\end{center}
+\figcap{Oscillation: measure $\sup - \inf$ over a window about $p$ and let
+the window close. The bars fall but stall at the size of the jump. The
+function is continuous at $p$ exactly when they fall to $0$.}
+
+\sitem{S4.5}{Theorem}
+\emph{$f$ is continuous at $p$ if and only if $\omega_f(p) = 0$. Moreover
+$\Omega_\varepsilon = \{x : \omega_f(x) \ge \varepsilon\}$ is closed for each
+$\varepsilon > 0$; consequently the set of points at which $f$ is
+\emph{discontinuous} is $\bigcup_n \Omega_{1/n}$, a countable union of closed
+sets, and the set where $f$ is continuous is a countable intersection of
+open sets.}
+\provenance{Yu Pin, Lemmas 131--132 and p.\,227, for arbitrary maps of metric
+spaces; Tao I, Ex.\ 9.3.4.}
+\begin{proof}
+If $\omega_f(p)=0$ then given $\varepsilon>0$ some window has
+$\sup - \inf < \varepsilon$, so $|f(x)-f(p)| < \varepsilon$ throughout it:
+$f$ is continuous at $p$. Conversely continuity makes both $\sup$ and $\inf$
+over a small enough window lie within $\varepsilon$ of $f(p)$, so their
+difference is at most $2\varepsilon$.
+
+For the second claim, let $\omega_f(x_0) < \varepsilon$. Then some ball
+$B(x_0,r)$ has $\sup-\inf < \varepsilon$ on it, and every $x \in B(x_0,r)$
+has a smaller ball inside $B(x_0,r)$, so $\omega_f(x) < \varepsilon$ too.
+Hence $\{\omega_f < \varepsilon\}$ is open and its complement
+$\Omega_\varepsilon$ is closed. Finally $f$ is discontinuous at $x$ exactly
+when $\omega_f(x)>0$, that is when $x \in \Omega_{1/n}$ for some $n$.
+\end{proof}
+
+\begin{deeper}[The payoff: why Thomae's function has no mirror image]
+Rudin's Exercise 4.18 produces a function continuous at every irrational and
+discontinuous at every rational. The obvious next question --- can a function
+be continuous at every \emph{rational} and discontinuous at every irrational?
+--- Rudin never asks, and with his Chapter 4 tools he cannot answer it. S4.5
+answers it: no.
+
+The continuity set is always $\bigcap_n \{x : \omega_f(x) < 1/n\}$, an
+intersection of countably many open sets. If some $f$ were continuous exactly
+on $\Q$, then $\Q$ would be such an intersection, say $\Q = \bigcap_n U_n$
+with each $U_n$ open and dense (each contains $\Q$). Enumerate
+$\Q = \{q_1,q_2,\dots\}$; then
+\[ \varnothing = \Bigl(\bigcap_n U_n\Bigr) \cap
+   \Bigl(\bigcap_k \bigl(\R\setminus\{q_k\}\bigr)\Bigr) \]
+exhibits $\varnothing$ as a countable intersection of dense open sets, which
+Baire's theorem forbids. So Thomae's function has no mirror image, and the
+asymmetry between $\Q$ and its complement --- the theme running from 2.44 to
+Chapter 3's rearrangements --- shows up once more.
+
+Rudin proves Baire's theorem in Exercise 3.22; this is one of its first real
+uses.
+\end{deeper}
+
+% ============================================================
+\ssection{Supplement B --- Orders of magnitude: the calculus of limits}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 4]
+\raggedright
+\textbf{What Rudin does.} Nothing --- and that is the point. There is no
+$o$, no $O$, no notion of one quantity being negligible beside another
+anywhere in Chapters 1--4. Limits are proved to exist and are then named.
+
+\smallskip
+\textbf{The gap.} Analysis outside this book is conducted almost entirely in
+asymptotic notation, and the notation is not decoration: it is how one keeps
+track of which error terms matter. Rudin's abstract line never needs it
+because he never computes a limit that is not already a theorem.
+
+\smallskip
+\textbf{Where the gap bites.} At 5.15, where Taylor's theorem is really a
+statement that a remainder is $o\bigl((x-a)^n\bigr)$ and has to be phrased
+instead with an explicit intermediate point; at 3.20, where the special
+limits are exactly statements about relative rates of growth; and in every
+computation a reader will meet outside these covers.
+
+\smallskip
+\textbf{What this section supplies.} The definitions, the substitution
+theorem that makes them usable, and --- most importantly --- the pitfall that
+substitution is legal in factors and illegal in summands, which is the error
+the notation invites.
+\end{roadmap}
+
+\sitem{S4.6}{Definition}
+\emph{Let $f,g$ be defined near $p$ (with $g \ne 0$ there). As $x \to p$:}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item $f = o(g)$ \emph{means} $f/g \to 0$;
+  \item $f = O(g)$ \emph{means} $|f| \le C|g|$ \emph{near $p$, for some
+        constant $C$};
+  \item $f \sim g$ (\emph{equivalent}) \emph{means} $f/g \to 1$.
+\end{enumerate}
+\provenance{ECNU \cjk{无穷小量的阶}{orders of infinitesimals}, bk.\ pp.\,57--59;
+USTC \cjk{等价无穷小替换}{equivalent-infinitesimal substitution}, bk.\
+pp.\,32--35.}
+
+\noindent
+The equality sign in $f = o(g)$ is an abuse: $o(g)$ names a \emph{class} of
+functions and the statement is membership.\kn{Read every ``$=$'' involving
+$o$ or $O$ left-to-right and never reverse it. From $f = o(x)$ and
+$h = o(x)$ it does not follow that $f = h$; both are merely in the same
+class. ECNU makes this explicit by writing $o(g) = \{f : f/g \to 0\}$.}
+
+\sitem{S4.7}{Theorem}
+\emph{(Substitution of equivalents.) Suppose $\alpha \sim \beta$ as
+$x \to p$. If $\lim \alpha u$ exists, then $\lim \beta u$ exists and they are
+equal; if $\lim v/\alpha$ exists, then $\lim v/\beta$ exists and they are
+equal.}
+\provenance{ECNU \cjk{定理}{Thm} 3.12; USTC \cjk{定理}{Thm} 12.}
+\begin{proof}
+Write $\beta = \alpha \cdot (\beta/\alpha)$ where $\beta/\alpha \to 1$. Then
+$\beta u = (\alpha u)(\beta/\alpha)$, and the limit of a product is the
+product of the limits (4.4), so $\lim \beta u = (\lim \alpha u)\cdot 1$.
+The quotient case is identical with $v/\beta = (v/\alpha)(\alpha/\beta)$.
+\end{proof}
+
+\begin{pitfall}[Substitution is legal in products and quotients --- nowhere else]
+Since $\tan x \sim x$ and $\sin x \sim x$ as $x \to 0$, one is tempted to
+replace both in a \emph{difference}:
+\[ \tan x - \sin x \;\overset{?}{\sim}\; x - x = 0 , \]
+which is not merely imprecise but wrong. The truth is
+\[ \tan x - \sin x = \sin x\,\frac{1-\cos x}{\cos x}
+   \sim x \cdot \frac{x^2}{2} = \frac{x^3}{2}, \]
+so $(\tan x - \sin x)/\sin^3 x \to \tfrac12$, not $0$. The two equivalences
+are each accurate to first order, and the difference cancels precisely the
+order they are accurate to; what survives is third order, about which they
+say nothing.
+
+The rule to carry: equivalents may be substituted into a \emph{factor} of a
+product or quotient, never into a summand. When a difference is what you
+want, expand to enough orders --- which is what Taylor's theorem (5.15) will
+industrialise.
+\end{pitfall}
+
+\sitem{S4.8}{Definition}
+\emph{$f$ is an \emph{infinitely large quantity} as $x \to p$ if
+$|f(x)| \to +\infty$.}\kn{Not the same as unbounded, and the difference is
+the point of the definition. On $(0,\infty)$ the function $x\sin x$ is
+unbounded, yet it does not tend to $\infty$: at $x = n\pi$ it is $0$. ECNU
+isolates this as the standard beginner's error --- Rudin's 4.33 defines the
+notion correctly but never contrasts it with unboundedness.}
+
+\sitem{S4.9}{Definition}
+\emph{(Asymptotes.) A line $L$ is an \emph{asymptote} of the curve $y=f(x)$
+if the distance from $\bigl(x,f(x)\bigr)$ to $L$ tends to $0$ as the point
+recedes to infinity. The line $y = ax+b$ is an asymptote as $x \to +\infty$
+if and only if}
+\[ a = \lim_{x\to+\infty}\frac{f(x)}{x},
+   \qquad b = \lim_{x\to+\infty}\bigl[f(x)-ax\bigr], \]
+\emph{both limits existing finitely; and $x = c$ is a vertical asymptote if
+some one-sided limit of $f$ at $c$ is infinite.}
+\provenance{ECNU \cjk{曲线的渐近线}{asymptotes}, bk.\ pp.\,61--62; USTC
+Ex.\ 1.2.14. Absent from Rudin entirely.}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,0) -- (96,0);
+  \draw[axis] (0,-3) -- (0,40);
+  \draw[guide] (10,0) -- (10,38);
+  \node[mlbl, anchor=north] at (10,-1.4) {$x=c$};
+  \draw[thin] (20,0) -- (92,28.8);
+  \node[mlbl, anchor=north west] at (78,22.4) {$y=ax+b$};
+  \draw[seg] (18,34.2) .. controls (21,27) and (23,22) .. (30,18)
+             .. controls (36,15.6) and (40,16.4) .. (45,18)
+             .. controls (52,20) and (60,22.6) .. (70,24.7)
+             .. controls (78,26.4) and (84,28) .. (90,29.6);
+  \draw[thin, {Stealth[length=2.5pt]}-{Stealth[length=2.5pt]}]
+    (60,16) -- (60,21.9);
+  \node[mlbl, anchor=west] at (62,13.6) {$f(x)-(ax+b)\to0$};
+\end{tikzpicture}
+\end{center}
+\figcap{An oblique asymptote. Because the distance from $(x,f(x))$ to the
+line is $|f(x)-ax-b|/\sqrt{1+a^2}$, the geometric condition ``distance
+$\to 0$'' is the algebraic condition $f(x)-ax-b \to 0$ --- which is why
+dividing by $x$ recovers $a$ first, and subtracting $ax$ then recovers $b$.
+A vertical asymptote is the separate case where $f$ itself blows up.}
+
+\begin{unpack}[Worked example]
+For $f(x) = \dfrac{x^3}{x^2+2x-3}$ division gives
+\[ f(x) = x-2 + \frac{7x-6}{x^2+2x-3}, \]
+and the remainder tends to $0$, so $y = x-2$ is an asymptote in both
+directions. Since $x^2+2x-3 = (x+3)(x-1)$, the lines $x=-3$ and $x=1$ are
+vertical asymptotes. Note that the recipe found $a$ and $b$ without any
+division: $f(x)/x \to 1$ and $f(x)-x \to -2$.
+\end{unpack}
+
+% ============================================================
+\ssection{Supplement C --- The two limits Rudin postpones}
+
+\begin{pitfall}[Read this section as a loan against Chapter 8]
+Rudin has no $\sin$, $\cos$, $\exp$ or $\log$ at this point: they are
+\emph{defined} in 8.7 by power series, and every property of them is derived
+there. So the two theorems below are not available in his development, and
+the geometric proof of the first uses the area of a circular sector --- that
+is, integration (Chapter 6) and arc length (8.7 again).
+
+They are included because every other text proves them here, because every
+computation in a first course needs them, and because the arguments are
+worth seeing. But the logical order is Rudin's, and Yu Pin --- who also
+defines $\sin$ by its series --- shows what that costs: he proves the same
+limit in one line from the estimate
+\[ \Bigl|\frac{\sin x}{x} - 1\Bigr| \le |x|^2 e^{|x|}, \]
+read straight off the series with no geometry at all. The picture below is
+then an illustration of a fact already proved, not the proof.
+\end{pitfall}
+
+\sitem{S4.10}{Theorem}
+\emph{$\displaystyle\lim_{x\to0}\frac{\sin x}{x} = 1$.}
+\provenance{ECNU \cjk{定理}{Thm} 3.14 (bk.\ p.\,53); USTC \cjk{定理}{Thm} 10
+(bk.\ p.\,30). Rudin obtains it from 8.7.}
+
+\begin{proof}[The geometric proof]
+Let $0 < x < \pi/2$ and work in the unit circle. Comparing the areas of the
+triangle $OAB$, the sector $OAB$, and the triangle $OAT$ gives
+\[ \tfrac12\sin x \;<\; \tfrac12 x \;<\; \tfrac12\tan x . \]
+Dividing by $\tfrac12\sin x > 0$ yields $1 < x/\sin x < 1/\cos x$, that is
+\[ \cos x < \frac{\sin x}{x} < 1 . \]
+Since $\cos x \to 1$ as $x \to 0^+$, the squeeze S4.3 gives the limit from
+the right; the quotient is even, so the two-sided limit follows.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \fill[black!26] (0,0) -- (34,0)
+    arc[start angle=0, end angle=55, radius=34] -- cycle;
+  \fill[black!10] (0,0) -- (34,0) -- (19.50,27.85) -- cycle;
+  \fill[pattern=north east lines, pattern color=black!45]
+    (34,0) -- (34,48.56) -- (19.50,27.85)
+    arc[start angle=55, end angle=0, radius=34] -- cycle;
+  \draw[thin] (0,0) -- (34,0);
+  \draw[thin] (0,0) -- (34,48.56);
+  \draw[thin] (34,0) -- (34,48.56);
+  \draw[thin] (19.50,27.85) -- (34,0);
+  \draw[seg] (34,0) arc[start angle=0, end angle=55, radius=34];
+  \node[ptfill, minimum size=2.2pt] at (19.50,27.85) {};
+  \node[mlbl, anchor=north east] at (-0.6,0.4) {$O$};
+  \node[mlbl, anchor=north] at (34,-1.6) {$A$};
+  \node[mlbl, anchor=south east] at (18.6,28.4) {$B$};
+  \node[mlbl, anchor=south] at (34,50.2) {$T$};
+  \node[mlbl] at (11,3.6) {$x$};
+  % legend
+  \fill[black!10] (46,42) rectangle (52,46.4);
+  \draw[thin] (46,42) rectangle (52,46.4);
+  \node[lbl, anchor=west] at (53.4,44.2)
+    {triangle $OAB$: area $\tfrac12\sin x$};
+  \fill[black!26] (46,32) rectangle (52,36.4);
+  \draw[thin] (46,32) rectangle (52,36.4);
+  \node[lbl, anchor=west] at (53.4,34.2)
+    {${}+{}$ sliver ${}={}$ sector: area $\tfrac12 x$};
+  \fill[pattern=north east lines, pattern color=black!45]
+    (46,22) rectangle (52,26.4);
+  \draw[thin] (46,22) rectangle (52,26.4);
+  \node[lbl, anchor=west] at (53.4,24.2)
+    {${}+{}$ this ${}={}$ triangle $OAT$: area $\tfrac12\tan x$};
+\end{tikzpicture}
+\end{center}
+\figcap{Three nested regions in the unit circle. Containment of the regions
+\emph{is} the chain $\sin x < x < \tan x$ --- the only inequality the proof
+needs. The sector's area being $\tfrac12x$ is what makes radian measure the
+right measure, and is also what this argument borrows from Chapter 6.}
+
+\sitem{S4.11}{Theorem}
+\emph{$\displaystyle\lim_{x\to\infty}\Bigl(1+\frac1x\Bigr)^{x} = e$, in both
+directions; equivalently $\lim_{t\to0}(1+t)^{1/t} = e$.}
+\provenance{ECNU bk.\ p.\,54; USTC \cjk{定理}{Thm} 11. Rudin proves only the
+sequence case, 3.31.}
+\begin{proof}
+Let $x>0$ and $n = \lfloor x \rfloor$, so $n \le x < n+1$. Increasing the
+base increases the power, and increasing the exponent does too, so
+\[ \Bigl(1+\frac{1}{n+1}\Bigr)^{n}
+   \;<\; \Bigl(1+\frac1x\Bigr)^{x}
+   \;<\; \Bigl(1+\frac1n\Bigr)^{n+1} . \]
+The left side is $\bigl(1+\tfrac1{n+1}\bigr)^{n+1}$ divided by
+$\bigl(1+\tfrac1{n+1}\bigr)$ and the right side is
+$\bigl(1+\tfrac1n\bigr)^{n}$ times $\bigl(1+\tfrac1n\bigr)$; by 3.31 both
+tend to $e$. Since $n \to \infty$ as $x \to +\infty$, the squeeze S4.3 gives
+the limit. For $x \to -\infty$ put $x = -(y+1)$ and compute
+$\bigl(1+\tfrac1x\bigr)^{x} = \bigl(1+\tfrac1y\bigr)^{y+1} \to e$.
+\end{proof}
+
+\begin{unpack}[From Rudin's sequence to a continuous variable]
+Rudin's 3.31 establishes $\bigl(1+\tfrac1n\bigr)^n \to e$ for integers $n$.
+To pass to a real variable, trap $x$ between consecutive integers: with
+$n = \lfloor x \rfloor$ and $x>0$,
+\[ \Bigl(1+\frac{1}{n+1}\Bigr)^{n} \;<\;
+   \Bigl(1+\frac{1}{x}\Bigr)^{x} \;<\;
+   \Bigl(1+\frac{1}{n}\Bigr)^{n+1}, \]
+because increasing the base increases the power and so does increasing the
+exponent. Both outer terms are the sequence limit multiplied by a factor
+tending to $1$ --- the left is $\bigl(1+\tfrac1{n+1}\bigr)^{n+1}$ divided by
+$\bigl(1+\tfrac1{n+1}\bigr)$, the right is $\bigl(1+\tfrac1n\bigr)^n$ times
+$\bigl(1+\tfrac1n\bigr)$ --- so both tend to $e$, and S4.3 closes the gap.
+The case $x \to -\infty$ follows from the substitution $x = -(y+1)$.
+
+This bracketing is the standard way to lift \emph{any} sequence limit to a
+continuous one when the function is monotone between integers, and it is
+worth keeping for that reason alone.
+\end{unpack}
+
+% ============================================================
+\ssection{Supplement D --- Monotonicity, inverses, and the elementary functions}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 4]
+\raggedright
+\textbf{What Rudin does.} Theorem 4.17 proves that a continuous bijection of
+a \emph{compact} metric space has a continuous inverse, and Example 4.21
+shows compactness cannot simply be dropped. Monotone functions appear
+separately at 4.28--4.30, and the elementary functions do not appear at all
+--- $\exp$, $\log$, $\sin$ are built in Chapter 8 from power series.
+
+\smallskip
+\textbf{The gap.} On the line there is a second route to the same conclusion
+that uses no compactness whatever, only order --- and it reaches domains
+4.17 cannot, such as open and unbounded intervals. Rudin's two topics,
+inverse functions and monotone functions, are in fact one topic, and he never
+connects them.
+
+\smallskip
+\textbf{Where the gap bites.} At 4.21 itself, where the circle-wrap
+counterexample is offered as evidence that compactness is \emph{needed},
+when what it really shows is that the domain was not ordered; and at
+Exercise 4.14, which is about monotone open maps and sits next to a theorem
+that would explain it.
+
+\smallskip
+\textbf{What this section supplies.} The equivalence of injectivity and
+strict monotonicity for continuous functions on an interval; the inverse
+function theorem that follows, with no compactness; and the catalogue of
+elementary functions that this route makes available four chapters early.
+\end{roadmap}
+
+\sitem{S4.12}{Theorem}
+\emph{If $f$ is continuous and one-to-one on an interval $I \subset \R$, then
+$f$ is strictly monotone on $I$.}
+\provenance{Tao I, Ex.\ 9.8.3; USTC \cjk{定理}{Thm} 3 states the equivalence
+(continuous $f$ on $[a,b]$ is invertible iff strictly monotone).}
+\begin{proof}
+Suppose $f$ is not strictly monotone. Then there are $u<v<w$ in $I$ with
+$f(v)$ not strictly between $f(u)$ and $f(w)$ --- say $f(v) \ge f(u)$ and
+$f(v) \ge f(w)$, the other case being symmetric. Pick $c$ with
+$\max\{f(u),f(w)\} < c < f(v)$, possible unless $f(v)$ equals one of them,
+which injectivity forbids. The intermediate value theorem 4.23 applied on
+$[u,v]$ and on $[v,w]$ produces $s \in (u,v)$ and $t \in (v,w)$ with
+$f(s)=f(t)=c$, contradicting injectivity.
+\end{proof}
+
+\noindent
+The proof is the intermediate value theorem used three times: if $f$ were
+neither increasing nor decreasing, some triple $u<v<w$ would have $f(v)$
+outside the interval with endpoints $f(u)$, $f(w)$, and 4.23 would then
+produce a repeated value on one side or the other.\kn{The converse is
+trivial, so this says: for continuous functions on an interval, injectivity
+and strict monotonicity are the \emph{same} hypothesis. Rudin's Exercise 4.14
+(open maps are monotone) is a relative of this; the equivalence itself he
+never states.}
+
+\sitem{S4.13}{Theorem}
+\emph{(Inverse functions without compactness.) Let $f$ be continuous and
+strictly increasing on an interval $I$. Then $J = f(I)$ is an interval, $f :
+I \to J$ is a bijection, and $f^{-1} : J \to I$ is continuous and strictly
+increasing.}
+\provenance{ECNU \cjk{定理}{Thm} 4.8 (bk.\ pp.\,73--74); USTC \cjk{定理}{Thm}
+3; Tao I, Prop.\ 9.8.3.}
+
+\begin{proof}[The $\delta$ that monotonicity hands you]
+Let $y_0 = f(x_0)$ with $x_0$ interior to $I$, and let $\varepsilon > 0$ be
+small enough that $[x_0-\varepsilon, x_0+\varepsilon] \subset I$. Put
+$y_1 = f(x_0-\varepsilon)$ and $y_2 = f(x_0+\varepsilon)$; strict increase
+gives $y_1 < y_0 < y_2$. Take
+\[ \delta = \min\{\,y_0-y_1,\ y_2-y_0\,\} > 0 . \]
+If $|y - y_0| < \delta$ then $y_1 < y < y_2$, and applying the increasing
+map $f^{-1}$ gives $x_0-\varepsilon < f^{-1}(y) < x_0+\varepsilon$. Endpoints
+of $I$ are handled one-sidedly.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,0) -- (76,0);
+  \draw[axis] (0,0) -- (0,48);
+  \draw[seg] (6,4) .. controls (16,10) and (20,13) .. (30,20)
+             .. controls (40,27) and (48,33) .. (58,40)
+             .. controls (63,43) and (66,45) .. (70,46.5);
+  \draw[guide] (24,0) -- (24,16) -- (0,16);
+  \draw[guide] (34,0) -- (34,24) -- (0,24);
+  \draw[guide] (44,0) -- (44,31) -- (0,31);
+  \node[mlbl, anchor=north] at (24,-1.4) {$x_0{-}\varepsilon$};
+  \node[mlbl, anchor=north] at (34,-1.4) {$x_0$};
+  \node[mlbl, anchor=north] at (44,-1.4) {$x_0{+}\varepsilon$};
+  \node[mlbl, anchor=east] at (-1.4,16) {$y_1$};
+  \node[mlbl, anchor=east] at (-1.4,24) {$y_0$};
+  \node[mlbl, anchor=east] at (-1.4,31) {$y_2$};
+  \draw[thin, {Stealth[length=2.5pt]}-{Stealth[length=2.5pt]}]
+    (68,17) -- (68,31);
+  \node[mlbl, anchor=west] at (69.4,24) {$\delta$};
+  \draw[guide] (0,17) -- (68,17);
+  \draw[guide] (44,31) -- (68,31);
+\end{tikzpicture}
+\end{center}
+\figcap{Theorem S4.13: the $\varepsilon$-interval about $x_0$ is carried by
+$f$ onto an interval about $y_0$, and $\delta$ is simply the smaller of its
+two halves. Monotonicity is doing all the work --- it is what makes the
+image of an interval an interval, and what lets $f^{-1}$ preserve the
+trapping. No compactness enters, so $I$ may be open or unbounded.}
+
+\begin{deeper}[Two theorems about inverses, neither containing the other]
+Rudin 4.17 and S4.13 are genuinely different results:
+
+\smallskip
+\begin{tabular}{@{}p{0.30\linewidth}p{0.30\linewidth}p{0.30\linewidth}@{}}
+\toprule
+& \textbf{Rudin 4.17} & \textbf{S4.13} \\
+\midrule
+domain      & compact metric space   & interval in $\R$ \\
+hypothesis  & continuous bijection   & continuous, strictly monotone \\
+mechanism   & compactness (4.14, 2.35)& order + IVT \\
+reaches     & $\R^k$, function spaces & $(0,\infty)$, $\R$, half-open \\
+misses      & $(0,1) \to (0,1)$       & anything not ordered \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+Example 4.21 --- the circle-wrap $t \mapsto (\cos t, \sin t)$ on $[0,2\pi)$,
+whose inverse is discontinuous --- shows 4.17 fails without compactness; but
+$f(x) = x/(1-x^2)$ on $(-1,1)$ is a continuous increasing bijection onto
+$\R$ with continuous inverse, on a domain that is not compact. Order
+supplies what compactness supplied.
+\end{deeper}
+
+\sitem{S4.14}{Theorem}
+\emph{(Continuity of the elementary functions.) For $a>0$ the function
+$a^x$, defined for irrational $x$ as $\sup\{a^r : r \in \Q,\ r \le x\}$, is
+continuous on $\R$ and satisfies $a^{\alpha}a^{\beta}=a^{\alpha+\beta}$ and
+$(a^{\alpha})^{\beta}=a^{\alpha\beta}$. Its inverse $\log_a$ is continuous
+on $(0,\infty)$ by S4.13, the power $x^{\alpha}=e^{\alpha\ln x}$ is
+continuous on $(0,\infty)$, and $\sin$, $\cos$ are continuous because
+$|\sin x - \sin y| \le |x-y|$. Consequently every function built from these
+by finitely many algebraic operations, compositions, and inversions is
+continuous on its domain of definition.}
+\provenance{ECNU \cjk{定理}{Thm} 4.10--4.13 (bk.\ pp.\,78--80); USTC
+\cjk{定理}{Thm} 4 (bk.\ pp.\,45--46).}
+\begin{proof}[Proof sketch]
+Continuity of $a^x$ at $0$ follows from $a^{1/n}\to1$ (Rudin 3.20(b)) and
+monotonicity; the identity $a^{x+h}=a^xa^h$ then transports continuity from
+$0$ to every point, since $|a^{x+h}-a^x| = a^x|a^h-1|$. The laws
+$a^{\alpha}a^{\beta}=a^{\alpha+\beta}$ and
+$(a^{\alpha})^{\beta}=a^{\alpha\beta}$ hold for rational exponents by S1.13
+and extend to real exponents by density and continuity (Rudin's Exercise
+4.4). Continuity of $\log_a$ is S4.13, that of $x^{\alpha}=e^{\alpha\ln x}$
+is composition, and $|\sin x - \sin y| \le |x-y|$ gives the trigonometric
+cases. Closure under sums, products, quotients and composition is 4.9 and
+4.7.
+\end{proof}
+
+\begin{deeper}[The same destination by two routes]
+Rudin builds these functions in Chapter 8 from power series, and their
+continuity is then a corollary of the theorem that a power series is
+continuous inside its disc of convergence (8.1). The Chinese texts build
+them here, from the supremum definition of $a^x$ that Rudin sets as
+Exercises 1.6--1.7, and get continuity by hand.
+
+The trade is visible: Rudin's route is shorter and yields differentiability
+and the addition formulas at the same stroke, but it defers every concrete
+function by four chapters; the elementary route has functions available
+immediately but must prove each property separately. Neither is more
+rigorous. The Chinese texts' order is why their students compute limits in
+week three and Rudin's readers do not.
+\end{deeper}
+
+% ============================================================
+\ssection{Supplement E --- Uniform continuity: the working toolkit}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 4]
+\raggedright
+\textbf{What Rudin does.} Definition 4.18 gives uniform continuity, 4.19
+proves that continuity on a compact set implies it, and 4.20 exhibits the
+standard failures. Everything else about the notion is set as Exercises
+4.8--4.13.
+
+\smallskip
+\textbf{The gap.} Those exercises contain the working theory --- uniform
+continuity preserves Cauchy sequences, preserves boundedness, permits
+extension to the closure --- and as exercises they are unavailable to a
+reader who has not done them, and unquotable to one who has. There is also
+no \emph{criterion}: to show a function is not uniformly continuous, Rudin
+negates the definition by hand each time.
+
+\smallskip
+\textbf{Where the gap bites.} In Chapter 8, where $b^x$ is defined on $\Q$
+and must be extended to $\R$ --- an appeal to Exercise 4.13; and at 7.16 and
+beyond, where uniform continuity is used as a known tool.
+
+\smallskip
+\textbf{What this section supplies.} The sequential criterion, which turns
+every non-example into a two-line computation; the gluing lemma; the
+extension theorem in its general form; the algebra of what preserves uniform
+continuity; and the Lebesgue number lemma, which is what Rudin's own proof of
+4.19 manufactures without naming.
+\end{roadmap}
+
+\sitem{S4.15}{Theorem}
+\emph{(Sequential criterion.) $f : E \to Y$ is uniformly continuous on $E$
+if and only if for every pair of sequences $(p_n)$, $(q_n)$ in $E$ with
+$d(p_n,q_n) \to 0$ one has $d\bigl(f(p_n),f(q_n)\bigr) \to 0$.}
+\provenance{Tao I, Prop.\ 9.9.8 (via ``equivalent sequences''); ECNU
+\cjk{例}{Ex} 10 (bk.\ p.\,75).}
+\begin{proof}
+If $f$ is uniformly continuous and $d(p_n,q_n)\to0$, then given
+$\varepsilon>0$ take $\delta$ from the definition; eventually
+$d(p_n,q_n)<\delta$, so eventually
+$d\bigl(f(p_n),f(q_n)\bigr)<\varepsilon$.
+
+Conversely, suppose $f$ is not uniformly continuous. Then some
+$\varepsilon>0$ resists every $\delta$; taking $\delta = 1/n$ produces
+points $p_n,q_n$ with $d(p_n,q_n)<1/n$ but
+$d\bigl(f(p_n),f(q_n)\bigr) \ge \varepsilon$. This pair of sequences
+violates the stated condition.
+\end{proof}
+
+\noindent
+The value is in the negation: to prove a function \emph{not} uniformly
+continuous, exhibit one pair of sequences that close up while their images do
+not.\kn{Compare Rudin's own method at 4.20: he argues directly from the
+$\varepsilon$-$\delta$ negation each time. The criterion packages that
+argument once. Note the parallel it draws: continuity preserves
+\emph{convergent} sequences (4.2), uniform continuity preserves
+\emph{pairs that close up}.}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,0) -- (68,0);
+  \draw[axis] (0,0) -- (0,40);
+  \draw[seg] (5.5,36) .. controls (7,26) and (9,20) .. (13,15)
+             .. controls (18,10.5) and (24,8) .. (32,6.4)
+             .. controls (42,4.8) and (54,3.8) .. (64,3.4);
+  \draw[guide] (6,0) -- (6,33) -- (0,33);
+  \draw[guide] (12,0) -- (12,16.5) -- (0,16.5);
+  \node[mlbl, anchor=north] at (6,-1.4) {$q_n$};
+  \node[mlbl, anchor=north] at (13.6,-1.4) {$p_n$};
+  \node[mlbl, anchor=east] at (-1.4,33) {$2n$};
+  \node[mlbl, anchor=east] at (-1.4,16.5) {$n$};
+  \draw[thin, {Stealth[length=2.5pt]}-{Stealth[length=2.5pt]}]
+    (6,-6) -- (12,-6);
+  \node[mlbl, anchor=north] at (9,-7.4) {$\to0$};
+  \draw[thin, {Stealth[length=2.5pt]}-{Stealth[length=2.5pt]}]
+    (-9,16.5) -- (-9,33);
+  \node[mlbl, anchor=south, rotate=90] at (-10.4,25) {$\to\infty$};
+  \node[lbl, anchor=west] at (34,22) {$f(x)=1/x$ on $(0,1]$};
+  \node[lbl, anchor=west] at (34,17.6) {$p_n=1/n$, $q_n=1/2n$};
+\end{tikzpicture}
+\end{center}
+\figcap{The criterion applied to $1/x$: the two arguments close up
+($p_n - q_n \to 0$) while their values pull apart ($n$ versus $2n$). One
+pair of sequences settles it --- no $\varepsilon$-$\delta$ negation needed.
+For $x^2$ on $\R$ take $p_n = n$, $q_n = n + 1/n$: the gap tends to $0$ and
+the images differ by $2 + 1/n^2$.}
+
+\sitem{S4.16}{Theorem}
+\emph{(Gluing.) If $a < c < b$ and $f$ is uniformly continuous on $[a,c]$
+and on $[c,b]$, then $f$ is uniformly continuous on $[a,b]$. The same holds
+for two intervals sharing one endpoint, bounded or not.}
+\provenance{ECNU \cjk{例}{Ex} 12 (bk.\ p.\,76).}
+\begin{proof}
+Given $\varepsilon>0$, take $\delta_1$ and $\delta_2$ for $\varepsilon/2$ on
+$[a,c]$ and on $[c,b]$, and put $\delta = \min\{\delta_1,\delta_2\}$. Let
+$|x-y|<\delta$. If $x,y$ lie in the same piece there is nothing to prove.
+Otherwise $x \le c \le y$, so $|x-c|<\delta$ and $|c-y|<\delta$, and
+\[ |f(x)-f(y)| \le |f(x)-f(c)| + |f(c)-f(y)|
+   < \tfrac{\varepsilon}{2}+\tfrac{\varepsilon}{2} = \varepsilon . \]
+\end{proof}
+
+\begin{unpack}[Why gluing needs an argument at all, and what it buys]
+Uniform continuity is not a local property, so the union of two sets on which
+$f$ is uniformly continuous is not automatically another. The proof works
+because the two pieces meet: given $\varepsilon$, take $\delta_1,\delta_2$
+for $\varepsilon/2$ on the two pieces and set
+$\delta = \min\{\delta_1,\delta_2\}$. If $|x-y| < \delta$ with $x \le c \le
+y$, then $|x-c| < \delta$ and $|c-y| < \delta$, so
+\[ |f(x)-f(y)| \le |f(x)-f(c)| + |f(c)-f(y)| < \varepsilon . \]
+The shared point $c$ is the whole mechanism, and it is why two intervals
+with a \emph{gap} between them cannot be glued.
+
+The payoff is a standard trick: to prove $f$ uniformly continuous on
+$[0,\infty)$, prove it on the compact $[0,1]$ by 4.19 and on $[1,\infty)$ by
+a direct estimate. For $f(x)=\sqrt x$ the second is
+$|\sqrt x - \sqrt y| = |x-y|/(\sqrt x+\sqrt y) \le \tfrac12|x-y|$. Rudin's
+Exercise 4.8 asks for the boundedness half of this story and never supplies
+the gluing tool.
+\end{unpack}
+
+\sitem{S4.17}{Theorem}
+\emph{(Extension to the closure.) Let $f : E \to Y$ be uniformly continuous
+with $Y$ complete. Then $\lim_{x\to p} f(x)$ exists at every $p \in
+\overline E$, and $f$ extends uniquely to a uniformly continuous function on
+$\overline E$.}
+\provenance{Tao I, Cor.\ 9.9.14 and Prop.\ 9.9.12. Rudin poses the special
+case as Exercise 4.13.}
+\begin{proof}
+Let $p \in \overline E$ and let $(p_n)$ be a sequence in $E$ with
+$p_n \to p$. It is Cauchy, and a uniformly continuous map sends Cauchy
+sequences to Cauchy sequences: given $\varepsilon$, take $\delta$ from
+uniform continuity and then $N$ with $d(p_n,p_m)<\delta$ for $n,m\ge N$.
+Completeness of $Y$ makes $\bigl(f(p_n)\bigr)$ converge. Interleaving two
+such sequences shows the limit does not depend on the choice, so
+$\lim_{x\to p}f(x)$ exists by 4.2.
+
+Defining $\tilde f(p)$ to be that limit extends $f$ to $\overline E$; the
+extension is uniformly continuous because the defining inequality passes to
+limits, and it is unique because two continuous maps agreeing on the dense
+set $E$ agree on $\overline E$ (Rudin's Exercise 4.4).
+\end{proof}
+
+\begin{proofwalk}[How the proof flows]
+  \item \textbf{Choose the method.} A \emph{value} has to be produced at a
+        point where $f$ is not defined, so something must manufacture it.
+        The only manufacturing device available is completeness of the
+        target, and the only way to reach it is through Cauchy sequences.
+  \item \textbf{Convert the hypothesis into a Cauchy statement.} Uniform
+        continuity says one $\delta$ works everywhere, which is exactly what
+        lets a Cauchy sequence in the domain be pushed to a Cauchy sequence
+        in the target. Ordinary continuity cannot do this --- the $\delta$
+        would move with the point.
+  \item \textbf{Spend completeness.} Cauchy becomes convergent. This is the
+        only step that uses anything about $Y$.
+  \item \textbf{Remove the dependence on the sequence.} Interleaving two
+        approximating sequences is the standard device; it converts ``every
+        sequence gives a limit'' into ``the limit exists,'' which is 4.2.
+  \item \textbf{Audit.} Uniform continuity is spent once, in step 2;
+        completeness once, in step 3; density of $E$ in $\overline E$ once,
+        to know the approximating sequences exist at all. Drop uniformity and
+        the theorem fails --- $\sin(1/x)$ on $(0,1)$ is continuous, sends a
+        Cauchy sequence to a divergent one, and extends to no value at $0$.
+\end{proofwalk}
+
+\noindent
+This is the theorem Rudin's Exercise 4.13 is a special case of, and the
+reason uniform continuity matters at all in Chapter 8: it is what lets a
+function defined on $\Q$ --- like $b^x$ for rational $x$ in Exercise 1.6 ---
+become a function on $\R$.\kn{Chain of reasoning: uniformly continuous maps
+send Cauchy sequences to Cauchy sequences (Rudin's Exercise 4.11), the
+target is complete, so the images converge; S4.1 then upgrades ``every
+sequence works'' to ``the limit exists.'' Plain continuity is not enough:
+$1/x$ on $(0,1)$ is continuous, sends the Cauchy sequence $(1/n)$ to an
+unbounded one, and does not extend to $0$.}
+
+\sitem{S4.18}{Theorem}
+\emph{(What preserves uniform continuity.) If $f,g$ are uniformly continuous
+on $E$ then so are $f+g$, $f-g$, $cf$, $\max(f,g)$, $\min(f,g)$, and $g\circ
+f$ where defined. The product $fg$ need not be, but is if $f$ and $g$ are
+both bounded.}
+\provenance{Tao I, Ex.\ 9.9.6; Tao II, Ex.\ 2.3.4--2.3.6.}
+\begin{proof}
+For $f+g$ take $\delta$ to be the smaller of the two $\delta$'s for
+$\varepsilon/2$; for $cf$ use $\varepsilon/|c|$; for $g \circ f$ feed the
+$\delta$ of $g$ into $f$ as its $\varepsilon$. The identity
+$\max(f,g) = \tfrac12(f+g+|f-g|)$ and $\bigl||u|-|v|\bigr| \le |u-v|$ handle
+$\max$ and $\min$.
+
+For products with both factors bounded by $M$,
+\begin{align*}
+  |f(p)g(p)-f(q)g(q)|
+    &\le |f(p)|\,|g(p)-g(q)| + |g(q)|\,|f(p)-f(q)|\\
+    &\le M\bigl(|g(p)-g(q)|+|f(p)-f(q)|\bigr),
+\end{align*}
+so $\delta$ for $\varepsilon/2M$ in each factor works. Without boundedness
+the conclusion fails: $f(x)=g(x)=x$ are uniformly continuous on $\R^1$ and
+$fg=x^2$ is not.
+\end{proof}
+
+\noindent
+The counterexample is the smallest one available: $f(x)=g(x)=x$ is uniformly
+continuous on $\R$, and $fg = x^2$ is not --- the same function Rudin uses at
+4.20 for a different purpose.\kn{The boundedness repair is the usual
+splitting: $|fg(p)-fg(q)| \le |f(p)|\,|g(p)-g(q)| + |g(q)|\,|f(p)-f(q)|$,
+and if both factors are bounded by $M$ each term is small. Compare 3.3(c),
+where exactly this decomposition proves the product rule for limits ---
+the strips-and-corner picture there is the same algebra.}
+
+\sitem{S4.19}{Theorem}
+\emph{(Lebesgue number.) Let $K$ be a compact metric space and
+$\{U_\alpha\}$ an open cover of $K$. Then there is a $\delta>0$ --- a
+\emph{Lebesgue number} of the cover --- such that every ball
+$B(x,\delta)$ with $x \in K$ lies inside a single $U_\alpha$.}
+\provenance{Yu Pin, Prop.\ 66 (p.\,112) and the metric version p.\,114.}
+\begin{proof}
+Suppose no such $\delta$ exists. Then for each $n$ there is $x_n \in K$ with
+$B(x_n,1/n)$ contained in no single $U_\alpha$. Compactness gives a
+subsequence $x_{n_k} \to x$, and $x$ lies in some $U_\beta$, which contains a
+ball $B(x,r)$. For $k$ large enough that $d(x_{n_k},x)<r/2$ and
+$1/n_k < r/2$, the triangle inequality gives
+$B(x_{n_k},1/n_k) \subset B(x,r) \subset U_\beta$ --- contradicting the
+choice of $x_{n_k}$.
+\end{proof}
+
+\begin{proofwalk}[How the proof flows]
+  \item \textbf{Choose the method.} The claim is that a \emph{single} scale
+        works everywhere, and no candidate scale is in sight. So assume none
+        exists and let the failure build a sequence --- the standard move
+        when a uniform quantity is wanted and only pointwise data is given.
+  \item \textbf{Let the counterexamples index themselves.} Failure at scale
+        $1/n$ produces a point $x_n$. The sequence is free: it is the
+        negation of the conclusion, written out.
+  \item \textbf{Spend compactness.} A convergent subsequence appears, and its
+        limit lies in some cover element --- which finally supplies a ball of
+        a definite radius $r$, the first fixed scale in the argument.
+  \item \textbf{Collide the two scales.} For large $k$ the tiny ball around
+        $x_{n_k}$ sits inside $B(x,r)$, hence inside one $U_\beta$ ---
+        contradicting how $x_{n_k}$ was chosen. Note both smallnesses are
+        needed: $d(x_{n_k},x)$ small \emph{and} $1/n_k$ small.
+  \item \textbf{Audit.} Compactness is spent once, in step 3; openness of the
+        cover once, also in step 3, to get $r$. The lemma is what Rudin's own
+        4.19 constructs by hand --- his halving of $\phi(p)$ and taking the
+        minimum over a finite subcover produces exactly this $\delta$.
+\end{proofwalk}
+
+\begin{unpack}[The lemma hiding inside Rudin's proof of 4.19]
+Rudin's uniform continuity proof does not name this, but it manufactures it:
+he takes the balls $J(p)$ of radius $\tfrac12\phi(p)$, extracts a finite
+subcover, and sets $\delta = \tfrac12\min\phi(p_i)$. That $\delta$ is a
+Lebesgue number of the cover $\{J(p)\}$, and the halving trick is exactly the
+device that produces one.
+
+Isolate the lemma and 4.19 becomes three lines. Given $\varepsilon>0$, cover
+$K$ by the sets $U_x = f^{-1}\bigl(B(f(x),\varepsilon/2)\bigr)$, open by 4.8.
+Let $\delta$ be a Lebesgue number. If $d(p,q)<\delta$ then both lie in one
+$U_x$, so $f(p)$ and $f(q)$ are both within $\varepsilon/2$ of $f(x)$, hence
+within $\varepsilon$ of each other.
+
+The gain is not brevity but reuse: the same lemma proves that compact and
+sequentially compact agree, and it is the standard tool whenever a
+\emph{single} scale must be extracted from a cover. Yu Pin runs
+Heine--Borel itself off it. Keep it as the answer to ``what does compactness
+actually hand me?'' --- a uniform scale.
+\end{unpack}
+
+% ============================================================
+\ssection{Supplement F --- Finer structure: discontinuities and components}
+
+\sitem{S4.20}{Definition}
+\emph{(Four kinds of discontinuity.) Let $f$ be discontinuous at $x$. The
+discontinuity is}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item \emph{\textbf{removable} if $f(x+)$ and $f(x-)$ exist and are equal
+        (necessarily $\ne f(x)$);}
+  \item \emph{\textbf{a jump} if both exist and differ;}
+  \item \emph{\textbf{asymptotic} if a one-sided limit fails because $|f|$
+        is unbounded near $x$ on that side;}
+  \item \emph{\textbf{oscillatory} if a one-sided limit fails while $f$
+        stays bounded there.}
+\end{enumerate}
+\provenance{Tao I, Remark 9.5.4; USTC \cjk{可去间断点/跳跃点}{removable/jump},
+bk.\ pp.\,42--43.}
+
+\noindent
+Rudin's Definition 4.26 stops at two boxes: (a) and (b) together are his
+\emph{simple} discontinuities, and (c) and (d) together are his
+\emph{second kind}.\kn{The refinement earns its keep twice. Removable
+discontinuities are exactly the ones a change of a single value repairs, so
+they are not really properties of the function but of its bookkeeping.
+And the asymptotic/oscillatory split is the difference between $1/x$ and
+$\sin(1/x)$ at $0$ --- two failures that behave nothing alike, which
+Rudin's 4.27(d) illustrates without naming.}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % (a) removable
+  \draw[axis] (0,0) -- (34,0);
+  \draw[seg] (3,6) -- (16,13);
+  \draw[seg] (18,14) -- (31,21);
+  \node[ptopen] at (17,13.5) {};
+  \node[ptfill, minimum size=2.2pt] at (17,21) {};
+  \node[lbl, anchor=north] at (17,-2) {(a) removable};
+  % (b) jump
+  \begin{scope}[xshift=48mm]
+  \draw[axis] (0,0) -- (34,0);
+  \draw[seg] (3,7) -- (16,11);
+  \node[ptopen] at (17,11.3) {};
+  \draw[seg] (18,19) -- (31,23);
+  \node[ptfill, minimum size=2.2pt] at (17,19) {};
+  \node[lbl, anchor=north] at (17,-2) {(b) jump};
+  \end{scope}
+  % (c) asymptotic
+  \begin{scope}[yshift=-34mm]
+  \draw[axis] (0,0) -- (34,0);
+  \draw[guide] (17,0) -- (17,23);
+  \draw[seg] (5,2.6) .. controls (12,4) and (15.6,9) .. (16.4,22);
+  \draw[seg] (17.6,22) .. controls (18.4,9) and (22,4) .. (29,2.6);
+  \node[lbl, anchor=north] at (17,-2) {(c) asymptotic};
+  \end{scope}
+  % (d) oscillatory
+  \begin{scope}[xshift=48mm, yshift=-34mm]
+  \draw[axis] (0,0) -- (34,0);
+  \draw[guide] (17,0) -- (17,22);
+  \draw[seg] (3,6.5) .. controls (8,8.5) and (13,10) .. (16.6,11);
+  \node[ptopen] at (16.85,11.1) {};
+  \draw[seg] plot[smooth] coordinates {
+    (17.95,17) (18.05,11) (18.2,5) (18.35,11) (18.55,19)
+    (18.8,11) (19.1,4) (19.5,11) (20.0,19.5) (20.6,11)
+    (21.3,4) (22.2,11) (23.3,19.5) (24.6,11) (26.1,4.5)
+    (27.9,11) (29.6,18.5) (31,14)};
+  \node[lbl, anchor=north] at (17,-2) {(d) oscillatory};
+  \end{scope}
+  % brackets
+  \draw[thin] (0,28) -- (0,30) -- (82,30) -- (82,28);
+  \node[lbl, anchor=south] at (41,30.6)
+    {\emph{first kind} (Rudin: \emph{simple}) --- both one-sided limits exist};
+  \draw[thin] (0,-42) -- (0,-44) -- (82,-44) -- (82,-42);
+  \node[lbl, anchor=north] at (41,-44.6)
+    {\emph{second kind} --- a one-sided limit fails to exist};
+\end{tikzpicture}
+\end{center}
+\figcap{Rudin's two boxes opened into four. His 4.27(c) is case (b) and his
+4.27(d) is case (d); cases (a) and (c) he never names. The classification is
+per side --- a function may be removable from the left and asymptotic from
+the right --- so these are the four pure types, not a partition of all
+discontinuities.}
+
+\sitem{S4.21}{Definition}
+\emph{$E \subset X$ is \emph{path-connected} if for all $p,q \in E$ there is
+a continuous $\gamma : [0,1] \to E$ with $\gamma(0)=p$, $\gamma(1)=q$. Every
+path-connected set is connected; the converse is false.}
+\provenance{Tao II, Ex.\ 2.4.7 and \S2.4.}
+
+\begin{deeper}[The counterexample is Rudin's own $\sin(1/x)$]
+That path-connected implies connected is Rudin 4.22 applied to $\gamma$:
+if $E = A \cup B$ were a separation, the sets $\gamma^{-1}(A)$ and
+$\gamma^{-1}(B)$ would separate $[0,1]$, which 2.47 forbids.
+
+For the converse, take the closure of
+\[ S = \{(x,\sin(1/x)) : 0 < x \le 1\} , \]
+which adds the segment $\{0\}\times[-1,1]$. It is connected --- $S$ is
+connected as a continuous image of $(0,1]$, and adding limit points of a
+connected set preserves connectedness --- but no path joins a point of the
+segment to a point of $S$: a path would have to traverse infinitely much
+oscillation in finite time, and one shows its first coordinate cannot become
+positive. So Rudin's favourite pathological function, introduced at 4.27(d)
+purely as a discontinuity, turns out to also separate two notions of
+connectedness he never distinguishes.
+\end{deeper}
+
+\sitem{S4.22}{Theorem}
+\emph{(Components.) Define $p \sim q$ if some connected subset of $X$
+contains both. This is an equivalence relation; its classes, the
+\emph{connected components} of $X$, are connected and closed, and they
+partition $X$.}
+\provenance{Tao II, Ex.\ 2.4.6, 2.4.8, 2.4.9.}
+\begin{proof}
+Reflexivity holds because $\{p\}$ is connected, and symmetry is trivial. For
+transitivity, if $A$ is connected containing $p,q$ and $B$ is connected
+containing $q,r$, then $A \cup B$ is connected --- a separation of $A\cup B$
+would separate one of $A$, $B$, since $q$ lies in both --- and it contains
+$p$ and $r$.
+
+The class of $p$ is the union of all connected sets containing $p$; that
+union is connected by the same argument, so each class is connected and is
+maximal among connected sets meeting it. Finally the closure of a connected
+set is connected, so a class equals its own closure and is therefore closed.
+\end{proof}
+
+\noindent
+Transitivity holds because a union of connected sets with a point in common
+is connected, and closedness because the closure of a connected set is
+connected.\kn{Rudin never decomposes a space this way, though 2.47 is the
+statement that the components of a subset of $\R$ are intervals, and
+Exercise 2.29 --- every open set in $\R$ is a countable union of disjoint
+segments --- is the component decomposition of an open set. Naming the
+notion makes both results one result.}
+
+\sitem{S4.23}{Theorem}
+\emph{(Convexity, five ways.) For $f$ on an interval $I$ the following are
+equivalent: (i) $f(\lambda x + (1-\lambda)y) \le \lambda f(x) + (1-\lambda)f(y)$
+for $\lambda \in (0,1)$; (ii) for $x_1<x_2<x_3$ in $I$,}
+\[ \frac{f(x_2)-f(x_1)}{x_2-x_1} \;\le\;
+   \frac{f(x_3)-f(x_1)}{x_3-x_1} \;\le\;
+   \frac{f(x_3)-f(x_2)}{x_3-x_2}; \]
+\emph{(iii) for each fixed $a$, the slope $x \mapsto
+\bigl(f(x)-f(a)\bigr)/(x-a)$ is increasing; (iv) the $3\times3$ determinant
+with rows $(1,1,1)$, $(x_1,x_2,x_3)$, $\bigl(f(x_1),f(x_2),f(x_3)\bigr)$ is
+$\ge 0$; (v) the epigraph $\{(x,y) : y \ge f(x)\}$ is a convex subset of
+$\R^2$.}
+\provenance{Yu Pin, Thm 106 (pp.\,175--177); ECNU \cjk{凸函数}{convex
+functions} \S6.5 gives (i)--(iii).}
+\begin{proof}[Proof of (i) $\Leftrightarrow$ (ii)]
+Given $x_1<x_2<x_3$, write $x_2 = \lambda x_1 + (1-\lambda)x_3$ with
+$\lambda = (x_3-x_2)/(x_3-x_1) \in (0,1)$. Then (i) says
+$f(x_2) \le \lambda f(x_1) + (1-\lambda)f(x_3)$, and subtracting $f(x_1)$
+from both sides and dividing by $x_2-x_1 = (1-\lambda)(x_3-x_1) > 0$ turns
+this into the first inequality of (ii); subtracting instead from $f(x_3)$ and
+dividing by $x_3-x_2$ gives the second. Each step is reversible, so (ii)
+implies (i).
+
+Statement (iii) is (ii) with $x_1$ held fixed, (iv) is (ii) cleared of
+denominators, and (v) says that the chord joining two points of the graph
+lies in the region above the graph --- which is (i) verbatim.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \fill[black!7] (5,19.63) .. controls (16,12.6) and (27,6.6) .. (37,5)
+    .. controls (48,5.9) and (61,12.5) .. (70,20.56)
+    -- (70,27) -- (5,27) -- cycle;
+  \draw[axis] (0,0) -- (72,0);
+  \draw[seg] (5,19.63) .. controls (16,12.6) and (27,6.6) .. (37,5)
+    .. controls (48,5.9) and (61,12.5) .. (70,20.56);
+  \draw[thin] (15,11.91) -- (28,6.16);
+  \draw[thin] (15,11.91) -- (58,11.30);
+  \draw[thin] (28,6.16) -- (58,11.30);
+  \foreach \x/\y in {15/11.91, 28/6.16, 58/11.30}{
+    \node[ptfill, minimum size=2.2pt] at (\x,\y) {};
+    \draw[guide] (\x,0) -- (\x,\y);}
+  \node[mlbl, anchor=north] at (15,-1.4) {$x_1$};
+  \node[mlbl, anchor=north] at (28,-1.4) {$x_2$};
+  \node[mlbl, anchor=north] at (58,-1.4) {$x_3$};
+  \node[lbl, anchor=west] at (34,24) {epigraph: a convex set};
+  \node[lbl, anchor=west] at (75,14.5) {chord slopes increase:};
+  \node[mlbl, anchor=west] at (75,9.5)
+    {$[x_1,x_2] < [x_1,x_3] < [x_2,x_3]$};
+\end{tikzpicture}
+\end{center}
+\figcap{The chord slopes over $[x_1,x_2]$, $[x_1,x_3]$, $[x_2,x_3]$ increase
+from left to right --- statement (ii), which is (i) rewritten with
+$\lambda = (x_3-x_2)/(x_3-x_1)$. Statement (v) says the same thing without
+picking any points at all: everything on or above the graph is a convex set,
+which is what ``the chord lies above the graph'' means.}
+
+\begin{deeper}[Why five formulations instead of one]
+Rudin's Exercises 4.23--4.24 give the definition and ask for continuity on
+the open interval plus the midpoint characterisation. The equivalences above
+are what make those exercises routine, and each is the right tool for a
+different job. Form (ii) is the one that proves continuity: the slopes from
+a fixed interior point are bounded on both sides, so $f$ is Lipschitz on any
+compact subinterval of $I^\circ$ --- which incidentally shows why Rudin's
+exercise is stated on the \emph{open} interval, since an endpoint can carry
+a jump upward and stay convex.
+
+Form (v) is the conceptual one: it converts a statement about a function
+into a statement about a \emph{set}, so that convexity of functions and
+convexity of sets stop being two ideas. Form (iv) is the computational one,
+and form (iii) is what one differentiates in Chapter 5 to get ``$f'$
+increasing'' (Theorem 5.11's setting).
+\end{deeper}
+
+\begin{pitfall}[Continuity along lines, separately and jointly]
+Three conditions on $f : \R^2 \to \R$ at a point, each strictly weaker than
+the next:
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item continuous in each variable separately (two lines);
+  \item continuous along every straight line through the point;
+  \item jointly continuous.
+\end{enumerate}
+The function $xy/(x^2+y^2)$, with value $0$ at the origin, separates (a)
+from (b): it vanishes on both axes but equals $m/(1+m^2)$ along $y=mx$, so
+it is separately continuous and not even constant along lines. Rudin's
+Exercise 4.7 does the harder separation of (b) from (c): $xy^2/(x^2+y^4)$ is
+continuous along every line yet approaches $\tfrac12$ along the parabola
+$x=y^2$.
+
+Keeping the hierarchy straight matters in Chapter 9, where partial
+derivatives are a statement of type (a) --- which is why 9.21 needs
+continuity of the partials, not merely their existence.
+\end{pitfall}
+
+\begin{recap}[What the supplements changed]
+Take away four things.
+
+\smallskip
+\raggedright
+\textbf{Criteria produce limits; Rudin's theorems transport them.} S4.1 and
+S4.17 are the existence tools, and both need completeness of the target ---
+the same property that made Chapter 1 necessary.
+
+\smallskip
+\textbf{$o$, $O$, $\sim$ are the working language of limits}, and they are
+legal in factors, never in summands (S4.7). Rudin does without them because
+he never computes; you will not have that luxury.
+
+\smallskip
+\textbf{Compactness is not the only source of good behaviour.} Order does
+some of the same work: monotone functions have continuous inverses on any
+interval (S4.13), where Rudin's 4.17 needs compactness. Neither theorem
+contains the other.
+
+\smallskip
+\textbf{Rudin's classifications are coarse on purpose.} Two kinds of
+discontinuity become four (S4.20), connectedness sprouts a path-connected
+refinement (S4.21), and continuity at a point becomes a \emph{number},
+$\omega_f(p)$, which turns ``where is $f$ continuous?'' into a question with
+a theorem for an answer (S4.5).
+\end{recap}

@@ -1,0 +1,340 @@
+% Chapter 1 -- Ordered Sets, 1.5-1.11
+\rsection{Ordered Sets}
+
+\begin{signpost}[Why this section is here]
+Nothing in this section mentions $\R$, and on a first reading it feels like an
+unmotivated detour into abstraction. It is not. Rudin has just shown that $\Q$
+fails in a specific way, and he now needs language precise enough to \emph{name}
+that failure --- because the name will become the defining property of $\R$ in
+1.19. Definitions 1.5 to 1.7 are only scaffolding; 1.8 and 1.10 are the payload.
+If you read one thing here, read Definition 1.10, and notice that it is exactly
+what Example 1.9(a) showed $\Q$ does not have.
+\end{signpost}
+
+\ritem{1.5}{Definition}
+Let $S$ be a set. An \emph{order} on $S$ is a relation, denoted by $<$, with the
+following two properties:
+\begin{enumerate}[label=(\roman*), leftmargin=2.2em, itemsep=2pt, topsep=4pt]
+  \item If $x \in S$ and $y \in S$, then one and only one of the statements
+        \[ x < y, \qquad x = y, \qquad y < x \]
+        is true.\kn{Trichotomy. ``One and only one'' packs in two separate
+        demands: at least one holds, so the order is \emph{total}; and at most
+        one holds, so $<$ is irreflexive and antisymmetric. Drop totality and
+        you get a partial order, where suprema can fail to exist for reasons
+        having nothing to do with gaps.}
+  \item If $x, y, z \in S$, if $x < y$ and $y < z$, then $x < z$.
+\end{enumerate}
+The statement ``$x < y$'' may be read as ``$x$ is less than $y$'' or ``$x$ is
+smaller than $y$'' or ``$x$ precedes $y$''.
+
+It is often convenient to write $y > x$ in place of $x < y$.
+
+The notation $x \le y$ indicates that $x < y$ or $x = y$, without specifying
+which of these two is to hold. In other words, $x \le y$ is the negation of
+$x > y$.\kd{That last sentence is a small theorem, not a definition: ``$x<y$ or
+$x=y$'' is equivalent to ``not $x>y$'' precisely because of trichotomy in (i).
+In a partial order the two come apart, which is why $\le$ is normally taken as
+the primitive notion there.}
+
+\ritem{1.6}{Definition}
+An \emph{ordered set} is a set $S$ in which an order is defined.
+
+For example, $\Q$ is an ordered set if $r < s$ is defined to mean that $s - r$
+is a positive rational number.
+
+\ritem{1.7}{Definition}
+Suppose $S$ is an ordered set, and $E \subset S$. If there exists a
+$\beta \in S$ such that $x \le \beta$ for every $x \in E$, we say that $E$ is
+\emph{bounded above}, and call $\beta$ an \emph{upper bound} of $E$.
+
+Lower bounds are defined the same way (with $\ge$ in place of $\le$).
+
+\ritem{1.8}{Definition}
+Suppose $S$ is an ordered set, $E \subset S$, and $E$ is bounded above. Suppose
+there exists an $\alpha \in S$ with the following properties:
+\begin{enumerate}[label=(\roman*), leftmargin=2.2em, itemsep=2pt, topsep=4pt]
+  \item $\alpha$ is an upper bound of $E$.
+  \item If $\gamma < \alpha$ then $\gamma$ is not an upper bound of
+        $E$.\kn{This is the clause you will actually use, and it is stated
+        contrapositively. The working form: for every $\gamma < \alpha$ there
+        is an $x \in E$ with $x > \gamma$. In $\R$, equivalently: for every
+        $\varepsilon > 0$ there is $x \in E$ with $x > \alpha - \varepsilon$.
+        Reach for that sentence every time a proof opens ``let
+        $\alpha = \sup E$.''}
+\end{enumerate}
+Then $\alpha$ is called the \emph{least upper bound} of $E$ [that there is at
+most one such $\alpha$ is clear from (ii)] or the \emph{supremum} of $E$, and we
+write
+\[ \alpha = \sup E. \]
+
+The \emph{greatest lower bound}, or \emph{infimum}, of a set $E$ which is
+bounded below is defined in the same manner: The statement
+\[ \alpha = \inf E \]
+means that $\alpha$ is a lower bound of $E$ and that no $\beta$ with
+$\beta > \alpha$ is a lower bound of $E$.
+
+\begin{unpack}[Why the least upper bound and not the largest element]
+Because the largest element usually does not exist, and the supremum is the
+repair. Take $E_1 = \{\, r \in \Q : r < 0 \,\}$. It has no largest element: for
+any $r<0$ there is $r/2$ with $r < r/2 < 0$. But the set of its upper bounds ---
+everything ${}\ge 0$ --- does have a smallest one, namely $0$.
+
+The manoeuvre is to move the question from $E$, where the answer is often
+``none,'' to the set of upper bounds of $E$, where it is often ``yes.'' Rudin's
+bracketed aside is the payoff: uniqueness follows immediately from (ii), so
+speaking of ``the'' supremum is legitimate.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % upper bounds, drawn above the axis so nothing sits on a line
+  \draw[seg] (46,9) -- (86,9);
+  \node[ptfill] at (46,9) {};
+  \node[lbl, anchor=south] at (66,11) {upper bounds of $E$};
+  % the axis
+  \draw[axis] (-1,0) -- (92,0);
+  % the set E
+  \draw[seg] (6,0) -- (46,0);
+  \node[ptopen] at (46,0) {};
+  \node[lbl, anchor=north] at (26,-2) {the set $E$};
+  % the seam
+  \draw[guide] (46,-8) -- (46,15);
+  \node[lbl, anchor=south] at (46,15) {$\alpha=\sup E$};
+  % gamma
+  \node[ptfill, minimum size=2.6pt] at (36,0) {};
+  \node[mlbl, anchor=south] at (36,1.5) {$\gamma$};
+  \draw[guide] (36,-8) -- (36,0);
+  \draw[thin, {Stealth[length=3.5pt]}-{Stealth[length=3.5pt]}] (36,-8) -- (46,-8);
+  \node[lbl, anchor=north] at (41,-9.5) {some $x\in E$ lies in here};
+\end{tikzpicture}
+\end{center}
+\figcap{$\alpha$ is the seam. Everything to its right bounds $E$; nothing to its
+left does.}
+
+\smallskip
+The picture also shows why clause (ii) is the useful one. Stepping back from
+$\alpha$ by any amount lands you at a $\gamma$ that is \emph{not} an upper
+bound, which is to say some element of $E$ sticks out past it. That is the
+sentence you will use.
+\end{unpack}
+
+\ritem{1.9}{Examples}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=5pt, topsep=4pt]
+  \item Consider the sets $A$ and $B$ of Example 1.1 as subsets of the ordered
+        set $\Q$. The set $A$ is bounded above. In fact, the upper bounds of $A$
+        are exactly the members of $B$.\kd{Not \emph{exactly}, and Rudin is
+        being loose. Every $\beta \in B$ bounds $A$, and no member of $A$ does.
+        But one must also rule out a positive rational with $\beta^2 = 2$, and
+        that is impossible only by Example 1.1. The claim holds, but it leans on
+        the irrationality result proved a page earlier.} Since $B$ contains no
+        smallest member, $A$ has no least upper bound in $\Q$.
+
+        Similarly, $B$ is bounded below: the set of all lower bounds of $B$
+        consists of $A$ and of all $r \in \Q$ with $r \le 0$. Since $A$ has no
+        largest member, $B$ has no greatest lower bound in $\Q$.
+  \item If $\alpha = \sup E$ exists, then $\alpha$ may or may not be a member of
+        $E$. For instance, let $E_1$ be the set of all $r \in \Q$ with $r < 0$.
+        Let $E_2$ be the set of all $r \in \Q$ with $r \le 0$. Then
+        \[ \sup E_1 = \sup E_2 = 0, \]
+        and $0 \notin E_1$, $0 \in E_2$.\kn{Both suprema exist \emph{in $\Q$}.
+        Part (a) fails not because $\Q$ is too small in general but because of
+        where that particular gap sits. Whether $\sup E$ lies in $E$ is a
+        separate question from whether $\sup E$ exists, and running the two
+        together is the most common first-week error.}
+  \item Let $E$ consist of all numbers $1/n$, where $n = 1,2,3,\dots$. Then
+        $\sup E = 1$, which is in $E$, and $\inf E = 0$, which is not in $E$.
+\end{enumerate}
+
+\ritem{1.10}{Definition}
+An ordered set $S$ is said to have the \emph{least-upper-bound property} if the
+following is true:
+
+If $E \subset S$, $E$ is not empty, and $E$ is bounded above, then $\sup E$
+exists in $S$.\kw{Both hypotheses are load-bearing, and dropping either breaks
+the definition rather than merely weakening it. In $\R$: every real is an upper
+bound of $\emptyset$, so $\emptyset$ has no \emph{least} one; and $\Z$ is
+unbounded above, so it has none either. Any proof that produces a supremum owes
+you a check of both.}
+
+Example 1.9(a) shows that $\Q$ does not have the least-upper-bound property.
+
+\begin{deeper}[Rudin's choice of axiom is one of several]
+Completeness can be installed in an ordered field in several equivalent ways,
+and which one a book takes as primitive shapes everything after it.
+
+\smallskip
+\textbf{Rudin} takes the least-upper-bound property as the defining property
+(1.10), asserts a field with it (1.19), and \emph{derives} the archimedean
+property from it (1.20a).
+
+\smallskip
+\textbf{Yu Pin} (Tsinghua) axiomatises $\R$ by field, order, archimedean, and
+the \emph{nested interval} axiom --- every decreasing sequence of closed bounded
+intervals has a common point. He observes that $\Q$ satisfies the first three
+and fails only the fourth, then derives the supremum principle from it.
+Archimedes must be assumed separately, because nested intervals alone does not
+imply it; he proves the converse too, so over an archimedean ordered field the
+two are equivalent.
+
+\smallskip
+\textbf{Tao} (\emph{Analysis I}) assumes nothing, builds $\R$ from $\Q$ as
+equivalence classes of Cauchy sequences, and \emph{proves} the
+least-upper-bound property as a theorem.
+
+\smallskip
+\textbf{The ECNU text} lays out the whole menu. Its \S7.1 collects six
+statements --- the supremum principle, monotone convergence, nested intervals,
+Heine--Borel, Bolzano--Weierstrass, and the Cauchy criterion --- and proves the
+cycle $1\Rightarrow2\Rightarrow\cdots\Rightarrow6\Rightarrow1$, so that any one
+of them may serve as the axiom and the other five follow.
+
+\smallskip
+That last point is worth carrying into Chapter 2. Rudin does not present these
+as six faces of one property; he proves them separately and far apart --- 2.41
+and 2.42 for compactness and limit points in $\R^k$, 3.11 for Cauchy sequences,
+3.14 for monotone ones. Each is a theorem earned from 1.19. Knowing they are
+interderivable tells you that those later proofs are not accumulating new
+strength about $\R$: they are unpacking, in different vocabularies, the single
+property assumed here.
+\end{deeper}
+
+We shall now show that there is a close relation between greatest lower bounds
+and least upper bounds, and that every ordered set with the least-upper-bound
+property also has the greatest-lower-bound property.
+
+\begin{unpack}[The picture behind Theorem 1.11]
+We are handed a hypothesis about suprema and asked to produce an infimum, so
+the only move available is to find a set whose \emph{supremum} is the infimum we
+want. The set of lower bounds $L$ is that set --- it sits entirely below $B$,
+every element of $B$ bounds it from above, and the two meet at a single point.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % the set B, well clear above the axis
+  \draw[seg] (49,11) -- (88,11);
+  \node[lbl, anchor=south] at (68,13) {the set $B$};
+  % the axis, carrying L
+  \draw[axis] (-1,0) -- (94,0);
+  \draw[seg] (4,0) -- (48,0);
+  \node[ptfill] at (48,0) {};
+  \node[lbl, anchor=north] at (24,-2) {$L$ = all lower bounds of $B$};
+  % the shared boundary
+  \draw[guide] (48,-6) -- (48,18);
+  \node[lbl, anchor=south] at (48,18) {$\alpha=\sup L=\inf B$};
+  % B presses down on L
+  \draw[thin, -{Stealth[length=3.5pt]}] (62,9.5) -- (56,2);
+  \node[lbl, anchor=west] at (63,6) {each $x\in B$};
+  \node[lbl, anchor=west] at (63,2.6) {bounds $L$ above};
+\end{tikzpicture}
+\end{center}
+\figcap{The two sets share one boundary point, and the theorem says that point
+is both $\sup L$ and $\inf B$.}
+\end{unpack}
+
+\ritem{1.11}{Theorem}
+\emph{Suppose $S$ is an ordered set with the least-upper-bound property,
+$B \subset S$, $B$ is not empty, and $B$ is bounded below. Let $L$ be the set of
+all lower bounds of $B$. Then}
+\[ \alpha = \sup L \]
+\emph{exists in $S$ and $\alpha = \inf B$.}
+
+\emph{In particular, $\inf B$ exists in $S$.}
+
+\begin{proof}
+Since $B$ is bounded below, $L$ is not empty. Since $L$ consists of exactly
+those $y \in S$ which satisfy the inequality $y \le x$ for every $x \in B$, we
+see that every $x \in B$ is an upper bound of $L$.\kn{This single sentence is
+the whole idea. We are handed a hypothesis about suprema and asked for an
+infimum, so we must find a set whose \emph{supremum} is the infimum we want.
+$L$ is that set: $B$ presses down on it from above, and the two meet at one
+point.} Thus $L$ is bounded above. Our hypothesis about $S$ implies therefore
+that $L$ has a supremum in $S$; call it $\alpha$.
+
+If $\gamma < \alpha$ then (see Definition 1.8) $\gamma$ is not an upper bound of
+$L$, hence $\gamma \notin B$.\kn{Compressed to the point of opacity. Unpacked:
+$\gamma$ failing to be an upper bound of $L$ produces some $y \in L$ with
+$y > \gamma$. Since $y$ is a lower bound of $B$, every $x \in B$ satisfies
+$x \ge y > \gamma$. So $\gamma$ itself cannot belong to $B$.} It follows that
+$\alpha \le x$ for every $x \in B$. Thus $\alpha \in L$.
+
+If $\alpha < \beta$ then $\beta \notin L$, since $\alpha$ is an upper bound of
+$L$.
+
+We have shown that $\alpha \in L$ but $\beta \notin L$ if $\beta > \alpha$. In
+other words, $\alpha$ is a lower bound of $B$, but $\beta$ is not if
+$\beta > \alpha$. This means that $\alpha = \inf B$.
+\end{proof}
+
+\begin{proofwalk}[How the proof flows]
+  \item \textbf{Choose the method.} The hypothesis speaks of suprema, the goal
+        of an infimum, and the least-upper-bound property is the only
+        existence tool in the chapter. So the method is forced --- pattern 3
+        of the strategy index: \emph{find a set whose supremum is the number
+        you want}, then take its sup. The candidate is $L$, the set of all
+        lower bounds of $B$; the picture before the theorem shows why it is
+        right: $L$ ends exactly where $B$ begins.
+  \item \textbf{Buy the supremum.} The lub property sells only to sets that
+        are nonempty and bounded above, so both tickets must be produced.
+        $L \ne \emptyset$ is the hypothesis ``$B$ is bounded below''
+        restated. $L$ bounded above is the proof's one genuine observation:
+        every $x \in B$ bounds $L$, by the very definition of ``lower
+        bound.'' Payment accepted: $\alpha = \sup L$ exists.
+  \item \textbf{Show $\alpha$ is a lower bound} (first clause of the goal).
+        Rudin argues by testing every $\gamma < \alpha$: clause (ii) of 1.8
+        says $\gamma$ is not an upper bound of $L$, so some $y \in L$ exceeds
+        $\gamma$; since $y$ underlies all of $B$, so does $\gamma$, strictly
+        --- hence $\gamma \notin B$. Nothing in $B$ lies below $\alpha$, which
+        is precisely $\alpha \in L$.
+  \item \textbf{Show nothing larger works} (second clause). Any
+        $\beta > \alpha$ exceeds the supremum of $L$, hence $\beta \notin L$:
+        it fails to be a lower bound. This step uses clause (i) of 1.8 ---
+        $\alpha$ \emph{is} an upper bound of $L$.
+  \item \textbf{Read off the conclusion.} Steps 3 and 4 are exactly the two
+        clauses of Definition 1.8, mirrored for the infimum, so
+        $\alpha = \inf B$. Note the audit: clause (ii) of the supremum was
+        spent in step 3, clause (i) in step 4 --- each exactly once, the
+        usual sign that $L$ was the right set to build (compare the same
+        remark at 1.21).
+\end{proofwalk}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=27mm] (h) at (0,42)
+    {$B \ne \emptyset$,\\bounded below\\ \textit{(hypothesis)}};
+  \node[rmbox, text width=27mm] (l) at (60,42)
+    {$L \ne \emptyset$, bounded\\above by every $x \in B$};
+  \draw[rmarrow] (h) -- node[lbl, anchor=south, inner sep=2.5pt]
+    {definition of $L$} (l);
+  \node[rmbox, text width=24mm] (s) at (30,22) {$\alpha = \sup L$ exists};
+  \draw[rmarrow] (l) -- node[lbl, anchor=west, inner sep=3pt]
+    {\lub{} property} (s);
+  \node[rmbox, text width=32mm] (b1) at (0,0)
+    {$\gamma < \alpha \Rightarrow \gamma \notin B$:\\
+     $\alpha$ is a lower bound};
+  \node[rmbox, text width=32mm] (b2) at (60,0)
+    {$\beta > \alpha \Rightarrow \beta \notin L$:\\
+     no larger one is};
+  \draw[rmarrow] (s) -- node[lbl, anchor=east, inner sep=3pt]
+    {1.8(ii)} (b1);
+  \draw[rmarrow] (s) -- node[lbl, anchor=west, inner sep=3pt]
+    {1.8(i)} (b2);
+  \node[rmbox, text width=22mm] (c) at (30,-21) {$\alpha = \inf B$};
+  \draw[rmarrow] (b1) -- (c);
+  \draw[rmarrow] (b2) -- (c);
+\end{tikzpicture}
+\end{center}
+\figcap{The proof as a flow diagram: hypotheses qualify $L$, the
+least-upper-bound property mints $\alpha$, and the two clauses of Definition
+1.8 each certify one half of ``$\alpha = \inf B$.''}
+
+\begin{deeper}[Why this is not a triviality]
+The argument runs equally well in reverse, so for ordered sets the
+least-upper-bound property and the greatest-lower-bound property are
+\emph{equivalent}. That is why Rudin never states a separate greatest-lower-bound
+axiom for $\R$: Theorem 1.19 gives him one and Theorem 1.11 hands him the other.
+
+Every later appearance of $\inf$ rests on this --- lower Riemann--Stieltjes sums
+in 6.2, $\liminf$ in 3.16, the distance from a point to a set in the exercises.
+It is a two-paragraph theorem that the rest of the book quietly leans on.
+\end{deeper}

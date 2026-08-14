@@ -1,0 +1,472 @@
+% ============================================================
+%  Chapter 1 -- Appendix: construction of R by Dedekind cuts
+% ============================================================
+\rsection{Appendix}
+
+\begin{roadmap}[What the appendix is doing, and when to read it]
+This is the promissory note from 1.19 being paid. Rudin asserted that an ordered
+field with the least-upper-bound property exists; here he builds one out of
+$\Q$ and nothing else.
+
+\medskip
+\raggedright
+\textbf{You may skip it.} Nothing in Chapters 2--11 depends on having read it,
+and Rudin says in the Preface it may be ``studied and enjoyed whenever the time
+seems ripe.'' What it buys you is the knowledge that 1.19 is a theorem rather
+than an article of faith. He is not alone in deferring it: Yu Pin's Tsinghua
+notes call real-number theory ``very important for the completeness of the
+knowledge system, but not indispensable for understanding the basic ideas of
+analysis,'' and the USTC lecture notes postpone it to a third volume.
+
+\medskip
+\textbf{The idea in one sentence.} A real number is identified with the set of
+all rationals below it. That set --- a \emph{cut} --- is a \emph{subset} of
+$\Q$, so no new kind of object has to be conjured up; $\sqrt2$ becomes
+$\{p \in \Q : p<0 \text{ or } p^2<2\}$, a perfectly ordinary collection of
+rationals which exists whether or not $\sqrt 2$ does.
+
+\medskip
+\textbf{The nine steps, and which ones matter.}
+
+\medskip
+\centering
+\begin{tikzpicture}[scale=0.9, transform shape, node distance=4.5mm]
+\node[rmbox, text width=20mm] (a) {\textbf{1--3}\\cuts, order,\\the \lub{} property};
+\node[rmbox, text width=20mm, right=of a] (b) {\textbf{4--5}\\addition};
+\node[rmbox, text width=20mm, right=of b] (c) {\textbf{6--7}\\multiplication};
+\node[rmbox, text width=20mm, right=of c] (d) {\textbf{8--9}\\$\Q$ sits inside};
+\draw[rmarrow] (a) -- (b); \draw[rmarrow] (b) -- (c); \draw[rmarrow] (c) -- (d);
+\end{tikzpicture}
+
+\medskip
+\raggedright
+\textbf{Step 3 is the whole point} --- it is where the least-upper-bound
+property appears, and its proof is four lines: the supremum of a set of cuts is
+their \emph{union}. That is the payoff of representing numbers as sets. Steps
+4--7 are bookkeeping, verifying field axioms one at a time, and Rudin openly
+omits most of Step 6 as too similar to Step 4. Steps 8--9 establish the second
+sentence of 1.19, that $\Q$ is a subfield.
+
+\medskip
+\textbf{If you read only two things}, read Step 1 (what a cut is, and why
+property (III) is there) and Step 3.
+\end{roadmap}
+
+\noindent
+Theorem 1.19 will be proved in this appendix by constructing $\R$ from $\Q$. We
+shall divide the construction into several steps.
+
+\medskip
+\noindent\textbf{Step 1}\quad The members of $\R$ will be certain subsets of
+$\Q$, called \emph{cuts}. A cut is, by definition, any set $\alpha \subseteq \Q$
+with the following three properties.
+\begin{enumerate}[label=(\Roman*), leftmargin=2.6em, itemsep=2pt, topsep=4pt]
+  \item $\alpha$ is not empty, and $\alpha \ne \Q$.
+  \item If $p \in \alpha$, $q \in \Q$, and $q < p$, then $q \in \alpha$.
+  \item If $p \in \alpha$, then $p < r$ for some $r \in \alpha$.
+\end{enumerate}
+The letters $p,q,r,\dots$ will always denote rational numbers, and
+$\alpha,\beta,\gamma,\dots$ will denote cuts.
+
+Note that (III) simply says that $\alpha$ has no largest member; (II) implies
+two facts which will be used freely:
+\begin{quote}
+If $p \in \alpha$ and $q \notin \alpha$, then $p < q$.\\
+If $r \notin \alpha$ and $r < s$, then $s \notin \alpha$.
+\end{quote}
+
+\begin{unpack}[What the three properties are for]
+Picture the cut $\alpha$ as ``everything strictly below some point on the
+line.'' Each condition rules out a degenerate set that would spoil that picture.
+
+\smallskip
+\textbf{(I) excludes the two extremes.} $\emptyset$ and $\Q$ would correspond to
+$-\infty$ and $+\infty$, which are not real numbers.
+
+\smallskip
+\textbf{(II) says $\alpha$ is downward closed} --- it is an initial segment of
+$\Q$, not an arbitrary subset. Without it $\{0,5\}$ would qualify, and nothing
+about order would work.
+
+\smallskip
+\textbf{(III) says $\alpha$ has no largest member}, which forces the cut to be
+the set of rationals \emph{strictly} below its edge. This is the delicate one,
+and its purpose is uniqueness: without it, the point $2$ would be represented by
+two different cuts, $\{p<2\}$ and $\{p\le 2\}$, and the map from cuts to numbers
+would be two-to-one at every rational. Exercise 1.20 asks what breaks if you
+drop it --- the answer is that the additive inverse (A5) fails.
+
+\smallskip
+The two consequences of (II) that Rudin records are the workhorses of the whole
+appendix. Both say the same thing --- a cut has no gaps and no stragglers ---
+and he uses them dozens of times without further comment.
+\end{unpack}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % a cut
+  \draw[axis] (-1,10) -- (92,10);
+  \draw[seg] (2,10) -- (52,10);
+  \node[ptopen] at (52,10) {};
+  \node[lbl, anchor=north] at (26,8) {$\alpha$ --- everything in $\Q$ below the edge};
+  \node[lbl, anchor=south] at (74,11) {$\Q\setminus\alpha$};
+  \node[lbl, anchor=south] at (52,13.5) {no largest member: (III)};
+  \draw[guide] (52,11.5) -- (52,13);
+  % a second, larger cut
+  \draw[axis] (-1,-8) -- (92,-8);
+  \draw[seg] (2,-8) -- (70,-8);
+  \node[ptopen] at (70,-8) {};
+  \node[lbl, anchor=north] at (30,-10) {$\beta \supset \alpha$, so $\alpha<\beta$ (Step 2)};
+  \draw[guide] (52,9) -- (52,-8);
+\end{tikzpicture}
+\end{center}
+\figcap{A cut is a leftward ray of $\Q$ with no endpoint. Order is containment;
+one cut is smaller when it is a proper subset.}
+
+\medskip
+\noindent\textbf{Step 2}\quad Define ``$\alpha < \beta$'' to mean: $\alpha$ is a
+proper subset of $\beta$.
+
+Let us check that this meets the requirements of Definition 1.5.
+
+If $\alpha < \beta$ and $\beta < \gamma$ it is clear that $\alpha < \gamma$. (A
+proper subset of a proper subset is a proper subset.) It is also clear that at
+most one of the three relations
+\[ \alpha < \beta, \qquad \alpha = \beta, \qquad \beta < \alpha \]
+can hold for any pair $\alpha, \beta$. To show that at least one holds, assume
+that the first two fail. Then $\alpha$ is not a subset of $\beta$. Hence there
+is a $p \in \alpha$ with $p \notin \beta$. If $q \in \beta$, it follows that
+$q < p$ (since $p \notin \beta$), hence $q \in \alpha$, by (II). Thus
+$\beta \subset \alpha$. Since $\beta \ne \alpha$, we conclude
+$\beta < \alpha$.\kn{Trichotomy is the only part needing work, because
+containment of arbitrary sets is a \emph{partial} order --- two sets can be
+incomparable. What rules that out here is (II): downward-closed subsets of a
+totally ordered set are automatically nested. This is the first place property
+(II) earns its keep.}
+
+Thus $\R$ is now an ordered set.
+
+\medskip
+\noindent\textbf{Step 3}\quad \emph{The ordered set $\R$ has the least upper
+bound property.}
+
+To prove this, let $A$ be a nonempty subset of $\R$, and assume that
+$\beta \in \R$ is an upper bound of $A$. Define $\gamma$ to be the union of all
+$\alpha \in A$. In other words, $p \in \gamma$ if and only if $p \in \alpha$ for
+some $\alpha \in A$. We shall prove that $\gamma \in \R$ and that
+$\gamma = \sup A$.
+
+Since $A$ is not empty, there exists an $\alpha_0 \in A$. This $\alpha_0$ is not
+empty. Since $\alpha_0 \subset \gamma$, $\gamma$ is not empty. Next,
+$\gamma \subset \beta$ (since $\alpha \subset \beta$ for every $\alpha \in A$),
+and therefore $\gamma \ne \Q$. Thus $\gamma$ satisfies property (I). To prove
+(II) and (III), pick $p \in \gamma$. Then $p \in \alpha_1$ for some
+$\alpha_1 \in A$. If $q < p$, then $q \in \alpha_1$, hence $q \in \gamma$; this
+proves (II). If $r \in \alpha_1$ is so chosen that $r > p$, we see that
+$r \in \gamma$ (since $\alpha_1 \subset \gamma$), and therefore $\gamma$
+satisfies (III). Thus $\gamma \in \R$.
+
+It is clear that $\alpha \le \gamma$ for every $\alpha \in A$.
+
+Suppose $\delta < \gamma$. Then there is an $s \in \gamma$ such that
+$s \notin \delta$. Since $s \in \gamma$, $s \in \alpha$ for some $\alpha \in A$.
+Hence $\delta < \alpha$ and $\delta$ is not an upper bound of $A$.
+
+This gives the desired result: $\gamma = \sup A$.
+
+\begin{deeper}[Why both hypotheses of 1.10 appear, and where]
+Watch where each is consumed. \emph{Nonempty} gives an $\alpha_0 \in A$, which
+is what makes $\gamma$ nonempty --- half of property (I). \emph{Bounded above}
+gives a $\beta$ containing every $\alpha$, hence $\gamma \subset \beta \ne \Q$
+--- the other half.
+
+Without either, the union might not be a cut: an empty union is $\emptyset$, and
+an unbounded union is all of $\Q$. Both are excluded by (I) precisely because
+they are the cuts that would represent $-\infty$ and $+\infty$. This is the same
+observation as the warning at 1.10, now visible from the inside: the two
+hypotheses are not conveniences, they are what keeps the answer inside the
+system.
+
+The last two paragraphs are the two clauses of Definition 1.8: $\gamma$ is an
+upper bound, and nothing smaller is. Note how cheap the second is --- if
+$\delta$ is properly contained in the union, it must miss an element that some
+$\alpha$ contains, so $\alpha$ already exceeds it.
+\end{deeper}
+
+\medskip
+\noindent\textbf{Step 4}\quad If $\alpha \in \R$ and $\beta \in \R$, we define
+$\alpha + \beta$ to be the set of all sums $r+s$, where $r \in \alpha$ and
+$s \in \beta$.
+
+We define $0^*$ to be the set of all negative rational numbers. It is clear that
+$0^*$ is a cut. We verify that \emph{the axioms for addition} (see Definition
+1.12) \emph{hold in $\R$, with $0^*$ playing the role of $0$.}
+
+\begin{enumerate}[label=(A\arabic*), leftmargin=3.1em, itemsep=6pt, topsep=5pt]
+  \item We have to show that $\alpha+\beta$ is a cut. It is clear that
+        $\alpha+\beta$ is a nonempty subset of $\Q$. Take $r' \notin \alpha$,
+        $s' \notin \beta$. Then $r'+s' > r+s$ for all choices of $r \in \alpha$,
+        $s \in \beta$. Thus $r'+s' \notin \alpha+\beta$. It follows that
+        $\alpha+\beta$ has property (I).
+
+        Pick $p \in \alpha+\beta$. Then $p = r+s$, with $r \in \alpha$,
+        $s \in \beta$. If $q < p$, then $q - s < r$, so $q - s \in \alpha$, and
+        $q = (q-s)+s \in \alpha+\beta$. Thus (II) holds. Choose $t \in \alpha$
+        so that $t > r$. Then $p < t+s$ and $t+s \in \alpha+\beta$. Thus (III)
+        holds.
+  \item $\alpha+\beta$ is the set of all $r+s$, with $r \in \alpha$,
+        $s \in \beta$. By the same definition, $\beta+\alpha$ is the set of all
+        $s+r$. Since $r+s = s+r$ for all $r \in \Q$, $s \in \Q$, we have
+        $\alpha+\beta = \beta+\alpha$.
+  \item As above, this follows from the associative law in $\Q$.
+  \item If $r \in \alpha$ and $s \in 0^*$, then $r+s < r$, hence
+        $r+s \in \alpha$. Thus $\alpha+0^* \subset \alpha$. To obtain the
+        opposite inclusion, pick $p \in \alpha$, and pick $r \in \alpha$,
+        $r > p$. Then $p - r \in 0^*$, and
+        $p = r+(p-r) \in \alpha+0^*$. Thus $\alpha \subset \alpha+0^*$. We
+        conclude that $\alpha+0^* = \alpha$.\kn{The reverse inclusion is where
+        property (III) is used, and it is used essentially: we need some
+        $r \in \alpha$ strictly \emph{above} $p$ so that $p-r$ is negative. If
+        $\alpha$ had a largest member $p$, no such $r$ would exist and
+        $\alpha + 0^*$ would be missing $p$.}
+  \item Fix $\alpha \in \R$. Let $\beta$ be the set of all $p$ with the
+        following property:
+        \begin{quote}
+        There exists $r > 0$ such that $-p-r \notin \alpha$.
+        \end{quote}
+        In other words, some rational number smaller than $-p$ fails to be in
+        $\alpha$.
+
+        We show that $\beta \in \R$ and that $\alpha+\beta = 0^*$.
+
+        If $s \notin \alpha$ and $p = -s-1$, then $-p-1 \notin \alpha$, hence
+        $p \in \beta$. So $\beta$ is not empty. If $q \in \alpha$, then
+        $-q \notin \beta$. So $\beta \ne \Q$. Hence $\beta$ satisfies (I).
+
+        Pick $p \in \beta$ and $r > 0$ so that $-p-r \notin \alpha$. If
+        $q < p$, then $-q-r > -p-r$, hence $-q-r \notin \alpha$. Thus
+        $q \in \beta$ and (II) holds. Put $t = p+(r/2)$. Then $t > p$ and
+        $-t-(r/2) = -p-r \notin \alpha$, so that $t \in \beta$. Hence $\beta$
+        satisfies (III).
+
+        We have proved that $\beta \in \R$.
+
+        If $r \in \alpha$ and $s \in \beta$, then $-s \notin \alpha$, hence
+        $r < -s$, $r+s < 0$. Thus $\alpha+\beta \subset 0^*$.
+
+        To prove the opposite inclusion, pick $v \in 0^*$, put $w = -v/2$. Then
+        $w > 0$ and there is an integer $n$ such that $nw \in \alpha$ but
+        $(n+1)w \notin \alpha$. (Note that this depends on the fact that $\Q$
+        has the archimedean property!) Put $p = -(n+2)w$. Then $p \in \beta$,
+        since $-p-w \notin \alpha$, and
+        \[ v = nw + p \in \alpha+\beta. \]
+        Thus $0^* \subset \alpha+\beta$.
+
+        We conclude that $\alpha+\beta = 0^*$. This $\beta$ will of course be
+        denoted by $-\alpha$.
+\end{enumerate}
+
+\begin{unpack}[Why $-\alpha$ is defined so awkwardly]
+The natural guess is that $-\alpha$ should be $\{-q : q \notin \alpha\}$ ---
+reflect the complement. That is almost right and fails on exactly one point.
+
+If $\alpha$ is the cut of a rational $r$, then $\Q \setminus \alpha$ has a
+smallest element, namely $r$ itself. Reflecting gives a set with a
+\emph{largest} element $-r$, violating property (III). So the naive definition
+does not always produce a cut.
+
+Rudin's ``there exists $r>0$ with $-p-r \notin \alpha$'' repairs this by
+demanding strict room to spare: $p$ qualifies only if something \emph{strictly
+below} $-p$ already lies outside $\alpha$. That extra $r$ shaves off the single
+offending endpoint and nothing else. You can see the repair working in the
+verification of (III), where $t = p + r/2$ is produced by spending half the
+slack.
+
+The archimedean appeal at the end is the other subtlety, and Rudin flags it
+himself with an exclamation mark. To hit an arbitrary $v \in 0^*$ we need
+integer multiples of $w$ to eventually escape $\alpha$; that is exactly 1.20(a),
+holding in $\Q$. Note the logical order --- the archimedean property of $\Q$ is
+elementary and assumed, and it is being used to build $\R$, not derived from it.
+\end{unpack}
+
+\medskip
+\noindent\textbf{Step 5}\quad Having proved that the addition defined in Step 4
+satisfies axioms (A) of Definition 1.12, it follows that Proposition 1.14 is
+valid in $\R$, and we can prove one of the requirements in Definition 1.17:
+\begin{quote}
+If $\alpha,\beta,\gamma \in \R$ and $\beta < \gamma$, then
+$\alpha+\beta < \alpha+\gamma$.
+\end{quote}
+Indeed, it is obvious from the definition of $+$ in $\R$ that
+$\alpha+\beta \subset \alpha+\gamma$; if we had $\alpha+\beta = \alpha+\gamma$,
+the cancellation law (Proposition 1.14) would imply $\beta = \gamma$.\kd{Exactly
+the dividend promised at 1.13(c). Proposition 1.14 was proved once, for an
+arbitrary set satisfying axioms (A); having checked those axioms in Step 4,
+Rudin may now invoke cancellation for cuts without reproving anything. The
+one-time purchase is being collected.}
+
+It also follows that $\alpha > 0^*$ if and only if $-\alpha < 0^*$.
+
+\medskip
+\noindent\textbf{Step 6}\quad Multiplication is a little more bothersome than
+addition in the present context, since products of negative rationals are
+positive. For this reason we confine ourselves first to $\R^+$, the set of all
+$\alpha \in \R$ with $\alpha > 0^*$.
+
+If $\alpha \in \R^+$ and $\beta \in \R^+$, we define $\alpha\beta$ to be the set
+of all $p$ such that $p \le rs$ for some choice of $r \in \alpha$,
+$s \in \beta$, $r>0$, $s>0$.\kw{The definition is \emph{not} ``the set of all
+products $rs$'' --- that would fail property (II), since the products of
+positive rationals omit everything negative. The clause $p \le rs$ patches this
+by throwing in everything below. Contrast Step 4, where the sums $r+s$ already
+sweep out a downward-closed set on their own.}
+
+We define $1^*$ to be the set of all $q < 1$.
+
+Then \emph{the axioms} (M) \emph{and} (D) \emph{of Definition 1.12 hold, with
+$\R^+$ in place of $F$, and with $1^*$ in the role of $1$.}
+
+The proofs are so similar to the ones given in detail in Step 4 that we omit
+them.
+
+Note, in particular, that the second requirement of Definition 1.17 holds: If
+$\alpha > 0^*$ and $\beta > 0^*$, then $\alpha\beta > 0^*$.
+
+\medskip
+\noindent\textbf{Step 7}\quad We complete the definition of multiplication by
+setting $\alpha 0^* = 0^*\alpha = 0^*$, and by setting
+\[
+  \alpha\beta = \begin{cases}
+    (-\alpha)(-\beta) & \text{if } \alpha<0^*,\ \beta<0^*,\\
+    -[(-\alpha)\beta] & \text{if } \alpha<0^*,\ \beta>0^*,\\
+    -[\alpha(-\beta)] & \text{if } \alpha>0^*,\ \beta<0^*.
+  \end{cases}
+\]
+The products on the right were defined in Step 6.
+
+Having proved (in Step 6) that the axioms (M) hold in $\R^+$, it is now
+perfectly simple to prove them in $\R$, by repeated application of the identity
+$\gamma = -(-\gamma)$, which is part of Proposition 1.14. (See Step 5.)
+
+The proof of the distributive law
+\[ \alpha(\beta+\gamma) = \alpha\beta + \alpha\gamma \]
+breaks into cases. For instance, suppose $\alpha > 0^*$, $\beta < 0^*$,
+$\beta+\gamma > 0^*$. Then $\gamma = (\beta+\gamma)+(-\beta)$, and (since we
+already know that the distributive law holds in $\R^+$)
+\[ \alpha\gamma = \alpha(\beta+\gamma) + \alpha\cdot(-\beta). \]
+But $\alpha\cdot(-\beta) = -(\alpha\beta)$. Thus
+\[ \alpha\beta + \alpha\gamma = \alpha(\beta+\gamma). \]
+The other cases are handled in the same way.
+
+We have now completed the proof that \emph{$\R$ is an ordered field with the
+least upper bound property.}
+
+\begin{deeper}[Why multiplication needs cases and addition does not]
+Addition is monotone in each argument on all of $\Q$: if $r$ grows, so does
+$r+s$. Multiplication is not --- multiplying by a negative reverses order. Since
+a cut is defined by \emph{downward} closure, the union of products
+$\{rs\}$ points the wrong way as soon as a negative factor appears, and the
+Step 6 definition simply does not describe a cut.
+
+Rudin's escape is to define multiplication only where it is well behaved, on
+$\R^+$, and then extend by the sign rules --- which is the same device used at
+1.16(c),(d) to prove $(-x)(-y) = xy$ from the field axioms. The cases in Step 7
+are those rules read as definitions rather than theorems.
+
+This asymmetry is why the appendix is longer than it looks. It is also why the
+distributive law, which mixes the two operations, must be checked case by case:
+$\beta$ and $\gamma$ can have opposite signs while $\beta+\gamma$ has either.
+\end{deeper}
+
+\medskip
+\noindent\textbf{Step 8}\quad We associate with each $r \in \Q$ the set $r^*$
+which consists of all $p \in \Q$ such that $p < r$. It is clear that each $r^*$
+is a cut; that is, $r^* \in \R$. These cuts satisfy the following relations:
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item $r^* + s^* = (r+s)^*$,
+  \item $r^*s^* = (rs)^*$,
+  \item $r^* < s^*$ if and only if $r < s$.
+\end{enumerate}
+
+To prove (a), choose $p \in r^*+s^*$. Then $p = u+v$, where $u<r$, $v<s$. Hence
+$p < r+s$, which says that $p \in (r+s)^*$.
+
+Conversely, suppose $p \in (r+s)^*$. Then $p < r+s$. Choose $t$ so that
+$2t = r+s-p$, put
+\[ r' = r-t, \qquad s' = s-t. \]
+Then $r' \in r^*$, $s' \in s^*$, and $p = r'+s'$, so that $p \in
+r^*+s^*$.\kn{The trick is splitting the shortfall evenly. We know $p$ falls
+short of $r+s$ by $2t>0$; docking $t$ from each of $r$ and $s$ keeps both
+strictly below their targets while making the sum land exactly on $p$. Halving
+the slack is the same device as $t = p + r/2$ in Step 4(A5).} This proves (a).
+The proof of (b) is similar.
+
+If $r < s$ then $r \in s^*$, but $r \notin r^*$; hence $r^* < s^*$.
+
+If $r^* < s^*$, then there is a $p \in s^*$ such that $p \notin r^*$. Hence
+$r \le p < s$, so that $r < s$. This proves (c).
+
+\medskip
+\noindent\textbf{Step 9}\quad We saw in Step 8 that the replacement of the
+rational numbers $r$ by the corresponding ``rational cuts'' $r^* \in \R$
+preserves sums, products, and order. This fact may be expressed by saying that
+the ordered field $\Q$ is \emph{isomorphic} to the ordered field $\Q^*$ whose
+elements are the rational cuts. Of course, $r^*$ is by no means the same as $r$,
+but the properties we are concerned with (arithmetic and order) are the same in
+the two fields.
+
+It is this identification of $\Q$ with $\Q^*$ which allows us to regard $\Q$ as
+a subfield of $\R$.\kd{This settles the second sentence of Theorem 1.19, and it
+is worth being clear about what is and is not claimed. The rational $2$ and the
+cut $2^* = \{p \in \Q : p<2\}$ are genuinely different objects --- one a number,
+the other an infinite set. What Step 8 establishes is that no
+arithmetic-or-order question can tell them apart, and we therefore agree to
+write $\Q \subset \R$. The same courtesy was extended to $\R \subset \C$ after
+1.26.}
+
+The second part of Theorem 1.19 is to be understood in terms of this
+identification. Note that the same phenomenon occurs when the real numbers are
+regarded as a subfield of the complex field, and it also occurs at a much more
+elementary level, when the integers are identified with a certain subset of
+$\Q$.
+
+It is a fact, which we will not prove here, that any two ordered fields with the
+least-upper-bound property are isomorphic. The first part of Theorem 1.19
+therefore \emph{characterizes} the real field $\R$ completely.\kd{The strongest
+sentence in the appendix, and it is dropped without proof. It says that
+Dedekind's construction was not one choice among many with different outcomes:
+\emph{any} route to a complete ordered field --- cuts, Cauchy sequences,
+infinite decimals --- lands on the same object up to isomorphism. That is why
+nothing in the rest of the book ever refers back to cuts. $\R$ is fully
+determined by its properties, so the properties are all one needs.}
+
+The books by Landau and Thurston cited in the Bibliography are entirely devoted
+to number systems. Chapter 1 of Knopp's book contains a more leisurely
+description of how $\R$ can be obtained from $\Q$. Another construction, in
+which each real number is defined to be an equivalence class of Cauchy sequences
+of rational numbers (see Chap.\ 3), is carried out in Sec.\ 5 of the book by
+Hewitt and Stromberg.
+
+The cuts in $\Q$ which we used here were invented by Dedekind. The construction
+of $\R$ from $\Q$ by means of Cauchy sequences is due to Cantor. Both Cantor and
+Dedekind published their constructions in 1872.\kd{Cantor's route is the one
+most modern texts take --- Tao's \emph{Analysis I} builds $\R$ as equivalence
+classes of Cauchy sequences of rationals (his Chapter 5) and explicitly declines
+Dedekind cuts. It generalises: the same construction completes any metric space
+(Rudin does exactly this in Exercise 3.24), whereas cuts need an order and so
+stop at $\R$. Cuts are shorter here, which is why Rudin keeps them. Both books
+warn off the third route, infinite decimals: it looks familiar but has to
+legislate $0.999\dots = 1$, and is the most delicate of the three.}
+
+\begin{recap}[What the appendix established]
+$\R$ exists. Concretely, it is the set of downward-closed, unbounded-below,
+maximum-free subsets of $\Q$, ordered by inclusion, with addition given by
+elementwise sums and multiplication defined first for positives and then by sign
+rules. Under those definitions it is an ordered field, its least upper bounds are
+unions, and it contains an isomorphic copy of $\Q$.
+
+\smallskip
+Theorem 1.19 is therefore a theorem. And since complete ordered fields are
+unique up to isomorphism, this particular construction may now be forgotten ---
+which is precisely what the rest of the book does.
+\end{recap}

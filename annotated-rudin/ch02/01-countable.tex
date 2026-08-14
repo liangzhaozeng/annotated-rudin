@@ -1,0 +1,615 @@
+% ============================================================
+%  Chapter 2 -- Finite, Countable, and Uncountable Sets, 2.1-2.14
+% ============================================================
+\rchapter{2}{Basic Topology}
+
+\begin{roadmap}[Why this chapter exists]
+Chapter 1 secured a number system with no gaps. That is a statement about
+$\R$ alone, and almost nothing in analysis is about $\R$ alone --- limits,
+continuity and integration all concern how points sit \emph{near} one another.
+This chapter builds the language for nearness, and it builds it once, for a
+general metric space, so that $\R$, $\C$, $\R^k$ and later spaces of functions
+are all covered by the same theorems.
+
+\medskip
+The chapter's centre of gravity is \textbf{compactness} (2.31--2.42). It is the
+property that makes ``infinitely many'' behave like ``finitely many,'' and it
+is what will later force a continuous function on $[a,b]$ to be bounded (4.15),
+to attain its bounds (4.16), and to be uniformly continuous (4.19). If you take
+one thing from Chapter 2, take Theorem 2.41.
+\end{roadmap}
+
+\begin{roadmap}[How it is organized, and why in that order]
+Five sections, and the first is not topology at all.
+
+\medskip
+\centering
+\begin{tikzpicture}[scale=0.9, transform shape, node distance=4mm]
+\node[rmbox, text width=19mm] (a) {\textbf{2.1--2.14}\\counting\\infinite sets};
+\node[rmbox, text width=19mm, right=of a] (b) {\textbf{2.15--2.30}\\metric spaces:\\open, closed};
+\node[rmbox, text width=19mm, right=of b] (c) {\textbf{2.31--2.42}\\compactness};
+\node[rmbox, text width=19mm, right=of c] (d) {\textbf{2.43--2.47}\\perfect,\\connected};
+\draw[rmarrow] (a) -- (b); \draw[rmarrow] (b) -- (c); \draw[rmarrow] (c) -- (d);
+\end{tikzpicture}
+
+\medskip
+\raggedright
+\textbf{The first section is not topology.} Countability is set theory, and
+Rudin puts it here because he needs it in two specific places: to know that
+$\Q$ is countable (used constantly), and to know that $\R$ is not (2.43, and
+the Cantor set at 2.44). You could read \S\S2.15--2.47 first and refer back.
+
+\smallskip
+\textbf{The definitions are chosen for what they enable, not for what they
+describe.} ``Open,'' ``closed,'' ``limit point'' will look like arbitrary
+vocabulary on first reading. They are not: each is exactly the hypothesis some
+later theorem needs. Watch where each is used rather than trying to intuit it
+in advance.
+
+\smallskip
+\textbf{Compactness is defined by open covers} (2.32), which is the strangest
+definition in the book and the one students resist hardest. Rudin's reason
+appears only at 2.41, where he proves that for subsets of $\R^k$ it coincides
+with two more familiar conditions. Until then, treat it as a formal property
+and watch what it does.
+
+\smallskip
+\textbf{Everything is done for a general metric space} where it can be, and for
+$\R^k$ where it cannot. That division is deliberate --- 2.41 and 2.42 are
+\emph{false} in general metric spaces, and knowing which theorems need $\R^k$
+is worth more than knowing the theorems.
+\end{roadmap}
+
+\rsection{Finite, Countable, and Uncountable Sets}
+
+\begin{signpost}[What this section is for]
+Two facts are needed later and everything here exists to produce them: $\Q$ is
+countable (Corollary to 2.13) and the set of $0$--$1$ sequences is not (2.14).
+The first makes $\Q$ small enough to enumerate --- spent in Exercises 2.18 and
+2.29, in Chapter 3, and wherever a countable dense set is wanted. The second is what makes $\R$
+genuinely bigger than $\Q$, and it reappears as 2.43.
+
+\smallskip
+The section also fixes notation for functions (2.1--2.2) that the whole book
+uses. Read 2.2 carefully even if the rest is familiar: Rudin's $f^{-1}$ is
+defined for \emph{sets} and does not presuppose that $f$ has an inverse.
+\end{signpost}
+
+\noindent
+We begin this section with a definition of the function concept.
+
+\ritem{2.1}{Definition}
+Consider two sets $A$ and $B$, whose elements may be any objects whatsoever,
+and suppose that with each element $x$ of $A$ there is associated, in some
+manner, an element of $B$, which we denote by $f(x)$. Then $f$ is said to be a
+\emph{function} from $A$ to $B$ (or a \emph{mapping} of $A$ into $B$). The set
+$A$ is called the \emph{domain} of $f$ (we also say $f$ is defined on $A$) and
+the elements $f(x)$ are called the \emph{values} of $f$. The set of all values
+of $f$ is called the \emph{range} of $f$.\kd{``Associated, in some manner'' is
+not a definition, and Rudin knows it --- he is declining to build set theory,
+exactly as he declined to build $\Z$ in Chapter 1. One repair is to define a
+function as a set of ordered pairs in which each $x$ appears exactly once;
+another, Tao's (his 3.3.1), keeps functions primitive and defines them by any
+property $P(x,y)$ passing the ``vertical line test,'' with the ordered-pair
+encoding relegated to his Exercise 3.5.10. Nothing in this book depends on the
+choice.}
+
+\ritem{2.2}{Definition}
+Let $A$ and $B$ be two sets and let $f$ be a mapping of $A$ into $B$. If
+$E \subset A$, $f(E)$ is defined to be the set of all elements $f(x)$, for
+$x \in E$. We call $f(E)$ the \emph{image} of $E$ under $f$. In this notation,
+$f(A)$ is the range of $f$. It is clear that $f(A) \subset B$. If $f(A) = B$, we
+say that $f$ maps $A$ \emph{onto} $B$. (Note that, according to this usage,
+\emph{onto} is more specific than \emph{into}.)
+
+If $E \subset B$, $f^{-1}(E)$ denotes the set of all $x \in A$ such that
+$f(x) \in E$. We call $f^{-1}(E)$ the \emph{inverse image} of $E$ under
+$f$.\kw{$f^{-1}$ here is an operation on \emph{subsets}, and it is always
+defined --- for every $f$, invertible or not. $f^{-1}(E)$ is simply
+``everything that lands in $E$,'' possibly empty. Do not read it as an inverse
+function. The clash of notation is universal and permanent, and the only
+defence is to check whether the argument is a set or a point.} If $y \in B$,
+$f^{-1}(y)$ is the set of all $x \in A$ such that $f(x) = y$. If, for each
+$y \in B$, $f^{-1}(y)$ consists of at most one element of $A$, then $f$ is said
+to be a \emph{1-1} (one-to-one) mapping of $A$ into $B$. This may also be
+expressed as follows: $f$ is a 1-1 mapping of $A$ into $B$ provided that
+$f(x_1) \ne f(x_2)$ whenever $x_1 \ne x_2$, $x_1 \in A$, $x_2 \in A$.
+
+(The notation $x_1 \ne x_2$ means that $x_1$ and $x_2$ are distinct elements;
+otherwise we write $x_1 = x_2$.)
+
+\begin{deeper}[Why inverse images, and not images, are the useful notion]
+Nothing yet suggests it, but $f^{-1}$ is the better-behaved of the two
+operations, and Chapter 4 will turn on the fact. Inverse images respect every
+set operation:
+\begin{gather*}
+  f^{-1}(E \cup F) = f^{-1}(E)\cup f^{-1}(F),\\
+  f^{-1}(E \cap F) = f^{-1}(E)\cap f^{-1}(F),\\
+  f^{-1}(E^c) = \bigl(f^{-1}(E)\bigr)^c .
+\end{gather*}
+Images respect only the first. $f(E \cap F) \subset f(E) \cap f(F)$ can be
+strict --- take $f$ constant and $E$, $F$ disjoint --- and images do not
+interact with complements at all.
+
+That asymmetry is why Theorem 4.8 characterises continuity by ``$f^{-1}$ of
+every open set is open'' rather than by anything about images --- no
+image-based version could work, since a constant map is continuous yet its
+images are single points, never open. Even the closure relation survives only
+one-sidedly for images: Exercise 4.2 proves
+$f(\overline{E}) \subset \overline{f(E)}$ and asks for an example where the
+inclusion is proper.
+\end{deeper}
+
+\ritem{2.3}{Definition}
+If there exists a 1-1 mapping of $A$ onto $B$, we say that $A$ and $B$ can be
+put in \emph{1-1 correspondence}, or that $A$ and $B$ have the same
+\emph{cardinal number}, or, briefly, that $A$ and $B$ are \emph{equivalent},
+and we write $A \sim B$. This relation clearly has the following properties:
+
+It is reflexive: $A \sim A$.
+
+It is symmetric: If $A \sim B$, then $B \sim A$.
+
+It is transitive: If $A \sim B$ and $B \sim C$, then $A \sim C$.
+
+Any relation with these three properties is called an \emph{equivalence
+relation}.
+
+\ritem{2.4}{Definition}
+For any positive integer $n$, let $\N_n$ be the set whose elements are the
+integers $1,2,\dots,n$; let $\N$ be the set consisting of all positive
+integers. For any set $A$, we say:
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item $A$ is \emph{finite} if $A \sim \N_n$ for some $n$ (the empty set is
+        also considered to be finite).
+  \item $A$ is \emph{infinite} if $A$ is not finite.
+  \item $A$ is \emph{countable} if $A \sim \N$.
+  \item $A$ is \emph{uncountable} if $A$ is neither finite nor countable.
+  \item $A$ is \emph{at most countable} if $A$ is finite or countable.
+\end{enumerate}
+Countable sets are sometimes called \emph{enumerable}, or
+\emph{denumerable}.\kw{Rudin's ``countable'' means countably \emph{infinite} --
+it excludes finite sets. Many other books use ``countable'' for what he calls
+``at most countable,'' and then say ``countably infinite'' for his sense. When
+you read a theorem elsewhere, check which convention is in force; several of
+Rudin's statements become false under the other one.}
+
+For two finite sets $A$ and $B$, we evidently have $A \sim B$ if and only if
+$A$ and $B$ contain the same number of elements. For infinite sets, however,
+the idea of ``having the same number of elements'' becomes quite vague, whereas
+the notion of 1-1 correspondence retains its clarity.
+
+\ritem{2.5}{Example}
+Let $\Z$ be the set of all integers. Then $\Z$ is countable. For, consider the
+following arrangement of the sets $\Z$ and $\N$:
+\[
+\begin{array}{lllllllll}
+  \Z: & 0, & 1, & -1, & 2, & -2, & 3, & -3, & \dots\\
+  \N: & 1, & 2, & 3,  & 4, & 5,  & 6, & 7,  & \dots
+\end{array}
+\]
+We can, in this example, even give an explicit formula for a function $f$ from
+$\N$ to $\Z$ which sets up a 1-1 correspondence:
+\[
+  f(n) = \begin{cases}
+    \dfrac{n}{2} & (n \text{ even}),\\[6pt]
+    -\dfrac{n-1}{2} & (n \text{ odd}).
+  \end{cases}
+\]
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \foreach \i/\z in {0/$0$,1/$1$,2/$-1$,3/$2$,4/$-2$,5/$3$,6/$-3$}{
+    \node[mlbl] (z\i) at (\i*12,9) {\z};
+    \node[mlbl] (n\i) at (\i*12,0) {$\the\numexpr\i+1\relax$};
+    \draw[thin, -{Stealth[length=3pt]}] (n\i) -- (z\i);
+  }
+  \node[mlbl] at (86,9) {$\cdots$};
+  \node[mlbl] at (86,0) {$\cdots$};
+  \node[lbl, anchor=east] at (-4,9) {$\Z$};
+  \node[lbl, anchor=east] at (-4,0) {$\N$};
+\end{tikzpicture}
+\end{center}
+\figcap{Counting the integers by alternating sides of $0$. Every integer is
+reached exactly once, which is all ``countable'' asks.}
+
+\ritem{2.6}{Remark}
+A finite set cannot be equivalent to one of its proper subsets. That this is,
+however, possible for infinite sets, is shown by Example 2.5, in which $\N$ is
+a proper subset of $\Z$.
+
+In fact, we could replace Definition 2.4(b) by the statement: $A$ is infinite
+if $A$ is equivalent to one of its proper subsets.\kd{This is Dedekind's
+definition of infinity, and taking it as primary is attractive because it needs
+no reference to $\N$ at all. The two definitions agree, but proving they agree
+requires a form of the axiom of choice --- which is why Rudin offers the
+Dedekind version as an aside rather than adopting it.}
+
+\ritem{2.7}{Definition}
+By a \emph{sequence}, we mean a function $f$ defined on the set $\N$ of all
+positive integers. If $f(n) = x_n$, for $n \in \N$, it is customary to denote
+the sequence $f$ by the symbol $(x_n)_{n=1}^\infty$, or more briefly by
+$(x_n)$, or sometimes by $x_1, x_2, x_3, \dots$. The values of $f$, that is,
+the elements $x_n$, are called the \emph{terms} of the sequence. If $A$ is a
+set and if $x_n \in A$ for all $n \in \N$, then $(x_n)$ is said to be a
+\emph{sequence in $A$}, or a \emph{sequence of elements of $A$}.
+
+Note that the terms $x_1, x_2, x_3, \dots$ of a sequence need not be
+distinct.\kw{A sequence is not its range. $(1,1,1,\dots)$ is an infinite
+sequence whose range is the one-element set $\{1\}$. Rudin flags this because
+the next paragraph slides between the two, and because Chapter 3 will
+repeatedly distinguish ``the sequence converges'' from statements about the
+set of its values.}
+
+Since every countable set is the range of a 1-1 function defined on $\N$, we
+may regard every countable set as the range of a sequence of distinct terms.
+Speaking more loosely, we may say that the elements of any countable set can be
+``arranged in a sequence.''
+
+Sometimes it is convenient to replace $\N$ in this definition by the set of all
+nonnegative integers, i.e., to start with $0$ rather than $1$.
+
+\ritem{2.8}{Theorem}
+\emph{Every infinite subset of a countable set $A$ is countable.}
+
+\begin{proof}
+Suppose $E \subset A$, and $E$ is infinite. Arrange the elements $x$ of $A$ in
+a sequence $(x_n)$ of distinct elements. Construct a sequence $(n_k)$ as
+follows:
+
+Let $n_1$ be the smallest positive integer such that $x_{n_1} \in E$. Having
+chosen $n_1,\dots,n_{k-1}$ $(k = 2,3,4,\dots)$, let $n_k$ be the smallest
+integer greater than $n_{k-1}$ such that $x_{n_k} \in E$.\kn{``Smallest'' is
+well-ordering again, the principle used silently in 1.1 and in the proof of
+1.20(b). Choosing the least admissible index at each stage is what makes the
+construction canonical --- no arbitrary choices are made, so no appeal to the
+axiom of choice is needed here. Contrast the proof of 2.12.}
+
+Putting $f(k) = x_{n_k}$ $(k = 1,2,3,\dots)$, we obtain a 1-1 correspondence
+between $E$ and $\N$.
+\end{proof}
+
+The theorem shows that, roughly speaking, countable sets represent the
+``smallest'' infinite: No uncountable set can be a subset of a countable set.
+
+\begin{unpack}[What 2.8 rules out]
+Read as a statement about size, 2.8 says there is nothing strictly between
+finite and countable. An infinite subset of a countable set cannot be a
+``smaller infinity'' --- it is countable, full stop.
+
+That has an immediate consequence used everywhere: to prove some set $S$ is
+countable it is enough to exhibit a 1-1 map from $S$ \emph{into} $\N$, or into
+any countable set, together with the knowledge that $S$ is infinite. You never
+have to construct a bijection. Rudin uses exactly this shortcut at the end of
+2.12, where he obtains $S \sim T$ for some $T \subset \N$ and then invokes 2.8.
+\end{unpack}
+
+\ritem{2.9}{Definition}
+Let $A$ and $\Omega$ be sets, and suppose that with each element $\alpha$ of
+$A$ there is associated a subset of $\Omega$ which we denote by $E_\alpha$.
+
+The set whose elements are the sets $E_\alpha$ will be denoted by
+$\{E_\alpha\}$. Instead of speaking of sets of sets, we shall sometimes speak
+of a \emph{collection} of sets, or a \emph{family} of sets.
+
+The \emph{union} of the sets $E_\alpha$ is defined to be the set $S$ such that
+$x \in S$ if and only if $x \in E_\alpha$ for at least one $\alpha \in A$. We
+use the notation
+\begin{equation}
+  S = \bigcup_{\alpha \in A} E_\alpha. \tag{2.1}
+\end{equation}
+If $A$ consists of the integers $1,2,\dots,n$, one usually writes
+\begin{equation}
+  S = \bigcup_{m=1}^{n} E_m \tag{2.2}
+\end{equation}
+or
+\begin{equation}
+  S = E_1 \cup E_2 \cup \cdots \cup E_n. \tag{2.3}
+\end{equation}
+If $A$ is the set of all positive integers, the usual notation is
+\begin{equation}
+  S = \bigcup_{m=1}^{\infty} E_m. \tag{2.4}
+\end{equation}
+The symbol $\infty$ in (2.4) merely indicates that the union of a countable
+collection of sets is taken, and should not be confused with the symbols
+$+\infty$, $-\infty$, introduced in Definition 1.23.\kw{Worth pausing on. The
+$\infty$ in $\bigcup_{m=1}^\infty$ is not a limit and nothing is approached ---
+it abbreviates ``over all $m \in \N$,'' and the union is defined outright by
+the membership condition, not as the limit of finite unions. Rudin flags the
+clash because Chapter 3 will use the same symbol for genuine limits.}
+
+The \emph{intersection} of the sets $E_\alpha$ is defined to be the set $P$
+such that $x \in P$ if and only if $x \in E_\alpha$ for every $\alpha \in A$.
+We use the notation
+\begin{equation}
+  P = \bigcap_{\alpha \in A} E_\alpha, \tag{2.5}
+\end{equation}
+or
+\begin{equation}
+  P = \bigcap_{m=1}^{n} E_m = E_1 \cap E_2 \cap \cdots \cap E_n, \tag{2.6}
+\end{equation}
+or
+\begin{equation}
+  P = \bigcap_{m=1}^{\infty} E_m, \tag{2.7}
+\end{equation}
+as for unions. If $A \cap B$ is not empty, we say that $A$ and $B$
+\emph{intersect}; otherwise they are \emph{disjoint}.
+
+\ritem{2.10}{Examples}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=4pt, topsep=4pt]
+  \item Suppose $E_1$ consists of $1,2,3$ and $E_2$ consists of $2,3,4$. Then
+        $E_1 \cup E_2$ consists of $1,2,3,4$, whereas $E_1 \cap E_2$ consists
+        of $2,3$.
+  \item Let $A$ be the set of real numbers $x$ such that $0 < x \le 1$. For
+        every $x \in A$, let $E_x$ be the set of real numbers $y$ such that
+        $0 < y < x$. Then
+        \begin{enumerate}[label=(\roman*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+          \item $E_x \subset E_z$ if and only if $0 < x \le z \le 1$;
+          \item $\bigcup_{x \in A} E_x = E_1$;
+          \item $\bigcap_{x \in A} E_x$ is empty.
+        \end{enumerate}
+        (i) and (ii) are clear. To prove (iii), we note that for every $y > 0$,
+        $y \notin E_x$ if $x < y$. Hence $y \notin \bigcap_{x \in A}
+        E_x$.\kn{Example (b)(iii) is the one to remember: an intersection of
+        nonempty nested sets can be empty. Each $E_x$ contains points, and any
+        \emph{finitely} many of them have a common point, yet nothing survives
+        all of them. Theorem 2.36 will show that compactness is exactly what
+        forbids this, and 2.39 is the version for $k$-cells.}
+\end{enumerate}
+
+\ritem{2.11}{Remarks}
+Many properties of unions and intersections are quite similar to those of sums
+and products; in fact, the words \emph{sum} and \emph{product} were sometimes
+used in this connection, and the symbols $\Sigma$ and $\Pi$ were written in
+place of $\bigcup$ and $\bigcap$.
+
+The commutative and associative laws are trivial:
+\begin{align}
+  A \cup B &= B \cup A; \qquad A \cap B = B \cap A. \tag{2.8}\\
+  (A \cup B) \cup C &= A \cup (B \cup C); \qquad
+  (A \cap B) \cap C = A \cap (B \cap C). \tag{2.9}
+\end{align}
+Thus the omission of parentheses in (2.3) and (2.6) is justified.
+
+The distributive law also holds:
+\begin{equation}
+  A \cap (B \cup C) = (A \cap B) \cup (A \cap C). \tag{2.10}
+\end{equation}
+To prove this, let the left and right members of (2.10) be denoted by $E$ and
+$F$, respectively.
+
+Suppose $x \in E$. Then $x \in A$ and $x \in B \cup C$, that is, $x \in B$ or
+$x \in C$ (possibly both). Hence $x \in A \cap B$ or $x \in A \cap C$, so that
+$x \in F$. Thus $E \subset F$.
+
+Next, suppose $x \in F$. Then $x \in A \cap B$ or $x \in A \cap C$. That is,
+$x \in A$, and $x \in B \cup C$. Hence $x \in A \cap (B \cup C)$, so that
+$F \subset E$.
+
+It follows that $E = F$.\kn{The template for every set identity in the book:
+prove two inclusions, each by chasing a single element. Rudin writes it out
+once here and never again --- later identities are left as ``easily
+verified.''}
+
+We list a few more relations which are easily verified:
+\begin{align}
+  A &\subset A \cup B, \tag{2.11}\\
+  A \cap B &\subset A. \tag{2.12}
+\end{align}
+If $\emptyset$ denotes the empty set, then
+\begin{equation}
+  A \cup \emptyset = A, \qquad A \cap \emptyset = \emptyset. \tag{2.13}
+\end{equation}
+If $A \subset B$, then
+\begin{equation}
+  A \cup B = B, \qquad A \cap B = A. \tag{2.14}
+\end{equation}
+
+\ritem{2.12}{Theorem}
+\emph{Let $\{E_n\}$, $n = 1,2,3,\dots$, be a countable collection of countable
+sets, and put}
+\begin{equation}
+  S = \bigcup_{n=1}^{\infty} E_n. \tag{2.15}
+\end{equation}
+\emph{Then $S$ is countable.}
+
+\begin{proof}
+Let every set $E_n$ be arranged in a sequence $(x_{nk})$, $k = 1,2,3,\dots$,
+and consider the infinite array\kw{This opening clause is where the axiom of
+countable choice enters, and Rudin does not mention it. Each $E_n$ \emph{can}
+be arranged in a sequence, but there is no canonical way to do it, and we are
+choosing one arrangement for each of infinitely many $n$ simultaneously.
+Without some choice principle the theorem is not provable --- it is consistent
+with ZF that $\R$ is a countable union of countable sets. Compare 2.8, where
+``smallest index'' made every choice canonical and no such principle was
+needed.}
+\begin{equation}
+\begin{array}{ccccc}
+  x_{11} & x_{12} & x_{13} & x_{14} & \cdots\\
+  x_{21} & x_{22} & x_{23} & x_{24} & \cdots\\
+  x_{31} & x_{32} & x_{33} & x_{34} & \cdots\\
+  x_{41} & x_{42} & x_{43} & x_{44} & \cdots\\
+  \multicolumn{5}{c}{\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots}
+\end{array}
+\tag{2.16}
+\end{equation}
+in which the elements of $E_n$ form the $n$th row. The array contains all
+elements of $S$. As indicated by the arrows, these elements can be arranged in
+a sequence
+\begin{equation}
+  x_{11};\; x_{21}, x_{12};\; x_{31}, x_{22}, x_{13};\;
+  x_{41}, x_{32}, x_{23}, x_{14};\; \dots \tag{2.17}
+\end{equation}
+If any two of the sets $E_n$ have elements in common, these will appear more
+than once in (2.17). Hence there is a subset $T$ of the set of all positive
+integers such that $S \sim T$, which shows that $S$ is at most countable
+(Theorem 2.8). Since $E_1 \subset S$, and $E_1$ is infinite, $S$ is infinite,
+and thus countable.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \foreach \r in {0,1,2,3}{
+    \foreach \c in {0,1,2,3}{
+      \node[mlbl] (e\r\c) at (\c*15, -\r*9)
+        {$x_{\the\numexpr\r+1\relax\the\numexpr\c+1\relax}$};}
+    \node[mlbl] at (62,-\r*9) {$\cdots$};}
+  \node[mlbl] at (0,-38) {$\vdots$};
+  % the diagonal sweeps
+  \foreach \d in {1,2,3}{
+    \draw[guide, -{Stealth[length=3.5pt]}]
+      (\d*15-3, 3) .. controls (\d*7.5,-\d*4.5) .. (2.5,-\d*9+2.5);}
+  \node[lbl, anchor=west] at (70,-9) {sweep the};
+  \node[lbl, anchor=west] at (70,-13) {anti-diagonals};
+\end{tikzpicture}
+\end{center}
+\figcap{Array (2.16). Each anti-diagonal is finite, so sweeping them in turn
+reaches every entry after finitely many steps --- which is exactly what an
+enumeration must do.}
+
+\begin{unpack}[Why the diagonal sweep, and not the obvious orders]
+The natural first attempts both fail, and seeing why is the content of the
+proof.
+
+\smallskip
+\emph{Row by row} never finishes row $1$, so $x_{21}$ is never reached.
+\emph{Column by column} fails the same way. What the anti-diagonals have that
+rows do not is \textbf{finiteness}: the $d$th anti-diagonal holds exactly $d$
+entries, so every entry sits at a finite distance from the start.
+
+\smallskip
+That is the whole idea, and it is worth stating in the form used later: a
+countable union of \emph{finite} sets is at most countable, and the array
+argument works by exhibiting $S$ as such a union --- the anti-diagonals.
+\end{unpack}
+
+\ritem{}{Corollary}
+\emph{Suppose $A$ is at most countable, and, for every $\alpha \in A$,
+$B_\alpha$ is at most countable. Put}
+\[ T = \bigcup_{\alpha \in A} B_\alpha. \]
+\emph{Then $T$ is at most countable}, for $T$ is equivalent to a subset of
+(2.15).
+
+\ritem{2.13}{Theorem}
+\emph{Let $A$ be a countable set, and let $B_n$ be the set of all $n$-tuples
+$(a_1,\dots,a_n)$, where $a_k \in A$ $(k = 1,\dots,n)$, and the elements
+$a_1,\dots,a_n$ need not be distinct. Then $B_n$ is countable.}
+
+\begin{proof}
+That $B_1$ is countable is evident, since $B_1 = A$. Suppose $B_{n-1}$ is
+countable $(n = 2,3,4,\dots)$. The elements of $B_n$ are of the form
+\begin{equation}
+  (b,a) \qquad (b \in B_{n-1},\ a \in A). \tag{2.18}
+\end{equation}
+For every fixed $b$, the set of pairs $(b,a)$ is equivalent to $A$, and hence
+countable. Thus $B_n$ is the union of a countable set of countable sets. By
+Theorem 2.12, $B_n$ is countable.
+
+The theorem follows by induction.
+\end{proof}
+
+\ritem{}{Corollary}
+\emph{The set of all rational numbers is countable.}
+
+\begin{proof}
+We apply Theorem 2.13, with $n = 2$, noting that every rational $r$ is of the
+form $b/a$, where $a$ and $b$ are integers. The set of pairs $(a,b)$, and
+therefore the set of fractions $b/a$, is countable.
+\end{proof}
+
+\begin{deeper}[The corollary is the reason for the section]
+$\Q$ countable is used more often than any other fact in this chapter. It gives
+$\R$ a countable dense subset (by 1.20(b)) --- which is what Exercise 2.18 uses
+to build a perfect set avoiding every rational, what the structure theorem for
+open sets (Exercise 2.29) rests on, and what makes $\R^k$ separable (Exercise
+2.22).
+
+Note also the shape of the argument, which recurs: $\Q$ is not obviously
+countable, but it is the image of a set of \emph{pairs}, and pairs are handled
+by 2.13. Whenever an object is specified by finitely many integers, this
+argument shows there are only countably many of them --- which is how Exercise
+2.2 gets the algebraic numbers.
+
+The strict inequality $|\Q| < |\R|$ that follows from 2.14 is worth pausing on
+for what it says about 1.20(b): between any two reals there is a rational, yet
+the rationals are vanishingly rare. Density and abundance are unrelated.
+\end{deeper}
+
+In fact, even the set of all algebraic numbers is countable (see Exercise 2.2).
+That not all infinite sets are, however, countable, is shown by the next
+theorem.
+
+\ritem{2.14}{Theorem}
+\emph{Let $A$ be the set of all sequences whose elements are the digits $0$ and
+$1$. This set $A$ is uncountable.}
+
+The elements of $A$ are sequences like $1,0,0,1,0,1,1,1,\dots$.
+
+\begin{proof}
+Let $E$ be a countable subset of $A$, and let $E$ consist of the sequences
+$s_1, s_2, s_3, \dots$. We construct a sequence $s$ as follows. If the $n$th
+digit in $s_n$ is $1$, we let the $n$th digit of $s$ be $0$, and vice versa.
+Then the sequence $s$ differs from every member of $E$ in at least one place;
+hence $s \notin E$. But clearly $s \in A$, so that $E$ is a proper subset of
+$A$.
+
+We have shown that every countable subset of $A$ is a proper subset of $A$. It
+follows that $A$ is uncountable (for otherwise $A$ would be a proper subset of
+$A$, which is absurd).\kn{The last step is where 2.6 is spent. If $A$ were
+countable then $A$ itself would be one of the countable subsets $E$, and the
+argument just showed every such $E$ is a \emph{proper} subset of $A$ --- so
+$A \subsetneq A$. Rudin's phrasing (``every countable subset is proper'')
+avoids having to fix an enumeration of $A$ in advance and then derive a
+contradiction, which is the more familiar but slightly clumsier route.}
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \def\rowA{1,0,0,1,0}
+  \foreach \r/\row in {0/{1,1,0,1,0}, 1/{0,1,1,0,1}, 2/{1,0,0,0,1},
+                       3/{1,1,1,0,0}, 4/{0,0,1,1,1}}{
+    \node[lbl, anchor=east] at (-3,-\r*7) {$s_{\the\numexpr\r+1\relax}$};
+    \foreach \c [count=\i from 0] in \row {
+      \node[mlbl] at (\i*10,-\r*7) {$\c$};}
+    \node[mlbl] at (54,-\r*7) {$\cdots$};}
+  % highlight the diagonal
+  \foreach \d in {0,1,2,3,4}{
+    \draw[thin] (\d*10-3.4,-\d*7-3.4) rectangle (\d*10+3.4,-\d*7+3.4);}
+  % the new sequence
+  \node[lbl, anchor=east] at (-3,-40) {$s$};
+  \foreach \c [count=\i from 0] in {0,0,1,1,0}{
+    \node[mlbl] at (\i*10,-40) {$\c$};}
+  \node[mlbl] at (54,-40) {$\cdots$};
+  \draw[guide] (-6,-36) -- (58,-36);
+  \node[lbl, anchor=west] at (62,-20) {flip the boxed};
+  \node[lbl, anchor=west] at (62,-24) {diagonal};
+\end{tikzpicture}
+\end{center}
+\figcap{Cantor's diagonal process. The new sequence $s$ disagrees with $s_n$ in
+place $n$, so it is not in the list --- whatever the list was.}
+
+The idea of the above proof was first used by Cantor, and is called
+\emph{Cantor's diagonal process}; for, if the sequences $s_1,s_2,s_3,\dots$
+are placed in an array like (2.16), it is the elements on the diagonal which
+are involved in the construction of the new sequence.
+
+Readers who are familiar with the binary representation of the real numbers
+(base $2$ instead of $10$) will notice that Theorem 2.14 implies that the set
+of all real numbers is uncountable. We shall give a second proof of this fact
+in Theorem 2.43.
+
+\begin{pitfall}[The binary argument needs one repair]
+The map from $0$--$1$ sequences to reals in $[0,1]$ is \emph{not} a bijection:
+$0.0111\dots$ and $0.1000\dots$ name the same number, exactly as $0.999\dots =
+1$ in base ten. So 2.14 does not immediately transfer.
+
+The repair is cheap. Only the dyadic rationals have two expansions, and there
+are countably many of them, so the map fails to be injective on a countable
+set --- not enough to make an uncountable set countable. But the gap is real,
+and it is the same delicacy that made Rudin warn ``we shall never use
+decimals'' at 1.22 and made Tao call the decimal construction of $\R$ the most
+complicated of the three.
+
+Theorem 2.43 avoids the issue entirely, which is presumably why Rudin promises
+a second proof.
+\end{pitfall}

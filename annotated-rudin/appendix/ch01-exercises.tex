@@ -1,0 +1,200 @@
+% ============================================================
+%  APPENDIX TO CHAPTER 1 -- EXERCISES S1.1-S1.15
+%  Imported from Tao I, ECNU, Yu Pin.  Not Rudin's.
+% ============================================================
+\ssection{Appendix exercises}
+
+\begin{roadmap}[How these differ from Rudin's twenty]
+Rudin's own Exercises 1.1--1.20 end the chapter proper. They are almost all
+verifications inside a structure already given: check a field axiom, compute
+with cuts, establish an inequality. These fifteen come from the comparison
+texts and ask two other kinds of question --- what the axioms \emph{cost},
+and how to actually compute with them.
+
+\medskip
+\raggedright
+\textbf{Group I (1--5): the toolkit.} Drills on the four facts of Supplement
+D, plus the two supremum lemmas every later chapter uses and Rudin never
+assigns. Exercise 4 is the first place in this book where anyone is asked to
+\emph{compute} a supremum.
+
+\medskip
+\textbf{Group II (6--10): what the axioms buy.} Where each hypothesis is
+spent --- induction failing on $\Z$, the supremum principle producing
+Archimedes, and the disconcerting question of whether one can prove any
+real numbers exist at all.
+
+\medskip
+\textbf{Group III (11--15): decimals and construction.} Exactly which reals
+have two decimal names, the supremum built by hand, and a game.
+
+\medskip
+\textbf{Marked $\star$:} harder, or requiring a result from a later chapter.
+\end{roadmap}
+
+\begin{enumerate}[label=\textbf{S1.\arabic*.}, leftmargin=3.4em, itemsep=9pt,
+                  topsep=8pt, labelsep=0.5em]
+
+% ---------------- Group I ----------------
+\item Let $a, b \in \R$. Prove that if $|a-b| < \varepsilon$ for every
+$\varepsilon > 0$, then $a = b$.\kn{The $\varepsilon$-principle of S1.9 as a
+drill, and the single most-used move in the book. The proof is one line by
+contradiction --- take $\varepsilon = |a-b|$ --- but the habit it builds is
+what matters: to prove two things equal, show their distance is smaller than
+every positive number. Rudin uses this at 1.11, 1.21, 3.2(b) and throughout
+Chapter 3 without ever stating it.}
+\provenance{ECNU \cjk{习题}{Ex} 1.1 \#3 (bk.\ p.\,4).}
+
+\item Prove that for all $x \in \R$: (a) $|x-1| + |x-2| \ge 1$; (b)
+$|x-1| + |x-2| + |x-3| \ge 2$. Determine in each case exactly when equality
+holds.\kn{Read each expression as a total distance to fixed points on the
+line. In (a) the sum of distances to $1$ and $2$ is least --- and equal to
+the gap --- exactly when $x$ lies between them. In (b) the middle point is
+free to be hit exactly, so equality occurs only at $x=2$: the minimiser of a
+sum of distances is the median. A geometric habit worth acquiring before
+Chapter 2 makes distance abstract.}
+\provenance{ECNU \cjk{习题}{Ex} 1.1 \#5 (bk.\ p.\,4).}
+
+\item Let $a,b,c > 0$. Prove
+$\bigl|\sqrt{a^2+b^2} - \sqrt{a^2+c^2}\bigr| \le |b-c|$, and give the
+inequality a geometric meaning.\kn{Two right triangles sharing the leg $a$:
+the hypotenuses cannot differ by more than the other legs do. Algebraically
+it says $t \mapsto \sqrt{a^2+t^2}$ never stretches distances --- it is what
+Chapter 4 will call a Lipschitz function with constant $1$. Rudin's Chapter 1
+exercises contain nothing geometric; this one rewards a picture.}
+\provenance{ECNU \cjk{习题}{Ex} 1.1 \#6 (bk.\ p.\,4).}
+
+\item For each set, find $\sup$ and $\inf$ and verify the answer
+\emph{from Definition 1.8}: (a) $\{x : x^2 < 2\}$; (b) $\{n! : n \in
+\N\}$; (c) $\{x \text{ irrational} : 0<x<1\}$; (d)
+$\{1 - 2^{-n} : n \in \N\}$.\kn{Rudin's Chapter 1 never asks anyone to
+compute a supremum, and computing four of them is the fastest way to
+internalise that Definition 1.8 has \emph{two} clauses --- an upper bound,
+and no smaller one. Note (b), where the set is unbounded above and the
+answer is $+\infty$ only in the extended sense of 1.23; and (c), where the
+supremum is $1$ and is not attained, while every neighbourhood of it is
+crowded.}
+\provenance{ECNU \cjk{习题}{Ex} 1.2 \#4 (bk.\ p.\,8).}
+
+\item Let $A,B$ be nonempty and bounded, and $A+B = \{x+y : x \in A,\ y \in
+B\}$. Prove $\sup(A+B) = \sup A + \sup B$ and
+$\inf(A+B) = \inf A + \inf B$.\kn{The workhorse lemma behind every
+limit-algebra proof, and it is not in Rudin's exercise set. Both halves are
+needed: ``$\le$'' because $\sup A + \sup B$ bounds $A+B$, and ``$\ge$''
+because any smaller bound would fail for some $x$ near $\sup A$ and $y$ near
+$\sup B$ --- which is the second clause of 1.8 doing its work. Compare 3.3,
+where the same statement for limits gets a whole theorem.}
+\provenance{ECNU \cjk{习题}{Ex} 1.2 \#7 (bk.\ p.\,8).}
+
+% ---------------- Group II ----------------
+\item Show that the principle of induction does not apply to $\Z$: exhibit a
+property $P(n)$ of integers such that $P(0)$ holds and $P(n)$ implies
+$P(n+1)$ for every integer $n$, yet $P(n)$ fails for some
+integer.\kn{Take $P(n)$ to be ``$n \ge 0$.'' One line, and a permanent
+lesson: induction is not a general logical principle but a specific axiom
+about $\N$, and what makes it work is that $\N$ has a starting point with
+nothing before it. Rudin uses induction freely throughout Chapter 1 --- at
+1.1, at 1.21, in the appendix --- and never says what licenses it.}
+\provenance{Tao I, Ex.\ 4.1.8 (bk.\ p.\,81).}
+
+\item Assuming only the field axioms and the order axioms, prove that the
+least-upper-bound property implies the archimedean property.\kn{This is
+Rudin's Theorem 1.20(a), but posed inside an axiom system where Archimedes is
+\emph{independent}, so that the exercise shows what is being bought rather
+than merely how. Compare S1.3, and note the shape of the argument: if $\N$
+were bounded, $\sup\N - 1$ would fail to be an upper bound, and the integer
+beating it has a successor beating the supremum.}
+\provenance{Yu Pin, homework A7 (p.\,36).}
+
+\item $\star$~Suppose $a>0$. Can you prove that the open interval $(0,a)$ is
+nonempty?\kn{Disconcerting, and meant to be. On the field and order axioms
+alone the only elements you have names for are $0$, $1$ and $-1$, so
+producing a real strictly between $0$ and $a$ is not the triviality it looks
+like --- you must manufacture new elements, and manufacturing elements in
+bulk is precisely what the completeness axiom is for. Rudin's 1.19 hands the
+reader a fully populated $\R$ by fiat, which is why the question cannot even
+be asked inside his development. Yu Pin's own comment: ``you will see the
+shadow of the Dedekind cut here.''}
+\provenance{Yu Pin, \cjk{思考题}{thought question} (p.\,22).}
+
+\item Prove that the ordered field $\R(t)$ of Supplement B really is ordered
+--- that the sum and product of eventually-positive rational functions are
+eventually positive, and that trichotomy holds --- and then verify directly
+that the set $\N$ has no least upper bound in it.\kn{The verification behind
+S1.2 and S1.3. For trichotomy, a nonzero rational function has finitely many
+zeros, so it has constant sign near $+\infty$. For the second part, show that
+if $f$ bounded $\N$ above then so would $f-1$, since $f - 1 > n$ whenever
+$f > n+1$ --- so no candidate can be least. The example is the one thing
+Chapter 1 lacks: a field where Archimedes visibly fails.}
+\provenance{Supplied here; see the provenance note at S1.2.}
+
+\item $\star$~Prove that, given the field and order axioms together with the
+archimedean property, the least-upper-bound property and the nested-interval
+property are equivalent. Then explain why the archimedean hypothesis cannot
+be dropped from this statement.\kn{The precise form of Chapter 1's
+comparison box. One direction is a bisection; the other is the argument of
+S2.3 in the Chapter 2 appendix. For the last part, look at S1.2: nested
+intervals alone cannot rule out infinite elements, so it cannot imply
+Archimedes, whereas \lub{} implies both at once. This is exactly why Yu Pin
+lists four axioms where Rudin needs one.}
+\provenance{Yu Pin, Remark 4 (p.\,28) and Thm 5 (pp.\,26--27).}
+
+% ---------------- Group III ----------------
+\item Prove that a real number has two decimal representations if it is a
+terminating decimal --- that is, if $x = n/10^m$ for integers $n,m$ --- and
+exactly one otherwise. Show also that the only decimal representations of
+$1$ are $1.000\ldots$ and $0.999\ldots$\kn{The statement Rudin's 1.22
+declines to make. He asserts that the expansion exists and is unique, having
+silently fixed the non-terminating digits by always choosing the
+\emph{largest} digit at each stage; ECNU fixes the opposite convention
+(S1.4). The exercise is to see that the ambiguity is real, is confined to
+exactly the terminating decimals, and is always a choice between a
+$0$-tail and a $9$-tail.}
+\provenance{Tao I, Ex.\ B.2.2--B.2.3 (bk.\ p.\,338); Yu Pin, homework E1
+(p.\,506), which states it as a four-way equivalence.}
+
+\item Prove the supremum principle by the digit construction of S1.7 for a
+set of your own choosing --- for instance $S = \{x : x^2 < 2\}$ --- and
+carry the algorithm far enough to produce the first four digits of
+$\sup S$.\kn{The point is to watch Definition 1.8's two clauses act as loop
+invariants: at each stage one keeps the largest digit that some element still
+reaches. Doing it once on $\{x : x^2<2\}$ produces $1.414$ and makes
+concrete what Rudin's 1.1 says is missing from $\Q$ --- the digits are
+perfectly well defined at every finite stage, and only the infinite string
+fails to be rational.}
+\provenance{ECNU \cjk{定理}{Thm} 1.1 (bk.\ pp.\,5--7).}
+
+\item $\star$~Construct the supremum of a nonempty bounded set by successive
+rational approximations, \emph{without} invoking the least-upper-bound
+property: for each $n$ find the unique integer $m$ such that $m/n$ is an
+upper bound while $(m-1)/n$ is not, and prove $m$ is unique.\kn{The same
+construction used in S2.7 to recover $\sup$ from Cauchy completeness, here
+isolated. Uniqueness of $m$ is where the archimedean property enters --- it
+is what guarantees the set of integers $k$ with $k/n$ an upper bound is
+nonempty and bounded below. Compare with exercise 12: one construction walks
+in steps of $10^{-k}$, the other in steps of $1/n$.}
+\provenance{Tao I, Ex.\ 5.5.2--5.5.3 (bk.\ p.\,121).}
+
+\item Prove that $b^{m/n}$ is well defined --- that
+$(b^{p})^{1/q} = (b^{m})^{1/n}$ whenever $m/n = p/q$ --- and deduce the law
+$b^{r+s} = b^rb^s$ for rational $r,s$.\kn{Rudin's Exercise 1.6, and the
+independence step is the whole of it. Both sides are positive $n q$th roots
+of $b^{mq}$, so the \emph{uniqueness} half of 1.21 identifies them --- one
+more instance of the pattern flagged at 1.21, where an existence-and-
+uniqueness theorem is used entirely for its uniqueness. See S1.13.}
+\provenance{Tao I, Lemma 5.6.8 (bk.\ p.\,124); Rudin's Ex.\ 1.6.}
+
+\item $\star$~\emph{(A game.)} Two players alternately choose nested closed
+intervals $I_1 \supset I_2 \supset \cdots$, each at most half the length of
+its predecessor, so that the intersection is a single point $x$. The first
+player wins if $x$ is rational, the second if $x$ is irrational. Who has a
+winning strategy?\kn{Everything needed lives in Chapter 1: nested intervals,
+density of $\Q$, and the uncountability that follows from S2.17 in the
+Chapter 2 appendix. The second player wins, and the reason is the same
+reason the diagonal argument works --- the first player must commit to a
+countable list of targets while the second retains room to dodge each one in
+turn. A pleasant way to see that ``most'' reals are irrational without ever
+using the word measure.}
+\provenance{Yu Pin, problem G (p.\,69), the Banach--Mazur game.}
+
+\end{enumerate}

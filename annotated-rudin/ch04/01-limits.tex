@@ -1,0 +1,256 @@
+% ============================================================
+%  Chapter 4 -- Limits of Functions, 4.1-4.4
+% ============================================================
+\rchapter{4}{Continuity}
+
+\begin{roadmap}[Why this chapter exists]
+Chapters 2 and 3 built machinery --- topology and limits --- and this chapter
+is where it gets spent. Continuity is defined three equivalent ways
+($\varepsilon$--$\delta$ at 4.5, sequences via 4.2, inverse images at 4.8),
+and then the two great theorems of Chapter 2 are converted into the two
+facts every calculus student uses without proof: a continuous function on a
+compact set is bounded, attains its extrema, and is uniformly continuous
+(4.14--4.19); a continuous function on an interval takes every intermediate
+value (4.22--4.23).
+
+\medskip
+The chapter's centre of gravity is \textbf{Theorem 4.8}: continuous means
+\emph{inverse images of open sets are open}. It converts continuity from a
+pointwise, quantifier-laden condition into a single structural statement, and
+it is the form in which every later argument uses the hypothesis.
+\end{roadmap}
+
+\begin{roadmap}[How it is organized, and why in that order]
+\textbf{Rudin's own account}, from the opening paragraph: the theorems ``would
+not become any easier if we restricted ourselves to real functions,'' and it
+``actually simplifies and clarifies the picture to discard unnecessary
+hypotheses and to state and prove theorems in an appropriately general
+context.'' So everything is done for metric spaces, exactly as in Chapters 2
+and 3, and specialised only when the real line genuinely matters
+(monotonicity, 4.28--4.30, needs an order; the intermediate value theorem
+needs intervals).
+
+\medskip
+\centering
+\begin{tikzpicture}[scale=0.9, transform shape, node distance=4mm]
+\node[rmbox, text width=19mm] (a) {\textbf{4.1--4.12}\\limits;\\continuity\\three ways};
+\node[rmbox, text width=19mm, right=of a] (b) {\textbf{4.13--4.21}\\compactness\\pays out};
+\node[rmbox, text width=19mm, right=of b] (c) {\textbf{4.22--4.24}\\connectedness\\pays out};
+\node[rmbox, text width=19mm, right=of c] (d) {\textbf{4.25--4.34}\\discontinuities;\\monotonicity};
+\draw[rmarrow] (a) -- (b); \draw[rmarrow] (b) -- (c); \draw[rmarrow] (c) -- (d);
+\end{tikzpicture}
+
+\medskip
+\raggedright
+Three things to know in advance.
+
+\smallskip
+\textbf{The proofs are translations, not inventions.} Almost every proof here
+either translates a sequence theorem through the bridge 4.2 (so Chapter 3 does
+the work), or pulls a topological property of the target space back through
+$f^{-1}$ (so Chapter 2 does the work). The strategy index of Chapter 1 gains
+an eighth pattern: \emph{transport structure along $f$ or $f^{-1}$}.
+
+\smallskip
+\textbf{The counterexamples are half the content.} 4.20--4.21 show exactly
+what dies without compactness, and 4.24, 4.27 what the intermediate value
+property does \emph{not} imply. Rudin places a counterexample after nearly
+every theorem in this chapter; read them as part of the theorem.
+
+\smallskip
+\textbf{Uniform continuity (4.18--4.19) is the new concept.} Everything else
+repackages Chapters 2--3; uniformity --- one $\delta$ serving every point at
+once --- is genuinely new, is the hardest distinction in the chapter, and is
+the hypothesis integration will need in Chapter 6 (Theorem 6.8).
+\end{roadmap}
+
+\noindent
+The function concept and some of the related terminology were introduced in
+Definitions 2.1 and 2.2. Although we shall (in later chapters) be mainly
+interested in real and complex functions (i.e., in functions whose values are
+real or complex numbers) we shall also discuss vector-valued functions (i.e.,
+functions with values in $\R^k$) and functions with values in an arbitrary
+metric space. The theorems we shall discuss in this general setting would not
+become any easier if we restricted ourselves to real functions, for instance,
+and it actually simplifies and clarifies the picture to discard unnecessary
+hypotheses and to state and prove theorems in an appropriately general
+context.
+
+The domains of definition of our functions will also be metric spaces,
+suitably specialized in various instances.
+
+\rsection{Limits of Functions}
+
+\ritem{4.1}{Definition}
+Let $X$ and $Y$ be metric spaces; suppose $E \subset X$, $f$ maps $E$ into
+$Y$, and $p$ is a limit point of $E$. We write $f(x) \to q$ as $x \to p$, or
+\begin{equation}
+  \lim_{x\to p} f(x) = q \tag{4.1}
+\end{equation}
+if there is a point $q \in Y$ with the following property: For every
+$\varepsilon > 0$ there exists a $\delta > 0$ such that
+\begin{equation}
+  d_Y(f(x),q) < \varepsilon \tag{4.2}
+\end{equation}
+for all points $x \in E$ for which
+\begin{equation}
+  0 < d_X(x,p) < \delta. \tag{4.3}
+\end{equation}
+The symbols $d_X$ and $d_Y$ refer to the distances in $X$ and $Y$,
+respectively.\kw{Two structural points hide in (4.3). The strict inequality
+$0 < d_X(x,p)$ \emph{deletes the point $p$ itself}: the limit ignores what
+happens at $p$, and even whether $f$ is defined there. And $p$ must be a
+\emph{limit point} of $E$ --- otherwise no $x$ satisfies (4.3) for small
+$\delta$ and every $q$ would qualify vacuously. The hypothesis is exactly
+what makes the limit unique.}
+
+If $X$ and/or $Y$ are replaced by the real line, the complex plane, or by some
+euclidean space $\R^k$, the distances $d_X$, $d_Y$ are of course replaced by
+absolute values, or by norms of differences (see Example 2.16).
+
+It should be noted that $p \in X$, but that $p$ need not be a point of $E$ in
+the above definition. Moreover, even if $p \in E$, we may very well have
+$f(p) \ne \lim_{x\to p} f(x)$.
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % X axis with deleted neighbourhood of p
+  \draw[axis] (-2,0) -- (52,0);
+  \node[lbl, anchor=north] at (50,-2) {$E \subset X$};
+  \node[ptgap] at (24,0) {};
+  \node[mlbl, anchor=north] at (24,-2.2) {$p$};
+  \draw[seg] (15,0) -- (22.8,0);
+  \draw[seg] (25.2,0) -- (33,0);
+  \node[ptopen, minimum size=2.4pt] at (15,0) {};
+  \node[ptopen, minimum size=2.4pt] at (33,0) {};
+  \draw[guide] (15,2) -- (15,7); \draw[guide] (33,2) -- (33,7);
+  \node[lbl, anchor=south] at (24,7.5) {punctured $\delta$-ball: $p$ itself excluded};
+  % arrow to Y
+  \draw[vec] (56,3) -- (66,3);
+  \node[mlbl, anchor=south] at (61,4.5) {$f$};
+  % Y axis with eps ball around q
+  \draw[axis] (70,-6) -- (70,14);
+  \node[lbl, anchor=west] at (72,13) {$Y$};
+  \node[ptfill, minimum size=2.6pt] at (70,4) {};
+  \node[mlbl, anchor=west] at (72,4) {$q$};
+  \draw[seg] (70,0.5) -- (70,7.5);
+  \node[mlbl, anchor=west] at (72,8.5) {$\varepsilon$-ball};
+\end{tikzpicture}
+\end{center}
+\figcap{The contract of 4.1: however small an $\varepsilon$-ball is drawn
+about $q$, some punctured $\delta$-ball about $p$ is mapped entirely into it.
+The value $f(p)$ --- if it exists at all --- plays no part.}
+
+We can recast this definition in terms of limits of sequences:
+
+\ritem{4.2}{Theorem}
+\emph{Let $X$, $Y$, $E$, $f$, and $p$ be as in Definition 4.1. Then}
+\begin{equation}
+  \lim_{x\to p} f(x) = q \tag{4.4}
+\end{equation}
+\emph{if and only if}
+\begin{equation}
+  \lim_{n\to\infty} f(p_n) = q \tag{4.5}
+\end{equation}
+\emph{for every sequence $(p_n)$ in $E$ such that}
+\begin{equation}
+  p_n \ne p, \qquad \lim_{n\to\infty} p_n = p. \tag{4.6}
+\end{equation}
+
+\begin{proof}
+Suppose (4.4) holds. Choose $(p_n)$ in $E$ satisfying (4.6). Let
+$\varepsilon > 0$ be given. Then there exists $\delta > 0$ such that
+$d_Y(f(x),q) < \varepsilon$ if $x \in E$ and $0 < d_X(x,p) < \delta$. Also,
+there exists $N$ such that $n > N$ implies $0 < d_X(p_n,p) < \delta$. Thus,
+for $n > N$, we have $d_Y(f(p_n),q) < \varepsilon$, which shows that (4.5)
+holds.
+
+Conversely, suppose (4.4) is false. Then there exists some $\varepsilon > 0$
+such that for every $\delta > 0$ there exists a point $x \in E$ (depending on
+$\delta$), for which $d_Y(f(x),q) \ge \varepsilon$ but
+$0 < d_X(x,p) < \delta$. Taking $\delta_n = 1/n$ $(n = 1,2,3,\dots)$, we thus
+find a sequence in $E$ satisfying (4.6) for which (4.5) is
+false.\kn{The forward direction chains two contracts: $\varepsilon$ buys a
+$\delta$ from $f$, and that $\delta$ buys an $N$ from the sequence. The
+converse is proved \emph{contrapositively}, and note its shape: negating
+``for every $\varepsilon$ there is $\delta$'' yields one bad $\varepsilon$
+whose every $\delta$ fails --- and harvesting one witness $x_n$ for each
+$\delta_n = 1/n$ assembles the bad sequence. (Silently, a choice is made for
+each $n$; compare the note at 2.12.)}
+\end{proof}
+
+\ritem{}{Corollary}
+\emph{If $f$ has a limit at $p$, this limit is unique.}
+
+This follows from Theorems 3.2(b) and 4.2.
+
+\begin{deeper}[The bridge, and which way to cross it]
+Theorem 4.2 is a dictionary: function limits on one side, sequence limits on
+the other. Its value is strategic, and each direction has a distinct use.
+
+\smallskip
+\textbf{To import theorems, cross left to right.} All of Chapter 3's limit
+arithmetic transfers instantly --- that is the entire proof of 4.4, one line
+long. Anything proved for sequences is proved for function limits, free.
+
+\smallskip
+\textbf{To refute limits, cross right to left.} To show $\lim_{x\to p} f(x)$
+does not exist, produce \emph{two} sequences approaching $p$ along which $f$
+tends to different values --- the function-limit analogue of the
+two-subsequence trick of 3.1(d). Example 4.27(d) will use exactly this on
+$\sin(1/x)$-type behaviour.
+
+\smallskip
+The quantifier ``\emph{every} sequence'' is what makes the dictionary
+faithful, and it is why the refutation direction is cheap while the
+verification direction through sequences is usually hopeless --- one cannot
+check all sequences one by one. For verifying, $\varepsilon$--$\delta$ or 4.8
+are the tools.
+\end{deeper}
+
+\ritem{4.3}{Definition}
+Suppose we have two complex functions, $f$ and $g$, both defined on $E$. By
+$f+g$ we mean the function which assigns to each point $x$ of $E$ the number
+$f(x)+g(x)$. Similarly we define the difference $f-g$, the product $fg$, and
+the quotient $f/g$ of two functions, with the understanding that the quotient
+is defined only at those points $x$ of $E$ at which $g(x) \ne 0$. If $f$
+assigns to each point $x$ of $E$ the same number $c$, then $f$ is said to be a
+\emph{constant} function, or simply a \emph{constant}, and we write $f = c$.
+If $f$ and $g$ are real functions, and if $f(x) \ge g(x)$ for every
+$x \in E$, we shall sometimes write $f \ge g$, for brevity.
+
+Similarly, if $\mathbf{f}$ and $\mathbf{g}$ map $E$ into $\R^k$, we define
+$\mathbf{f}+\mathbf{g}$ and $\mathbf{f}\cdot\mathbf{g}$ by
+\[ (\mathbf{f}+\mathbf{g})(x) = \mathbf{f}(x)+\mathbf{g}(x), \qquad
+   (\mathbf{f}\cdot\mathbf{g})(x) = \mathbf{f}(x)\cdot\mathbf{g}(x); \]
+and if $\lambda$ is a real number, $(\lambda\mathbf{f})(x) =
+\lambda\mathbf{f}(x)$.
+
+\ritem{4.4}{Theorem}
+\emph{Suppose $E \subset X$, a metric space, $p$ is a limit point of $E$, $f$
+and $g$ are complex functions on $E$, and}
+\[ \lim_{x\to p} f(x) = A, \qquad \lim_{x\to p} g(x) = B. \]
+\emph{Then}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item $\displaystyle\lim_{x\to p} (f+g)(x) = A+B$;
+  \item $\displaystyle\lim_{x\to p} (fg)(x) = AB$;
+  \item $\displaystyle\lim_{x\to p} \left(\frac fg\right)(x) = \frac AB$,
+        \emph{if $B \ne 0$.}
+\end{enumerate}
+
+\begin{proof}
+In view of Theorem 4.2, these assertions follow immediately from the analogous
+properties of sequences (Theorem 3.3).\kn{The dictionary in action: not one
+$\varepsilon$ appears, because every $\varepsilon$ was already spent in 3.3.
+This is the chapter's characteristic proof --- one sentence of translation
+--- and the same sentence will prove 4.9. When a proof is this short, the
+work was done elsewhere; the skill is knowing where.}
+\end{proof}
+
+\emph{Remark:} If $\mathbf{f}$ and $\mathbf{g}$ map $E$ into $\R^k$, then (a)
+remains true, and (b) becomes
+
+\emph{(b$'$)} $\displaystyle\lim_{x\to p}
+(\mathbf{f}\cdot\mathbf{g})(x) = \mathbf{A}\cdot\mathbf{B}$.
+
+(Compare Theorem 3.4.)

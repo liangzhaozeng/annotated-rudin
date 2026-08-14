@@ -1,0 +1,633 @@
+% ============================================================
+%  Chapter 2 -- Metric Spaces, 2.15-2.30
+% ============================================================
+\rsection{Metric Spaces}
+
+\begin{signpost}[Why this section is here]
+Chapter 1 ended by noting that $\R^k$ has a distance function satisfying three
+properties (1.37(a),(b),(f)). This section takes those three properties as the
+\emph{definition} of a space and develops everything that follows from them
+alone. The gain is reach: every theorem proved here holds for $\R$, for $\C$,
+for $\R^k$, for subsets of any of these, and later for spaces of functions
+(7.14, 11.35).
+
+\smallskip
+Definition 2.18 is the hinge of the chapter --- ten pieces of vocabulary in one
+block, arriving with no motivation. Do not try to absorb them all. The two that
+carry the weight are \textbf{limit point} (b) and \textbf{open} (f); ``closed''
+is defined from the first, and everything in 2.19--2.30 is bookkeeping about
+how the two interact. The rest of the list is there so Rudin need not
+interrupt himself later.
+
+\smallskip
+Read 2.29--2.30 with attention even though they look technical. They say that
+``open'' is not a property a set has by itself but one it has \emph{relative to
+an ambient space}, and that ambiguity causes more confusion in Chapter 4 than
+any other point in the book.
+\end{signpost}
+
+\ritem{2.15}{Definition}
+A set $X$, whose elements we shall call \emph{points}, is said to be a
+\emph{metric space} if with any two points $p$ and $q$ of $X$ there is
+associated a real number $d(p,q)$, called the \emph{distance} from $p$ to $q$,
+such that
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item $d(p,q) > 0$ if $p \ne q$; $d(p,p) = 0$;
+  \item $d(p,q) = d(q,p)$;
+  \item $d(p,q) \le d(p,r) + d(r,q)$ for any $r \in X$.
+\end{enumerate}
+Any function with these three properties is called a \emph{distance function},
+or a \emph{metric}.\kn{Compare 1.37: (a) here is 1.37(a),(b); (b) follows from
+1.37(c) with $\alpha = -1$; (c) is 1.37(f). Rudin verified all three for $\R^k$
+one chapter ago, which is why 2.16 can assert the example in a single line.
+Note what is \emph{absent}: no addition, no scalar multiplication, no inner
+product. A metric space has distance and nothing else.}
+
+\ritem{2.16}{Examples}
+The most important examples of metric spaces, from our standpoint, are the
+euclidean spaces $\R^k$, especially $\R^1$ (the real line) and $\R^2$ (the
+complex plane); the distance in $\R^k$ is defined by
+\begin{equation}
+  d(\mathbf{x},\mathbf{y}) = |\mathbf{x}-\mathbf{y}|
+  \qquad (\mathbf{x},\mathbf{y} \in \R^k). \tag{2.19}
+\end{equation}
+By Theorem 1.37, the conditions of Definition 2.15 are satisfied by (2.19).
+
+It is important to observe that every subset $Y$ of a metric space $X$ is a
+metric space in its own right, with the same distance function. For it is clear
+that if conditions (a) to (c) of Definition 2.15 hold for $p,q,r \in X$, they
+also hold if we restrict $p,q,r$ to lie in $Y$.\kn{This one-sentence
+observation is what makes 2.29--2.30 necessary. Because \emph{every} subset is
+itself a metric space, the words ``open'' and ``closed'' become ambiguous the
+moment more than one ambient space is in play --- and from Chapter 4 onward
+there always is.}
+
+Thus, every subset of a euclidean space is a metric space. Other examples are
+the spaces $\mathscr{C}(K)$ and $\mathscr{L}^2(\mu)$, which are discussed in
+Chaps.\ 7 and 11, respectively.
+
+\ritem{2.17}{Definition}
+By the \emph{segment} $(a,b)$ we mean the set of all real numbers $x$ such that
+$a < x < b$.
+
+By the \emph{interval} $[a,b]$ we mean the set of all real numbers $x$ such
+that $a \le x \le b$.
+
+Occasionally we shall also encounter ``half-open intervals'' $[a,b)$ and
+$(a,b]$; the first consists of all $x$ such that $a \le x < b$, the second of
+all $x$ such that $a < x \le b$.
+
+If $a_i < b_i$ for $i = 1,\dots,k$, the set of all points
+$\mathbf{x} = (x_1,\dots,x_k)$ in $\R^k$ whose coordinates satisfy the
+inequalities $a_i \le x_i \le b_i$ $(1 \le i \le k)$ is called a
+\emph{$k$-cell}. Thus a $1$-cell is an interval, a $2$-cell is a rectangle,
+etc.\kw{Rudin's ``segment'' means open interval and his ``interval'' means
+closed. Almost no other book uses these words this way, and he uses them
+constantly. A $k$-cell is always \emph{closed} --- the inequalities are
+$\le$ --- which is why 2.40 can prove they are compact.}
+
+If $\mathbf{x} \in \R^k$ and $r > 0$, the \emph{open} (or \emph{closed})
+\emph{ball} $B$ with center at $\mathbf{x}$ and radius $r$ is defined to be the
+set of all $\mathbf{y} \in \R^k$ such that $|\mathbf{y}-\mathbf{x}| < r$ (or
+$|\mathbf{y}-\mathbf{x}| \le r$).
+
+We call a set $E \subset \R^k$ \emph{convex} if
+\[ \lambda\mathbf{x} + (1-\lambda)\mathbf{y} \in E \]
+whenever $\mathbf{x} \in E$, $\mathbf{y} \in E$, and $0 < \lambda < 1$.
+
+For example, balls are convex. For if $|\mathbf{y}-\mathbf{x}| < r$,
+$|\mathbf{z}-\mathbf{x}| < r$, and $0 < \lambda < 1$, we have
+\begin{align*}
+  |\lambda\mathbf{y} + (1-\lambda)\mathbf{z} - \mathbf{x}|
+    &= |\lambda(\mathbf{y}-\mathbf{x}) + (1-\lambda)(\mathbf{z}-\mathbf{x})|\\
+    &\le \lambda|\mathbf{y}-\mathbf{x}| + (1-\lambda)|\mathbf{z}-\mathbf{x}|
+       < \lambda r + (1-\lambda)r\\
+    &= r.
+\end{align*}
+The same proof applies to closed balls. It is also easy to see that $k$-cells
+are convex.
+
+\begin{deeper}[Convexity is not a metric notion]
+Notice that convexity is defined only for $E \subset \R^k$, never for a general
+metric space --- and it could not be, because
+$\lambda\mathbf{x} + (1-\lambda)\mathbf{y}$ requires addition and scalar
+multiplication, which 2.15 does not provide. Convexity belongs to the vector
+space structure, not the metric.
+
+Rudin introduces it here and then barely uses it in this chapter --- Exercise
+2.21(c) below proves convex sets are connected, and the next real use is
+Theorem 9.19, where the mean value inequality needs the segment joining two
+points to stay inside the domain. (Convex \emph{functions}, a different
+notion, appear in Exercise 4.23.) The line ``balls are convex'' is worth
+keeping, though: it depends on the triangle inequality alone and is the reason
+pictures of neighbourhoods may be drawn as round blobs without loss.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % convex
+  \fill[black!8] plot[smooth cycle, tension=0.9]
+    coordinates {(0,3) (14,0) (27,4) (25,13) (10,15)};
+  \draw[thin] plot[smooth cycle, tension=0.9]
+    coordinates {(0,3) (14,0) (27,4) (25,13) (10,15)};
+  \node[ptfill, minimum size=2.4pt] (ca) at (5,7) {};
+  \node[ptfill, minimum size=2.4pt] (cb) at (22,8) {};
+  \draw[thin] (ca) -- (cb);
+  \node[lbl, anchor=north] at (13,-3) {convex: every segment stays in};
+  % non-convex
+  \begin{scope}[xshift=52mm]
+  \fill[black!8] plot[smooth cycle, tension=0.9]
+    coordinates {(0,1) (28,1) (25,12) (14,5) (3,12)};
+  \draw[thin] plot[smooth cycle, tension=0.9]
+    coordinates {(0,1) (28,1) (25,12) (14,5) (3,12)};
+  \node[ptfill, minimum size=2.4pt] (na) at (4,8) {};
+  \node[ptfill, minimum size=2.4pt] (nb) at (24,8) {};
+  \draw[guide] (na) -- (nb);
+  \node[lbl, anchor=north] at (14,-3) {not convex: this one leaves};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\figcap{The definition quantifies over every pair of points and every
+$\lambda$: one escaping chord is enough to fail it.}
+\end{deeper}
+
+\ritem{2.18}{Definition}
+Let $X$ be a metric space. All points and sets mentioned below are understood
+to be elements and subsets of $X$.
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=3pt, topsep=4pt]
+  \item A \emph{neighborhood} of $p$ is a set $N_r(p)$ consisting of all $q$
+        such that $d(p,q) < r$ for some $r > 0$. The number $r$ is called the
+        \emph{radius} of $N_r(p)$.
+  \item A point $p$ is a \emph{limit point} of the set $E$ if every
+        neighborhood of $p$ contains a point $q \ne p$ such that
+        $q \in E$.\kw{The clause $q \ne p$ is the whole definition. Without it
+        every point of $E$ would trivially be a limit point of $E$, and the
+        notion would be useless. A limit point is a point that $E$ crowds
+        \emph{from outside itself} --- and it need not belong to $E$: see
+        2.21(e), where $0$ is a limit point of $\{1/n\}$ and lies nowhere in
+        the set.}
+  \item If $p \in E$ and $p$ is not a limit point of $E$, then $p$ is called an
+        \emph{isolated point} of $E$.
+  \item $E$ is \emph{closed} if every limit point of $E$ is a point of $E$.
+  \item A point $p$ is an \emph{interior point} of $E$ if there is a
+        neighborhood $N$ of $p$ such that $N \subset E$.
+  \item $E$ is \emph{open} if every point of $E$ is an interior point of $E$.
+  \item The \emph{complement} of $E$ (denoted by $E^c$) is the set of all
+        points $p \in X$ such that $p \notin E$.
+  \item $E$ is \emph{perfect} if $E$ is closed and if every point of $E$ is a
+        limit point of $E$.
+  \item $E$ is \emph{bounded} if there is a real number $M$ and a point
+        $q \in X$ such that $d(p,q) < M$ for all $p \in E$.
+  \item $E$ is \emph{dense} in $X$ if every point of $X$ is a limit point of
+        $E$, or a point of $E$ (or both).
+\end{enumerate}
+Let us note that in $\R^1$ neighborhoods are segments, whereas in $\R^2$
+neighborhoods are interiors of circles.
+
+\begin{unpack}[The ten definitions in one picture]
+Take $E$ to be a shaded blob in the plane together with one stray point off to
+the side. Every term in 2.18 can be read off it.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % the blob
+  \fill[black!10] plot[smooth cycle, tension=0.8]
+    coordinates {(6,8) (26,4) (44,12) (40,28) (18,30)};
+  \draw[thin] plot[smooth cycle, tension=0.8]
+    coordinates {(6,8) (26,4) (44,12) (40,28) (18,30)};
+  \node[lbl] at (25,19) {$E$};
+  % interior point
+  \node[ptfill, minimum size=2.4pt] at (15,14) {};
+  \draw[thin] (15,14) circle (4.5mm);
+  \draw[thin] (15,9) -- (13,-4);
+  \node[lbl, anchor=north] at (13,-5) {interior point:};
+  \node[lbl, anchor=north] at (13,-9) {a ball fits inside $E$};
+  % limit point on the edge, not in E
+  \node[ptopen] at (43,17) {};
+  \draw[guide] (43,17) circle (4mm);
+  \draw[thin] (43,21) -- (46,33);
+  \node[lbl, anchor=south west] at (44,33) {limit point, not in $E$:};
+  \node[lbl, anchor=north west] at (44,33) {every ball meets $E$};
+  % isolated point, in E
+  \node[ptfill, minimum size=2.6pt] at (74,14) {};
+  \draw[thin] (74,14) circle (4.5mm);
+  \draw[thin] (74,9) -- (74,-4);
+  \node[lbl, anchor=north] at (74,-5) {isolated point of $E$:};
+  \node[lbl, anchor=north] at (74,-9) {its ball meets $E$};
+  \node[lbl, anchor=north] at (74,-13) {only at itself};
+  \node[lbl, anchor=south] at (74,20) {also part of $E$};
+\end{tikzpicture}
+\end{center}
+\figcap{A neighbourhood is a ball. An interior point has one inside $E$; a
+limit point has every one of its balls meeting $E$ elsewhere; an isolated
+point of $E$ has a ball meeting $E$ only at itself.}
+
+\smallskip
+Three consequences are worth fixing now, because Rudin uses them without
+comment.
+
+\smallskip
+\textbf{Open and closed are not opposites.} They are defined by unrelated
+conditions --- (f) is about points \emph{of} $E$, (d) is about limit points,
+which may lie outside. A set can be both (the whole space $X$, and
+$\emptyset$), or neither (the half-open $[0,1)$ in $\R$). Theorem 2.23 supplies
+the only link there is: $E$ open $\iff$ $E^c$ closed.
+
+\smallskip
+\textbf{A point of $E$ is either isolated or a limit point of $E$}, by (c), and
+never both. A perfect set (h) is one with no isolated points at all, closed.
+
+\smallskip
+\textbf{``Dense'' means the closure is everything.} Once 2.26 defines
+$\overline{E} = E \cup E'$, clause (j) reads $\overline{E} = X$. Theorem
+1.20(b) says exactly that $\Q$ is dense in $\R$.
+\end{unpack}
+
+\ritem{2.19}{Theorem}
+\emph{Every neighborhood is an open set.}
+
+\begin{proof}
+Consider a neighborhood $E = N_r(p)$, and let $q$ be any point of $E$. Then
+there is a positive real number $h$ such that
+\[ d(p,q) = r - h. \]
+For all points $s$ such that $d(q,s) < h$, we have then
+\[ d(p,s) \le d(p,q) + d(q,s) < r - h + h = r, \]
+so that $s \in E$. Thus $q$ is an interior point of $E$.
+\end{proof}
+
+\begin{unpack}[A ball inside a ball]
+The statement sounds like a tautology and is not: ``neighborhood'' is defined
+by a distance inequality, ``open'' by the existence of small balls around every
+point. The theorem says the first implies the second, and the triangle
+inequality is what does it.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[thin] (0,0) circle (18mm);
+  \node[ptfill, minimum size=2.4pt] at (0,0) {};
+  \node[mlbl, anchor=north east] at (-0.5,-0.5) {$p$};
+  \node[ptfill, minimum size=2.4pt] at (11,7) {};
+  \node[mlbl, anchor=south] at (11,8.5) {$q$};
+  \draw[thin] (11,7) circle (5mm);
+  \draw[thin, -{Stealth[length=3pt]}] (0,0) -- (11,7);
+  \node[mlbl, anchor=north west] at (4,4) {$r-h$};
+  \draw[thin, -{Stealth[length=3pt]}] (11,7) -- (14.5,10.6);
+  \node[mlbl, anchor=west] at (16,11) {$h$};
+  \node[lbl, anchor=west] at (24,0) {radius $r$ from $p$};
+  \node[lbl, anchor=west] at (24,-4) {leaves room $h$ at $q$};
+\end{tikzpicture}
+\end{center}
+\figcap{Whatever is left over after travelling $d(p,q)$ is exactly the radius
+that fits at $q$.}
+
+\smallskip
+The number $h = r - d(p,q)$ is positive precisely because $q$ is \emph{inside}
+the neighbourhood. That is the only thing being used, and it is why closed
+balls in $\R^k$ are not open: a point on the boundary sphere has $h = 0$ and
+no room at all.
+\end{unpack}
+
+\ritem{2.20}{Theorem}
+\emph{If $p$ is a limit point of a set $E$, then every neighborhood of $p$
+contains infinitely many points of $E$.}
+
+\begin{proof}
+Suppose there is a neighborhood $N$ of $p$ which contains only a finite number
+of points of $E$. Let $q_1,\dots,q_n$ be those points of $N \cap E$ which are
+distinct from $p$, and put
+\[ r = \min_{1 \le m \le n} d(p,q_m). \]
+[We use this notation to denote the smallest of the numbers
+$d(p,q_1)$, \dots, $d(p,q_n)$.] The minimum of a finite set of positive numbers is
+clearly positive, so that $r > 0$.\kn{Here is where finiteness is spent, and it
+is the entire proof. An infinite set of positive numbers can have infimum $0$
+--- take $\{1/n\}$ --- so no such $r$ could be extracted. The same
+finite-minimum move appears in 2.24(c), and both are the reason those theorems
+say ``finite.''}
+
+The neighborhood $N_r(p)$ contains no point $q$ of $E$ such that $q \ne p$, so
+that $p$ is not a limit point of $E$. This contradiction establishes the
+theorem.
+\end{proof}
+
+\ritem{}{Corollary}
+\emph{A finite point set has no limit points.}
+
+\ritem{2.21}{Examples}
+Let us consider the following subsets of $\R^2$:
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=4pt]
+  \item The set of all complex $z$ such that $|z| < 1$.
+  \item The set of all complex $z$ such that $|z| \le 1$.
+  \item A nonempty finite set.
+  \item The set of all integers.
+  \item The set consisting of the numbers $1/n$ $(n = 1,2,3,\dots)$. Let us
+        note that this set $E$ has a limit point (namely, $z = 0$) but that no
+        point of $E$ is a limit point of $E$; we wish to stress the difference
+        between having a limit point and containing one.
+  \item The set of all complex numbers (that is, $\R^2$).
+  \item The segment $(a,b)$.
+\end{enumerate}
+Let us note that (d), (e), (g) can be regarded also as subsets of $\R^1$.
+
+Some properties of these sets are tabulated below:
+
+\medskip
+\begin{center}
+\begin{tabular}{@{}c@{\hspace{2em}}c@{\hspace{1.6em}}c@{\hspace{1.6em}}c@{\hspace{1.6em}}c@{}}
+\toprule
+ & Closed & Open & Perfect & Bounded\\
+\midrule
+(a) & No  & Yes & No  & Yes\\
+(b) & Yes & No  & Yes & Yes\\
+(c) & Yes & No  & No  & Yes\\
+(d) & Yes & No  & No  & No\\
+(e) & No  & No  & No  & Yes\\
+(f) & Yes & Yes & Yes & No\\
+(g) & No  &     & No  & Yes\\
+\bottomrule
+\end{tabular}
+\end{center}
+\medskip
+
+In (g), we left the second entry blank. The reason is that the segment $(a,b)$
+is not open if we regard it as a subset of $\R^2$, but it is an open subset of
+$\R^1$.\kw{The blank entry is the most instructive cell in the table. ``Open''
+is not a property of a set; it is a property of a set \emph{in an ambient
+space}. As a subset of the line, $(a,b)$ is open; the same points sitting in
+the plane form a segment with empty interior, since no disc fits inside it.
+This is what 2.29--2.30 are about, and forgetting it is the standard error in
+Chapter 4.}
+
+\begin{unpack}[Reading the table]
+Row (f) is worth staring at: $\R^2$ is closed \emph{and} open in itself. So is
+$\emptyset$. That is not a paradox --- it is what the definitions say. In fact
+connectedness (2.45) amounts to exactly this: a space is connected precisely
+when $\emptyset$ and the whole space are its only subsets that are both open
+and closed, as a short argument from Definition 2.45 shows.
+
+Row (e) is the one Rudin flags. $E = \{1/n\}$ \emph{has} the limit point $0$
+but does not \emph{contain} it, so $E$ is not closed. No point of $E$ is a
+limit point of $E$, so every point of $E$ is isolated. A set can therefore be
+entirely isolated points and still have a limit point elsewhere.
+
+Rows (b) and (f) are the perfect ones. Perfect means closed with no isolated
+points, and (c),(d),(e) fail it for having isolated points, while (a) and (g)
+fail it for not being closed.
+\end{unpack}
+
+\ritem{2.22}{Theorem}
+\emph{Let $\{E_\alpha\}$ be a (finite or infinite) collection of sets
+$E_\alpha$. Then}
+\begin{equation}
+  \Bigl(\bigcup_\alpha E_\alpha\Bigr)^c = \bigcap_\alpha (E_\alpha^c). \tag{2.20}
+\end{equation}
+
+\begin{proof}
+Let $A$ and $B$ be the left and right members of (2.20). If $x \in A$, then
+$x \notin \bigcup_\alpha E_\alpha$, hence $x \notin E_\alpha$ for any $\alpha$,
+hence $x \in E_\alpha^c$ for every $\alpha$, so that $x \in \bigcap
+E_\alpha^c$. Thus $A \subset B$.
+
+Conversely, if $x \in B$, then $x \in E_\alpha^c$ for every $\alpha$, hence
+$x \notin E_\alpha$ for any $\alpha$, hence $x \notin \bigcup_\alpha E_\alpha$,
+so that $x \in (\bigcup_\alpha E_\alpha)^c$. Thus $B \subset A$.
+
+It follows that $A = B$.
+\end{proof}
+
+\ritem{2.23}{Theorem}
+\emph{A set $E$ is open if and only if its complement is closed.}
+
+\begin{proof}
+First, suppose $E^c$ is closed. Choose $x \in E$. Then $x \notin E^c$, and $x$
+is not a limit point of $E^c$. Hence there exists a neighborhood $N$ of $x$
+such that $E^c \cap N$ is empty, that is, $N \subset E$. Thus $x$ is an
+interior point of $E$, and $E$ is open.
+
+Next, suppose $E$ is open. Let $x$ be a limit point of $E^c$. Then every
+neighborhood of $x$ contains a point of $E^c$, so that $x$ is not an interior
+point of $E$. Since $E$ is open, this means that $x \in E^c$. It follows that
+$E^c$ is closed.
+\end{proof}
+
+\ritem{}{Corollary}
+\emph{A set $F$ is closed if and only if its complement is open.}
+
+\begin{deeper}[2.22 and 2.23 are the engine of the section]
+Every remaining proof about closed sets is obtained by complementing a proof
+about open sets. 2.22 (De Morgan) turns unions into intersections; 2.23 turns
+open into closed. Together they let Rudin prove half of 2.24 and get the other
+half free, which is exactly what he does.
+
+The pattern is worth naming because it recurs throughout the book: prove the
+statement for open sets, where the definition is local and easy to verify at a
+point, then complement. Closedness is a statement about limit points, which are
+harder to handle directly --- so one almost never argues with it head on.
+\end{deeper}
+
+\ritem{2.24}{Theorem}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{For any collection $\{G_\alpha\}$ of open sets,
+        $\bigcup_\alpha G_\alpha$ is open.}
+  \item \emph{For any collection $\{F_\alpha\}$ of closed sets,
+        $\bigcap_\alpha F_\alpha$ is closed.}
+  \item \emph{For any finite collection $G_1,\dots,G_n$ of open sets,
+        $\bigcap_{i=1}^n G_i$ is open.}
+  \item \emph{For any finite collection $F_1,\dots,F_n$ of closed sets,
+        $\bigcup_{i=1}^n F_i$ is closed.}
+\end{enumerate}
+
+\begin{proof}
+Put $G = \bigcup_\alpha G_\alpha$. If $x \in G$ then $x \in G_\alpha$ for some
+$\alpha$. Since $x$ is an interior point of $G_\alpha$, $x$ is also an interior
+point of $G$, and $G$ is open. This proves (a).
+
+By Theorem 2.22,
+\begin{equation}
+  \Bigl(\bigcap_\alpha F_\alpha\Bigr)^c = \bigcup_\alpha (F_\alpha^c),
+  \tag{2.21}
+\end{equation}
+and $F_\alpha^c$ is open, by Theorem 2.23. Hence (a) implies that (2.21) is
+open, so that $\bigcap_\alpha F_\alpha$ is closed.
+
+Next, put $H = \bigcap_{i=1}^n G_i$. For any $x \in H$, there exist
+neighborhoods $N_i$ of $x$, with radii $r_i$, such that $N_i \subset G_i$
+$(i = 1,\dots,n)$. Put
+\[ r = \min\{r_1,\dots,r_n\} \]
+and let $N$ be the neighborhood of $x$ of radius $r$. Then $N \subset G_i$ for
+$i = 1,\dots,n$, so that $N \subset H$, and $H$ is open.\kn{The finite minimum
+again, exactly as in 2.20. With infinitely many $G_i$ the radii could shrink to
+zero and leave no room, which is precisely what happens in Example 2.25.}
+
+By taking complements, (d) follows from (c):
+\[ \Bigl(\bigcup_{i=1}^n F_i\Bigr)^c = \bigcap_{i=1}^n (F_i^c). \qedhere \]
+\end{proof}
+
+\ritem{2.25}{Example}
+In parts (c) and (d) of the preceding theorem, the finiteness of the
+collections is essential. For let $G_n$ be the segment $(-1/n,\,1/n)$
+$(n = 1,2,3,\dots)$. Then $G_n$ is an open subset of $\R^1$. Put
+$G = \bigcap_{n=1}^\infty G_n$. Then $G$ consists of a single point (namely,
+$x = 0$) and is therefore not an open subset of $\R^1$.
+
+Thus the intersection of an infinite collection of open sets need not be open.
+Similarly, the union of an infinite collection of closed sets need not be
+closed.
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \foreach \n/\w in {1/40, 2/20, 3/13.3, 4/10}{
+    \pgfmathsetmacro\yy{-(\n-1)*7}
+    \draw[axis] (-46,\yy) -- (46,\yy);
+    \draw[seg] (-\w,\yy) -- (\w,\yy);
+    \node[ptopen] at (-\w,\yy) {}; \node[ptopen] at (\w,\yy) {};
+    \node[lbl, anchor=west] at (50,\yy) {$G_{\n}$};}
+  \draw[axis] (-46,-33) -- (46,-33);
+  \node[ptfill, minimum size=3pt] at (0,-33) {};
+  \node[lbl, anchor=west] at (50,-33) {$\bigcap G_n=\{0\}$};
+  \draw[guide] (0,3) -- (0,-30);
+\end{tikzpicture}
+\end{center}
+\figcap{Each $G_n$ is open, yet the radii shrink to nothing and the
+intersection is a single point --- not open.}
+
+\ritem{2.26}{Definition}
+If $X$ is a metric space, if $E \subset X$, and if $E'$ denotes the set of all
+limit points of $E$ in $X$, then the \emph{closure} of $E$ is the set
+$\overline{E} = E \cup E'$.
+
+\ritem{2.27}{Theorem}
+\emph{If $X$ is a metric space and $E \subset X$, then}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{$\overline{E}$ is closed,}
+  \item \emph{$E = \overline{E}$ if and only if $E$ is closed,}
+  \item \emph{$\overline{E} \subset F$ for every closed set $F \subset X$ such
+        that $E \subset F$.}
+\end{enumerate}
+\emph{By (a) and (c), $\overline{E}$ is the smallest closed subset of $X$ that
+contains $E$.}\kn{That last sentence is the content; (a) and (b) are warm-up.
+``Smallest closed set containing $E$'' is the characterisation you should carry
+--- it is how closure is \emph{defined} in most later treatments, with
+$\overline E = E \cup E'$ demoted to a theorem.}
+
+\begin{proof}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=4pt, topsep=3pt]
+  \item If $p \in X$ and $p \notin \overline{E}$ then $p$ is neither a point of
+        $E$ nor a limit point of $E$. Hence $p$ has a neighborhood which does
+        not intersect $E$. The complement of $\overline{E}$ is therefore open.
+        Hence $\overline{E}$ is closed.
+  \item If $E = \overline{E}$, (a) implies that $E$ is closed. If $E$ is
+        closed, then $E' \subset E$ [by Definitions 2.18(d) and 2.26], hence
+        $E = \overline{E}$.
+  \item If $F$ is closed and $F \supset E$, then $F \supset F'$, hence
+        $F \supset E'$. Thus $F \supset \overline{E}$.
+\end{enumerate}
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % E = {1/n}
+  \draw[axis] (-2,10) -- (72,10);
+  \foreach \n in {1,...,9}{\node[ptfill, minimum size=2pt] at ({62/\n},10) {};}
+  \node[ptgap] at (0,10) {};
+  \draw[guide] (0,12.5) -- (0,17);
+  \node[lbl, anchor=south west] at (-2,17) {closure adds the limit point $0$};
+  \node[mlbl, anchor=north] at (62,8) {$1$};
+  \node[lbl, anchor=east] at (-6,10) {$E=\{1/n\}$};
+  % E = (0,1)
+  \draw[axis] (-2,-8) -- (72,-8);
+  \draw[seg] (12,-8) -- (57,-8);
+  \node[ptgap] at (12,-8) {};
+  \node[ptgap] at (57,-8) {};
+  \draw[guide] (12,-10.5) -- (12,-15);
+  \draw[guide] (57,-10.5) -- (57,-15);
+  \node[lbl, anchor=north] at (34,-15.5) {closure adds both endpoints};
+  \node[lbl, anchor=east] at (-6,-8) {$E=(0,1)$};
+\end{tikzpicture}
+\end{center}
+\figcap{Closure fills in exactly the limit points (dashed circles); nothing
+else changes. Compare 2.28: for a bounded set of reals, $\sup E$ is always
+among the points filled in, if it was missing.}
+
+\ritem{2.28}{Theorem}
+\emph{Let $E$ be a nonempty set of real numbers which is bounded above. Let
+$y = \sup E$. Then $y \in \overline{E}$. Hence $y \in E$ if $E$ is closed.}
+
+Compare this with the examples in Sec.\ 1.9.
+
+\begin{proof}
+If $y \in E$ then $y \in \overline{E}$. Assume $y \notin E$. For every $h > 0$
+there exists then a point $x \in E$ such that $y - h < x < y$, for otherwise
+$y - h$ would be an upper bound of $E$. Thus $y$ is a limit point of $E$. Hence
+$y \in \overline{E}$.
+\end{proof}
+
+\begin{unpack}[Chapter 1 meets Chapter 2]
+This is the first theorem to connect the order structure of $\R$ with the
+topology, and the proof is two lines because the work was done in Chapter 1.
+``For every $h>0$ there is $x \in E$ with $y - h < x$'' is precisely clause
+(ii) of Definition 1.8, in the working form given there --- and clause (ii)
+says exactly that $y$ is crowded from below by $E$, which is what a limit point
+is.
+
+So $\sup E$ is either a member of $E$ or a limit point of it, never anything
+else. The examples at 1.9 now read topologically: $\sup E_1 = 0 \notin E_1$
+makes $0$ a limit point, while $\sup E_2 = 0 \in E_2$. Theorem 2.28 is what
+lets Chapter 4 conclude that a continuous function on a compact set attains its
+supremum (4.16).
+\end{unpack}
+
+\ritem{2.29}{Remark}
+Suppose $E \subset Y \subset X$, where $X$ is a metric space. To say that $E$
+is an open subset of $X$ means that to each point $p \in E$ there is associated
+a positive number $r$ such that the conditions $d(p,q) < r$, $q \in X$ imply
+that $q \in E$. But we have already observed (Example 2.16) that $Y$ is also a
+metric space, so that our definitions may equally well be made within $Y$. To
+be quite explicit, let us say that $E$ is \emph{open relative to $Y$} if to
+each $p \in E$ there is associated an $r > 0$ such that $q \in E$ whenever
+$d(p,q) < r$ and $q \in Y$. Example 2.21(g) showed that a set may be open
+relative to $Y$ without being an open subset of $X$. However, there is a simple
+relation between these concepts, which we now state.
+
+\ritem{2.30}{Theorem}
+\emph{Suppose $Y \subset X$. A subset $E$ of $Y$ is open relative to $Y$ if and
+only if $E = Y \cap G$ for some open subset $G$ of $X$.}
+
+\begin{proof}
+Suppose $E$ is open relative to $Y$. To each $p \in E$ there is a positive
+number $r_p$ such that the conditions $d(p,q) < r_p$, $q \in Y$ imply that
+$q \in E$. Let $V_p$ be the set of all $q \in X$ such that $d(p,q) < r_p$, and
+define
+\[ G = \bigcup_{p \in E} V_p. \]
+Then $G$ is an open subset of $X$, by Theorems 2.19 and 2.24.
+
+Since $p \in V_p$ for all $p \in E$, it is clear that $E \subset G \cap Y$.
+
+By our choice of $V_p$, we have $V_p \cap Y \subset E$ for every $p \in E$, so
+that $G \cap Y \subset E$. Thus $E = G \cap Y$, and one half of the theorem is
+proved.
+
+Conversely, if $G$ is open in $X$ and $E = G \cap Y$, every $p \in E$ has a
+neighborhood $V_p \subset G$. Then $V_p \cap Y \subset E$, so that $E$ is open
+relative to $Y$.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % ambient X
+  \draw[thin] (0,0) rectangle (56,30);
+  \node[lbl, anchor=north west] at (1,29.5) {$X=\R^2$};
+  % Y = a line inside X
+  \draw[seg] (4,12) -- (52,12);
+  \node[lbl, anchor=west] at (58,12) {$Y=\R^1$};
+  % G an open disc in X
+  \draw[guide] (28,15) circle (11mm);
+  \node[lbl, anchor=south] at (28,27) {$G$ open in $X$};
+  % E = G cap Y
+  \draw[draw=RuInk, line width=2pt] (18.5,12) -- (37.5,12);
+  \node[lbl, anchor=north] at (28,9) {$E=G\cap Y$: open in $Y$, not in $X$};
+\end{tikzpicture}
+\end{center}
+\figcap{The same points form an open set inside the line and a non-open set
+inside the plane. ``Open'' always means \emph{open in} something.}

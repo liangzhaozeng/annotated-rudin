@@ -1,0 +1,522 @@
+% ============================================================
+%  Chapter 3 -- Series, Nonnegative Terms, e: 3.21-3.32
+% ============================================================
+\rsection{Series}
+
+\begin{signpost}[A series is a sequence in disguise]
+Nothing new is defined in this section except notation: a series \emph{is} its
+sequence of partial sums, and Rudin says so twice --- in 3.21 (``$s$ is the
+limit of a sequence of sums, and is not obtained simply by addition'') and in
+the remark that every theorem about sequences can be restated for series via
+$a_n = s_n - s_{n-1}$. The three theorems here are the three big sequence facts
+passed through that dictionary: 3.22 is the Cauchy criterion 3.11, 3.24 is
+monotone convergence 3.14, and 3.23 is the trivial-but-vital corollary that
+terms of a convergent series must die out.
+
+\smallskip
+The section ends with the comparison test, 3.25 --- the master test. Every
+test that follows (root, ratio, condensation applications) works by comparing
+against a series already understood, almost always the geometric series 3.26.
+\end{signpost}
+
+\noindent
+In the remainder of this chapter, all sequences and series under consideration
+will be complex-valued, unless the contrary is explicitly stated. Extensions of
+some of the theorems which follow, to series with terms in $\R^k$, are
+mentioned in Exercise 3.15.
+
+\ritem{3.21}{Definition}
+Given a sequence $(a_n)$, we use the notation
+\[ \sum_{n=p}^{q} a_n \qquad (p \le q) \]
+to denote the sum $a_p + a_{p+1} + \cdots + a_q$. With $(a_n)$, we associate a
+sequence $(s_n)$, where
+\[ s_n = \sum_{k=1}^{n} a_k. \]
+For $(s_n)$ we also use the symbolic expression
+\[ a_1 + a_2 + a_3 + \cdots \]
+or, more concisely,
+\begin{equation}
+  \sum_{n=1}^{\infty} a_n. \tag{3.4}
+\end{equation}
+The symbol in (3.4) we call an \emph{infinite series}, or just a \emph{series}.
+The numbers $s_n$ are called the \emph{partial sums} of the series. If $(s_n)$
+converges to $s$, we say that the series \emph{converges}, and write
+\[ \sum_{n=1}^{\infty} a_n = s. \]
+The number $s$ is called the \emph{sum} of the series; but it should be clearly
+understood that $s$ is the limit of a sequence of sums, and is not obtained
+simply by addition.\kw{This sentence is the guard rail for the whole second
+half of the chapter. Addition of finitely many numbers is commutative and
+associative by the field axioms; a ``sum'' that is really a \emph{limit}
+inherits neither property automatically. Theorem 3.54 will show rearrangement
+genuinely failing, and 3.55 will show what hypothesis buys it back.}
+
+If $(s_n)$ diverges, the series is said to \emph{diverge}.
+
+Sometimes, for convenience of notation, we shall consider series of the form
+\begin{equation}
+  \sum_{n=0}^{\infty} a_n. \tag{3.5}
+\end{equation}
+And frequently, when there is no possible ambiguity, or when the distinction is
+immaterial, we shall simply write $\Sigma a_n$ in place of (3.4) or (3.5).
+
+It is clear that every theorem about sequences can be stated in terms of series
+(putting $a_1 = s_1$ and $a_n = s_n - s_{n-1}$ for $n > 1$), and vice versa.
+But it is nevertheless useful to consider both concepts.
+
+The Cauchy criterion (Theorem 3.11) can be restated in the following form:
+
+\ritem{3.22}{Theorem}
+\emph{$\Sigma a_n$ converges if and only if for every $\varepsilon > 0$ there
+is an integer $N$ such that}
+\begin{equation}
+  \left|\sum_{k=n}^{m} a_k\right| \le \varepsilon \tag{3.6}
+\end{equation}
+\emph{if $m \ge n \ge N$.}
+
+In particular, by taking $m = n$, (3.6) becomes
+\[ |a_n| \le \varepsilon \qquad (n \ge N). \]
+In other words:
+
+\ritem{3.23}{Theorem}
+\emph{If $\Sigma a_n$ converges, then $\lim_{n\to\infty} a_n = 0$.}
+
+The condition $a_n \to 0$ is not, however, sufficient to ensure convergence of
+$\Sigma a_n$. For instance, the series
+\[ \sum_{n=1}^{\infty} \frac{1}{n} \]
+diverges; for the proof, we refer to Theorem 3.28.\kw{Necessary, not
+sufficient --- the single most-cited warning in elementary analysis. The
+harmonic series is the canonical witness: terms shrink to $0$, partial sums
+climb past every bound. Rudin flags it before anyone can form the converse
+habit; 3.22 with $m > n$ is what genuine convergence requires, and a
+\emph{block} of small terms can still add up.}
+
+Theorem 3.14, concerning monotonic sequences, also has an immediate
+counterpart for series.
+
+\ritem{3.24}{Theorem}
+\emph{A series of nonnegative\footnote{The expression ``nonnegative'' always
+refers to real numbers.} terms converges if and only if its partial sums form a
+bounded sequence.}\kn{Nonnegative terms make the partial sums monotonically
+increasing, and 3.14 does the rest. This innocent-looking equivalence is the
+engine of the whole nonnegative theory: comparison (3.25), condensation
+(3.27), and the root test all reduce convergence to boundedness of partial
+sums, which is checked by comparing.}
+
+We now turn to a convergence test of a different nature, the so-called
+``comparison test.''
+
+\ritem{3.25}{Theorem}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item \emph{If $|a_n| \le c_n$ for $n \ge N_0$, where $N_0$ is some fixed
+        integer, and if $\Sigma c_n$ converges, then $\Sigma a_n$ converges.}
+  \item \emph{If $a_n \ge d_n \ge 0$ for $n \ge N_0$ and if $\Sigma d_n$
+        diverges, then $\Sigma a_n$ diverges.}
+\end{enumerate}
+\emph{Note that (b) applies only to series of nonnegative terms $a_n$.}
+
+\begin{proof}
+Given $\varepsilon > 0$, there exists $N \ge N_0$ such that $m \ge n \ge N$
+implies
+\[ \sum_{k=n}^{m} c_k \le \varepsilon, \]
+by the Cauchy criterion. Hence
+\[ \left|\sum_{k=n}^{m} a_k\right| \le \sum_{k=n}^{m} |a_k|
+   \le \sum_{k=n}^{m} c_k \le \varepsilon, \]
+and (a) follows.
+
+Next, (b) follows from (a), for if $\Sigma a_n$ converges, so must $\Sigma d_n$
+[note that (b) also follows from Theorem 3.24].
+\end{proof}
+
+\begin{unpack}[What comparison actually proves, and the asymmetry]
+Look at the chain of inequalities: it bounds $|\sum a_k|$ through
+$\sum|a_k|$. So (a) silently proves more than it claims --- under its
+hypotheses $\Sigma|a_n|$ converges too, i.e.\ the convergence is
+\emph{absolute} (3.45's terminology). This is why Rudin will say at 3.46 that
+comparison, root and ratio ``cannot give any information about conditionally
+convergent series'': all three run through this chain.
+
+The asymmetry between (a) and (b) is not decoration. Domination transfers
+convergence \emph{downward} and divergence \emph{upward}, never the reverse;
+and (b) needs $a_n \ge 0$ because a wildly oscillating series can dominate a
+divergent positive one and still converge --- cancellations rescue it. Keep
+the mantra: below a convergent series, convergent; above a divergent
+nonnegative series, divergent.
+\end{unpack}
+
+The comparison test is a very useful one; to use it efficiently, we have to
+become familiar with a number of series of nonnegative terms whose convergence
+or divergence is known.
+
+\rsection{Series of Nonnegative Terms}
+
+\noindent
+The simplest of all is perhaps the geometric series.
+
+\ritem{3.26}{Theorem}
+\emph{If $0 \le x < 1$, then}
+\[ \sum_{n=0}^{\infty} x^n = \frac{1}{1-x}. \]
+\emph{If $x \ge 1$, the series diverges.}
+
+\begin{proof}
+If $x \ne 1$,
+\[ s_n = \sum_{k=0}^{n} x^k = \frac{1-x^{n+1}}{1-x}. \]
+The result follows if we let $n \to \infty$. For $x = 1$, we get
+\[ 1 + 1 + 1 + \cdots, \]
+which evidently diverges.\kn{One of only two series in the chapter whose sum
+is \emph{computed} rather than merely shown to exist (the other is $e$). The
+closed form for $s_n$ --- multiply by $x$, subtract, telescope --- is the
+entire proof, and the limit uses 3.20(e). Every later test converges things by
+comparing them to this one series; it is the yardstick.}
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (-2,0) -- (95,0);
+  \foreach \x in {0,36,57.6,70.56,78.34,83}{\draw[thin] (\x,-1.6) -- (\x,1.6);}
+  \node[ptopen] at (90,0) {};
+  \node[mlbl, anchor=north] at (18,-2.2)  {$1$};
+  \node[mlbl, anchor=north] at (46.8,-2.2){$x$};
+  \node[mlbl, anchor=north] at (64.1,-2.2){$x^2$};
+  \node[mlbl, anchor=north] at (74.5,-2.2){$x^3$};
+  \node[mlbl, anchor=north] at (85.8,-2.2){$\cdots$};
+  \draw[thin, {Stealth[length=2.5pt]}-{Stealth[length=2.5pt]}]
+    (0,6.5) -- (89.4,6.5);
+  \node[mlbl, anchor=south] at (44.7,7.5) {$S$};
+  \draw[guide, {Stealth[length=2.5pt]}-{Stealth[length=2.5pt]}]
+    (36.4,-7) -- (89.4,-7);
+  \node[mlbl, anchor=north] at (62.9,-8) {$xS$ --- the whole, scaled by $x$};
+\end{tikzpicture}
+\end{center}
+\figcap{The segments $1, x, x^2, \dots$ laid end to end (drawn for $x = 0.6$).
+The tail beyond the first segment is a copy of the entire picture shrunk by
+the factor $x$, so $S = 1 + xS$, i.e.\ $S = 1/(1-x)$. Rudin's closed form for
+$s_n$ is this picture stopped after $n$ steps --- it is the identity of 1.21,
+$b^{n+1}-a^{n+1} = (b-a)(b^n + \cdots + a^n)$, with $b = 1$, $a = x$.}
+
+In many cases which occur in applications, the terms of the series decrease
+monotonically. The following theorem of Cauchy is therefore of particular
+interest. The striking feature of the theorem is that a rather ``thin''
+subsequence of $(a_n)$ determines the convergence or divergence of
+$\Sigma a_n$.
+
+\ritem{3.27}{Theorem}
+\emph{Suppose $a_1 \ge a_2 \ge a_3 \ge \cdots \ge 0$. Then the series
+$\sum_{n=1}^{\infty} a_n$ converges if and only if the series}
+\begin{equation}
+  \sum_{k=0}^{\infty} 2^ka_{2^k} = a_1 + 2a_2 + 4a_4 + 8a_8 + \cdots
+  \tag{3.7}
+\end{equation}
+\emph{converges.}
+
+\begin{proof}
+By Theorem 3.24, it suffices to consider the boundedness of the partial sums.
+Let
+\begin{align*}
+  s_n &= a_1 + a_2 + \cdots + a_n,\\
+  t_k &= a_1 + 2a_2 + \cdots + 2^ka_{2^k}.
+\end{align*}
+For $n < 2^k$,
+\begin{align*}
+  s_n &\le a_1 + (a_2+a_3) + \cdots + (a_{2^k}+\cdots+a_{2^{k+1}-1})\\
+      &\le a_1 + 2a_2 + \cdots + 2^ka_{2^k}\\
+      &= t_k,
+\end{align*}
+so that
+\begin{equation}
+  s_n \le t_k. \tag{3.8}
+\end{equation}
+On the other hand, if $n > 2^k$,
+\begin{align*}
+  s_n &\ge a_1 + a_2 + (a_3+a_4) + \cdots +
+        (a_{2^{k-1}+1}+\cdots+a_{2^k})\\
+      &\ge \tfrac12a_1 + a_2 + 2a_4 + \cdots + 2^{k-1}a_{2^k}\\
+      &= \tfrac12t_k,
+\end{align*}
+so that
+\begin{equation}
+  2s_n \ge t_k. \tag{3.9}
+\end{equation}
+By (3.8) and (3.9), the sequences $(s_n)$ and $(t_k)$ are either both bounded
+or both unbounded. This completes the proof.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % bars for a_2..a_15 of a decreasing series, grouped in dyadic blocks
+  % heights ~ 12/n
+  \foreach \n/\h in {2/6.0, 3/4.0}{
+    \draw[thin, fill=black!14] ({(\n-2)*5.6},0) rectangle ({(\n-1)*5.6-0.7},\h);}
+  \foreach \n/\h in {4/3.0, 5/2.4, 6/2.0, 7/1.71}{
+    \draw[thin, fill=black!26] ({(\n-2)*5.6},0) rectangle ({(\n-1)*5.6-0.7},\h);}
+  \foreach \n/\h in {8/1.5, 9/1.33, 10/1.2, 11/1.09, 12/1.0, 13/0.92, 14/0.86, 15/0.8}{
+    \draw[thin, fill=black!8] ({(\n-2)*5.6},0) rectangle ({(\n-1)*5.6-0.7},\h);}
+  % group braces (drawn as brackets below)
+  \draw[thin] (0,-2) -- (0,-3.5) -- (10.5,-3.5) -- (10.5,-2);
+  \node[lbl, anchor=north] at (4,-4) {$a_2{+}a_3 \le 2a_2$};
+  \draw[thin] (11.2,-2) -- (11.2,-8.5) -- (33,-8.5) -- (33,-2);
+  \node[lbl, anchor=north] at (23,-9) {$a_4{+}\cdots{+}a_7 \le 4a_4$};
+  \draw[thin] (33.6,-2) -- (33.6,-3.5) -- (77.7,-3.5) -- (77.7,-2);
+  \node[lbl, anchor=north] at (55.6,-4) {$a_8{+}\cdots{+}a_{15} \le 8a_8$};
+  \node[lbl, anchor=west] at (80,8) {each block trapped};
+  \node[lbl, anchor=west] at (80,4.5) {between $\tfrac12\,2^ka_{2^k}$};
+  \node[lbl, anchor=west] at (80,1) {and $2^ka_{2^k}$};
+\end{tikzpicture}
+\end{center}
+\figcap{Cauchy condensation: chop the series into blocks of doubling length.
+Monotonicity makes each block at most its first term times its length, and at
+least its last term times half its length --- inequalities (3.8) and (3.9).}
+
+\begin{deeper}[Why the sampling is allowed to be so thin]
+The theorem replaces all of $(a_n)$ by the sample $a_1, a_2, a_4, a_8, \dots$
+--- vanishingly sparse --- and loses nothing. Monotonicity is what pays for
+it: within a dyadic block the terms cannot vary by more than the endpoints, so
+the whole block is measured by one sample to within a factor of $2$. Without
+monotonicity the sampled series says nothing (put all the mass off the sample
+points).
+
+The choice of base $2$ is a convenience; any factor works. And the theorem is
+built for exactly one purpose, visible in 3.28--3.29: it turns
+$\sum 1/n^p$ into a \emph{geometric} series, and $\sum 1/[n(\log n)^p]$ into
+$\sum 1/k^p$ --- each application of condensation strips off one logarithm.
+That is why the borderline series in Rudin's ladder all involve iterated logs.
+\end{deeper}
+
+\ritem{3.28}{Theorem}
+\emph{$\sum \dfrac{1}{n^p}$ converges if $p > 1$ and diverges if $p \le 1$.}
+
+\begin{proof}
+If $p \le 0$, divergence follows from Theorem 3.23. If $p > 0$, Theorem 3.27
+is applicable, and we are led to the series
+\[ \sum_{k=0}^{\infty} 2^k \cdot \frac{1}{2^{kp}} =
+   \sum_{k=0}^{\infty} 2^{(1-p)k}. \]
+Now, $2^{1-p} < 1$ if and only if $1 - p < 0$, and the result follows by
+comparison with the geometric series (take $x = 2^{1-p}$ in Theorem
+3.26).\kn{With $p = 1$ this settles the harmonic series: condensation turns it
+into $\sum_k 2^k\cdot 2^{-k} = 1+1+1+\cdots$. The classical grouped proof ---
+$\tfrac12 + (\tfrac13{+}\tfrac14) + (\tfrac15{+}\cdots{+}\tfrac18) + \cdots
+\ge \tfrac12+\tfrac12+\cdots$ --- is exactly inequality (3.9) written out for
+this one series.}
+\end{proof}
+
+As a further application of Theorem 3.27, we prove:
+
+\ritem{3.29}{Theorem}
+\emph{If $p > 1$,}
+\begin{equation}
+  \sum_{n=2}^{\infty} \frac{1}{n(\log n)^p} \tag{3.10}
+\end{equation}
+\emph{converges; if $p \le 1$, the series diverges.}
+
+\emph{Remark:} ``$\log n$'' denotes the logarithm of $n$ to the base $e$
+(compare Exercise 1.7); the number $e$ will be defined in a moment (see
+Definition 3.30). We let the series start with $n = 2$, since $\log 1 = 0$.
+
+\begin{proof}
+The monotonicity of the logarithmic function (which will be discussed in more
+detail in Chap.\ 8) implies that $(\log n)_{n=1}^\infty$ increases. Hence
+$(1/[n(\log n)^p])_{n=1}^\infty$ decreases, and we can apply Theorem 3.27 to
+(3.10); this leads us to the series
+\begin{equation}
+  \sum_{k=1}^{\infty} 2^k \cdot \frac{1}{2^k(\log 2^k)^p}
+  = \sum_{k=1}^{\infty} \frac{1}{(k\log 2)^p}
+  = \frac{1}{(\log 2)^p}\sum_{k=1}^{\infty} \frac{1}{k^p}, \tag{3.11}
+\end{equation}
+and Theorem 3.29 follows from Theorem 3.28.
+\end{proof}
+
+This procedure may evidently be continued. For instance,
+\begin{equation}
+  \sum_{n=3}^{\infty} \frac{1}{n\log n\,\log(\log n)} \tag{3.12}
+\end{equation}
+diverges, whereas
+\begin{equation}
+  \sum_{n=3}^{\infty} \frac{1}{n\log n\,(\log(\log n))^2} \tag{3.13}
+\end{equation}
+converges.
+
+We may now observe that the terms of the series (3.12) differ very little from
+those of (3.13). Still, one diverges, the other converges. If we continue the
+process which led us from Theorem 3.28 to Theorem 3.29, and then to (3.12) and
+(3.13), we get pairs of convergent and divergent series whose terms differ even
+less than those of (3.12) and (3.13). One might thus be led to the conjecture
+that there is a limiting situation of some sort, a ``boundary'' with all
+convergent series on one side, all divergent series on the other side --- at
+least as far as series with monotonic coefficients are concerned. This notion
+of a ``boundary'' is of course quite vague. The point we wish to make is this:
+\emph{No matter how we make this notion precise, the conjecture is false.}
+Exercises 3.11(b) and 3.12(b) may serve as illustrations.\kd{A rare editorial
+aside from Rudin, and worth taking seriously: there is no slowest divergent
+series and no fastest convergent one. Given any convergent $\Sigma a_n$ with
+positive terms, Exercise 3.12(b) produces a convergent series with terms
+\emph{larger} by an unbounded factor; 3.11(b) does the dual for divergence.
+The convergence/divergence frontier is not a curve one can creep up to --- a
+genuinely counterintuitive fact, and the reason ``comparison with the worst
+convergent series'' can never be a test.}
+
+We do not wish to go any deeper into this aspect of convergence theory, and
+refer the reader to Knopp's ``Theory and Application of Infinite Series,''
+Chap.\ IX, particularly Sec.\ 41.
+
+\rsection{The Number $e$}
+
+\begin{signpost}[Why $e$ appears in a chapter on series]
+Partly because it can --- the series $\sum 1/n!$ is the book's first named sum
+--- and partly as a demonstration piece. Theorem 3.31 reconciles the two
+classical definitions of $e$ using exactly the $\limsup$/$\liminf$ machinery
+just built, and Rudin flags it as ``a good illustration of operations with
+limits.'' The error estimate (3.16) then delivers the irrationality of $e$ in
+five lines, the chapter's most elegant single proof. Yu Pin's Tsinghua course
+takes the definition of $e$ (and eventually $e^{i\pi} = -1$) as the organising
+goal of its entire first semester; Rudin gets the number itself this cheaply
+because the series technology came first.
+\end{signpost}
+
+\ritem{3.30}{Definition}
+$\displaystyle e = \sum_{n=0}^{\infty} \frac{1}{n!}$.
+
+Here $n! = 1\cdot2\cdot3\cdots n$ if $n \ge 1$, and $0! = 1$. Since
+\begin{align*}
+  s_n &= 1 + 1 + \frac{1}{1\cdot2} + \frac{1}{1\cdot2\cdot3} + \cdots +
+        \frac{1}{1\cdot2\cdots n}\\
+      &< 1 + 1 + \frac12 + \frac{1}{2^2} + \cdots + \frac{1}{2^{n-1}} < 3,
+\end{align*}
+the series converges, and the definition makes sense.\kn{The comparison is
+with the geometric series, of course: $n! \ge 2^{n-1}$ because each factor
+past the first is at least $2$. Convergence via 3.24 --- increasing partial
+sums, bounded by $3$. So $2 < e < 3$ before anything else is known about it.}
+In fact, the series converges very rapidly and allows us to compute $e$ with
+great accuracy.
+
+It is of interest to note that $e$ can also be defined by means of another
+limit process; the proof provides a good illustration of operations with
+limits:
+
+\ritem{3.31}{Theorem}
+$\displaystyle\lim_{n\to\infty} \left(1+\frac{1}{n}\right)^n = e$.
+
+\begin{proof}
+Let
+\[ s_n = \sum_{k=0}^{n} \frac{1}{k!}, \qquad
+   t_n = \left(1+\frac{1}{n}\right)^n. \]
+By the binomial theorem,
+\begin{align*}
+  t_n = 1 + 1 &+ \frac{1}{2!}\left(1-\frac1n\right)
+        + \frac{1}{3!}\left(1-\frac1n\right)\left(1-\frac2n\right) + \cdots\\
+      &+ \frac{1}{n!}\left(1-\frac1n\right)\left(1-\frac2n\right)\cdots
+        \left(1-\frac{n-1}{n}\right).
+\end{align*}
+Hence $t_n \le s_n$, so that
+\begin{equation}
+  \limsup_{n\to\infty} t_n \le e, \tag{3.14}
+\end{equation}
+by Theorem 3.19. Next, if $n \ge m$,
+\[ t_n \ge 1 + 1 + \frac{1}{2!}\left(1-\frac1n\right) + \cdots +
+   \frac{1}{m!}\left(1-\frac1n\right)\cdots\left(1-\frac{m-1}{n}\right). \]
+Let $n \to \infty$, keeping $m$ fixed. We get
+\[ \liminf_{n\to\infty} t_n \ge 1 + 1 + \frac{1}{2!} + \cdots + \frac{1}{m!}, \]
+so that
+\[ s_m \le \liminf_{n\to\infty} t_n. \]
+Letting $m \to \infty$, we finally get
+\begin{equation}
+  e \le \liminf_{n\to\infty} t_n. \tag{3.15}
+\end{equation}
+The theorem follows from (3.14) and (3.15).
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=30mm] (u0) at (0,24)
+    {binomial theorem:\\$t_n \le s_n$ (all $n$)};
+  \node[rmbox, text width=28mm] (u1) at (60,24)
+    {$\limsup t_n \le e$};
+  \draw[rmarrow] (u0) -- node[lbl, anchor=south, inner sep=2.5pt]
+    {3.19} (u1);
+  \node[rmbox, text width=30mm] (l0) at (0,6)
+    {freeze $m$, drop terms:\\$n\to\infty$ by 3.3};
+  \node[rmbox, text width=28mm] (l1) at (60,6)
+    {$\liminf t_n \ge s_m$,\\then let $m\to\infty$};
+  \draw[rmarrow] (l0) -- (l1);
+  \node[rmbox, text width=26mm] (m) at (30,-13)
+    {$\lim t_n = e$};
+  \draw[rmarrow] (u1) -- node[lbl, anchor=west, inner sep=3pt]
+    {3.18(c)} (m);
+  \draw[rmarrow] (l1) -- (m);
+\end{tikzpicture}
+\end{center}
+\figcap{Two independent one-sided bounds, closed by the squeeze of 3.18(c).
+The upper branch may use all $n$ at once; the lower must freeze $m$ first ---
+the legal order for exchanging two limits.}
+
+\begin{unpack}[The two-parameter squeeze, dissected]
+The proof is a small masterclass in a manoeuvre used constantly from here on.
+The obstacle: $t_n$ is a sum of $n$ terms, each \emph{changing with $n$}, so no
+single limit theorem applies. The solution: cut the dependence in two.
+
+\smallskip
+\textbf{Upper half.} Every bracketed factor is $\le 1$, so term by term
+$t_n \le s_n$; take $\limsup$ (which exists unconditionally --- this is why
+3.16 was built) and use 3.19.
+
+\smallskip
+\textbf{Lower half.} \emph{Freeze} the number of terms at $m$, discard the
+rest --- legitimate since all terms are positive --- and let only $n$ run.
+Now there are finitely many factors, each $\to 1$, so 3.3 applies and gives
+$\liminf t_n \ge s_m$ for each \emph{fixed} $m$. Only then release $m$.
+
+\smallskip
+The order of operations is everything: $n$ first with $m$ frozen, $m$ second.
+Interchanging two limit processes illegally is the classic analysis error, and
+this proof is the book's first demonstration of how to do it legally --- by
+one-sided bounds and a squeeze. Example 3.18(c) closes the trap:
+$\limsup = \liminf = e$ forces $\lim = e$.
+\end{unpack}
+
+The rapidity with which the series $\sum 1/n!$ converges can be estimated as
+follows: If $s_n$ has the same meaning as above, we have
+\begin{align*}
+  e - s_n &= \frac{1}{(n+1)!} + \frac{1}{(n+2)!} + \frac{1}{(n+3)!} + \cdots\\
+    &< \frac{1}{(n+1)!}\left\{1 + \frac{1}{n+1} + \frac{1}{(n+1)^2} + \cdots
+      \right\} = \frac{1}{n!\,n}
+\end{align*}
+so that
+\begin{equation}
+  0 < e - s_n < \frac{1}{n!\,n}. \tag{3.16}
+\end{equation}
+Thus $s_{10}$, for instance, approximates $e$ with an error less than
+$10^{-7}$. The inequality (3.16) is of theoretical interest as well, since it
+enables us to prove the irrationality of $e$ very easily.
+
+\ritem{3.32}{Theorem}
+\emph{$e$ is irrational.}
+
+\begin{proof}
+Suppose $e$ is rational. Then $e = p/q$, where $p$ and $q$ are positive
+integers. By (3.16),
+\begin{equation}
+  0 < q!\,(e-s_q) < \frac{1}{q}. \tag{3.17}
+\end{equation}
+By our assumption, $q!\,e$ is an integer. Since
+\[ q!\,s_q = q!\left(1+1+\frac{1}{2!}+\cdots+\frac{1}{q!}\right) \]
+is an integer, we see that $q!\,(e-s_q)$ is an integer.
+
+Since $q \ge 1$, (3.17) implies the existence of an integer between $0$ and
+$1$. We have thus reached a contradiction.
+\end{proof}
+
+Actually, $e$ is not even an algebraic number. For a simple proof of this, see
+page 25 of Niven's book, or page 176 of Herstein's, cited in the Bibliography.
+
+\begin{deeper}[The shape of the irrationality proof]
+Compare Chapter 1's proof that $\sqrt2 \notin \Q$: there, rationality forced an
+infinite descent; here it forces an integer strictly between $0$ and $1$. Both
+are impossibility-of-an-integer arguments, and the second pattern --- scale the
+error by exactly the denominator's factorial and watch it land in $(0,1)$ ---
+is the template for most irrationality proofs in analysis.
+
+Everything hinges on \emph{how fast} the series converges: (3.16) says the
+tail after $s_q$ is smaller than $1/(q!\,q)$, so multiplying by $q!$ leaves
+something below $1/q$, still positive. A series converging slower --- like
+$\sum 1/n^2$, whose sum $\pi^2/6$ is also irrational --- gives no such
+one-line proof. Fast convergence is arithmetic leverage: Exercise 2.3 showed transcendental
+numbers \emph{exist} without naming one, and here analysis pins down an
+explicit number as irrational.
+\end{deeper}

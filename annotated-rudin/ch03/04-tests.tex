@@ -1,0 +1,498 @@
+% ============================================================
+%  Chapter 3 -- Root and Ratio Tests, Power Series,
+%               Summation by Parts, Absolute Convergence: 3.33-3.46
+% ============================================================
+\rsection{The Root and Ratio Tests}
+
+\begin{signpost}[Two comparisons with the geometric series]
+Neither test is a new idea. Both ask one question --- does $\Sigma a_n$ sit
+below some geometric series $\Sigma\beta^n$ with $\beta < 1$? --- and differ
+only in how they detect it: the root test reads the geometric rate off
+$\sqrt[n]{|a_n|}$ directly, the ratio test off the quotient of consecutive
+terms. This is why $\limsup$ was built: the rates need not converge, and
+3.17(b) is exactly the tool that converts ``$\limsup < 1$'' into ``eventually
+below a fixed $\beta < 1$.''
+
+\smallskip
+The relationship between the two is settled by 3.37: the root test is
+strictly stronger, and Example 3.35 exhibits a series the ratio test cannot
+touch. Use the ratio test for factorials and products, the root test for
+theory --- it is the one the radius of convergence (3.39) is built on.
+\end{signpost}
+
+\ritem{3.33}{Theorem}
+\emph{Given $\Sigma a_n$, put
+$\alpha = \limsup_{n\to\infty} \sqrt[n]{|a_n|}$.}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{If $\alpha < 1$, $\Sigma a_n$ converges;}
+  \item \emph{if $\alpha > 1$, $\Sigma a_n$ diverges;}
+  \item \emph{if $\alpha = 1$, the test gives no information.}
+\end{enumerate}
+
+\begin{proof}
+If $\alpha < 1$, we can choose $\beta$ so that $\alpha < \beta < 1$, and an
+integer $N$ such that
+\[ \sqrt[n]{|a_n|} < \beta \]
+for $n \ge N$ [by Theorem 3.17(b)]. That is, $n \ge N$ implies
+\[ |a_n| < \beta^n. \]
+Since $0 < \beta < 1$, $\Sigma\beta^n$ converges. Convergence of $\Sigma a_n$
+follows now from the comparison test.\kn{Watch 3.17(b) do precisely its
+promised job: $\beta > \alpha = s^*$ caps the whole tail. The room between
+$\alpha$ and $1$ is essential --- the comparison is with $\Sigma\beta^n$ for a
+\emph{fixed} $\beta < 1$, which is why $\alpha = 1$ proves nothing: no room
+remains.}
+
+If $\alpha > 1$, then, again by Theorem 3.17, there is a sequence $(n_k)$ such
+that
+\[ \sqrt[n_k]{|a_{n_k}|} \to \alpha. \]
+Hence $|a_n| > 1$ for infinitely many values of $n$, so that the condition
+$a_n \to 0$, necessary for convergence of $\Sigma a_n$, does not hold (Theorem
+3.23).
+
+To prove (c), we consider the series
+\[ \sum \frac1n, \qquad \sum \frac{1}{n^2}. \]
+For each of these series $\alpha = 1$, but the first diverges and the second
+converges.\kn{Both $\alpha$'s are $1$ by 3.20(c): $\sqrt[n]{1/n} =
+1/\sqrt[n]{n} \to 1$, and likewise for $1/n^2$. The $p$-series live exactly on
+the geometric tests' blind spot --- their terms decay polynomially, slower
+than every geometric rate, which is why 3.27/3.28 needed a different idea.}
+\end{proof}
+
+\ritem{3.34}{Theorem}
+\emph{The series $\Sigma a_n$}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{converges if
+        $\displaystyle\limsup_{n\to\infty}
+        \left|\frac{a_{n+1}}{a_n}\right| < 1$,}
+  \item \emph{diverges if $\left|\dfrac{a_{n+1}}{a_n}\right| \ge 1$ for all
+        $n \ge n_0$, where $n_0$ is some fixed integer.}
+\end{enumerate}
+
+\begin{proof}
+If condition (a) holds, we can find $\beta < 1$, and an integer $N$, such that
+\[ \left|\frac{a_{n+1}}{a_n}\right| < \beta \]
+for $n \ge N$. In particular,
+\begin{align*}
+  |a_{N+1}| &< \beta|a_N|,\\
+  |a_{N+2}| &< \beta|a_{N+1}| < \beta^2|a_N|,\\
+  &\;\;\vdots\\
+  |a_{N+p}| &< \beta^p|a_N|.
+\end{align*}
+That is,
+\[ |a_n| < |a_N|\beta^{-N}\cdot\beta^n \]
+for $n \ge N$, and (a) follows from the comparison test, since $\Sigma\beta^n$
+converges.
+
+If $|a_{n+1}| \ge |a_n|$ for $n \ge n_0$, it is easily seen that the condition
+$a_n \to 0$ does not hold, and (b) follows.
+\end{proof}
+
+\emph{Note:} the knowledge that $\lim a_{n+1}/a_n = 1$ implies nothing about
+the convergence of $\Sigma a_n$. The series $\sum 1/n$ and $\sum 1/n^2$
+demonstrate this.
+
+\begin{pitfall}[The divergence half of the ratio test is not a limsup]
+Read (b) again: it demands $|a_{n+1}/a_n| \ge 1$ \emph{for all} $n \ge n_0$
+--- a pointwise, eventually-everywhere condition. The tempting statement
+``$\limsup |a_{n+1}/a_n| > 1$ implies divergence'' is \textbf{false}, and
+Example 3.35(b) below is the counterexample: a convergent series with ratio
+$\limsup$ equal to $2$. A few large ratios do no harm if they are followed by
+crashes; only a ratio that \emph{never} again dips below $1$ pins the terms
+away from zero.
+
+Symmetrically, the convergence half really is a $\limsup$, and the
+$\liminf$-version ``$\liminf |a_{n+1}/a_n| < 1$ implies convergence'' is false
+too --- 3.35(a) has ratio $\liminf$ $0$ and could easily be built divergent.
+The test is asymmetric because it detects geometric \emph{domination}, and
+domination is one-sided.
+\end{pitfall}
+
+\ritem{3.35}{Examples}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=4pt, topsep=4pt]
+  \item Consider the series
+        \[ \frac12 + \frac13 + \frac{1}{2^2} + \frac{1}{3^2} + \frac{1}{2^3}
+           + \frac{1}{3^3} + \frac{1}{2^4} + \frac{1}{3^4} + \cdots, \]
+        for which
+        \begin{align*}
+          \liminf_{n\to\infty} \frac{a_{n+1}}{a_n}
+            &= \lim_{n\to\infty}\left(\frac23\right)^n = 0,\\
+          \liminf_{n\to\infty} \sqrt[n]{a_n}
+            &= \lim_{n\to\infty}\sqrt[2n]{\frac{1}{3^n}} = \frac{1}{\sqrt3},\\
+          \limsup_{n\to\infty} \sqrt[n]{a_n}
+            &= \lim_{n\to\infty}\sqrt[2n]{\frac{1}{2^n}} = \frac{1}{\sqrt2},\\
+          \limsup_{n\to\infty} \frac{a_{n+1}}{a_n}
+            &= \lim_{n\to\infty}\frac12\left(\frac32\right)^n = +\infty.
+        \end{align*}
+        The root test indicates convergence; the ratio test does not
+        apply.\kn{The series interleaves two geometric series with different
+        rates. The \emph{roots} feel only the rates, and both are safely below
+        $1$; the \emph{ratios} feel the jumps between the two strands, which
+        grow without bound. Interleaving is the standard way to break the
+        ratio test.}
+  \item The same is true for the series
+        \[ \frac12 + 1 + \frac18 + \frac14 + \frac{1}{32} + \frac{1}{16}
+           + \frac{1}{128} + \frac{1}{64} + \cdots, \]
+        where
+        \[ \liminf_{n\to\infty} \frac{a_{n+1}}{a_n} = \frac18, \qquad
+           \limsup_{n\to\infty} \frac{a_{n+1}}{a_n} = 2, \]
+        but
+        \[ \lim_{n\to\infty} \sqrt[n]{a_n} = \frac12. \]
+\end{enumerate}
+
+\ritem{3.36}{Remarks}
+The ratio test is frequently easier to apply than the root test, since it is
+usually easier to compute ratios than $n$th roots. However, the root test has
+wider scope. More precisely: Whenever the ratio test shows convergence, the
+root test does too; whenever the root test is inconclusive, the ratio test is
+too. This is a consequence of Theorem 3.37 and is illustrated by the above
+examples.
+
+Neither of the two tests is subtle with regard to divergence. Both deduce
+divergence from the fact that $a_n$ does not tend to zero as $n \to \infty$.
+
+\ritem{3.37}{Theorem}
+\emph{For any sequence $(c_n)$ of positive numbers,}
+\begin{align*}
+  \liminf_{n\to\infty} \frac{c_{n+1}}{c_n}
+    &\le \liminf_{n\to\infty} \sqrt[n]{c_n},\\
+  \limsup_{n\to\infty} \sqrt[n]{c_n}
+    &\le \limsup_{n\to\infty} \frac{c_{n+1}}{c_n}.
+\end{align*}
+
+\begin{proof}
+We shall prove the second inequality; the proof of the first is quite similar.
+Put
+\[ \alpha = \limsup_{n\to\infty} \frac{c_{n+1}}{c_n}. \]
+If $\alpha = +\infty$, there is nothing to prove. If $\alpha$ is finite, choose
+$\beta > \alpha$. There is an integer $N$ such that
+\[ \frac{c_{n+1}}{c_n} \le \beta \]
+for $n \ge N$. In particular, for any $p > 0$,
+\[ c_{N+k+1} \le \beta c_{N+k} \qquad (k = 0,1,\dots,p-1). \]
+Multiplying these inequalities, we obtain
+\[ c_{N+p} \le \beta^pc_N, \]
+or
+\[ c_n \le c_N\beta^{-N}\cdot\beta^n \qquad (n \ge N). \]
+Hence
+\[ \sqrt[n]{c_n} \le \sqrt[n]{c_N\beta^{-N}}\cdot\beta, \]
+so that
+\begin{equation}
+  \limsup_{n\to\infty} \sqrt[n]{c_n} \le \beta, \tag{3.18}
+\end{equation}
+by Theorem 3.20(b). Since (3.18) is true for every $\beta > \alpha$, we have
+\[ \limsup_{n\to\infty} \sqrt[n]{c_n} \le \alpha. \]\kn{The mechanism: a bound
+on every \emph{ratio} compounds into a geometric bound on the terms
+themselves, and taking $n$th roots flattens the constant $c_N\beta^{-N}$ into
+$1$ by 3.20(b). Roots retain only the exponential rate; ratios carry every
+local fluctuation. That is the entire content of ``root is stronger than
+ratio,'' and it is also why $\lim c_{n+1}/c_n = L$ forces
+$\lim\sqrt[n]{c_n} = L$ --- squeeze both displayed inequalities. Setting
+$c_n = n!/n^n$ gives the useful byproduct $\sqrt[n]{n!}\sim n/e$.}
+\end{proof}
+
+\rsection{Power Series}
+
+\begin{signpost}[Six chapters of consequences begin here]
+Two items only --- a definition and one theorem --- but 3.39 is the
+foundation on which Chapter 8 builds the exponential, the trigonometric
+functions and eventually $e^{i\pi} = -1$. The theorem says the convergence
+domain of $\Sigma c_nz^n$ is always a disc, and computes its radius by the
+root test. That a single formula answers ``for which $z$?'' is the first sign
+of how rigid power series are; the second, uniform convergence inside the
+disc, arrives at 8.1.
+\end{signpost}
+
+\ritem{3.38}{Definition}
+Given a sequence $(c_n)$ of complex numbers, the series
+\begin{equation}
+  \sum_{n=0}^{\infty} c_nz^n \tag{3.19}
+\end{equation}
+is called a \emph{power series}. The numbers $c_n$ are called the
+\emph{coefficients} of the series; $z$ is a complex number.
+
+In general, the series will converge or diverge, depending on the choice of
+$z$. More specifically, with every power series there is associated a circle,
+the \emph{circle of convergence}, such that (3.19) converges if $z$ is in the
+interior of the circle and diverges if $z$ is in the exterior of the circle (to
+cover all cases, we have to consider the plane as the interior of a circle with
+infinite radius, and a point as a circle with radius zero). The behavior on the
+circle of convergence is much more varied and cannot be described so simply.
+
+\ritem{3.39}{Theorem}
+\emph{Given the power series $\Sigma c_nz^n$, put}
+\[ \alpha = \limsup_{n\to\infty} \sqrt[n]{|c_n|}, \qquad R = \frac{1}{\alpha}. \]
+\emph{(If $\alpha = 0$, $R = +\infty$; if $\alpha = +\infty$, $R = 0$.) Then
+$\Sigma c_nz^n$ converges if $|z| < R$ and diverges if $|z| > R$.}
+
+\begin{proof}
+Put $a_n = c_nz^n$ and apply the root test:
+\[ \limsup_{n\to\infty} \sqrt[n]{|a_n|}
+   = |z|\limsup_{n\to\infty} \sqrt[n]{|c_n|} = \frac{|z|}{R}. \]
+\end{proof}
+
+\emph{Note:} $R$ is called the \emph{radius of convergence} of
+$\Sigma c_nz^n$.
+
+\ritem{3.40}{Examples}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=4pt]
+  \item The series $\sum n^nz^n$ has $R = 0$.
+  \item The series $\displaystyle\sum \frac{z^n}{n!}$ has $R = +\infty$. (In
+        this case the ratio test is easier to apply than the root test.)
+  \item The series $\sum z^n$ has $R = 1$. If $|z| = 1$, the series diverges,
+        since $(z^n)$ does not tend to $0$ as $n \to \infty$.
+  \item The series $\displaystyle\sum \frac{z^n}{n}$ has $R = 1$. It diverges
+        if $z = 1$. It converges for all other $z$ with $|z| = 1$. (The last
+        assertion will be proved in Theorem 3.44.)
+  \item The series $\displaystyle\sum \frac{z^n}{n^2}$ has $R = 1$. It
+        converges for all $z$ with $|z| = 1$, by the comparison test, since
+        $|z^n/n^2| = 1/n^2$.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % the disc of convergence
+  \draw[thin] (0,0) circle (17mm);
+  \draw[axis] (-24,0) -- (26,0);
+  \draw[axis] (0,-22) -- (0,24);
+  \node[ptfill, minimum size=2.2pt] at (17,0) {};
+  \node[mlbl, anchor=north west] at (16.5,-1.5) {$R$};
+  \node[lbl] at (-7.5,7.5) {converges};
+  \node[lbl] at (-7.2,4) {absolutely};
+  \node[lbl, anchor=west] at (20,17) {diverges outside};
+  \node[lbl, anchor=west] at (30,6) {on the circle:};
+  \node[lbl, anchor=west] at (30,2.5) {all three behaviours occur ---};
+  \node[lbl, anchor=west] at (30,-1) {3.40(c) nowhere, (d) everywhere};
+  \node[lbl, anchor=west] at (30,-4.5) {but $z{=}1$, (e) everywhere};
+  \draw[thin, -{Stealth[length=3pt]}] (30,5) -- (13,11.5);
+\end{tikzpicture}
+\end{center}
+\figcap{Theorem 3.39: inside the circle everything converges (absolutely ---
+the proof runs through the root test, hence 3.25), outside everything
+diverges, and the circle itself carries no general rule.}
+
+\rsection{Summation by Parts}
+
+\begin{signpost}[The one tool for conditional convergence]
+Rudin will observe at 3.46 that comparison, root and ratio only ever detect
+\emph{absolute} convergence. This section supplies the single technique in the
+book that goes further. The identity 3.41 trades $\Sigma a_nb_n$ for a sum
+involving the partial sums $A_n$ --- profitable exactly when the $A_n$ are
+bounded though $\Sigma a_n$ itself diverges, as with $a_n = (-1)^n$ or
+$a_n = z^n$ on the unit circle. Theorem 3.42 packages the trade; 3.43
+(alternating series) and 3.44 (boundary of the disc) are its two famous
+corollaries.
+\end{signpost}
+
+\ritem{3.41}{Theorem}
+\emph{Given two sequences $(a_n)$ and $(b_n)$, put}
+\[ A_n = \sum_{k=0}^{n} a_k \]
+\emph{if $n \ge 0$; put $A_{-1} = 0$. Then, if $0 \le p \le q$, we have}
+\begin{equation}
+  \sum_{n=p}^{q} a_nb_n = \sum_{n=p}^{q-1} A_n(b_n - b_{n+1})
+  + A_qb_q - A_{p-1}b_p. \tag{3.20}
+\end{equation}
+
+\begin{proof}
+\[ \sum_{n=p}^{q} a_nb_n = \sum_{n=p}^{q} (A_n - A_{n-1})b_n
+   = \sum_{n=p}^{q} A_nb_n - \sum_{n=p-1}^{q-1} A_nb_{n+1}, \]
+and the last expression on the right is clearly equal to the right side of
+(3.20).
+\end{proof}
+
+Formula (3.20), the so-called ``partial summation formula,'' is useful in the
+investigation of series of the form $\Sigma a_nb_n$, particularly when $(b_n)$
+is monotonic. We shall now give applications.
+
+\begin{deeper}[Integration by parts, one chapter early]
+Rename the pieces and (3.20) is an old friend: $A_n$ is the ``antiderivative''
+of $a_n$ (partial sums undo differencing, since $a_n = A_n - A_{n-1}$), and
+$b_n - b_{n+1}$ is the ``derivative'' of $b_n$. The formula then reads
+$\sum a\,b = -\sum A\,\Delta b + \text{boundary terms}$, which is
+$\int u\,dv = uv - \int v\,du$ with sums for integrals. Chapter 6 proves the
+integral version as 6.22, by essentially this computation applied to
+Riemann--Stieltjes sums.
+
+The strategic content is the same in both settings: move the burden from the
+factor you cannot control onto the factor that varies slowly. Here $\Sigma a_n$
+may diverge, but only the \emph{bounded} $A_n$ appear on the right, multiplied
+by the increments of a monotone $b_n$ --- and those increments telescope.
+\end{deeper}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \fill[black!8] (10,0) rectangle (30,30);
+  \fill[black!8] (30,0) rectangle (44,24);
+  \fill[black!8] (44,0) rectangle (62,17);
+  \fill[black!8] (62,0) rectangle (80,12);
+  \fill[pattern=north east lines, pattern color=black!45]
+    (44,0) rectangle (62,17);
+  \fill[pattern=north west lines, pattern color=black!45]
+    (10,24) rectangle (30,30);
+  \draw[thin] (10,0) -- (10,30) -- (30,30) -- (30,24) -- (44,24) -- (44,17)
+    -- (62,17) -- (62,12) -- (80,12) -- (80,0);
+  \draw[thin] (30,0) -- (30,24);
+  \draw[thin] (44,0) -- (44,17);
+  \draw[thin] (62,0) -- (62,12);
+  \draw[guide] (10,24) -- (30,24);
+  \draw[guide] (10,17) -- (44,17);
+  \draw[guide] (10,12) -- (62,12);
+  \draw[axis] (4,0) -- (86,0);
+  \foreach \x in {10,30,44,62,80}{\draw[thin] (\x,-1.6) -- (\x,0);}
+  \node[mlbl, anchor=north] at (10,-2.2) {$A_{p-1}$};
+  \node[mlbl, anchor=north] at (30,-2.2) {$A_p$};
+  \node[mlbl, anchor=north] at (44,-2.2) {$A_{p+1}$};
+  \node[mlbl, anchor=north] at (62,-2.2) {$A_{p+2}$};
+  \node[mlbl, anchor=north] at (80,-2.2) {$A_q$};
+  \node[mlbl, fill=white, inner sep=1pt] at (53,8) {$a_nb_n$};
+  \node[mlbl, anchor=east] at (7.6,27)
+    {$(A_n{-}A_{p-1})(b_n{-}b_{n+1})$};
+  \node[mlbl, anchor=south] at (20,32) {$b_p$};
+  \node[mlbl, anchor=west] at (82,6) {$b_q$};
+\end{tikzpicture}
+\end{center}
+\figcap{Both sides of (3.20) measure this one staircase: columns of height
+$b_n$ stand over the increments $a_n = A_n - A_{n-1}$. Sliced vertically
+(hatched sample), the area is $\sum_p^q a_nb_n$. Sliced horizontally, the slab
+between levels $b_{n+1}$ and $b_n$ has width $A_n - A_{p-1}$, and the base
+slab, height $b_q$, runs the full width $A_q - A_{p-1}$; expanding the widths
+telescopes all the $A_{p-1}$'s into the single boundary term $-A_{p-1}b_p$ of
+(3.20). Drawn for $a_n > 0$ and decreasing positive $b_n$ --- exactly 3.42's
+hypotheses; Rudin's two-line proof is the same bookkeeping with signs allowed.}
+
+\ritem{3.42}{Theorem}
+\emph{Suppose}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{the partial sums $A_n$ of $\Sigma a_n$ form a bounded sequence;}
+  \item \emph{$b_0 \ge b_1 \ge b_2 \ge \cdots$;}
+  \item \emph{$\lim_{n\to\infty} b_n = 0$.}
+\end{enumerate}
+\emph{Then $\Sigma a_nb_n$ converges.}
+
+\begin{proof}
+Choose $M$ such that $|A_n| \le M$ for all $n$. Given $\varepsilon > 0$, there
+is an integer $N$ such that $b_N \le \varepsilon/(2M)$. For
+$N \le p \le q$, we have
+\begin{align*}
+  \left|\sum_{n=p}^{q} a_nb_n\right|
+    &= \left|\sum_{n=p}^{q-1} A_n(b_n-b_{n+1}) + A_qb_q - A_{p-1}b_p\right|\\
+    &\le M\left[\sum_{n=p}^{q-1} (b_n-b_{n+1}) + b_q + b_p\right]\\
+    &= 2Mb_p \le 2Mb_N \le \varepsilon.
+\end{align*}
+Convergence now follows from the Cauchy criterion. We note that the first
+inequality in the above chain depends of course on the fact that
+$b_n - b_{n+1} \ge 0$.\kn{The telescope is the payoff: the increments
+$b_n - b_{n+1}$ are nonnegative, so absolute values cost nothing, and their
+sum collapses to $b_p - b_q$. All the oscillation of $\Sigma a_n$ has been
+absorbed into the single constant $M$; what remains converges because $(b_n)$
+does. Note the shape of the conclusion: convergence via 3.22, no sum ever
+named.}
+\end{proof}
+
+\ritem{3.43}{Theorem}
+\emph{Suppose}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{$|c_1| \ge |c_2| \ge |c_3| \ge \cdots$;}
+  \item \emph{$c_{2m-1} \ge 0$, $c_{2m} \le 0$ \quad $(m = 1,2,3,\dots)$;}
+  \item \emph{$\lim_{n\to\infty} c_n = 0$.}
+\end{enumerate}
+\emph{Then $\Sigma c_n$ converges.}
+
+Series for which (b) holds are called ``alternating series''; the theorem was
+known to Leibnitz.
+
+\begin{proof}
+Apply Theorem 3.42 with $a_n = (-1)^{n+1}$, $b_n = |c_n|$.\kn{The partial sums
+of $(-1)^{n+1}$ are $1,0,1,0,\dots$ --- bounded by $M = 1$ --- and the
+$|c_n|$ decrease to $0$. The most famous instance:
+$1 - \frac12 + \frac13 - \frac14 + \cdots$ converges --- its sum turns out
+to be $\log 2$, a fact that needs Chapter 8 --- while its absolute version,
+the harmonic series, diverges. The gap between those two facts is the subject of the whole
+next section.}
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (-2,0) -- (96,0);
+  \node[lbl, anchor=north] at (94,-2) {$n$};
+  % partial sums of 1 - 1/2 + 1/3 - ... scaled: s=limit ~ .693 -> y=14
+  \draw[guide] (0,14) -- (92,14);
+  \node[mlbl, anchor=west] at (92.5,14) {$s$};
+  % s1=1 -> 20.2, s2=.5 -> 10.1, s3=.833->16.8, s4=.583->11.8, s5=.783->15.8,
+  % s6=.617->12.5, s7=.760->15.3, s8=.635->12.8, s9=.746->15.1, s10=.646->13.0
+  \foreach \i/\x/\y in {1/6/20.2, 2/14/10.1, 3/22/16.8, 4/30/11.8, 5/38/15.8,
+                        6/46/12.5, 7/54/15.3, 8/62/12.8, 9/70/15.1, 10/78/13.0}{
+    \node[ptfill, minimum size=2.2pt] (s\i) at (\x,\y) {};}
+  \foreach \i [evaluate=\i as \j using int(\i+1)] in {1,...,9}{
+    \draw[thin] (s\i) -- (s\j);}
+  \node[mlbl, anchor=south] at (6,21.5) {$s_1$};
+  \node[mlbl, anchor=north] at (14,8.6) {$s_2$};
+  \node[mlbl, anchor=south] at (22,18.2) {$s_3$};
+  \node[lbl, anchor=west] at (30,22) {odd sums fall, even sums rise,};
+  \node[lbl, anchor=west] at (30,18.5) {the limit is pinched between};
+\end{tikzpicture}
+\end{center}
+\figcap{Alternating series: each swing overshoots the limit and is shorter
+than the last. The even partial sums increase, the odd ones decrease, and
+$|s - s_n| \le |c_{n+1}|$ --- the error is at most the first omitted term.}
+
+\ritem{3.44}{Theorem}
+\emph{Suppose the radius of convergence of $\Sigma c_nz^n$ is $1$, and suppose
+$c_0 \ge c_1 \ge c_2 \ge \cdots$, $\lim_{n\to\infty} c_n = 0$. Then
+$\Sigma c_nz^n$ converges at every point on the circle $|z| = 1$, except
+possibly at $z = 1$.}
+
+\begin{proof}
+Put $a_n = z^n$, $b_n = c_n$. The hypotheses of Theorem 3.42 are then
+satisfied, since
+\[ |A_n| = \left|\sum_{m=0}^{n} z^m\right|
+   = \left|\frac{1-z^{n+1}}{1-z}\right| \le \frac{2}{|1-z|}, \]
+if $|z| = 1$ and $z \ne 1$.\kn{The bound degrades as $z$ approaches $1$ ---
+$|1-z|$ in the denominator --- which is why $z = 1$ must be excepted; there
+$A_n = n+1$ is unbounded and 3.42 has nothing to grip. This settles 3.40(d):
+$\sum z^n/n$ converges everywhere on the unit circle except at $z=1$, where it
+is the harmonic series. Alternating series are the case $z = -1$.}
+\end{proof}
+
+\rsection{Absolute Convergence}
+
+\noindent
+The series $\Sigma a_n$ is said to \emph{converge absolutely} if the series
+$\Sigma|a_n|$ converges.
+
+\ritem{3.45}{Theorem}
+\emph{If $\Sigma a_n$ converges absolutely, then $\Sigma a_n$ converges.}
+
+\begin{proof}
+The assertion follows from the inequality
+\[ \left|\sum_{k=n}^{m} a_k\right| \le \sum_{k=n}^{m} |a_k|, \]
+plus the Cauchy criterion.
+\end{proof}
+
+\ritem{3.46}{Remarks}
+For series of positive terms, absolute convergence is the same as convergence.
+
+If $\Sigma a_n$ converges, but $\Sigma|a_n|$ diverges, we say that
+$\Sigma a_n$ converges \emph{conditionally} [[nonabsolutely]].\kn{The doubled
+brackets are the retyped edition's editorial mark, explained in its foreword:
+Rudin's own word was ``nonabsolutely,'' silently modernised to
+``conditionally'' throughout, with the original recorded once --- here --- at
+the point of first use.} For instance, the series
+\[ \sum_{n=1}^{\infty} \frac{(-1)^n}{n} \]
+converges conditionally (Theorem 3.43).
+
+The comparison test, as well as the root and ratio tests, is really a test for
+absolute convergence, and therefore cannot give any information about
+conditionally convergent series. Summation by parts can sometimes be used to
+handle the latter. In particular, power series converge absolutely in the
+interior of the circle of convergence.
+
+We shall see that we may operate with absolutely convergent series very much as
+with finite sums. We may multiply them term by term and we may change the order
+in which the additions are carried out, without affecting the sum of the
+series. But for conditionally convergent series this is no longer true, and
+more care has to be taken when dealing with them.\kd{This paragraph is the
+thesis statement for the rest of the chapter. ``Absolutely convergent'' will
+turn out to mean ``behaves like a finite sum'' --- products work (3.50),
+rearrangements are harmless (3.55) --- while ``conditionally convergent''
+means the sum is an artifact of the \emph{order} of summation, so much so that
+rearrangement can produce any sum whatever (3.54). Absolute convergence is not
+a technicality; it is the boundary between arithmetic and analysis.}

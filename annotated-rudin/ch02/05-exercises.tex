@@ -1,0 +1,320 @@
+% ============================================================
+%  Chapter 2 -- Exercises 2.1-2.30
+% ============================================================
+\rsection{Exercises}
+
+\begin{roadmap}[How to use these]
+Chapter 2's exercises are less optional than Chapter 1's. Several supply
+results the book later assumes, and one chain (2.22--2.26) proves a theorem
+Rudin states in the text without proof.
+
+\medskip
+\raggedright
+\textbf{The chain that matters.} \emph{2.22 $\to$ 2.23 $\to$ 2.24 $\to$ 2.26}
+builds up to the claim made in passing after 2.41: that (b) and (c) are
+equivalent in \emph{any} metric space, not just $\R^k$. Rudin proves
+(b)$\Rightarrow$(c) as 2.37 and leaves the converse here. Do them in order;
+each is a step.
+
+\smallskip
+\textbf{Counterexample exercises.} \emph{2.14, 2.15, 2.16} show what fails
+without compactness, and \emph{2.16} is the one Rudin cites in the text --- a
+closed bounded set that is not compact, living in $\Q$.
+
+\smallskip
+\textbf{Baire.} \emph{2.30} is a special case of Baire's theorem, proved by
+imitating 2.43. It is used throughout functional analysis, and Exercise 3.22
+gives the general version.
+
+\smallskip
+\textbf{Routine.} 2.1, 2.5--2.9, 2.11 are short checks on the definitions. Do
+them quickly to make sure the vocabulary of 2.18 has landed.
+\end{roadmap}
+
+\begin{enumerate}[label=\textbf{2.\arabic*.}, leftmargin=3.0em, itemsep=9pt,
+                  topsep=8pt, labelsep=0.5em]
+
+\item Prove that the empty set is a subset of every set.\kn{Vacuous
+implication: ``every $x \in \emptyset$ satisfies $\dots$'' is true because
+there is no $x$ to check. If you find this uncomfortable, note the alternative
+would make $\emptyset \subset \emptyset$ false.}
+
+\item A complex number $z$ is said to be \emph{algebraic} if there are integers
+$a_0,\dots,a_n$, not all zero, such that
+\[ a_0z^n + a_1z^{n-1} + \cdots + a_{n-1}z + a_n = 0. \]
+Prove that the set of all algebraic numbers is countable. \emph{Hint:} For
+every positive integer $N$ there are only finitely many equations with
+\[ n + |a_0| + |a_1| + \cdots + |a_n| = N. \]
+\kn{The hint is the whole exercise, and it is the anti-diagonal idea of 2.12
+again: sort the objects by a size parameter $N$ so that each level is
+\emph{finite}, then take a countable union. Each equation has at most $n$
+roots, so level $N$ contributes finitely many numbers.}
+
+\item Prove that there exist real numbers which are not algebraic.\kn{One line
+from 2.2 and 2.43: the algebraic numbers are countable, $\R$ is not, so
+something is left over. Note that this proves transcendentals exist without
+exhibiting a single one --- Cantor's original observation, and a century
+younger than the first explicit example.}
+
+\item Is the set of all irrational real numbers countable?\kn{No, and the
+argument is the same as 2.3: if it were, $\R = \Q \cup (\R\setminus\Q)$ would
+be a union of two countable sets, hence countable by 2.12.}
+
+\item Construct a bounded set of real numbers with exactly three limit
+points.\kn{Take three copies of $\{1/n\}$, translated. The point is that limit
+points can be prescribed at will --- there is nothing canonical about them.}
+
+\item Let $E'$ be the set of all limit points of a set $E$. Prove that $E'$ is
+closed. Prove that $E$ and $\overline{E}$ have the same limit points. (Recall
+that $\overline{E} = E \cup E'$.) Do $E$ and $E'$ always have the same limit
+points?\kw{The last question is the interesting one and the answer is no. Take
+$E = \{1/n\}$: then $E' = \{0\}$, which has no limit points at all, while $E$
+has one. Adding limit points can destroy them.}
+
+\item Let $A_1,A_2,A_3,\dots$ be subsets of a metric space.
+  \begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=4pt]
+    \item If $B_n = \bigcup_{i=1}^n A_i$, prove that
+          $\overline{B_n} = \bigcup_{i=1}^n \overline{A_i}$ for
+          $n = 1,2,3,\dots$.
+    \item If $B = \bigcup_{i=1}^\infty A_i$, prove that
+          $\overline{B} \supset \bigcup_{i=1}^\infty \overline{A_i}$.
+  \end{enumerate}
+  Show, by an example, that this inclusion can be proper.\kn{Finite versus
+  infinite once more --- (a) is an equality, (b) only an inclusion. For the
+  proper inclusion enumerate $\Q$ as $A_i = \{q_i\}$: each $\overline{A_i}$ is
+  a point, their union is $\Q$, but $\overline{B} = \R$.}
+
+\item Is every point of every open set $E \subset \R^2$ a limit point of $E$?
+Answer the same question for closed sets in $\R^2$.\kn{Yes for open, no for
+closed. An open set contains a ball about each of its points, and a ball in
+$\R^2$ has infinitely many points; a closed set may be a single point. So open
+sets in $\R^k$ ($k\ge1$) never have isolated points --- which is why the
+perfect sets of 2.44 are interesting: they are closed with no isolated points
+either, without containing any ball.}
+
+\item Let $E^\circ$ denote the set of all interior points of a set $E$. [See
+Definition 2.18(e); $E^\circ$ is called the \emph{interior} of $E$.]
+  \begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=4pt]
+    \item Prove that $E^\circ$ is always open.
+    \item Prove that $E$ is open if and only if $E^\circ = E$.
+    \item If $G \subset E$ and $G$ is open, prove that $G \subset E^\circ$.
+    \item Prove that the complement of $E^\circ$ is the closure of the
+          complement of $E$.
+    \item Do $E$ and $\overline{E}$ always have the same interiors?
+    \item Do $E$ and $E^\circ$ always have the same closures?
+  \end{enumerate}
+  \kn{Parts (a)--(c) are 2.27 with every inclusion reversed: interior is the
+  largest open set inside, as closure is the smallest closed set outside. Part
+  (d), $(E^\circ)^c = \overline{E^c}$, is the duality that makes the two
+  notions one notion. For (e) and (f) the answer is no both times; $E = \Q$
+  settles both.}
+
+\item Let $X$ be an infinite set. For $p \in X$ and $q \in X$, define
+\[ d(p,q) = \begin{cases} 1 & (\text{if } p \ne q)\\ 0 & (\text{if } p = q).
+    \end{cases} \]
+Prove that this is a metric. Which subsets of the resulting metric space are
+open? Which are closed? Which are compact?\kd{The discrete metric, and the
+standard sanity check on every definition in the chapter. \emph{Every} subset
+is open (the ball of radius $\frac12$ about $p$ is $\{p\}$), hence every subset
+is closed, and the compact sets are exactly the finite ones --- cover an
+infinite set by singletons and no finite subfamily suffices. Note the
+consequence: here every set is closed and bounded, yet almost none is compact.
+That is Rudin's remark after 2.41, in its cheapest form.}
+
+\item For $x \in \R^1$ and $y \in \R^1$, define
+\begin{align*}
+  d_1(x,y) &= (x-y)^2, & d_2(x,y) &= \sqrt{|x-y|},\\
+  d_3(x,y) &= |x^2-y^2|, & d_4(x,y) &= |x-2y|,\\
+  d_5(x,y) &= \frac{|x-y|}{1+|x-y|}. &&
+\end{align*}
+Determine, for each of these, whether it is a metric or not.\kn{Check the three
+axioms of 2.15 one at a time and the failures are quick: $d_1$ fails the
+triangle inequality, $d_3$ fails $d(p,q)>0$ for $p \ne q$ (take $x=-y$), $d_4$
+fails symmetry and even $d(p,p)=0$. The two that work, $d_2$ and $d_5$, are
+worth remembering --- $d_5$ is the standard way to make any metric bounded
+without changing which sets are open.}
+
+\item Let $K \subset \R^1$ consist of $0$ and the numbers $1/n$ for
+$n = 1,2,3,\dots$. Prove that $K$ is compact directly from the definition
+(without using the Heine-Borel theorem).\kn{The model example, and worth doing
+by hand. Whatever cover is given, \emph{some} $G_\alpha$ contains $0$; being
+open it contains all $1/n$ beyond some index, leaving only finitely many points
+to cover one at a time. Compare 2.32: this is the compactness proof in
+miniature, and it is why $\{1/n\}$ alone --- without $0$ --- is not compact.}
+
+\item Construct a compact set of real numbers whose limit points form a
+countable set.\kn{Nest the previous example: put a shrunken copy of $K$ near
+each $1/n$. The limit points are then $\{1/n\} \cup \{0\}$.}
+
+\item Give an example of an open cover of the segment $(0,1)$ which has no
+finite subcover.\kn{$\{(1/n,\,1)\}$. See the figure at 2.32 --- this is exactly
+the picture drawn there.}
+
+\item Show that Theorem 2.36 and its Corollary become false (in $\R^1$, for
+example) if the word ``compact'' is replaced by ``closed'' or by
+``bounded.''\kn{For ``closed'' take $F_n = [n,\infty)$; for ``bounded'' take
+$(0,1/n)$. Both are nested with empty intersection, and each fails exactly one
+half of ``closed and bounded.'' Compare Example 2.10(b)(iii).}
+
+\item Regard $\Q$, the set of all rational numbers, as a metric space, with
+$d(p,q) = |p-q|$. Let $E$ be the set of all $p \in \Q$ such that $2 < p^2 < 3$.
+Show that $E$ is closed and bounded in $\Q$, but that $E$ is not compact. Is
+$E$ open in $\Q$?\kd{The exercise Rudin cites in the text after 2.41, and the
+cleanest demonstration that (a) does not imply (b) outside $\R^k$. $E$ is
+closed \emph{in $\Q$} because its would-be boundary points $\pm\sqrt2$,
+$\pm\sqrt3$ are not rational --- the holes in $\Q$ from Chapter 1 are doing the
+work. It is also open in $\Q$, so here is a set that is both, in a space that
+is connected nowhere. Everything that goes wrong traces back to $\Q$ lacking
+the least-upper-bound property.}
+
+\item Let $E$ be the set of all $x \in [0,1]$ whose decimal expansion contains
+only the digits $4$ and $7$. Is $E$ countable? Is $E$ dense in $[0,1]$? Is $E$
+compact? Is $E$ perfect?\kn{A Cantor set in disguise: uncountable (diagonalise,
+2.14), nowhere dense, compact and perfect. Build it as an intersection of
+nested closed sets exactly as in 2.44 and every answer follows from that
+section.}
+
+\item Is there a nonempty perfect set in $\R^1$ which contains no rational
+number?\kn{Yes. Repeat the construction of 2.44 but at stage $n$ remove an open
+interval around the $n$th rational, small enough to leave two closed pieces.
+Enumerating $\Q$ is possible by the Corollary to 2.13 --- this is one of the
+places countability is actually used.}
+
+\item \begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=2pt]
+    \item If $A$ and $B$ are disjoint closed sets in some metric space $X$,
+          prove that they are separated.
+    \item Prove the same for disjoint open sets.
+    \item Fix $p \in X$, $\delta > 0$, define $A$ to be the set of all
+          $q \in X$ for which $d(p,q) < \delta$, define $B$ similarly, with
+          $>$ in place of $<$. Prove that $A$ and $B$ are separated.
+    \item Prove that every connected metric space with at least two points is
+          uncountable. \emph{Hint:} Use (c).
+  \end{enumerate}
+  \kn{(a) and (b) say that for closed or open sets, disjoint already implies
+  separated --- the distinction Remark 2.46 draws only bites for sets that are
+  neither. (d) is the striking one: connectedness forces uncountability. By (c)
+  the space splits at every radius $\delta$ unless some point sits at distance
+  exactly $\delta$ from $p$; so all but countably many $\delta$ would
+  disconnect $X$, and there must be uncountably many distances.}
+
+\item Are closures and interiors of connected sets always connected? (Look at
+subsets of $\R^2$.)\kw{Closures yes, interiors no --- and the asymmetry is easy
+to miss. For the counterexample take two closed discs in the plane touching at
+a single point: the union is connected, but removing the boundary disconnects
+the interior into two open discs.}
+
+\item Let $A$ and $B$ be separated subsets of some $\R^k$, suppose
+$\mathbf{a} \in A$, $\mathbf{b} \in B$, and define
+\[ \mathbf{p}(t) = (1-t)\mathbf{a} + t\mathbf{b} \]
+for $t \in \R^1$. Put $A_0 = \mathbf{p}^{-1}(A)$,
+$B_0 = \mathbf{p}^{-1}(B)$. [Thus $t \in A_0$ if and only if
+$\mathbf{p}(t) \in A$.]
+  \begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=4pt]
+    \item Prove that $A_0$ and $B_0$ are separated subsets of $\R^1$.
+    \item Prove that there exists $t_0 \in (0,1)$ such that
+          $\mathbf{p}(t_0) \notin A \cup B$.
+    \item Prove that every convex subset of $\R^k$ is connected.
+  \end{enumerate}
+  \kn{The strategy: pull a question about $\R^k$ back to a question about the
+  line, where 2.47 settles everything. Part (b) is 2.47 applied to $A_0 \cup
+  B_0$, which cannot be all of $[0,1]$ because that would be connected. This is
+  the first appearance of ``restrict to a segment,'' a device used constantly
+  in Chapter 9.}
+
+\item A metric space is called \emph{separable} if it contains a countable
+dense subset. Show that $\R^k$ is separable. \emph{Hint:} Consider the set of
+points which have only rational coordinates.\kn{Rational points are countable
+by 2.13 and dense by 1.20(b) applied coordinatewise. This is the first link of
+the 2.22--2.26 chain, and it is where Chapter 1's density theorem is finally
+spent.}
+
+\item A collection $\{V_\alpha\}$ of open subsets of $X$ is said to be a
+\emph{base} for $X$ if the following is true: For every $x \in X$ and every
+open set $G \subset X$ such that $x \in G$, we have
+$x \in V_\alpha \subset G$ for some $\alpha$. In other words, every open set in
+$X$ is the union of a subcollection of $\{V_\alpha\}$.
+
+Prove that every separable metric space has a countable base. \emph{Hint:} Take
+all neighborhoods with rational radius and center in some countable dense
+subset of $X$.\kn{A countable base is what lets you replace an arbitrary open
+cover by a countable one --- the crucial reduction in 2.26. Countability of the
+family comes from 2.13 (pairs: centre and radius).}
+
+\item Let $X$ be a metric space in which every infinite subset has a limit
+point. Prove that $X$ is separable. \emph{Hint:} Fix $\delta > 0$, and pick
+$x_1 \in X$. Having chosen $x_1,\dots,x_j \in X$, choose $x_{j+1} \in X$, if
+possible, so that $d(x_i,x_{j+1}) \ge \delta$ for $i = 1,\dots,j$. Show that
+this process must stop after a finite number of steps, and that $X$ can
+therefore be covered by finitely many neighborhoods of radius $\delta$. Take
+$\delta = 1/n$ $(n = 1,2,3,\dots)$, and consider the centers of the
+corresponding neighborhoods.\kn{The process must stop because an infinite
+$\delta$-separated set has no limit point --- any two of its points stay
+$\delta$ apart, so no neighbourhood of radius $\delta/2$ can hold two of them.
+This ``greedy separation'' construction is worth learning; it appears again in
+proofs of total boundedness.}
+
+\item Prove that every compact metric space $K$ has a countable base, and that
+$K$ is therefore separable. \emph{Hint:} For every positive integer $n$, there
+are finitely many neighborhoods of radius $1/n$ whose union covers
+$K$.\kn{Direct from 2.32: the balls of radius $1/n$ about every point form an
+open cover, so finitely many suffice. Taking all $n$ gives a countable family.}
+
+\item Let $X$ be a metric space in which every infinite subset has a limit
+point. Prove that $X$ is compact. \emph{Hint:} By Exercises 2.23 and 2.24, $X$
+has a countable base. It follows that every open cover of $X$ has a countable
+subcover $\{G_n\}$, $n = 1,2,3,\dots$. If no finite subcollection of the
+$\{G_n\}$ covers $X$, then the complement $F_n$ of $G_1 \cup \cdots \cup G_n$
+is nonempty for each $n$, but $\bigcap_{n=1}^\infty F_n$ is empty. If $E$ is a
+set which contains a point from each $F_n$, consider a limit point of $E$, and
+obtain a contradiction.\kd{This completes the claim Rudin makes in the text
+after 2.41: (b) and (c) are equivalent in \emph{any} metric space. Only (a) is
+special to $\R^k$. The exercise is genuinely hard and genuinely important; do
+2.22--2.25 first, since each is used. Tao proves the same equivalence as his
+Theorem 1.5.8, taking the sequential property as the definition and deriving
+the cover property --- the reverse of Rudin's order.}
+
+\item Define a point $p$ in a metric space $X$ to be a \emph{condensation
+point} of a set $E \subset X$ if every neighborhood of $p$ contains uncountably
+many points of $E$.
+
+Suppose $E \subset \R^k$, $E$ is uncountable, and let $P$ be the set of all
+condensation points of $E$. Prove that $P$ is perfect and that at most
+countably many points of $E$ are not in $P$. In other words, show that
+$P^c \cap E$ is at most countable. \emph{Hint:} Let $\{V_n\}$ be a countable
+base of $\R^k$, let $W$ be the union of those $V_n$ for which $E \cap V_n$ is
+at most countable, and show that $P = W^c$.\kn{``Limit point'' upgraded from
+``infinitely many nearby'' (2.20) to ``uncountably many nearby.'' The result
+says an uncountable set is a perfect set plus countable debris --- the
+Cantor--Bendixson theorem, and the reason 2.28 follows.}
+
+\item Prove that every closed set in a separable metric space is the union of a
+(possibly empty) perfect set and a set which is at most countable.
+(\emph{Corollary:} Every countable closed set in $\R^k$ has isolated points.)
+\emph{Hint:} Use Exercise 2.27.
+
+\item Prove that every open set in $\R^1$ is the union of an at most countable
+collection of disjoint segments. \emph{Hint:} Use Exercise 2.22.\kn{The
+structure theorem for open subsets of the line, and it has no analogue in
+$\R^2$. Take the maximal segment inside the set around each point --- these are
+the connected components, by 2.47 --- and each contains a rational, so there
+are at most countably many.}
+
+\item Imitate the proof of Theorem 2.43 to obtain the following result:
+
+If $\R^k = \bigcup_{n=1}^\infty F_n$, where each $F_n$ is a closed subset of
+$\R^k$, then at least one $F_n$ has a nonempty interior.
+
+\emph{Equivalent statement:} If $G_n$ is a dense open subset of $\R^k$ for
+$n = 1,2,3,\dots$, then $\bigcap_{n=1}^\infty G_n$ is not empty (in fact, it is
+dense in $\R^k$).
+
+(This is a special case of Baire's theorem; see Exercise 3.22 for the general
+case.)\kd{Baire's theorem, and the most consequential exercise in the chapter.
+It says $\R^k$ cannot be assembled from countably many ``thin'' closed pieces
+--- a completeness statement, ultimately resting on 2.36 exactly as 2.43 did.
+It is the engine behind the uniform boundedness principle and the open mapping
+theorem in functional analysis, and it gives a one-line proof that $\R$ is
+uncountable: a countable set is a countable union of points, each closed with
+empty interior.}
+
+\end{enumerate}

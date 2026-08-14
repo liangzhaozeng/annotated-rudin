@@ -1,0 +1,504 @@
+% ============================================================
+%  Chapter 3 -- Cauchy Sequences, Upper and Lower Limits,
+%               Some Special Sequences: 3.8-3.20
+% ============================================================
+\rsection{Cauchy Sequences}
+
+\begin{signpost}[Convergence without the limit]
+Definition 3.1 cannot be checked without naming the limit in advance --- a
+severe handicap, since the whole point of many arguments is to \emph{prove} a
+limit exists. This section removes the handicap. A Cauchy sequence is one whose
+terms crowd \emph{each other}; Theorem 3.11 says that in $\R^k$ this internal
+crowding already guarantees a limit. Rudin says exactly this in the note after
+3.11, and it is the single most-used fact in the chapter: every series
+convergence test works by verifying the Cauchy condition, never by producing
+the sum.
+\end{signpost}
+
+\ritem{3.8}{Definition}
+A sequence $(p_n)$ in a metric space $X$ is said to be a \emph{Cauchy sequence}
+if for every $\varepsilon > 0$ there is an integer $N$ such that
+$d(p_n,p_m) < \varepsilon$ if $n \ge N$ and $m \ge N$.\kw{Both indices are
+quantified, independently. The weaker condition
+$d(p_n,p_{n+1}) \to 0$ --- consecutive terms approaching --- does \emph{not}
+suffice: $s_n = \sqrt n$ has $s_{n+1}-s_n \to 0$ yet marches to infinity, and
+the partial sums of the harmonic series (3.28) do the same. Mistaking the
+consecutive condition for the Cauchy condition is the most common error made
+with this definition.}
+
+In our discussion of Cauchy sequences, as well as other situations which will
+arise later, the following geometric concept will be useful.
+
+\ritem{3.9}{Definition}
+Let $E$ be a nonempty subset of a metric space $X$ and let $S$ be the set of
+all real numbers of the form $d(p,q)$ with $p \in E$ and $q \in E$. The sup of
+$S$ is called the \emph{diameter} of $E$.
+
+If $(p_n)$ is a sequence in $X$ and if $E_N$ consists of the points
+$p_N, p_{N+1}, p_{N+2}, \dots$, it is clear from the two preceding definitions
+that $(p_n)$ is a Cauchy sequence if and only if
+\[ \lim_{N\to\infty} \operatorname{diam} E_N = 0. \]
+
+\ritem{3.10}{Theorem}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item \emph{If $\overline{E}$ is the closure of a set $E$ in a metric space
+        $X$, then}
+        \[ \operatorname{diam} \overline{E} = \operatorname{diam} E. \]
+  \item \emph{If $K_n$ is a sequence of compact sets in $X$ such that
+        $K_n \supset K_{n+1}$ $(n = 1,2,3,\dots)$ and if}
+        \[ \lim_{n\to\infty} \operatorname{diam} K_n = 0, \]
+        \emph{then $\bigcap_{n=1}^\infty K_n$ consists of exactly one point.}
+\end{enumerate}
+
+\begin{proof}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=4pt, topsep=3pt]
+  \item Since $E \subset \overline{E}$, it is clear that
+        \[ \operatorname{diam} E \le \operatorname{diam} \overline{E}. \]
+        Fix $\varepsilon > 0$, and choose $p \in \overline{E}$,
+        $q \in \overline{E}$. By the definition of $\overline{E}$, there are
+        points $p'$, $q'$ in $E$ such that $d(p,p') < \varepsilon$,
+        $d(q,q') < \varepsilon$. Hence
+        \begin{align*}
+          d(p,q) &\le d(p,p') + d(p',q') + d(q',q)\\
+                 &< 2\varepsilon + d(p',q') \le
+                   2\varepsilon + \operatorname{diam} E.
+        \end{align*}
+        It follows that
+        \[ \operatorname{diam} \overline{E} \le 2\varepsilon +
+           \operatorname{diam} E, \]
+        and since $\varepsilon$ was arbitrary, (a) is proved.
+  \item Put $K = \bigcap_{n=1}^\infty K_n$. By Theorem 2.36, $K$ is not empty.
+        If $K$ contains more than one point, then $\operatorname{diam} K > 0$.
+        But for each $n$, $K_n \supset K$ so that
+        $\operatorname{diam} K_n \ge \operatorname{diam} K$. This contradicts
+        the assumption that $\operatorname{diam} K_n \to 0$.\kn{Division of
+        labour: 2.36 (compactness) supplies \emph{at least} one point;
+        shrinking diameters supply \emph{at most} one. Nested-interval
+        arguments always have these two halves, and it is worth noticing which
+        hypothesis funds which.}
+\end{enumerate}
+\end{proof}
+
+\ritem{3.11}{Theorem}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item \emph{In any metric space $X$, every convergent sequence is a Cauchy
+        sequence.}
+  \item \emph{If $X$ is a compact metric space and if $(p_n)$ is a Cauchy
+        sequence in $X$, then $(p_n)$ converges to some point of $X$.}
+  \item \emph{In $\R^k$, every Cauchy sequence converges.}
+\end{enumerate}
+
+\emph{Note:} The difference between the definition of convergence and the
+definition of a Cauchy sequence is that the limit is explicitly involved in the
+former, but not in the latter. Thus Theorem 3.11(b) may enable us to decide
+whether or not a given sequence converges without knowledge of the limit to
+which it may converge.
+
+The fact (contained in Theorem 3.11) that a sequence converges in $\R^k$ if and
+only if it is a Cauchy sequence is usually called the \emph{Cauchy criterion}
+for convergence.
+
+\begin{proof}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=4pt, topsep=3pt]
+  \item If $p_n \to p$ and if $\varepsilon > 0$, there is an integer $N$ such
+        that $d(p,p_n) < \varepsilon$ for all $n \ge N$. Hence
+        \[ d(p_n,p_m) \le d(p_n,p) + d(p,p_m) < 2\varepsilon \]
+        as soon as $n \ge N$ and $m \ge N$. Thus $(p_n)$ is a Cauchy
+        sequence.
+  \item Let $(p_n)$ be a Cauchy sequence in the compact space $X$. For
+        $N = 1,2,3,\dots$, let $E_N$ be the set consisting of
+        $p_N, p_{N+1}, p_{N+2}, \dots$. Then
+        \begin{equation}
+          \lim_{N\to\infty} \operatorname{diam} \overline{E}_N = 0, \tag{3.3}
+        \end{equation}
+        by Definition 3.9 and Theorem 3.10(a). Being a closed subset of a
+        compact space $X$, each $\overline{E}_N$ is compact (Theorem 2.35).
+        Also, $E_N \supset E_{N+1}$, so that
+        $\overline{E}_N \supset \overline{E}_{N+1}$.
+
+        Theorem 3.10(b) shows now that there is a unique $p \in X$ which lies
+        in every $\overline{E}_N$.\kn{Why the closures? $E_N$ itself need not
+        be compact --- it is just a scatter of points --- and 3.10(b) needs
+        compact sets. Passing to $\overline{E}_N$ costs nothing precisely
+        because of 3.10(a): closing a set does not increase its diameter. That
+        is the entire reason 3.10(a) was proved.}
+
+        Let $\varepsilon > 0$ be given. By (3.3) there is an integer $N_0$
+        such that $\operatorname{diam} \overline{E}_N < \varepsilon$ if
+        $N \ge N_0$. Since $p \in \overline{E}_N$, it follows that
+        $d(p,q) < \varepsilon$ for every $q \in \overline{E}_N$, hence for
+        every $q \in E_N$. In other words, $d(p,p_n) < \varepsilon$ if
+        $n \ge N_0$. This says precisely that $p_n \to p$.
+  \item Let $(\mathbf{x}_n)$ be a Cauchy sequence in $\R^k$. Define $E_N$ as
+        in (b), with $\mathbf{x}_i$ in place of $p_i$. For some $N$,
+        $\operatorname{diam} E_N < 1$. The range of $(\mathbf{x}_n)$ is the
+        union of $E_N$ and the finite set
+        $\{\mathbf{x}_1,\dots,\mathbf{x}_{N-1}\}$. Hence $(\mathbf{x}_n)$ is
+        bounded. Since every bounded subset of $\R^k$ has compact closure in
+        $\R^k$ (Theorem 2.41), (c) follows from (b).\kn{The structure of (c):
+        Cauchy $\Rightarrow$ bounded (cheaply, from one $E_N$ of finite
+        diameter plus finitely many strays --- the same split as 3.2(c)), then
+        bounded $\Rightarrow$ inside a compact set (2.41), then apply (b). All
+        the completeness is imported through 2.41.}
+\end{enumerate}
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=26mm] (b0) at (0,22)
+    {$(p_n)$ Cauchy};
+  \node[rmbox, text width=30mm] (b1) at (43,22)
+    {$\operatorname{diam} E_N \to 0$\\ \textit{(3.9, tails shrink)}};
+  \node[rmbox, text width=30mm] (b2) at (89,22)
+    {$\overline{E}_N$: compact,\\nested, diam $\to 0$};
+  \draw[rmarrow] (b0) -- (b1);
+  \draw[rmarrow] (b1) -- node[lbl, anchor=south, inner sep=2.5pt]
+    {2.35, 3.10(a)} (b2);
+  \node[rmbox, text width=30mm] (b3) at (89,0)
+    {one $p$ in every $\overline{E}_N$};
+  \draw[rmarrow] (b2) -- node[lbl, anchor=west, inner sep=3pt]
+    {3.10(b)} (b3);
+  \node[rmbox, text width=33mm] (b4) at (40,0)
+    {$d(p,p_n) \le \operatorname{diam}\overline{E}_N$:\\$p_n \to p$};
+  \draw[rmarrow] (b3) -- (b4);
+\end{tikzpicture}
+\end{center}
+\figcap{Theorem 3.11(b) as a flow diagram: the tail-sets carry the whole
+argument, closures make them compact, and the nested-set theorem hands over
+the limit. Part (c) bolts ``Cauchy $\Rightarrow$ bounded $\Rightarrow$ inside
+a compact set (2.41)'' onto the front.}
+
+\ritem{3.12}{Definition}
+A metric space in which every Cauchy sequence converges is said to be
+\emph{complete}.
+
+Thus \emph{Theorem 3.11 says that all compact metric spaces and all euclidean
+spaces are complete}. Theorem 3.11 implies also that \emph{every closed subset
+$E$ of a complete metric space $X$ is complete}. (Every Cauchy sequence in $E$
+is a Cauchy sequence in $X$, hence it converges to some $p \in X$, and actually
+$p \in E$ since $E$ is closed.) An example of a metric space which is not
+complete is the space of all rational numbers, with $d(x,y) = |x-y|$.
+
+\begin{deeper}[The word ``complete,'' finally --- and the full circle]
+This is the definition promised since Chapter 1. The comparison box at 1.10
+said the least-upper-bound property ``is what the word \emph{complete} will
+name in 3.12''; here is the naming, and with it the last of the standard
+completeness statements enters the book. Of the ECNU text's six equivalent
+formulations, five have now appeared: the supremum principle (1.19), nested
+intervals (2.38), Heine--Borel (2.41), Bolzano--Weierstrass (2.42 and 3.6(b)),
+and now the Cauchy criterion (3.11(c)); monotone convergence follows as 3.14.
+
+There is also a genuine full circle here. Tao \emph{constructs} $\R$ as the
+completion of $\Q$ --- real numbers are, in his book, equivalence classes of
+Cauchy sequences of rationals, so ``every Cauchy sequence converges'' is nearly
+true by construction. Rudin travelled the other way: $\R$ was characterised by
+suprema, and Cauchy completeness arrived at the end of a chain through
+compactness. Exercise 3.24 closes the loop from Rudin's side, carrying out the
+Cauchy-sequence completion for an arbitrary metric space.
+
+One caution: completeness and compactness part company here. Compact implies
+complete (3.11(b)), but $\R^k$ is complete without being compact, and
+completeness is \emph{not} intrinsic in the sense of 2.33 --- $(0,1)$ and $\R$
+are homeomorphic, yet one is complete and the other not. Completeness belongs
+to the metric, not the topology.
+\end{deeper}
+
+Theorem 3.2(c) and example (d) after Definition 3.1 show that convergent
+sequences are bounded, but that bounded sequences in $\R^k$ need not converge.
+However, there is one important case in which convergence is equivalent to
+boundedness; this happens for monotonic sequences in $\R^1$.
+
+\ritem{3.13}{Definition}
+A sequence $(s_n)$ of real numbers is said to be
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{monotonically increasing} if $s_n \le s_{n+1}$
+        $(n = 1,2,3,\dots)$;
+  \item \emph{monotonically decreasing} if $s_n \ge s_{n+1}$
+        $(n = 1,2,3,\dots)$.
+\end{enumerate}
+The class of \emph{monotonic} sequences consists of the increasing and the
+decreasing sequences.
+
+\ritem{3.14}{Theorem}
+\emph{Suppose $(s_n)$ is monotonic. Then $(s_n)$ converges if and only if it is
+bounded.}
+
+\begin{proof}
+Suppose $s_n \le s_{n+1}$ (the proof is analogous in the other case). Let $E$
+be the range of $(s_n)$. If $(s_n)$ is bounded, let $s$ be the least upper
+bound of $E$. Then
+\[ s_n \le s \qquad (n = 1,2,3,\dots). \]
+For every $\varepsilon > 0$, there is an integer $N$ such that
+\[ s - \varepsilon < s_N \le s, \]
+for otherwise $s - \varepsilon$ would be an upper bound of $E$.\kn{Clause (ii)
+of Definition 1.8 yet again, in its working form --- step back from the
+supremum and some term sticks out past you. Monotonicity then does what no
+other hypothesis could: one term beyond $s-\varepsilon$ drags the entire tail
+with it.} Since $(s_n)$ increases, $n \ge N$ therefore implies
+\[ s - \varepsilon < s_n \le s, \]
+which shows that $(s_n)$ converges (to $s$).
+
+The converse follows from Theorem 3.2(c).
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (-2,0) -- (96,0);
+  \node[lbl, anchor=north] at (94,-2) {$n$};
+  % sup line
+  \draw[thin] (0,22) -- (92,22);
+  \node[mlbl, anchor=east] at (-2,22) {$s=\sup E$};
+  \draw[guide] (0,17) -- (92,17);
+  \node[mlbl, anchor=west] at (92.5,17) {$s-\varepsilon$};
+  % staircase terms
+  \foreach \x/\y in {5/4, 13/8, 21/11, 29/13.5, 37/15.5, 45/18, 53/19.3,
+                     61/20.2, 69/20.8, 77/21.2, 85/21.5}{
+    \node[ptfill, minimum size=2.2pt] at (\x,\y) {};}
+  \draw[guide] (45,-4.5) -- (45,18);
+  \node[lbl, anchor=north] at (45,-5.5) {$N$: first term past $s-\varepsilon$};
+  \node[lbl, anchor=south] at (26,24.5) {increasing, never past $s$};
+\end{tikzpicture}
+\end{center}
+\figcap{Monotone convergence: the terms climb, the supremum caps them, and once
+one term passes $s-\varepsilon$ the rest are trapped in the gap. The limit
+\emph{is} the supremum --- 3.14 is Definition 1.10 restated for sequences,
+which is why the ECNU text lists the two as equivalent completeness axioms.}
+
+\rsection{Upper and Lower Limits}
+
+\begin{signpost}[The hardest definition in the chapter, and what it is for]
+A divergent sequence can still have structure: $(-1)^n$ oscillates between two
+values rather than wandering. $\limsup$ and $\liminf$ capture the outer
+envelope of that oscillation --- the largest and smallest subsequential
+limits. Their virtue is \emph{unconditional existence}: every real sequence has
+both, in the extended reals, with no hypothesis at all. That is why the root
+test (3.33) and the radius-of-convergence formula (3.39) are stated with
+$\limsup$ --- an ordinary limit might not exist, and the theory would fill up
+with exceptions.
+
+\smallskip
+Keep Theorem 3.17 in view as the working characterisation: $s^* $ is the one
+number that is both \emph{reached} (along some subsequence) and \emph{barely
+exceeded} (only finitely many terms above any $x > s^*$). The definition via
+$\sup E$ is for existence; 3.17 is what proofs actually use.
+\end{signpost}
+
+\ritem{3.15}{Definition}
+Let $(s_n)$ be a sequence of real numbers with the following property: For
+every real $M$ there is an integer $N$ such that $n \ge N$ implies
+$s_n \ge M$. We then write
+\[ s_n \to +\infty. \]
+Similarly, if for every real $M$ there is an integer $N$ such that $n \ge N$
+implies $s_n \le M$, we write
+\[ s_n \to -\infty. \]
+
+It should be noted that we now use the symbol $\to$ (introduced in Definition
+3.1) for certain types of divergent sequences, as well as for convergent
+sequences, but that the definitions of convergence and of limit, given in
+Definition 3.1, are unchanged.\kw{So ``$s_n \to +\infty$'' and ``$(s_n)$
+diverges'' are compatible statements --- the arrow has been extended, the word
+\emph{limit} has not. This is the extended-real bookkeeping of 1.23 paying its
+way: $+\infty$ is a destination for notation, not a number a sequence can
+converge to.}
+
+\ritem{3.16}{Definition}
+Let $(s_n)$ be a sequence of real numbers. Let $E$ be the set of numbers $x$
+(in the extended real number system) such that $s_{n_k} \to x$ for some
+subsequence $(s_{n_k})$. This set $E$ contains all subsequential limits as
+defined in Definition 3.5, plus possibly the numbers $+\infty$, $-\infty$.
+
+We now recall Definitions 1.8 and 1.23 and put
+\[ s^* = \sup E, \qquad s_* = \inf E. \]
+The numbers $s^*$, $s_*$ are called the \emph{upper} and \emph{lower limits} of
+$(s_n)$; we use the notation
+\[ \limsup_{n\to\infty} s_n = s^*, \qquad \liminf_{n\to\infty} s_n = s_*. \]
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (-2,0) -- (98,0);
+  \node[lbl, anchor=north] at (96,-2) {$n$};
+  % envelopes
+  \draw[thin] (0,24) -- (94,24);
+  \node[mlbl, anchor=west] at (94.5,24) {$s^*=1$};
+  \draw[thin] (0,4) -- (94,4);
+  \node[mlbl, anchor=west] at (94.5,4) {$s_*=-1$};
+  % oscillating terms approaching the envelopes: s_n=(-1)^n/(1+1/n) scaled
+  % top subsequence rises to 24, bottom falls to 4  (centre line at 14)
+  \foreach \x/\y in {6/19.0, 18/21.6, 30/22.6, 42/23.0, 54/23.3, 66/23.5, 78/23.6, 90/23.7}{
+    \node[ptfill, minimum size=2.2pt] at (\x,\y) {};}
+  \foreach \x/\y in {12/7.7, 24/5.7, 36/5.0, 48/4.7, 60/4.5, 72/4.4, 84/4.35}{
+    \node[ptopen, minimum size=2.6pt] at (\x,\y) {};}
+  \node[lbl, anchor=south] at (30,27) {even terms $\to 1$};
+  \node[lbl, anchor=north] at (30,-3) {odd terms $\to -1$};
+\end{tikzpicture}
+\end{center}
+\figcap{Example 3.18(b), $s_n = (-1)^n/(1+1/n)$: two subsequences, two
+subsequential limits, $E = \{-1,1\}$. The upper and lower limits are the
+envelope the oscillation settles into --- not the largest and smallest
+\emph{terms}.}
+
+\ritem{3.17}{Theorem}
+\emph{Let $(s_n)$ be a sequence of real numbers. Let $E$ and $s^*$ have the
+same meaning as in Definition 3.16. Then $s^*$ has the following two
+properties:}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{$s^* \in E$.}
+  \item \emph{If $x > s^*$, there is an integer $N$ such that $n \ge N$ implies
+        $s_n < x$.}
+\end{enumerate}
+\emph{Moreover, $s^*$ is the only number with the properties (a) and (b).}
+
+\emph{Of course, an analogous result is true for $s_*$.}
+
+\begin{proof}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=4pt, topsep=3pt]
+  \item If $s^* = +\infty$, then $E$ is not bounded above; hence $(s_n)$ is
+        not bounded above, and there is a subsequence $(s_{n_k})$ such that
+        $s_{n_k} \to +\infty$.
+
+        If $s^*$ is real, then $E$ is bounded above, and at least one
+        subsequential limit exists, so that (a) follows from Theorems 3.7 and
+        2.28.\kn{Here is where the section's stockpile is spent, both pieces
+        at once: 3.7 says $E$ is closed, 2.28 says $\sup E$ lies in
+        $\overline{E} = E$. So the supremum of the subsequential limits is
+        itself a subsequential limit --- attained, not merely approached. This
+        is the fact that makes $\limsup$ usable.}
+
+        If $s^* = -\infty$, then $E$ contains only one element, namely
+        $-\infty$, and there is no subsequential limit. Hence, for any real
+        $M$, $s_n > M$ for at most a finite number of values of $n$, so that
+        $s_n \to -\infty$.
+
+        This establishes (a) in all cases.
+  \item Suppose there is a number $x > s^*$ such that $s_n \ge x$ for
+        infinitely many values of $n$. In that case, there is a number
+        $y \in E$ such that $y \ge x > s^*$, contradicting the definition of
+        $s^*$.\kn{The compressed step: infinitely many terms $\ge x$ form a
+        subsequence in $[x,+\infty]$, and 3.6/3.17(a) applied to it yields a
+        subsequential limit $y \ge x$. ``Infinitely many terms above $x$''
+        always hands you an element of $E$ at or above $x$ --- that
+        conversion, bounded-infinite-to-limit, is Bolzano--Weierstrass 3.6(b)
+        on duty.}
+\end{enumerate}
+Thus $s^*$ satisfies (a) and (b). To show the uniqueness, suppose there are
+two numbers, $p$ and $q$, which satisfy (a) and (b), and suppose $p < q$.
+Choose $x$ such that $p < x < q$. Since $p$ satisfies (b), we have $s_n < x$
+for $n \ge N$. But then $q$ cannot satisfy (a).
+\end{proof}
+
+\begin{unpack}[Three working forms of one number]
+$\limsup$ wears three interchangeable outfits, and fluency means switching
+freely.
+
+\smallskip
+\textbf{As $\sup E$} (Definition 3.16): best for existence and for symmetry
+with $\liminf$.
+
+\smallskip
+\textbf{As the two-sided test} (Theorem 3.17): $s^*$ is reached along a
+subsequence, and any $x > s^*$ eventually caps the whole sequence. In
+$\varepsilon$-form: for every $\varepsilon > 0$, $s_n > s^*+\varepsilon$ only
+finitely often, while $s_n > s^*-\varepsilon$ infinitely often. This is the
+form the root test uses.
+
+\smallskip
+\textbf{As a limit of suprema}: $s^* = \lim_{N\to\infty} \sup_{n\ge N} s_n$
+--- the tail-suprema $\sup_{n \ge N} s_n$ decrease as the tail shrinks, so
+they converge by 3.14, and their limit is $s^*$. Rudin leaves this form to
+Exercise 3.5's neighbourhood; Tao takes it as the \emph{definition} (his
+6.4.6, via ``$\sup$ of the tail''), and the ECNU text develops it in its
+\S7.2. It explains the name: the \emph{lim} of the \emph{sup}s.
+\end{unpack}
+
+\ritem{3.18}{Examples}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=3pt, topsep=4pt]
+  \item Let $(s_n)$ be a sequence containing all rationals. Then every real
+        number is a subsequential limit, and
+        \[ \limsup_{n\to\infty} s_n = +\infty, \qquad
+           \liminf_{n\to\infty} s_n = -\infty. \]\kn{Such a sequence exists
+        because $\Q$ is countable (Corollary to 2.13), and every real is a
+        subsequential limit because $\Q$ is dense (1.20(b)) --- the two
+        headline facts about $\Q$, cooperating. Here $E$ is all of the
+        extended line: divergence as total as it gets.}
+  \item Let $s_n = (-1)^n/[1+(1/n)]$. Then
+        \[ \limsup_{n\to\infty} s_n = 1, \qquad
+           \liminf_{n\to\infty} s_n = -1. \]
+  \item For a real-valued sequence $(s_n)$, $\lim_{n\to\infty} s_n = s$ if and
+        only if
+        \[ \limsup_{n\to\infty} s_n = \liminf_{n\to\infty} s_n = s. \]\kn{The
+        squeeze that makes the pair useful: convergence is exactly ``the
+        envelope closes.'' Many later proofs show $\limsup \le c$ and
+        $\liminf \ge c$ separately and conclude $\lim = c$; 3.19 exists to
+        service such arguments.}
+\end{enumerate}
+
+We close this section with a theorem which is useful and whose proof is quite
+trivial:
+
+\ritem{3.19}{Theorem}
+\emph{If $s_n \le t_n$ for $n \ge N$, where $N$ is fixed, then}
+\[ \liminf_{n\to\infty} s_n \le \liminf_{n\to\infty} t_n, \qquad
+   \limsup_{n\to\infty} s_n \le \limsup_{n\to\infty} t_n. \]
+
+\rsection{Some Special Sequences}
+
+\begin{signpost}[A toolkit, assembled by one method]
+Five limits used from here to the end of the book, each proved by the squeeze
+stated in the opening line: trap $x_n$ between $0$ and something already known
+to vanish. The recurring supplier of the trap is the binomial theorem ---
+expand $(1+x)^n$, keep a single term, and discard the rest. Item (d) is the
+one to remember: powers beat polynomials, and (e), geometric decay, is its
+special case $\alpha = 0$. These feed directly into 3.26 and every comparison
+with a geometric series afterwards.
+\end{signpost}
+
+\noindent
+We shall now compute the limits of some sequences which occur frequently. The
+proofs will all be based on the following remark: \emph{If $0 \le x_n \le s_n$
+for $n \ge N$, where $N$ is some fixed number, and if $s_n \to 0$, then
+$x_n \to 0$.}
+
+\ritem{3.20}{Theorem}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item \emph{If $p > 0$, then $\displaystyle\lim_{n\to\infty} \frac{1}{n^p} = 0$.}
+  \item \emph{If $p > 0$, then $\displaystyle\lim_{n\to\infty} \sqrt[n]{p} = 1$.}
+  \item \emph{$\displaystyle\lim_{n\to\infty} \sqrt[n]{n} = 1$.}
+  \item \emph{If $p > 0$ and $\alpha$ is real, then
+        $\displaystyle\lim_{n\to\infty} \frac{n^\alpha}{(1+p)^n} = 0$.}
+  \item \emph{If $|x| < 1$, then $\displaystyle\lim_{n\to\infty} x^n = 0$.}
+\end{enumerate}
+
+\begin{proof}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=4pt, topsep=3pt]
+  \item Take $n > (1/\varepsilon)^{1/p}$. (Note that the archimedean property
+        of the real number system is used here.)\kn{And note \emph{what else}
+        is used: $n^p$ for real $p$ is Exercise 1.6's construction, and the
+        inequality manipulation needs 1.21. The one-line proof stands on the
+        chapter-1 exercises.}
+  \item If $p > 1$, put $x_n = \sqrt[n]{p} - 1$. Then $x_n > 0$ and, by the
+        binomial theorem,
+        \[ 1 + nx_n \le (1+x_n)^n = p, \]
+        so that
+        \[ 0 < x_n \le \frac{p-1}{n}. \]
+        Hence $x_n \to 0$. If $p = 1$, (b) is trivial, and if $0 < p < 1$, the
+        result is obtained by taking reciprocals.
+  \item Put $x_n = \sqrt[n]{n} - 1$. Then $x_n \ge 0$ and, by the binomial
+        theorem,
+        \[ n = (1+x_n)^n \ge \frac{n(n-1)}{2}x_n^2. \]
+        Hence
+        \[ 0 \le x_n \le \sqrt{\frac{2}{n-1}} \qquad (n \ge 2). \]\kn{Same
+        trick as (b), one term deeper. Keeping the linear term gives only
+        $x_n \le (n-1)/n$, which is useless; the quadratic term grows like
+        $n^2$ and beats the left side. Choosing \emph{which} binomial term to
+        keep is the entire skill, and (d) makes the choice a third time, with
+        term $k$.}
+  \item Let $k$ be an integer such that $k > \alpha$, $k > 0$. For $n > 2k$,
+        \[ (1+p)^n > \binom{n}{k}p^k =
+           \frac{n(n-1)\cdots(n-k+1)}{k!}\,p^k > \frac{n^kp^k}{2^kk!}. \]
+        Hence
+        \[ 0 < \frac{n^\alpha}{(1+p)^n} < \frac{2^kk!}{p^k}\,n^{\alpha-k}
+           \qquad (n > 2k). \]
+        Since $\alpha - k < 0$, $n^{\alpha-k} \to 0$, by (a).
+  \item Take $\alpha = 0$ in (d).
+\end{enumerate}
+\end{proof}

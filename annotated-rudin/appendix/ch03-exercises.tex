@@ -1,0 +1,232 @@
+% ============================================================
+%  APPENDIX TO CHAPTER 3 -- EXERCISES S3.1-S3.18
+%  Imported from Tao I, ECNU, USTC, Yu Pin.  Not Rudin's.
+% ============================================================
+\ssection{Appendix exercises}
+
+\begin{roadmap}[How these differ from Rudin's twenty-five]
+Rudin's own Exercises 3.1--3.25 end the chapter proper. These eighteen come
+from the four comparison texts.
+
+\medskip
+\raggedright
+\textbf{Group I (1--5): sequences.} Coupled recursions --- Gauss's
+arithmetic--geometric mean among them --- where Rudin's 3.16--3.17 use a
+single recursion; plus the means package and bounded variation.
+
+\medskip
+\textbf{Group II (6--12): series.} The decay rate of the terms of a
+convergent series, Cauchy--Schwarz in $\ell^2$, infinite products, and the
+positive/negative split that Rudin buries inside the proof of 3.54.
+
+\medskip
+\textbf{Group III (13--16): upper and lower limits.} The algebra of
+Supplement A, put to work.
+
+\medskip
+\textbf{Group IV (17--18): summation over sets.} Iterated sums, and the
+counterexample that shows absolute convergence is not decoration.
+
+\medskip
+\textbf{Marked $\star$:} harder, or requiring a result from a later chapter.
+\end{roadmap}
+
+\begin{enumerate}[label=\textbf{S3.\arabic*.}, leftmargin=3.4em, itemsep=9pt,
+                  topsep=8pt, labelsep=0.5em]
+
+% ---------------- Group I ----------------
+\item \emph{(Arithmetic--geometric mean.)} Let $a_1 > b_1 > 0$ and put
+\[ a_{n+1} = \frac{a_n+b_n}{2}, \qquad b_{n+1} = \sqrt{a_nb_n}. \]
+Prove that $\lim a_n$ and $\lim b_n$ both exist and are
+equal.\kn{Gauss's AGM. The engine is the inequality $\sqrt{xy} \le (x+y)/2$,
+which gives $b_n < b_{n+1} < a_{n+1} < a_n$: the two sequences are monotone
+in opposite directions and interleaved, so 3.14 applies to each and the gap
+$a_{n+1}-b_{n+1} \le (a_n-b_n)/2$ closes. Rudin's Exercises 3.16--3.17 are
+single recursions converging to a square root; a \emph{coupled} recursion is
+materially different, and the common limit here has no elementary closed
+form --- it is an elliptic integral.}
+\provenance{ECNU \cjk{习题}{Ex} 2.3 \#11 (bk.\ p.\,38).}
+
+\item \emph{(Arithmetic--harmonic mean.)} With $a_1, b_1 > 0$ put
+$a_{n+1} = (a_n+b_n)/2$ and $b_{n+1} = 2a_nb_n/(a_n+b_n)$. Prove both limits
+exist and equal $\sqrt{a_1b_1}$.\kn{The companion to exercise 1, and this
+time the answer \emph{is} elementary --- because $a_nb_n$ is invariant:
+$a_{n+1}b_{n+1} = a_nb_n$ for every $n$. Spot the invariant and the problem
+collapses. Compare the strategy index's second pattern in Chapter 1: hunt for
+the quantity the recursion does not move.}
+\provenance{ECNU \cjk{总练习题}{review} 2 \#8 (bk.\ p.\,39).}
+
+\item Prove that $a_n \to a$ implies $(a_1+\cdots+a_n)/n \to a$, and that if
+also $a_n > 0$ then $\sqrt[n]{a_1\cdots a_n} \to a$. Deduce that
+$b_{n+1}/b_n \to a$ implies $\sqrt[n]{b_n} \to a$ for $b_n>0$, and use it to
+evaluate $\lim n/\sqrt[n]{n!}$.\kn{Rudin gives only the first part, as
+Exercise 3.14(a). The deduction is the content of 3.37 --- the root test
+dominates the ratio test --- and the last limit is $e$, obtained by applying
+(c) to $b_n = n^n/n!$. Show also that the converses all fail: averaging
+destroys information, so $(-1)^n$ has Ces\`aro mean $0$ without converging.}
+\provenance{ECNU \cjk{总练习题}{review} 2 \#3--\#4 (bk.\ p.\,39); USTC
+Ch.\ 1 suppl.\ \#6--\#11.}
+
+\item Suppose $\sum_{k=1}^{n} |a_{k+1}-a_k| \le M$ for every $n$. Prove that
+$(a_n)$ converges.\kn{Bounded variation implies convergence --- the sequence
+version of a notion Chapter 6 will develop for functions. The proof is one
+line once you see it: $a_n = a_1 + \sum_{k<n}(a_{k+1}-a_k)$ exhibits $(a_n)$
+as the partial sums of an absolutely convergent series. Note the converse
+fails: a convergent sequence can wander infinitely far, as
+$a_n = \sum_{k\le n} (-1)^k/k$ shows.}
+\provenance{ECNU \cjk{总练习题}{review} 2 \#6 (bk.\ p.\,39); USTC Ch.\ 1
+suppl.\ \#5.}
+
+\item Prove that if every convergent subsequence of a bounded sequence has
+the same limit $L$, then the sequence itself converges to $L$. Deduce that a
+bounded divergent sequence has two subsequences with different
+limits.\kn{The cleanest packaging of Rudin's 3.6--3.7. Argue by
+contradiction: if $x_n \not\to L$, infinitely many terms stay $\varepsilon$
+away, and that subsequence is bounded, so by 3.6(b) it has a convergent
+sub-subsequence --- whose limit is not $L$. Note the hypothesis
+\emph{bounded} is essential: $x_n = n$ has no convergent subsequence at all,
+so the condition holds vacuously.}
+\provenance{USTC \S1.2 (bk.\ p.\,15), left there as an exercise.}
+
+% ---------------- Group II ----------------
+\item Prove that if $\Sigma u_n$ is a convergent series of positive terms and
+$(u_n)$ is monotone, then $\lim n\,u_n = 0$.\kn{Sharper than 3.23, which
+gives only $u_n \to 0$. The trick is to look at a block: monotonicity makes
+$u_{n+1}+\cdots+u_{2n} \ge n\,u_{2n}$, and the left side tends to $0$ by the
+Cauchy criterion. Note what fails without monotonicity --- one can have a
+convergent series with $n u_n \not\to 0$ by putting spikes at sparse indices.
+This is the quantitative reason the harmonic series is the boundary.}
+\provenance{ECNU \cjk{总练习题}{review} 12 \#1 (\cjk{下}{vol.2}
+bk.\ p.\,24).}
+
+\item Prove that if $\Sigma a_n^2$ and $\Sigma b_n^2$ converge then
+$\Sigma a_nb_n$ and $\Sigma(a_n+b_n)^2$ converge, and
+\[ \Bigl(\sum a_nb_n\Bigr)^2 \le \sum a_n^2 \sum b_n^2, \]
+\[ \Bigl(\sum (a_n+b_n)^2\Bigr)^{1/2} \le
+   \Bigl(\sum a_n^2\Bigr)^{1/2} + \Bigl(\sum b_n^2\Bigr)^{1/2}. \]\kn{%
+Cauchy--Schwarz and Minkowski in $\ell^2$ --- Theorem 1.35 and 1.37(e) in
+infinite dimensions, which Rudin never revisits after Chapter 1. Prove the
+finite versions and pass to the limit; the only care needed is that the
+partial sums are increasing and bounded. This is the first appearance of the
+space $\ell^2$, which Chapter 11 treats seriously.}
+\provenance{ECNU \cjk{总练习题}{review} 12 \#8 (\cjk{下}{vol.2}
+bk.\ p.\,24).}
+
+\item Let $a_n > 0$. Prove that $\prod_{k=1}^n (1+a_k)$ converges (to a
+finite nonzero limit) if and only if $\Sigma a_n$ converges. Evaluate
+$\prod_{k=0}^{\infty}\bigl(1+q^{2^k}\bigr)$ for $|q|<1$.\kn{Infinite
+products reduced entirely to Chapter 3 by taking logarithms: convergence of
+$\Sigma \log(1+a_k)$ is equivalent to convergence of $\Sigma a_k$, since
+$\log(1+x)\sim x$. The evaluation telescopes --- multiply by $(1-q)$ and
+watch $(1-q)(1+q)(1+q^2)(1+q^4)\cdots = 1-q^{2^{n}}$ --- giving $1/(1-q)$.
+None of the four texts devotes a section to infinite products; this exercise
+is the whole theory in miniature.}
+\provenance{ECNU \cjk{习题}{Ex} 12.2 \#15 (\cjk{下}{vol.2} bk.\ p.\,17);
+USTC \cjk{习题}{Ex} 1.1 \#8(5).}
+
+\item Let $a_n \ge 0$ with $(na_n)$ bounded. Prove $\Sigma a_n^2$ converges.
+Prove also that if $\Sigma u_n$ is a convergent positive series then
+$\Sigma\sqrt{u_nu_{n+1}}$ converges.\kn{Two decay-rate arguments. The first
+is comparison with $\Sigma 1/n^2$; the second is the arithmetic--geometric
+mean inequality, $\sqrt{u_nu_{n+1}} \le (u_n+u_{n+1})/2$. Both illustrate the
+same habit: when a series resists direct attack, bound its terms by
+something already known to converge, and prefer the crudest bound that
+works.}
+\provenance{ECNU \cjk{习题}{Ex} 12.2 \#5, \#7 (\cjk{下}{vol.2}
+bk.\ p.\,16).}
+
+\item With $p_n = (|u_n|+u_n)/2$ and $q_n = (|u_n|-u_n)/2$, prove that if
+$\Sigma u_n$ converges conditionally then $\Sigma p_n$ and $\Sigma q_n$ both
+diverge.\kn{The lemma inside Rudin's proof of 3.54, isolated. If both
+converged, $\Sigma|u_n| = \Sigma(p_n+q_n)$ would converge, contradicting
+conditionality; if exactly one converged, $\Sigma u_n = \Sigma(p_n-q_n)$
+would diverge. So both piles are infinite --- which is precisely the fuel
+Riemann's rearrangement burns. Worth extracting because the statement, not
+the rearrangement, is what makes 3.54 believable.}
+\provenance{ECNU \cjk{习题}{Ex} 12.3 \#4 (\cjk{下}{vol.2} bk.\ p.\,23).}
+
+\item $\star$~Prove that $\displaystyle\sum_{n=1}^{\infty}
+\frac{(-1)^{\lfloor\sqrt n\rfloor}}{n}$ converges.\kn{The signs come in runs
+of lengths $3,5,7,\dots$, so the alternating series test (3.43) does not
+apply at all. Group the terms into blocks of constant sign, show the grouped
+series converges by comparison, and then use the fact that the terms tend to
+$0$ to remove the parentheses --- which is legitimate here precisely because
+the block lengths grow slowly. A genuine stress test of S3.5 and S3.8.}
+\provenance{ECNU \cjk{习题}{Ex} 12.3 \#8 (\cjk{下}{vol.2} bk.\ p.\,24).}
+
+\item Given a convergent series of positive terms $\Sigma u_n$, must there
+exist $\varepsilon > 0$ with $u_n/n^{-(1+\varepsilon)} \to c$ for some
+$c > 0$?\kn{No --- and the exercise is the concrete form of ``there is no
+slowest convergent series,'' the moral of Supplement B. Convergent series can
+decay arbitrarily slowly, so no single power of $n$ serves as a universal
+gauge. This is why the Raabe/Gauss hierarchy has no last member, and why
+Rudin's remark after 3.35 is a structural fact rather than an omission.}
+\provenance{ECNU \cjk{总练习题}{review} 12 \#5(3) (\cjk{下}{vol.2}
+bk.\ p.\,24).}
+
+% ---------------- Group III ----------------
+\item Prove the parts of S3.3: $\liminf a_n = -\limsup(-a_n)$;
+$\liminf a_n + \liminf b_n \le \liminf(a_n+b_n)$; and, for positive
+sequences with $\liminf a_n > 0$, $\limsup(1/a_n) = 1/\liminf a_n$.\kn{All
+three fall out of the $\inf$-of-$\sup$s formula S3.1 plus the elementary
+facts $\sup(-A) = -\inf A$ and $\inf(A+B) \ge \inf A + \inf B$. Doing them
+once makes clear why the inequalities point the way they do: taking a
+supremum over a tail is a \emph{sublinear} operation, and sublinearity is
+one-directional.}
+\provenance{ECNU \cjk{习题}{Ex} 7.2 \#2 (bk.\ p.\,159).}
+
+\item Let $a_n > 0$ and suppose $\limsup a_n \cdot \limsup(1/a_n) = 1$.
+Prove that $(a_n)$ converges.\kn{A one-line consequence of S3.3(e) once you
+see it: the hypothesis says $\limsup a_n = \liminf a_n$, and 3.17 finishes
+it. The pleasure is that a statement about products of upper limits secretly
+encodes ``the two limits coincide.'' Note the hypothesis forces
+$\liminf a_n > 0$, so the reciprocal rule applies.}
+\provenance{ECNU \cjk{习题}{Ex} 7.2 \#4 (bk.\ p.\,159).}
+
+\item $\star$~Suppose $\liminf x_n = A < B = \limsup x_n$ and
+$\lim(x_{n+1}-x_n) = 0$. Prove that the set of subsequential limits of
+$(x_n)$ is exactly $[A,B]$.\kn{A beautiful result with no analogue anywhere
+in Rudin. The hypothesis says the sequence moves in ever-smaller steps while
+still travelling between $A$ and $B$ infinitely often --- so it cannot skip
+any value in between. Formally: given $c \in (A,B)$ and $\varepsilon>0$,
+find a stretch of indices crossing from below $c$ to above $c$; because the
+steps are eventually smaller than $\varepsilon$, some term of that stretch
+lands within $\varepsilon$ of $c$. Compare S2.10 in the Chapter 2 appendix,
+where consecutive-terms-close fails to give convergence: here the same
+hypothesis is turned into positive information.}
+\provenance{ECNU \cjk{总练习题}{review} 7 \#3 (bk.\ p.\,160), starred there
+as well.}
+
+\item Show by example that $\limsup(a_nb_n) = \limsup a_n \cdot \limsup b_n$
+can fail for positive bounded sequences, and prove it holds when one of the
+sequences converges.\kn{The multiplicative twin of the pitfall at S3.3.
+Take $a_n$ alternating between $1$ and $2$ and $b_n$ alternating the other
+way: each has $\limsup = 2$, but the product is constantly $2$. The repair
+is the same --- a convergent factor peaks everywhere at once, so it cannot
+dodge the other sequence's peaks.}
+\provenance{ECNU \cjk{习题}{Ex} 7.2 \#2 (bk.\ p.\,159), product part.}
+
+% ---------------- Group IV ----------------
+\item Define $f : \N\times\N \to \R$ by $f(n,n) = 1$, $f(n,n+1) = -1$, and
+$f = 0$ otherwise. Compute both iterated sums
+$\sum_n\bigl(\sum_m f(n,m)\bigr)$ and $\sum_m\bigl(\sum_n f(n,m)\bigr)$, and
+explain why S3.12 does not apply.\kn{The answers are $0$ and $1$. Every row
+and every column is a \emph{finite} sum, so nothing diverges and nothing is
+subtle --- and still the order of summation matters, because
+$\sum_{(n,m)}|f(n,m)|$ is infinite. The lesson is that absolute convergence
+is the entire hypothesis of Fubini, not a technical convenience. Rudin's
+Exercise 3.25 asks for a relative of this.}
+\provenance{Tao I, \S8.2 discussion (bk.\ p.\,188).}
+
+\item $\star$~Let $X$ be any set and $f : X \to \R$ with
+$\sum_{x\in X}|f(x)|$ finite. Prove that $\{x : f(x) \ne 0\}$ is at most
+countable, and that $\sum_{x\in X} f(x)$ is independent of the enumeration
+used to compute it.\kn{S3.11 and the well-definedness behind S3.10. For the
+first part, show $\{x : |f(x)| > 1/n\}$ is finite for each $n$ and take the
+union. For the second, the two enumerations differ by a bijection of $\N$,
+so this is Rudin's 3.55 --- which is exactly the point: absolute convergence
+is what makes ``the sum over a set'' meaningful, and 3.54 says the notion
+collapses without it.}
+\provenance{Tao I, Lemma 8.2.5 and Ex.\ 8.2.2 (bk.\ p.\,188).}
+
+\end{enumerate}

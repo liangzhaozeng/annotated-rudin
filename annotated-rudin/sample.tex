@@ -1,0 +1,429 @@
+\documentclass[11pt,twoside]{article}
+
+\usepackage[
+  paperwidth=8.5in, paperheight=11in,
+  twoside,
+  inner=1.05in, outer=2.35in,
+  top=1.0in, bottom=1.05in,
+  marginparwidth=1.75in, marginparsep=0.22in,
+  headsep=16pt
+]{geometry}
+
+\usepackage{annotated}
+\usepackage[colorlinks=true, allcolors=RuInk, linkcolor=RuInk]{hyperref}
+
+\linespread{1.06}
+\setlength{\parskip}{5pt}
+\setlength{\parindent}{0pt}
+
+\renewcommand{\leftmark}{Chapter 1 \;\textbullet\; The Real and Complex Number Systems}
+\renewcommand{\rightmark}{The Annotated Rudin}
+
+\begin{document}
+
+% ============================================================
+\thispagestyle{empty}
+\vspace*{1.6in}
+\begin{center}
+{\sffamily\Huge\bfseries\color{RuInk} The Annotated Rudin}\\[10pt]
+{\sffamily\large\color{RuGrey} A reader's companion to \emph{Principles of Mathematical Analysis}}\\[4pt]
+{\sffamily\large\color{RuGrey} Third Edition}\\[40pt]
+{\sffamily\normalsize\color{RuInk}\bfseries STYLE SAMPLE \textperiodcentered\ OPTION A \textperiodcentered\ B/W PRINT}\\[6pt]
+{\sffamily\small\color{RuGrey} Chapter 1, \S\S1.1--1.21 --- roughly 8 of Rudin's pages}
+\end{center}
+\vfill
+\begin{center}
+\begin{minipage}{0.82\textwidth}
+\small\color{RuGrey}
+This sample exists so you can judge the \emph{style} before I commit to eleven
+chapters. The mathematics is Rudin's; the boxes around it are the annotation
+layer. Everything about the layout --- colours, box types, how much of Rudin's
+own text gets quoted, how deep the commentary goes --- is still open.
+\end{minipage}
+\end{center}
+\newpage
+
+% ============================================================
+\section*{How to read this book}
+\addcontentsline{toc}{section}{How to read this book}
+
+Rudin is terse by design. He states things once, in their sharpest form, and
+leaves the reader to supply motivation, examples, and the missing algebra. This
+companion supplies exactly those three things and nothing else. It is meant to
+be read \emph{beside} Rudin, not instead of him.
+
+This book is set for black-and-white printing, so the boxes are told apart by
+their \emph{frames}, not by colour. Five kinds appear throughout.
+
+\begin{roadmap}[What this chapter is for]
+A fully boxed panel with a solid black title bar opens every chapter. It says
+what the chapter is trying to achieve, gives the logical spine as a diagram, and
+marks which parts you can safely skip. A matching panel closes the chapter with
+the same ground shaded grey.
+\end{roadmap}
+
+\begin{rudinbox}{\textsc{2.27} Theorem}
+\itshape A grey panel with a reverse-video number tab is Rudin, compressed.
+Definitions and theorem statements appear here in his own phrasing (lightly
+trimmed), so you always know what is his and what is mine. Proofs he gives are
+reproduced when the annotation needs to point at specific lines.
+\end{rudinbox}
+
+\begin{unpack}
+A \textbf{solid} rule down the left margin means unpacking. It answers ``what is
+this actually saying,'' ``where did that formula come from,'' and ``why is the
+definition phrased \emph{this} way and not the obvious way.'' If you are reading
+Rudin for the first time, these are the boxes to read.
+\end{unpack}
+
+\begin{deeper}
+A \textbf{dashed} rule and a faint grey ground means the box goes further than
+the course requires: what breaks in a more general setting, which later theorem
+this quietly sets up, what the standard generalisation looks like. Skippable on
+a first pass.
+\end{deeper}
+
+\begin{pitfall}
+Rules closing the box top and bottom, with a black label tab, mark a specific
+wrong belief that students reliably form here --- and the counterexample that
+kills it.
+\end{pitfall}
+
+\begin{proofwalk}[Reading the proof]
+  \item Longer proofs get a numbered walk-through like this one, keyed to
+        Rudin's lines. Each step says what is being done and, more importantly,
+        \emph{why that step and not another}.
+  \item Steps that look like rabbits pulled from hats --- Rudin's specialty ---
+        get reverse-engineered, so you can see the choice being made rather
+        than just verified.
+\end{proofwalk}
+
+\mnote{Margin notes carry one-line pointers: cross-references, the name of a
+result, a warning to slow down.}
+Finally, margin notes like the one beside this paragraph carry short pointers
+that would interrupt the flow if inlined.
+
+\newpage
+
+% ============================================================
+\section*{Chapter 1 \quad The Real and Complex Number Systems}
+
+\begin{roadmap}[What this chapter is for]
+Analysis is the study of limits, and a limit is a promise that some process
+\emph{arrives} somewhere. The rationals break that promise: you can write down a
+sequence of rationals closing in on $\sqrt 2$ with nothing at the end of it.
+Chapter 1 fixes this once, by isolating the single property $\Q$ lacks --- the
+least-upper-bound property --- and asserting a field that has it.
+
+\medskip
+The logical spine is short:
+
+\medskip
+\centering
+\begin{tikzpicture}[scale=0.92, transform shape, node distance=5mm]
+\node[rmbox, text width=23mm] (a) {\textbf{1.1}\\$\Q$ has gaps};
+\node[rmbox, text width=23mm, right=of a] (b) {\textbf{1.8--1.10}\\$\sup$, $\inf$,\\the \lub{} property};
+\node[rmbox, text width=23mm, right=of b] (c) {\textbf{1.19}\\$\R$ exists\\and has it};
+\node[rmbox, text width=23mm, right=of c] (d) {\textbf{1.20, 1.21}\\Archimedes;\\$n$th roots};
+\draw[rmarrow] (a) -- (b); \draw[rmarrow] (b) -- (c); \draw[rmarrow] (c) -- (d);
+\end{tikzpicture}
+
+\medskip
+\raggedright
+Everything after \rref{1.21} --- the extended reals, $\C$, Euclidean space --- is
+setting up notation for later chapters. The appendix builds $\R$ from $\Q$ by
+Dedekind cuts, discharging the promissory note in \rref{1.19}; you can read it
+whenever you like, or never, without affecting anything else.
+\end{roadmap}
+
+% ------------------------------------------------------------
+\subsection*{1.1 \; The gap in $\Q$}
+
+Rudin opens by showing there is no rational $p$ with $p^2 = 2$ --- the familiar
+parity argument --- and then does something less familiar. He sets
+\[
+  A = \{\, p \in \Q : p > 0,\; p^2 < 2 \,\},
+  \qquad
+  B = \{\, p \in \Q : p > 0,\; p^2 > 2 \,\},
+\]
+and shows \emph{$A$ has no largest member and $B$ has no smallest}. The tool is a
+formula that arrives with no explanation:
+
+\begin{rudinbox}{\textsc{1.1} Example (the key construction)}
+\upshape
+To each rational $p>0$ associate
+\begin{align}
+  q &\;=\; p - \frac{p^2-2}{p+2} \;=\; \frac{2p+2}{p+2}, \tag{1.3}\\[2pt]
+  q^2 - 2 &\;=\; \frac{2\,(p^2-2)}{(p+2)^2}. \tag{1.4}
+\end{align}
+If $p \in A$ then $p^2 - 2 < 0$, so (1.3) gives $q > p$ and (1.4) gives $q^2 < 2$;
+thus $q \in A$. If $p \in B$ then $p^2 - 2 > 0$, so $0 < q < p$ and $q^2 > 2$;
+thus $q \in B$.
+\end{rudinbox}
+
+\begin{unpack}[Where does (1.3) come from?]
+It is not magic and it is not Newton's method. Ask instead: \emph{which} map
+$p \mapsto q$ would have $\sqrt2$ as a fixed point? Try the simplest shape, a
+ratio of linear terms $q = (ap+b)/(cp+d)$. Demanding $q = p$ at $p = \sqrt 2$
+means $p^2 = 2$ must fall out of $p(cp+d) = ap+b$, and $q = (2p+2)/(p+2)$ is the
+smallest-integer solution: it gives $p^2 + 2p = 2p + 2$, i.e.\ $p^2 = 2$.
+
+So (1.3) is the natural rational map pointing at $\sqrt 2$. The reason it moves
+$p$ \emph{toward} $\sqrt2$ without ever crossing it is visible if you factor the
+error. A short computation gives
+\[
+  q - \sqrt2 \;=\; \frac{\sqrt2\,(\sqrt2-1)}{p+2}\,\bigl(p - \sqrt2\bigr)
+  \;=\; \frac{2-\sqrt2}{p+2}\,\bigl(p-\sqrt2\bigr).
+\]
+For $p > 0$ the multiplier $(2-\sqrt2)/(p+2)$ lies strictly between $0$ and
+$(2-\sqrt2)/2 \approx 0.29$. Being \emph{positive} is what keeps $q$ on the same
+side of $\sqrt2$ as $p$ --- that is Rudin's ``$q \in A$'' and ``$q \in B$.'' Being
+\emph{less than one} is what makes the error shrink, which is why $q$ is strictly
+better than $p$ and no member of $A$ can be largest.
+\end{unpack}
+
+\begin{deeper}[This is a contraction, eight chapters early]
+The factorisation above says the map $p \mapsto (2p+2)/(p+2)$ contracts distance
+to $\sqrt2$ by a factor of at most $0.29$ at every step. That is precisely the
+hypothesis of the \emph{contraction principle}, \rref{9.23}, which Rudin uses to
+prove the inverse function theorem. Chapter 1 quietly runs the argument by hand
+before the general theorem exists.
+
+Iterating from $p_0 = 1$ gives $1,\ \tfrac43,\ \tfrac{10}{7},\ \tfrac{24}{17},\
+\tfrac{58}{41}, \dots$ --- the convergents of the continued fraction
+$\sqrt2 = [1;2,2,2,\dots]$, alternating below and above only because we started
+below. Compare Newton's method on $f(p) = p^2-2$, which gives $p \mapsto
+(p^2+2)/(2p)$: faster (the error squares), but it always lands \emph{above}
+$\sqrt2$, so it would prove ``$B$ has no smallest'' and say nothing about $A$.
+Rudin's choice is the one that does both halves at once.
+\end{deeper}
+
+\begin{pitfall}[No largest member is not openness]
+Openness is not the point and would not be enough. The content of \rref{1.1} is
+that $A$ is bounded above in $\Q$ --- every element of $B$ is an upper bound ---
+yet among those upper bounds there is no \emph{least} one, because $B$ has no
+smallest element. A set can perfectly well have no largest member and still have
+a supremum: $\{\,r \in \Q : r < 0\,\}$ has none, but its supremum $0$ exists in
+$\Q$. The failure in \rref{1.1} is about the \emph{upper bounds}, not about $A$.
+\end{pitfall}
+
+% ------------------------------------------------------------
+\subsection*{1.8--1.10 \; Supremum, infimum, and the property that matters}
+
+\mnote{Read \rref{1.8} as two clauses: $\alpha$ \emph{is} an upper bound, and
+nothing smaller is.}
+
+\begin{rudinbox}{\textsc{1.8} Definition}
+Let $S$ be an ordered set and $E \subset S$ bounded above. Suppose there is
+$\alpha \in S$ with
+\begin{enumerate}[label=(\roman*), leftmargin=2em, itemsep=1pt]
+  \item $\alpha$ is an upper bound of $E$;
+  \item if $\gamma < \alpha$ then $\gamma$ is not an upper bound of $E$.
+\end{enumerate}
+Then $\alpha$ is the \emph{least upper bound}, or \emph{supremum}, of $E$;
+we write $\alpha = \sup E$. The infimum is defined symmetrically.
+\end{rudinbox}
+
+\begin{unpack}[Why not just say ``the largest element''?]
+Because it usually does not exist. $E_1 = \{r \in \Q : r < 0\}$ has no largest
+element, but the set of its upper bounds --- everything ${}\ge 0$ --- does have a
+smallest, namely $0$. The supremum relocates the question from $E$, where the
+answer is often ``none,'' to the set of upper bounds of $E$, where it is often
+``yes.''
+
+Clause (ii) is the whole definition. It is stated in contrapositive form, and
+the version you will actually use in proofs is:
+\[
+  \text{for every } \varepsilon > 0 \text{ there is } x \in E
+  \text{ with } x > \alpha - \varepsilon.
+\]
+Any $\gamma < \alpha$ fails to be an upper bound, which means \emph{something in
+$E$ sticks out above $\gamma$}. Reach for that sentence every time a proof
+begins ``let $\alpha = \sup E$.''
+\end{unpack}
+
+\begin{rudinbox}{\textsc{1.10} Definition}
+An ordered set $S$ has the \emph{least-upper-bound property} if: whenever
+$E \subset S$ is nonempty and bounded above, $\sup E$ exists in $S$.
+\end{rudinbox}
+
+\begin{pitfall}[The two hypotheses are not decoration]
+``Nonempty'' and ``bounded above'' are both load-bearing, and dropping either
+breaks the definition rather than merely weakening it. In $\R$, every real number
+is an upper bound of $\emptyset$, so $\emptyset$ has no least upper bound; and
+$\Z \subset \R$ is unbounded above, so it has none either. Any proof that
+produces a supremum owes you a check of both --- in \rref{1.21} below, Rudin
+spends two full sentences establishing exactly these before he writes
+$y = \sup E$.
+\end{pitfall}
+
+% ------------------------------------------------------------
+\subsection*{1.11 \; Greatest lower bounds come for free}
+
+\begin{rudinbox}{\textsc{1.11} Theorem}
+Suppose $S$ is an ordered set with the least-upper-bound property, $B \subset S$
+is nonempty and bounded below, and $L$ is the set of all lower bounds of $B$.
+Then $\alpha = \sup L$ exists in $S$, and $\alpha = \inf B$.
+\end{rudinbox}
+
+\begin{unpack}[The shape of the trick]
+We are handed a hypothesis about suprema and asked for an infimum, so the only
+possible move is to find a set whose \emph{supremum} is the infimum we want. The
+set of lower bounds $L$ is the natural candidate: it sits entirely below $B$, so
+$B$ pushes down on it from above, and its top edge is exactly where $B$ begins.
+The picture is worth more than the algebra:
+\[
+  \underbrace{\cdots\cdots\cdots}_{\textstyle L}
+  \;\bullet\;
+  \underbrace{\cdots\cdots\cdots}_{\textstyle B}
+  \qquad\text{with } \bullet = \sup L = \inf B .
+\]
+The two sets meet at a single point, and the theorem says that point is both.
+\end{unpack}
+
+\begin{rproof}
+Since $B$ is bounded below, $L$ is not empty. Since $L$ consists of exactly those
+$y \in S$ satisfying $y \le x$ for every $x \in B$, every $x \in B$ is an upper
+bound of $L$. Thus $L$ is bounded above, and the hypothesis on $S$ gives
+$\alpha = \sup L$ in $S$.
+
+If $\gamma < \alpha$ then $\gamma$ is not an upper bound of $L$, hence
+$\gamma \notin B$. It follows that $\alpha \le x$ for every $x \in B$; thus
+$\alpha \in L$.
+
+If $\alpha < \beta$ then $\beta \notin L$, since $\alpha$ is an upper bound of
+$L$. So $\alpha \in L$ but $\beta \notin L$ whenever $\beta > \alpha$; that is,
+$\alpha$ is a lower bound of $B$ and no larger element is. Hence
+$\alpha = \inf B$.
+\end{rproof}
+
+\begin{proofwalk}
+  \item \textbf{$L \ne \emptyset$, $L$ bounded above.} Both hypotheses of the
+        \lub{} property must be checked before invoking it. Nonempty is the
+        assumption that $B$ is bounded below, restated. Bounded above is the
+        observation that every single $x \in B$ is an upper bound for $L$ ---
+        by the very definition of ``lower bound of $B$.'' This is the one genuine
+        idea in the proof.
+  \item \textbf{$\alpha \in L$, i.e.\ $\alpha$ is a lower bound of $B$.} Rudin
+        argues contrapositively and compresses two steps into one line. Unpacked:
+        take any $\gamma < \alpha$. Since $\alpha$ is the \emph{least} upper
+        bound of $L$, $\gamma$ is not an upper bound of $L$, so some
+        $y \in L$ has $y > \gamma$. But $y$ is a lower bound of $B$, so
+        $\gamma < y \le x$ for all $x \in B$, and in particular $\gamma \notin B$.
+        No element of $B$ is therefore less than $\alpha$, which is to say
+        $\alpha \le x$ for all $x \in B$.
+  \item \textbf{Nothing bigger works.} If $\beta > \alpha$ then $\beta \notin L$,
+        because $\alpha$ is an upper bound of $L$. So $\beta$ is not a lower bound
+        of $B$. Combined with step 2, $\alpha$ is a lower bound and no larger
+        element is --- which is the definition of $\inf B$.
+\end{proofwalk}
+
+\begin{deeper}[Why this is not a triviality]
+The mirror-image statement is false in general order-theoretic settings, and the
+reason the proof works here is that $L$ and $B$ are \emph{complementary} in a
+strong sense: the upper bounds of $L$ include all of $B$. Take the greatest
+lower bound property as a hypothesis instead and the same argument runs
+backwards, so the two properties are equivalent for ordered sets. This is why
+Rudin never states a separate ``greatest-lower-bound property'' axiom for $\R$:
+\rref{1.19} gives him one, and \rref{1.11} hands him the other. Every later use
+of $\inf$ --- lower Riemann--Stieltjes sums in \rref{6.2}, $\liminf$ in
+\rref{3.16} --- rests on this one theorem.
+\end{deeper}
+
+% ------------------------------------------------------------
+\subsection*{1.21 \; $n$th roots, and the rabbit out of the hat}
+
+This is the theorem that repays the whole chapter: it is the first time the
+\lub{} property produces a number that $\Q$ could not.
+
+\begin{rudinbox}{\textsc{1.21} Theorem}
+For every real $x > 0$ and every integer $n > 0$ there is one and only one
+positive real $y$ with $y^n = x$.
+\end{rudinbox}
+
+Rudin sets $E = \{\, t > 0 : t^n < x \,\}$, checks $E$ is nonempty and bounded
+above, puts $y = \sup E$, and rules out $y^n < x$ and $y^n > x$ in turn. The
+first case runs like this:
+
+\begin{rudinbox}{\textsc{1.21} Proof, the case $y^n < x$}
+\upshape
+The identity $b^n - a^n = (b-a)(b^{n-1} + b^{n-2}a + \cdots + a^{n-1})$ yields
+\begin{equation}\tag{$\ast$}
+  b^n - a^n < (b-a)\,n\,b^{n-1} \qquad (0 < a < b).
+\end{equation}
+Assume $y^n < x$. Choose $h$ so that $0 < h < 1$ and
+\[
+  h < \frac{x - y^n}{n\,(y+1)^{n-1}} .
+\]
+Put $a = y$, $b = y+h$. Then
+\[
+  (y+h)^n - y^n < h\,n\,(y+h)^{n-1} < h\,n\,(y+1)^{n-1} < x - y^n ,
+\]
+so $(y+h)^n < x$ and $y + h \in E$. Since $y+h > y$, this contradicts the fact
+that $y$ is an upper bound of $E$.
+\end{rudinbox}
+
+\begin{unpack}[Reverse-engineering the choice of $h$]
+Nobody guesses that $h$. It is found by writing down the goal and solving
+backwards; Rudin simply deletes the derivation. Here it is.
+
+\smallskip
+\textbf{Goal.} Find $h>0$ with $(y+h)^n < x$. Equivalently,
+$(y+h)^n - y^n < x - y^n$, where the right-hand side is a fixed positive number
+because we assumed $y^n < x$.
+
+\smallskip
+\textbf{Bound the left side.} We cannot compute $(y+h)^n - y^n$, but $(\ast)$
+with $a = y$, $b = y+h$ bounds it: $(y+h)^n - y^n < h\,n\,(y+h)^{n-1}$. So it is
+\emph{enough} to make $h\,n\,(y+h)^{n-1} \le x - y^n$.
+
+\smallskip
+\textbf{Remove $h$ from the exponent.} That inequality still has $h$ buried
+inside $(y+h)^{n-1}$, which we cannot solve for. Kill it by agreeing in advance
+that $h < 1$; then $(y+h)^{n-1} < (y+1)^{n-1}$, a constant. This is the only
+reason the condition ``$0 < h < 1$'' appears --- it is bookkeeping, not
+mathematics.
+
+\smallskip
+\textbf{Solve.} It now suffices that $h\,n\,(y+1)^{n-1} < x - y^n$, i.e.
+\[
+  h < \frac{x-y^n}{n\,(y+1)^{n-1}},
+\]
+which is Rudin's line. Both conditions on $h$ are upper bounds, so take $h$
+below the smaller of the two and such an $h$ exists.
+\end{unpack}
+
+\begin{deeper}[What the proof is really doing]
+Strip the algebra and the argument is: \emph{$t \mapsto t^n$ is continuous, so if
+$y^n$ were strictly below $x$ we could nudge $y$ upward and stay below $x$.} The
+displayed choice of $h$ is a hand-rolled continuity estimate, written out
+because continuity is not available until \rref{4.4} --- and \rref{4.4}'s
+machinery is not available until $\R$ exists, which is what we are in the middle
+of establishing. The same argument reappears in clean form as an application of
+the intermediate value theorem (\rref{4.23}) once Chapter 4 is in place.
+
+Note also which side each case attacks. Assuming $y^n < x$ contradicts ``$y$ is
+an \emph{upper bound}''; assuming $y^n > x$ contradicts ``$y$ is the
+\emph{least} upper bound.'' Both halves of \rref{1.8} get used exactly once,
+which is a good sign that the choice of $E$ was the right one.
+\end{deeper}
+
+\begin{pitfall}[Why $E$ needs $t>0$]
+Without the positivity restriction, $E = \{t : t^n < x\}$ is unbounded below for
+odd $n$ and the set is a different animal for even $n$. More to the point, the
+uniqueness claim is false without it: for $n=2$, $x=4$, both $2$ and $-2$ are
+roots. Rudin's ``one and only one \emph{positive}'' is doing real work.
+\end{pitfall}
+
+\vspace{6pt}
+\begin{recap}[Chapter 1 in one paragraph]
+$\Q$ fails to be a home for analysis because bounded sets can have no least
+upper bound (\rref{1.1}). Name that failure (\rref{1.8}--\rref{1.10}), assert a
+field free of it (\rref{1.19}), and the consequences follow immediately: infima
+exist too (\rref{1.11}), $\N$ is unbounded and $\Q$ is dense (\rref{1.20}), and
+every positive real has every root (\rref{1.21}). Nothing in the rest of the
+book uses more about $\R$ than this. When a later proof says ``by completeness,''
+it means \rref{1.19} and nothing else.
+\end{recap}
+
+\end{document}

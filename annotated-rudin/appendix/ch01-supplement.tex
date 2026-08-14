@@ -1,0 +1,903 @@
+% ============================================================
+%  APPENDIX TO CHAPTER 1.  Material NOT in Rudin, imported from
+%  Tao I/II, ECNU, USTC, Yu Pin.  Numbered S1.n throughout.
+% ============================================================
+\rappendix{1}
+
+\begin{roadmap}[How to use this appendix]
+Nothing in this appendix is Rudin's text. It is imported from the four
+comparison texts and set apart at every level: the running head names the
+appendix, section heads carry a reverse-video tag, item numbers are prefixed
+\textbf{S}, and every statement names its source.
+
+\medskip
+\raggedright
+\textbf{Why import anything at all.} Chapter 1 is the one chapter where Rudin
+is deliberately incomplete, and he says so. He assumes $\Q$ outright, exiles
+the construction of $\R$ to an appendix he tells you to skip, and states his
+sharpest result --- that the complete ordered field is unique --- with the
+words \emph{``which we will not prove here.''} Each omission is defensible;
+each also leaves a question a reader is entitled to have answered.
+
+\medskip
+\textbf{What is here.}
+
+\smallskip
+\textbf{A. The uniqueness theorem, proved.} Rudin's strongest sentence about
+$\R$ is the one he declines to justify. Proving it is what converts his
+appendix from ``one construction'' into ``the only possible answer.''
+
+\medskip
+\textbf{B. How much is the Archimedean property?} Rudin gets it free from
+\lub{} at 1.20(a), so he never has to show it is not automatic. It is not:
+there are ordered fields containing infinite elements, and seeing one
+explains why Yu Pin must assume Archimedes separately.
+
+\medskip
+\textbf{C. Decimals, and a third route to the supremum.} Rudin disposes of
+decimals in three lines and says he will never use them. ECNU \emph{defines}
+reals as decimals, which makes $0.999\ldots = 1$ a normalisation rule and
+turns the supremum into something one computes rather than asserts.
+
+\medskip
+\textbf{D. The toolkit Rudin never states.} The real triangle inequality, its
+reverse form, the band rule for absolute values, and the
+$\varepsilon$-principle --- four facts he uses constantly and states
+nowhere.
+
+\medskip
+\textbf{E. Below Rudin's starting line.} He assumes $\Q$ in his second
+sentence. Tao pays that bill in full, and the itemised cost explains what
+Rudin's appendix is an instance of.
+
+\medskip
+\textbf{F. $\R$ is not the only completion of $\Q$.} ``Filling the holes''
+presumes a way of measuring closeness. Change the absolute value and the
+holes move.
+
+\medskip
+\textbf{G. Real exponents, worked.} Rudin's Exercises 1.6--1.7 done
+properly, including the two steps his hint glosses.
+
+\medskip
+\textbf{How to read it.} Section A belongs with Rudin's own appendix, and is
+best read straight after it. Section B can be read as soon as 1.20 is done,
+C alongside 1.22, D before Chapter 3, and G with Exercises 1.6--1.7. E and F
+are optional and answer ``what did the assumptions cost?'' The exercises are
+the last section.
+\end{roadmap}
+
+% ============================================================
+\ssection{Supplement A --- The uniqueness theorem, proved}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 1]
+\raggedright
+\textbf{What Rudin does.} Theorem 1.19 asserts that an ordered field $\R$
+with the least-upper-bound property exists and contains $\Q$ as a subfield;
+his appendix builds one from Dedekind cuts. At the end of that appendix he
+writes: \emph{``It is a fact, which we will not prove here, that any two
+ordered fields with the least-upper-bound property are isomorphic''} --- and
+concludes that 1.19 \emph{characterizes} $\R$ completely.
+
+\smallskip
+\textbf{The gap.} That sentence is the load-bearing one for the entire book,
+and it arrives unsupported. Everything after Chapter 1 uses only the
+\emph{properties} of $\R$ and never the cuts; the licence for that is
+precisely uniqueness. Without it, a sceptic could ask whether the theorems of
+Chapters 2--11 are theorems about \emph{Dedekind's} real numbers rather than
+about the real numbers.
+
+\smallskip
+\textbf{Where the gap bites.} Immediately and permanently. It is why Rudin
+can tell the reader, in his Preface, to skip the appendix; why Tao may build
+$\R$ from Cauchy sequences and get the same object; why ECNU may define reals
+as infinite decimals; and why the six equivalent completeness axioms of the
+Chapter 1 box are equivalent \emph{as descriptions of one thing} rather than
+as six different subjects.
+
+\smallskip
+\textbf{What this section supplies.} The proof. It is not hard --- it is the
+density of $\Q$ used four times --- but it is the argument that retires the
+construction for good.
+\end{roadmap}
+
+\sitem{S1.1}{Theorem}
+\emph{Let $F_1$ and $F_2$ be ordered fields with the least-upper-bound
+property. Then there is exactly one order-preserving field isomorphism
+$\varphi : F_1 \to F_2$, and it fixes the rationals.}
+\provenance{Nobody's. Rudin states it and declines to prove it; Tao never
+introduces the notion of an ordered field at all; Yu Pin defers it (p.\,35,
+``as for uniqueness, we will discuss it in passing later'') and delivers only
+the metric version --- the completion of a metric space is unique up to
+isometry (p.\,124). The proof below is supplied here.}
+
+\begin{proof}
+Each of $F_1$, $F_2$ contains an isomorphic copy of $\Q$, obtained by sending
+$n \mapsto 1 + \cdots + 1$ and then $m/n \mapsto m \cdot n^{-1}$; the field
+axioms make this injective and order-preserving, and we identify $\Q$ with
+its image in each. By 1.20, applied in each field, both are archimedean and
+$\Q$ is dense in each.
+
+For $x \in F_1$ put
+\[ Q_x = \{\,q \in \Q : q < x\,\}, \qquad
+   \varphi(x) = \sup\nolimits_{F_2} Q_x . \]
+The set $Q_x$ is nonempty and bounded above in $F_2$: by the archimedean
+property there are integers $m < x < n$, so $m \in Q_x$ and $n$ bounds it.
+Hence the supremum exists in $F_2$ by hypothesis, and $\varphi$ is defined.
+
+\emph{$\varphi$ fixes $\Q$ and preserves order.} If $r \in \Q$ then
+$Q_r = \{q \in \Q : q < r\}$ has supremum $r$ in $F_2$, so $\varphi(r)=r$. If
+$x < y$ in $F_1$, density gives rationals with $x < q < r < y$; then every
+element of $Q_x$ is below $q$ while $r \in Q_y$, so
+$\varphi(x) \le q < r \le \varphi(y)$. In particular $\varphi$ is injective.
+
+\emph{$\varphi$ is additive.} $Q_x + Q_y \subset Q_{x+y}$ gives
+$\varphi(x)+\varphi(y) \le \varphi(x+y)$. Conversely, if $q < x+y$ is
+rational, density supplies rationals $q_1 < x$ and $q_2 < y$ with
+$q < q_1+q_2$ --- choose $q_1$ within $\tfrac12(x+y-q)$ of $x$ and $q_2$
+likewise --- so $q \le \varphi(x)+\varphi(y)$. Taking the supremum over such
+$q$ gives the reverse inequality.
+
+\emph{$\varphi$ is multiplicative.} For $x,y>0$ the same two-sided argument
+applies to products of positive rationals; the general case follows from
+additivity, since $\varphi(-x) = -\varphi(x)$.
+
+\emph{$\varphi$ is onto.} Given $z \in F_2$, set
+$x = \sup_{F_1}\{q \in \Q : q < z\}$, which exists for the same reason as
+before. Then $Q_x$ and $\{q \in \Q : q < z\}$ have the same elements, by
+density in each field, so $\varphi(x) = z$.
+
+\emph{Uniqueness of $\varphi$.} Any order-preserving field isomorphism fixes
+$1$, hence fixes $\Q$; and an order-preserving map fixing a dense set is
+determined, since $\psi(x)$ must be an upper bound of $\psi(Q_x) = Q_x$ and
+below every rational above $x$.
+\end{proof}
+
+\begin{proofwalk}[How the proof flows]
+  \item \textbf{Choose the method.} An isomorphism must be \emph{built}, and
+        the only structure both fields are known to share is $\Q$ and the
+        supremum operation. So the map must be defined by naming each $x$
+        with rationals and reassembling it on the other side: pattern 3 of
+        Chapter 1's strategy index, transport to the supremum.
+  \item \textbf{Buy the supremum.} $\varphi(x) = \sup Q_x$ needs $Q_x$
+        nonempty and bounded --- exactly the two tickets 1.10 demands, and
+        exactly what the archimedean property (1.20(a)) supplies. Note this
+        is the first use of \lub{}, and it is used to \emph{define} the map,
+        not to prove anything about it.
+  \item \textbf{Get order for free.} Density (1.20(b)) separates any two
+        points by two rationals, and two rationals are enough to separate
+        their images. Injectivity comes with it.
+  \item \textbf{Do the algebra by squeezing.} Additivity and multiplicativity
+        are each proved by two inequalities: one inclusion of sets gives
+        ``$\le$,'' and density gives ``$\ge$.'' There is no computation
+        anywhere --- only the fact that rationals approximate from below as
+        closely as one likes.
+  \item \textbf{Run the construction backwards for surjectivity.} The same
+        formula with the roles of $F_1$ and $F_2$ exchanged produces the
+        preimage. Symmetry of the hypotheses is what makes this free.
+  \item \textbf{Audit.} The least-upper-bound property is spent twice, once
+        in each field, both times to define a map. The archimedean property
+        and density of $\Q$ are spent repeatedly --- but both are
+        \emph{consequences} of \lub{} by 1.20, so the hypothesis list is
+        exactly Rudin's. Nothing about cuts, decimals or Cauchy sequences
+        appears anywhere, which is the whole point.
+\end{proofwalk}
+
+\begin{deeper}[What the theorem licenses]
+Read the theorem as a permission slip. It says the phrase ``the real
+numbers'' denotes a single object, so that:
+
+\smallskip
+\emph{Constructions are disposable.} Rudin's cuts, Tao's Cauchy sequences,
+and ECNU's infinite decimals are three routes to the same destination.
+Rudin's advice in the Preface --- that beginning with a construction is
+``pedagogically unsound (though logically correct)'' --- is only defensible
+because of this theorem: you may skip the construction precisely because the
+construction does not matter.
+
+\smallskip
+\emph{Axiom choices are disposable too.} Chapter 1's box compared four
+axiomatisations --- Rudin's \lub{}, Yu Pin's nested intervals, Tao's Cauchy
+completeness, ECNU's six-cycle. Uniqueness is what makes those four
+descriptions of one field rather than four fields.
+
+\smallskip
+\emph{And it is sharp.} Drop any hypothesis and the conclusion fails.
+Without \lub{} there are many non-isomorphic archimedean ordered fields ---
+$\Q$ itself, and every subfield of $\R$. Without the ordering there are
+field isomorphisms of $\C$ that are wildly discontinuous. The next section
+drops the archimedean property, which \lub{} was silently supplying, and
+shows what escapes.
+\end{deeper}
+
+% ============================================================
+\ssection{Supplement B --- How much is the Archimedean property?}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 1]
+\raggedright
+\textbf{What Rudin does.} Theorem 1.20(a) derives the archimedean property
+--- for $x>0$ and any $y$ there is a positive integer $n$ with $nx>y$ ---
+from the least-upper-bound property, in four lines. His margin remark notes
+that this is a theorem, not an axiom.
+
+\smallskip
+\textbf{The gap.} Deriving a property is not the same as showing it has
+content. Because Rudin obtains Archimedes free of charge, a reader has no
+way to see that it is a genuine restriction --- that ordered fields exist in
+which some element exceeds every integer, and that such fields therefore
+cannot have the \lub{} property.
+
+\smallskip
+\textbf{Where the gap bites.} At Chapter 1's own comparison box, where Yu Pin
+axiomatises $\R$ as field $+$ order $+$ \emph{archimedean} $+$ nested
+intervals, and the natural question --- why does he need the third
+hypothesis when Rudin does not? --- has no answer inside Rudin. It bites
+again at S2.7 in the Chapter 2 appendix, where recovering $\sup$ from Cauchy
+completeness needs Archimedes as a separate hypothesis, for exactly the
+reason exhibited here.
+
+\smallskip
+\textbf{What this section supplies.} An explicit non-archimedean ordered
+field, small enough to hold in the hand, together with the proof that no such
+field can have the least-upper-bound property.
+\end{roadmap}
+
+\sitem{S1.2}{Example}
+\emph{(An ordered field with infinite elements.) Let $\R(t)$ be the field of
+rational functions $p(t)/q(t)$ with real coefficients, and declare
+$f > 0$ when $f(x) > 0$ for all sufficiently large real $x$ --- equivalently,
+when the leading coefficients of $p$ and $q$ have the same sign. This makes
+$\R(t)$ an ordered field in which}
+\[ t > n \qquad \text{for every positive integer } n . \]
+\provenance{Supplied here: an explicit non-archimedean ordered field is
+absent from all four comparison texts. Yu Pin's axiom list (field, order,
+archimedean, nested intervals) is built to expose the possibility --- he
+notes at p.\,26 that (F), (O) and (A) alone are satisfied by $\Q$ --- but he
+gives no example in which (A) fails.}
+
+\begin{unpack}[Checking the order, and reading the element $t$]
+That the relation is an order needs only that a nonzero rational function has
+constant sign near $+\infty$ --- it has finitely many zeros --- and that the
+sum and product of two eventually-positive functions are eventually positive.
+Both are immediate, and they are the two clauses of Definition 1.17.
+
+Now look at $t$. For any integer $n$ the function $t - n$ is eventually
+positive, so $t > n$: the single element $t$ exceeds every integer. Its
+reciprocal $1/t$ is then a positive element smaller than every $1/n$ --- a
+genuine infinitesimal. Neither is a limit of anything; they are simply
+elements of the field, and the field's arithmetic is entirely ordinary.
+
+The moral is that ``$\R$ has no infinite or infinitesimal elements'' is not a
+consequence of being an ordered field. It has to be imposed, and Rudin
+imposes it without naming it, by assuming \lub{}.
+\end{unpack}
+
+\sitem{S1.3}{Theorem}
+\emph{An ordered field with the least-upper-bound property is archimedean.
+Consequently $\R(t)$ does not have the least-upper-bound property: the set of
+positive integers is bounded above in $\R(t)$ but has no supremum.}
+
+\begin{proof}
+This is Rudin's 1.20(a) restated, and his proof is the argument. Suppose the
+set $\N$ of positive integers were bounded above in an ordered field with the
+\lub{} property, and let $\alpha = \sup \N$. Since $\alpha - 1 < \alpha$, the
+element $\alpha-1$ is not an upper bound, so $n > \alpha-1$ for some
+$n \in \N$; but then $n+1 > \alpha$ and $n+1 \in \N$, contradicting that
+$\alpha$ is an upper bound.
+
+Hence in such a field $\N$ is unbounded, which is the archimedean property.
+In $\R(t)$ the element $t$ bounds $\N$ above, so $\R(t)$ cannot have the
+\lub{} property.
+\end{proof}
+
+\begin{deeper}[Three fields, and what separates them]
+Line up the examples Chapter 1 now has:
+
+\smallskip
+\begin{tabular}{@{}l c c p{0.44\linewidth}@{}}
+\toprule
+\textbf{field} & \textbf{arch.} & \textbf{\lub{}} & \textbf{what it lacks} \\
+\midrule
+$\Q$      & yes & no  & the sup of $\{p : p^2<2\}$ (1.1) \\
+$\R(t)$   & no  & no  & any bound on $\N$ \\
+$\R$      & yes & yes & --- \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+$\Q$ and $\R(t)$ fail to be $\R$ for genuinely different reasons, and the
+difference is worth holding on to. $\Q$ has the right \emph{scale} --- it is
+archimedean, its integers are unbounded --- and is merely full of holes.
+$\R(t)$ has no holes of $\Q$'s kind at all in the relevant sense; it fails
+earlier and more crudely, by containing elements no integer can reach.
+
+This is why Yu Pin's axiom list needs four items where Rudin's needs one
+extra property. Nested intervals alone does not imply Archimedes --- one can
+have a non-archimedean field in which every nested sequence of intervals has
+a common point --- so he must assume it. Rudin's \lub{} implies both at once,
+which is economical but conceals that two separate things were bought.
+\end{deeper}
+
+% ============================================================
+\ssection{Supplement C --- Decimals, and a third route to the supremum}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 1]
+\raggedright
+\textbf{What Rudin does.} Theorem 1.22 disposes of decimals in three lines:
+given $x>0$, take the largest integer $n_0 \le x$, then the largest $n_1$
+with $n_0 + n_1/10 \le x$, and so on; the resulting decimal converges to $x$.
+He then writes that \emph{``we shall never use decimals''} and does not
+mention them again.
+
+\smallskip
+\textbf{The gap.} Two, in opposite directions. Forwards: his appendix builds
+$\R$ from cuts and stops, never reconnecting the constructed field to the
+notation every reader has used since childhood --- so ``what \emph{is}
+$0.999\ldots$?'' is never answered. Backwards: he presents \lub{} as an
+axiom and its construction as a one-off, leaving the impression that a
+supremum is an object one may assert but not compute.
+
+\smallskip
+\textbf{Where the gap bites.} At 1.22 itself, where the reader is told the
+decimal expansion exists and is unique but not what makes the uniqueness
+work; at the end of the appendix, where cuts are abandoned without ever
+being converted into anything familiar; and in every later argument that
+approximates a real by rationals --- 1.20(b), 1.21, 3.20 --- each of which
+rebuilds an approximation scheme that 1.22 could have supplied once.
+
+\smallskip
+\textbf{What this section supplies.} ECNU's development, which runs the other
+way: reals \emph{are} infinite decimals, the awkward identification
+$0.999\ldots = 1$ is a normalisation rule chosen in advance, and the
+supremum is produced by an algorithm --- one digit at a time --- rather than
+asserted.
+\end{roadmap}
+
+\sitem{S1.4}{Definition}
+\emph{(Reals as decimals.) A real number is an infinite decimal
+$a_0.a_1a_2a_3\cdots$; it is rational when the expansion terminates or
+eventually repeats and irrational otherwise. To make the representation
+unique, every terminating expansion is rewritten with a tail of nines:
+for $a_n \ne 0$,}
+\[ a_0.a_1\cdots a_n \;=\; a_0.a_1\cdots(a_n-1)999\cdots , \]
+\emph{and an integer $a_0$ is written $(a_0-1).999\cdots$. Order is then
+lexicographic: $x > y$ if $a_0 > b_0$, or if the digits agree up to place
+$l$ and $a_{l+1} > b_{l+1}$.}
+\provenance{ECNU \cjk{定义}{Def} 1 (bk.\ pp.\,1--2), where this is the
+definition of $\R$, not a theorem about it.}
+
+\begin{pitfall}[$0.999\ldots = 1$ is a convention, not a paradox]
+Students meet this identity as a puzzle. In ECNU's development it is not a
+puzzle at all: $0.999\ldots$ is the \emph{official name} of $1$, chosen so
+that the lexicographic order of Definition S1.4 is a genuine total order.
+
+Why the choice matters: without a convention, $2.001$ and $2.000999\ldots$
+are two names for one number, and lexicographic comparison of names would
+declare the first larger. Normalising every terminating decimal to its
+nine-tail leaves exactly one name per number, and comparison of names then
+computes comparison of numbers. Note the convention runs \emph{opposite} to
+intuition --- the canonical form is the infinite one.
+
+Rudin sidesteps all of this by refusing to use decimals. His 1.22 asserts
+existence and uniqueness of the expansion and moves on; the uniqueness there
+is bought by taking the \emph{largest} $n_k$ at each stage, which produces
+the terminating form and so is the opposite normalisation. Neither choice is
+better --- but a reader who has seen only one will find the other's
+$0.999\ldots$ baffling.
+\end{pitfall}
+
+\sitem{S1.5}{Definition}
+\emph{(Deficient and excess approximations.) For $x = a_0.a_1a_2\cdots \ge 0$
+put}
+\[ x_n = a_0.a_1\cdots a_n, \qquad \bar x_n = x_n + 10^{-n} , \]
+\emph{so that $x_n \le x < \bar x_n$ with $\bar x_n - x_n = 10^{-n}$. The
+$x_n$ increase and the $\bar x_n$ decrease.}
+\provenance{ECNU \cjk{定义}{Def} 2 (bk.\ p.\,2).}
+
+\sitem{S1.6}{Theorem}
+\emph{$x > y$ if and only if $x_n > \bar y_n$ for some $n$. Consequently, if
+$x < y$ there is a rational $r$ with $x < r < y$.}
+\provenance{ECNU \cjk{命题}{Prop} and \cjk{例}{Ex} 1 (bk.\ pp.\,2--3).}
+
+\begin{proof}
+If $x_n > \bar y_n$ then $x \ge x_n > \bar y_n > y$. Conversely, if $x>y$
+then $x - y > 0$, and since $\bar x_n - x_n = 10^{-n} \to 0$ the sandwich
+$x_n \le x$, $y < \bar y_n$ forces $x_n > \bar y_n$ once $10^{-n}$ is smaller
+than the gap.
+
+For density, apply this with the roles reversed: $x<y$ gives an $n$ with
+$\bar x_n < y_n$, and
+\[ r = \tfrac12\bigl(\bar x_n + y_n\bigr) \]
+is rational --- being the average of two terminating decimals --- with
+$x \le \bar x_n < r < y_n \le y$.
+\end{proof}
+
+\begin{deeper}[Two proofs of density, and what each costs]
+Compare with Rudin's 1.20(b). He proves density from the archimedean
+property: stretch the interval by an integer $n$ until $n(y-x)>1$, catch an
+integer $m$ in the stretched gap, and divide back. The catching step needs
+that a set of integers bounded below has a least element --- well-ordering
+--- which he uses without comment.
+
+The proof above needs none of that. It truncates both numbers at a common
+depth and averages, and the only fact used is that the truncations sandwich
+the number within $10^{-n}$. It is also \emph{constructive}: it names the
+rational, whereas Rudin's argument asserts that a suitable $m$ exists.
+
+The trade is that this proof is available only once reals are decimals.
+Rudin's works in any archimedean ordered field, which is what he needs, since
+at 1.20 he has no decimals and does not want any.
+\end{deeper}
+
+\sitem{S1.7}{Theorem}
+\emph{(The supremum, computed.) Every nonempty set $S \subset \R$ that is
+bounded above has a least upper bound, and its decimal digits can be
+generated one at a time.}
+\provenance{ECNU \cjk{确界原理}{sup principle} \cjk{定理}{Thm} 1.1
+(bk.\ pp.\,5--7), proved from the decimal definition.}
+
+\begin{proof}
+Assume $S$ contains a nonnegative number. Choose a nonnegative integer $n$
+such that $x < n+1$ for every $x \in S$ while some $a_0 \in S$ has
+$a_0 \ge n$; this is possible because $S$ is bounded above and nonempty.
+
+Divide $[n, n+1)$ into ten equal parts. Among the ten, there is a largest
+digit $n_1$ for which some element of $S$ reaches $n.n_1$, and then
+\[ x < n.n_1 + 10^{-1} \quad\text{for all } x \in S,
+   \qquad a_1 \ge n.n_1 \quad\text{for some } a_1 \in S. \]
+Divide $[\,n.n_1,\ n.n_1 + 10^{-1})$ into ten parts and repeat. Inductively
+one obtains digits $n_1, n_2, \dots$ with
+\begin{equation}
+  x < n.n_1\cdots n_k + 10^{-k}\ \ (x \in S), \qquad
+  a_k \ge n.n_1\cdots n_k \ \ \text{for some } a_k \in S. \tag{S1.1}
+\end{equation}
+Let $\eta = n.n_1n_2n_3\cdots$ be the real number those digits name.
+
+$\eta$ is an upper bound: if some $x \in S$ had $x > \eta$, then by S1.6
+$x_k > \bar\eta_k = n.n_1\cdots n_k + 10^{-k}$ for some $k$, contradicting the
+first half of (S1.1).
+
+$\eta$ is least: if $\alpha < \eta$, then by S1.6 there is $k$ with
+$\eta_k > \bar\alpha_k$, and the second half of (S1.1) supplies $a_k \in S$
+with $a_k \ge \eta_k > \bar\alpha_k \ge \alpha$, so $\alpha$ is not an upper
+bound.
+\end{proof}
+
+\begin{proofwalk}[How the proof flows]
+  \item \textbf{Choose the method.} Unlike Rudin, we may not assume the
+        supremum exists --- it is the conclusion. So it must be
+        \emph{constructed}, and the only construction material available is
+        decimal digits. The proof is therefore an algorithm: decide the
+        digits one at a time.
+  \item \textbf{Fix the integer part.} Boundedness above gives an integer
+        ceiling; nonemptiness gives a floor. Both hypotheses of 1.10 are
+        spent here, in the first sentence, exactly as in Rudin's 1.21.
+  \item \textbf{Choose each digit greedily.} At each stage take the largest
+        digit that some element of $S$ still reaches. ``Largest that is still
+        attained'' is what makes the result least; ``still an upper bound''
+        is what makes it an upper bound. The two clauses of (S1.1) are the
+        two halves of Definition 1.8, maintained as loop invariants.
+  \item \textbf{Let the algorithm run forever.} The digits define a real
+        number by S1.4 --- and this is the step that would fail over $\Q$,
+        since the digit string need not repeat.
+  \item \textbf{Verify both clauses.} Each is checked by S1.6, which converts
+        a comparison of reals into a comparison of finite truncations. The
+        invariants were designed so that this conversion closes the argument
+        immediately.
+  \item \textbf{Audit.} Boundedness and nonemptiness are spent once each, in
+        step 2. The decimal definition of $\R$ is spent once, in step 4.
+        Nothing else enters --- in particular no cuts, no Cauchy sequences,
+        and no appeal to \lub{}, which is what makes this a genuine
+        \emph{third} construction rather than a restatement.
+\end{proofwalk}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,26) -- (104,26);
+  \foreach \x in {0,10,...,100}{\draw[thin] (\x,24.6) -- (\x,27.4);}
+  \node[mlbl, anchor=north] at (0,23) {$n$};
+  \node[mlbl, anchor=north] at (100,23) {$n{+}1$};
+  \fill[black!14] (60,25) rectangle (70,27);
+  \node[mlbl, anchor=south] at (65,28) {$n_1=6$};
+  % stage 2
+  \draw[axis] (0,10) -- (104,10);
+  \foreach \x in {0,10,...,100}{\draw[thin] (\x,8.6) -- (\x,11.4);}
+  \fill[black!14] (30,9) rectangle (40,11);
+  \node[mlbl, anchor=south] at (35,12) {$n_2=3$};
+  \node[mlbl, anchor=north] at (0,7) {$n.6$};
+  \node[mlbl, anchor=north] at (100,7) {$n.7$};
+  \draw[guide, {Stealth[length=3pt]}-] (60,23.4) -- (60,13);
+  \draw[guide, {Stealth[length=3pt]}-] (70,23.4) -- (100,13);
+  \node[lbl, anchor=west] at (0,-2)
+    {each stage magnifies the chosen tenth and picks the next digit};
+\end{tikzpicture}
+\end{center}
+\figcap{The supremum computed digit by digit: at each stage the interval is
+cut into ten, and the algorithm takes the rightmost part that some element of
+$S$ still reaches. The two conditions (S1.1) --- still an upper bound, still
+attained --- are the two clauses of Definition 1.8 carried along as
+invariants, and the digits they force out spell $\sup S$.}
+
+% ============================================================
+\ssection{Supplement D --- The toolkit Rudin never states}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 1]
+\raggedright
+\textbf{What Rudin does.} He proves the triangle inequality twice --- at
+1.33(e) for complex numbers and at 1.37(e) for $\R^k$ --- and defines
+neighbourhoods once, at 2.18(a), as open balls.
+
+\smallskip
+\textbf{The gap.} The real-line versions of both are missing. The real
+triangle inequality never appears as a standalone statement; the reverse
+form $\bigl||a|-|b|\bigr| \le |a-b|$ appears nowhere at all; the rule that
+converts $|a| < h$ into a two-sided band is never written down; and the
+$\varepsilon$-principle --- if $a < b + \varepsilon$ for every
+$\varepsilon>0$ then $a \le b$ --- is used in almost every proof from
+Chapter 1 onward without ever being stated.
+
+\smallskip
+\textbf{Where the gap bites.} Every $\varepsilon$-argument in the book opens
+by unpacking an absolute value into a band and closes by letting
+$\varepsilon$ shrink. Rudin performs both moves silently --- at 1.20, 1.21,
+3.2, 3.3, 4.2 --- so a reader learns them by imitation rather than by
+statement, and the reverse triangle inequality, which is what one needs to
+bound a difference of norms from below, has to be rediscovered each time it
+is wanted.
+
+\smallskip
+\textbf{What this section supplies.} The four facts, stated once, with the
+proof of the triangle inequality that derives it from the band rule rather
+than by cases.
+\end{roadmap}
+
+\sitem{S1.8}{Theorem}
+\emph{(Absolute value.) For real $a,b$ and $h>0$:}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item $-|a| \le a \le |a|$;
+  \item $|a| < h$ \emph{if and only if} $-h < a < h$;
+  \item $\bigl|\,|a|-|b|\,\bigr| \;\le\; |a \pm b| \;\le\; |a|+|b|$.
+\end{enumerate}
+\provenance{ECNU \S1.2, six properties of $|\cdot|$ (bk.\ p.\,3).}
+
+\begin{proof}
+(a) and (b) are the definition read in the two cases $a \ge 0$ and $a<0$.
+
+For (c), add the two instances of (a):
+\[ -\bigl(|a|+|b|\bigr) \;\le\; a+b \;\le\; |a|+|b| , \]
+and apply (b) in the reverse direction to read that band as
+$|a+b| \le |a|+|b|$. Replacing $b$ by $-b$ gives the same bound for
+$|a-b|$. For the left-hand inequality, write $|a| = |(a-b)+b| \le |a-b|+|b|$,
+so $|a|-|b| \le |a-b|$; exchanging $a$ and $b$ gives
+$|b|-|a| \le |a-b|$, and the two together are the claim.
+\end{proof}
+
+\begin{unpack}[Why (b) is the load-bearing one]
+Parts (a) and (c) are the famous ones, but (b) is the one used most often and
+the one Rudin never states. It is the rule that turns a statement about a
+\emph{distance} into a statement about \emph{two inequalities}, and back
+again --- and the proof above shows the ``back again'' direction doing real
+work: the triangle inequality is proved by producing a band and then reading
+it as an absolute value, with no case analysis anywhere.
+
+Every $\varepsilon$-$\delta$ argument in the book is an application. When
+Rudin writes ``$|s_n - s| < \varepsilon$'' and then concludes
+``$s - \varepsilon < s_n < s + \varepsilon$,'' that is (b), used without
+comment.
+\end{unpack}
+
+\sitem{S1.9}{Theorem}
+\emph{(The $\varepsilon$-principle.) If $a < b + \varepsilon$ for every
+$\varepsilon > 0$, then $a \le b$. Equivalently, if
+$|a - b| < \varepsilon$ for every $\varepsilon>0$, then $a = b$.}
+\provenance{ECNU \cjk{例}{Ex} 2 (bk.\ p.\,3) and \cjk{习题}{Ex} 1.1 \#3.}
+
+\begin{proof}
+Suppose $a > b$. Then $\varepsilon = a - b$ is positive, and the hypothesis
+applied to this particular $\varepsilon$ gives $a < b + (a-b) = a$, which is
+absurd.
+\end{proof}
+
+\noindent
+The proof is three lines and the statement is used everywhere, which is
+exactly why it deserves a name.\kn{Watch for it in Rudin. The last step of
+1.11's proof, of 1.21, of 3.2(b), and of every uniqueness argument in
+Chapter 3 is this principle: having shown a quantity is smaller than every
+positive number, conclude it is zero. Rudin never separates the move from
+its instances, so it reads as a trick repeated rather than a theorem
+applied.}
+
+\sitem{S1.10}{Definition}
+\emph{(Neighbourhood system.) For $a \in \R$ and $\delta>0$ write}
+\[ U(a;\delta) = \{x : |x-a|<\delta\}, \qquad
+   U^{\circ}(a;\delta) = \{x : 0<|x-a|<\delta\}, \]
+\emph{and $U_{+}(a;\delta) = [a, a+\delta)$,
+$U_{-}(a;\delta) = (a-\delta, a]$ for the one-sided versions;
+$U(+\infty) = \{x : x>M\}$, $U(-\infty) = \{x : x<-M\}$ and
+$U(\infty) = \{x : |x|>M\}$ for $M$ large.}
+\provenance{ECNU \S2.1 (bk.\ pp.\,4--5).}
+
+\begin{deeper}[One notation, and the four definitions it collapses]
+Rudin introduces neighbourhoods once, at 2.18(a), and only the two-sided
+ball. Every limit notion he later defines is then written out separately:
+4.1 for $\lim_{x\to p}$, 4.25 for one-sided limits, 4.33 for limits at
+$\pm\infty$. The three definitions look unrelated on the page.
+
+With the system above they are one sentence. In every case,
+$\lim f = A$ means
+\[ \text{for each } U(A;\varepsilon) \text{ there is }
+   U^{\circ}(a;\delta) \text{ with } f\bigl(U^{\circ}(a;\delta)\bigr)
+   \subset U(A;\varepsilon), \]
+and the four notions differ only in which neighbourhood of $a$ is used:
+punctured, right-hand, left-hand, or a neighbourhood of $+\infty$. The
+Chapter 4 appendix reaches the same unification from the other direction,
+through Tao's ``limit along a subset'' (S4.2); ECNU gets there by naming the
+neighbourhoods instead of the index sets.
+\end{deeper}
+
+% ============================================================
+\ssection{Supplement E --- Below Rudin's starting line}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 1]
+\raggedright
+\textbf{What Rudin does.} The second sentence of the book fixes his starting
+line: \emph{``we shall not, however, enter into any discussion of the axioms
+that govern the arithmetic of the integers, but assume familiarity with the
+rational numbers.''} Everything in Chapter 1 is built on $\Q$, taken as given.
+
+\smallskip
+\textbf{The gap.} A reader cannot tell whether that assumption is cheap or
+expensive. Is $\Q$ a few lines of set theory, or a serious construction? And
+if it is serious, is Rudin's Dedekind-cut appendix a special trick or an
+instance of something standard?
+
+\smallskip
+\textbf{Where the gap bites.} At the appendix, which looks like a
+one-off contrivance --- why \emph{sets of rationals}, of all things? --- and
+at every use of induction in the book, since Rudin never says what property
+of $\N$ makes induction legitimate.
+
+\smallskip
+\textbf{What this section supplies.} Tao's construction of $\N$, $\Z$ and
+$\Q$, priced honestly; and the observation that his three constructions and
+Rudin's cuts are the same manoeuvre performed four times.
+\end{roadmap}
+
+\sitem{S1.11}{Definition}
+\emph{(The Peano axioms.) $\N$ is a set with a distinguished element $0$ and
+a successor operation $n \mapsto n{+}{+}$ satisfying: $0$ is not a successor;
+the successor operation is injective; and if $P(0)$ holds and $P(n)$ implies
+$P(n{+}{+})$ for every $n$, then $P(n)$ holds for all $n$.}
+\provenance{Tao I, Axioms 2.1--2.5 (bk.\ pp.\,16--21).}
+
+\begin{deeper}[What Rudin's one sentence costs]
+Tao pays the bill in full, and the itemisation is instructive.
+
+\smallskip
+\emph{Even addition is a theorem first.} Before $+$ can be \emph{defined} by
+recursion one must prove that recursive definitions are legitimate at all ---
+Tao's Proposition 2.1.16. Induction is what licenses it. This is the answer
+to ``what makes $\N$ special'': not that its elements are small, but that it
+supports recursion.
+
+\smallskip
+\emph{$\Z$ is a quotient.} An integer is a \emph{formal difference}
+$a \,\text{---}\, b$ of naturals, with $a\,\text{---}\,b = c\,\text{---}\,d$
+declared to mean $a+d = c+b$. One then checks that $+$, $\times$ and $<$ are
+well defined on the classes.
+
+\smallskip
+\emph{$\Q$ is another quotient.} A rational is a \emph{formal quotient}
+$a /\!/ b$ with $b \ne 0$, and $a/\!/b = c/\!/d$ means $ad = cb$. Same
+checking again.
+
+\smallskip
+So Rudin's ``assume familiarity with the rational numbers'' is roughly
+thirty-five pages, two quotient constructions and a theorem about recursion.
+His Preface defends skipping it as avoiding what is ``pedagogically unsound
+(though logically correct),'' and after S1.1 --- uniqueness --- that defence
+is airtight: the construction cannot matter, so it may be skipped.
+\end{deeper}
+
+\begin{unpack}[One manoeuvre, performed four times]
+Look at what $\Z$, $\Q$, $\R$ have in common as constructions:
+
+\smallskip
+\begin{tabular}{@{}l l l@{}}
+\toprule
+\textbf{to build} & \textbf{formal symbol} & \textbf{identified when} \\
+\midrule
+$\Z$ from $\N$ & $a \,\text{---}\, b$   & $a+d = c+b$ \\
+$\Q$ from $\Z$ & $a /\!/ b$             & $ad = cb$ \\
+$\R$ from $\Q$ (Tao) & $\operatorname{LIM} a_n$ & $\lim|a_n-b_n| = 0$ \\
+$\R$ from $\Q$ (Rudin) & a cut $\alpha$ & --- (the set \emph{is} the number) \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+The first three are identical in shape: introduce a symbol for the operation
+you wish you could perform, declare when two symbols name the same thing,
+and prove the arithmetic descends to the classes. Tao says so explicitly ---
+$\operatorname{LIM}$ is introduced as ``a new formal symbol, similar to
+$\text{---}$ and $/\!/$'' --- and adds that once formal limits are shown to
+be actual limits, they are never needed again.
+
+Rudin's cuts are the odd one out: a cut is not a symbol standing for
+something absent but a set that \emph{is} the number. That is why his
+appendix needs no equivalence classes and why Step 1 spends so long on
+property (III) --- the normalisation that makes the representation unique is
+built into the definition rather than quotiented out afterwards.
+\end{unpack}
+
+% ============================================================
+\ssection{Supplement F --- $\R$ is not the only completion of $\Q$}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 1]
+\raggedright
+\textbf{What Rudin does.} Section 1.1 exhibits the gap in $\Q$ --- the set
+$\{p : p^2<2\}$ with no rational supremum --- and 1.19 supplies $\R$ as the
+field that fills it. The narrative is: $\Q$ has holes, $\R$ is $\Q$ with the
+holes filled.
+
+\smallskip
+\textbf{The gap.} That narrative quietly presumes a notion of ``hole,'' and a
+hole is only visible relative to a way of measuring closeness. Rudin uses
+the ordinary absolute value throughout and never says it is a choice.
+
+\smallskip
+\textbf{Where the gap bites.} Nowhere in this book --- which is exactly why
+it is worth one page. A reader who never learns that the choice existed will
+later meet $\Q_p$ and find it inexplicable, and will also misread the word
+``complete'' in Chapter 3 as a property of a \emph{set} rather than of a
+\emph{metric}.
+
+\smallskip
+\textbf{What this section supplies.} A second absolute value on $\Q$, and the
+different field it completes to.
+\end{roadmap}
+
+\sitem{S1.12}{Definition}
+\emph{(The $p$-adic absolute value.) Fix a prime $p$. Every nonzero rational
+$x$ is uniquely $x = p^{v}\,m/n$ with $m$, $n$ coprime to $p$; put
+$v(x) = v$ and}
+\[ |x|_p = p^{-v(x)}, \qquad d_p(x,y) = |x-y|_p . \]
+\emph{Then $d_p$ is a metric on $\Q$, and $(\Q, d_p)$ is not complete; its
+completion is the field $\Q_p$ of $p$-adic numbers.}
+\provenance{Yu Pin p.\,125, as a worked corollary of his completion theorem
+(Thm 77, pp.\,123--124).}
+
+\begin{deeper}[What ``complete'' is a property of]
+Under $d_p$ a number is \emph{small} when it is divisible by a high power of
+$p$. With $p = 5$, the numbers $5, 25, 125, \dots$ march to zero, and
+$1/5$ is enormous. The metric is genuinely a metric --- and it satisfies
+something stronger than the triangle inequality,
+$|x+y|_p \le \max(|x|_p,|y|_p)$, which makes its geometry unrecognisable:
+every triangle is isosceles, and every point of a ball is its centre.
+
+Complete $(\Q,d_p)$ and you get $\Q_p$, not $\R$. So:
+
+\smallskip
+\emph{``$\R$ is $\Q$ with the holes filled'' is incomplete as a description.}
+The correct statement is that $\R$ is $\Q$ completed \emph{with respect to
+the ordinary absolute value}. Change the absolute value and the holes move.
+
+\smallskip
+\emph{This is why Chapter 3 defines completeness for a metric space and not
+for a set.} Rudin's 3.11 is stated for metric spaces precisely because the
+property depends on $d$; his Exercise 3.24 constructs the completion in
+general. The Chapter 2 appendix (S2.8) gives the definition, and Yu Pin's
+universal property is what makes ``\emph{the} completion'' legitimate
+language.
+
+\smallskip
+There is a theorem lurking here that neither book states: Ostrowski's, that
+the ordinary absolute value and the $p$-adic ones are the \emph{only}
+absolute values on $\Q$ up to equivalence. So $\R$ and the $\Q_p$ are the
+complete list of completions --- Rudin's choice was not arbitrary, merely
+unremarked.
+\end{deeper}
+
+% ============================================================
+\ssection{Supplement G --- Real exponents, worked}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 1]
+\raggedright
+\textbf{What Rudin does.} Theorem 1.21 proves that every positive real has a
+unique positive $n$th root. Exercises 1.6 and 1.7 then ask the reader to
+build $b^x$ for all real $x$ and establish its laws, with a hint.
+
+\smallskip
+\textbf{The gap.} The exercises are substantially harder than they look, and
+two steps in particular are glossed by the hint: that $b^{m/n}$ does not
+depend on how the fraction $m/n$ is written, and that the limit defining
+$b^x$ for irrational $x$ exists at all.
+
+\smallskip
+\textbf{Where the gap bites.} Every later appearance of $x^\alpha$,
+$a^x$ and $\log$ --- 3.20's special limits, 8.6's exponential --- rests on
+this exercise having been done. A reader who skipped it has a gap under the
+whole of Chapters 3 and 8.
+
+\smallskip
+\textbf{What this section supplies.} Tao's worked version of Rudin's
+exercise, with both glossed steps proved.
+\end{roadmap}
+
+\sitem{S1.13}{Theorem}
+\emph{(Rational exponents.) For $x>0$ and $n$ a positive integer put
+$x^{1/n} = \sup\{y \ge 0 : y^n \le x\}$. The set is nonempty and bounded
+above, so the supremum exists; it satisfies $(x^{1/n})^n = x$, and for
+integers $a$ and positive integers $b$ the definition
+$x^{a/b} = (x^{1/b})^a$ is independent of the representation of the
+fraction. With these, $x^{q+r} = x^qx^r$ and $(x^q)^r = x^{qr}$ for all
+rational $q,r$.}
+\provenance{Tao I, Def.\ 5.6.4--5.6.7 and Lemmas 5.6.5--5.6.9
+(bk.\ pp.\,123--125) --- Rudin's Exercise 1.6 worked out.}
+\begin{proof}
+The set $\{y \ge 0 : y^n \le x\}$ contains $0$ and is bounded above by
+$\max\{1,x\}$, since $y > \max\{1,x\}$ forces $y^n \ge y > x$. So the
+supremum exists. Because $t \mapsto t^n$ is strictly increasing on
+$[0,\infty)$, the set is the interval $[0,y]$ where $y$ is the unique
+positive $n$th root supplied by 1.21; hence $x^{1/n}=y$ and
+$(x^{1/n})^n = x$.
+
+For independence, suppose $a/b = c/d$, so $ad = cb$. Both $(x^{1/b})^a$ and
+$(x^{1/d})^c$ are positive, and raising each to the power $bd$ gives
+$x^{ad}$ and $x^{cb}$ respectively --- equal numbers. Since 1.21 provides
+\emph{exactly one} positive $bd$th root, the two agree.
+
+The laws $x^{q+r}=x^qx^r$ and $(x^q)^r = x^{qr}$ now follow by writing $q$
+and $r$ over a common denominator and using the corresponding integer
+identities together with uniqueness in 1.21.
+\end{proof}
+
+\noindent
+Rudin's 1.21 already gives the root; the content here is the
+\emph{independence}, which needs the uniqueness half of 1.21 to force
+$(x^{1/bd})^{ad} = (x^{1/b})^a$ whenever $a/b = c/d$.\kn{Rudin's hint for
+Exercise 1.6 says to prove $(b^m)^{1/n} = (b^p)^{1/q}$ when $m/n = p/q$ and
+then define $b^{m/n}$ to be that common value. That single sentence is the
+independence step, and it is where all the work is --- both sides are $n$th
+roots, so uniqueness in 1.21 is what identifies them.}
+
+\sitem{S1.14}{Theorem}
+\emph{(Irrational exponents.) Let $x>0$ and let $\alpha$ be real. If
+$(q_n)$ is any sequence of rationals with $q_n \to \alpha$, then
+$(x^{q_n})$ converges, and the limit does not depend on the sequence chosen.
+One may therefore define $x^{\alpha} = \lim_n x^{q_n}$.}
+\provenance{Tao I, Lemma 6.7.1 (bk.\ pp.\,152--153) --- Rudin's Exercise 1.7.}
+\begin{proof}
+Take $x \ge 1$ (for $0<x<1$ apply the result to $1/x$). If $q,r$ are
+rationals with $|q|,|r| \le M$ and $|q-r| \le 1/K$, then
+\[ \bigl|x^{q}-x^{r}\bigr| = x^{r}\bigl|x^{q-r}-1\bigr|
+   \le x^{M}\bigl(x^{1/K}-1\bigr), \]
+and $x^{1/K} \to 1$ as $K \to \infty$ by 3.20(b). Now let $q_n \to \alpha$
+with each $q_n$ rational. The sequence $(q_n)$ is Cauchy and bounded, so the
+displayed estimate makes $\bigl(x^{q_n}\bigr)$ Cauchy, and it converges by
+completeness of $\R$ (3.11).
+
+If $(q_n')$ is a second rational sequence tending to $\alpha$, interleave the
+two into a single sequence; it also tends to $\alpha$, so its image
+converges, and the two original limits --- being limits of subsequences of a
+convergent sequence --- coincide.
+\end{proof}
+
+\begin{unpack}[The estimate that makes the definition legal]
+Everything rests on one inequality. For rationals $q, r$ with
+$|q - r| \le 1/K$ and both at most $M$ in absolute value,
+\[ \bigl|x^{q} - x^{r}\bigr| \;\le\; x^{M}\bigl(x^{1/K} - 1\bigr)
+   \qquad (x \ge 1), \]
+and $x^{1/K} \to 1$ as $K \to \infty$ --- which is Rudin's own 3.20(b) in
+disguise. So $(x^{q_n})$ is Cauchy whenever $(q_n)$ is, and completeness of
+$\R$ supplies the limit. Interleaving two sequences with the same limit shows
+the value is independent of the choice, exactly as in the uniqueness argument
+of S1.1.
+
+Two things are worth noticing. First, the definition needs completeness of
+$\R$, so real exponentiation is downstream of 1.19 --- it could not have been
+introduced in $\Q$. Second, this is the same three-step pattern used
+throughout: \emph{approximate by rationals, show the approximations are
+Cauchy, pass to the limit}. S1.1 uses it to build an isomorphism, S1.7 to
+build a supremum, and Chapter 4's S4.17 to extend a uniformly continuous
+function. Recognising the pattern is worth more than any one instance.
+\end{unpack}

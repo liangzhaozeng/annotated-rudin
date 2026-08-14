@@ -1,0 +1,242 @@
+% ============================================================
+%  Chapter 1 -- Euclidean Spaces, 1.36-1.38
+% ============================================================
+\rsection{Euclidean Spaces}
+
+\begin{signpost}[The last piece of equipment]
+Three items, and the section exists for one sentence: Remark 1.38, which
+observes that $\R^k$ is a metric space. Everything in Chapter 2 --- open sets,
+compactness, connectedness --- is developed for metric spaces, and $\R^k$ is the
+example that motivates all of it. This section supplies the distance function
+and verifies the three properties Chapter 2 will demand.
+
+\smallskip
+Note what is \emph{not} claimed. Rudin gives $\R^k$ a vector space structure and
+an inner product, but no multiplication of vectors by vectors --- $\R^k$ is not
+a field for $k > 1$. The only exception is $k = 2$, which coincides with $\C$;
+1.38 remarks on the coincidence, and it is worth keeping straight that $\R^2$
+and $\C$ are the same metric space but only $\C$ has a product.
+\end{signpost}
+
+\ritem{1.36}{Definitions}
+For each positive integer $k$, let $\R^k$ be the set of all ordered $k$-tuples
+\[ \mathbf{x} = (x_1, x_2, \dots, x_k), \]
+where $x_1, \dots, x_k$ are real numbers, called the \emph{coordinates} of
+$\mathbf{x}$. The elements of $\R^k$ are called \emph{points}, or
+\emph{vectors}, especially when $k > 1$. We shall denote vectors by boldfaced
+letters. If $\mathbf{y} = (y_1,\dots,y_k)$ and if $\alpha$ is a real number, put
+\begin{align*}
+  \mathbf{x}+\mathbf{y} &= (x_1+y_1, \dots, x_k+y_k)\\
+  \alpha\mathbf{x} &= (\alpha x_1, \dots, \alpha x_k)
+\end{align*}
+so that $\mathbf{x}+\mathbf{y} \in \R^k$ and $\alpha\mathbf{x} \in \R^k$. This
+defines addition of vectors, as well as multiplication of a vector by a real
+number (a \emph{scalar}). These two operations satisfy the commutative,
+associative, and distributive laws (the proof is trivial, in view of the
+analogous laws for the real numbers) and make $\R^k$ into a \emph{vector space
+over the real field}. The zero element of $\R^k$ (sometimes called the
+\emph{origin} or the \emph{null vector}) is the point $\mathbf{0}$, all of whose
+coordinates are $0$.
+
+We also define the so-called ``inner product'' (or scalar product) of
+$\mathbf{x}$ and $\mathbf{y}$ by
+\[ \mathbf{x}\cdot\mathbf{y} = \sum_{i=1}^k x_iy_i \]
+and the \emph{norm} of $\mathbf{x}$ by
+\[ |\mathbf{x}| = (\mathbf{x}\cdot\mathbf{x})^{1/2}
+   = \left(\sum_{i=1}^k x_i^2\right)^{1/2}. \]
+
+The structure now defined (the vector space $\R^k$ with the above inner product
+and norm) is called \emph{euclidean $k$-space}.\kn{Three separate structures are
+being stacked here, and later chapters use them independently: a \emph{vector
+space} (addition and scaling, used throughout Chapter 9), an \emph{inner
+product} (used for orthogonality and in Chapter 11), and a \emph{norm} (used to
+make a metric, which is all Chapter 2 needs). The norm is derived from the inner
+product; the inner product is not derived from anything.}
+
+\ritem{1.37}{Theorem}
+\emph{Suppose $\mathbf{x},\mathbf{y},\mathbf{z} \in \R^k$, and $\alpha$ is real.
+Then}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{$|\mathbf{x}| \ge 0$;}
+  \item \emph{$|\mathbf{x}| = 0$ if and only if $\mathbf{x} = \mathbf{0}$;}
+  \item \emph{$|\alpha\mathbf{x}| = |\alpha|\,|\mathbf{x}|$;}
+  \item \emph{$|\mathbf{x}\cdot\mathbf{y}| \le |\mathbf{x}|\,|\mathbf{y}|$;}
+  \item \emph{$|\mathbf{x}+\mathbf{y}| \le |\mathbf{x}|+|\mathbf{y}|$;}
+  \item \emph{$|\mathbf{x}-\mathbf{z}| \le |\mathbf{x}-\mathbf{y}|
+        + |\mathbf{y}-\mathbf{z}|$.}
+\end{enumerate}
+
+\begin{proof}
+(a), (b), and (c) are obvious, and (d) is an immediate consequence of the
+Schwarz inequality.\kn{Take 1.35 with all $a_j, b_j$ real; conjugation does
+nothing, and the statement becomes
+$(\sum x_iy_i)^2 \le \sum x_i^2 \sum y_i^2$, which is (d) squared. This is the
+only place the previous section's main theorem is used, and it is the reason
+that section had to come first.} By (d) we have
+\begin{align*}
+  |\mathbf{x}+\mathbf{y}|^2
+    &= (\mathbf{x}+\mathbf{y})\cdot(\mathbf{x}+\mathbf{y})\\
+    &= \mathbf{x}\cdot\mathbf{x} + 2\,\mathbf{x}\cdot\mathbf{y}
+       + \mathbf{y}\cdot\mathbf{y}\\
+    &\le |\mathbf{x}|^2 + 2|\mathbf{x}|\,|\mathbf{y}| + |\mathbf{y}|^2\\
+    &= (|\mathbf{x}|+|\mathbf{y}|)^2,
+\end{align*}
+so that (e) is proved. Finally (f) follows from (e) if we replace $\mathbf{x}$
+by $\mathbf{x}-\mathbf{y}$ and $\mathbf{y}$ by $\mathbf{y}-\mathbf{z}$.
+\end{proof}
+
+\begin{deeper}[The geometry of 1.37(d) and (e)]
+Parts (d) and (e) are the two facts of Euclidean geometry that survive into
+arbitrary dimension, and each has a picture that is also its proof.
+
+\medskip
+\textbf{(d) Schwarz is a statement about projection.} Assume
+$\mathbf{y} \ne \mathbf{0}$ --- otherwise both sides of (d) vanish and there
+is nothing to prove. Drop a perpendicular from $\mathbf{x}$ onto the line
+through $\mathbf{y}$. The foot sits at $t\mathbf{y}$ with
+$t = (\mathbf{x}\cdot\mathbf{y})/|\mathbf{y}|^2$, and the leftover piece
+$\mathbf{x}-t\mathbf{y}$ is perpendicular to $\mathbf{y}$.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[thin] (-4,0) -- (56,0);
+  % the projection, drawn heavy along the line
+  \draw[seg] (0,0) -- (26,0);
+  \draw[vec] (0,0) -- (44,0);  \node[mlbl, anchor=south] at (44,1.4) {$\mathbf{y}$};
+  \draw[vec] (0,0) -- (26,17);  \node[mlbl, anchor=south east] at (26,17) {$\mathbf{x}$};
+  \draw[guide] (26,17) -- (26,0);
+  \draw[thin] (22.5,0) -- (22.5,3.5) -- (26,3.5);
+  \node[ptfill, minimum size=2.6pt] at (26,0) {};
+  \node[mlbl, anchor=west] at (27.5,2.5) {$t\mathbf{y}$};
+  \node[lbl, anchor=west] at (28,11) {$\mathbf{x}-t\mathbf{y}$};
+  % the projection length, safely below the line
+  \draw[thin, {Stealth[length=3pt]}-{Stealth[length=3pt]}] (0,-4) -- (26,-4);
+  \node[lbl, anchor=north] at (13,-5.5)
+    {this shadow has length $|\mathbf{x}\cdot\mathbf{y}|/|\mathbf{y}|$};
+\end{tikzpicture}
+\end{center}
+\figcap{The shadow of $\mathbf{x}$ on $\mathbf{y}$ cannot be longer than
+$\mathbf{x}$ itself.}
+
+\smallskip
+Now compute the length of that leftover piece:
+\[
+  0 \;\le\; |\mathbf{x}-t\mathbf{y}|^2
+    \;=\; |\mathbf{x}|^2 - \frac{(\mathbf{x}\cdot\mathbf{y})^2}{|\mathbf{y}|^2},
+\]
+and rearranging gives exactly
+$(\mathbf{x}\cdot\mathbf{y})^2 \le |\mathbf{x}|^2|\mathbf{y}|^2$. That is
+Schwarz, and no angle was needed --- only that a squared length is not
+negative. Equality holds precisely when the leftover piece vanishes, that is
+when $\mathbf{x}$ lies on the line through $\mathbf{y}$: the linear dependence
+of Exercise 1.15.
+
+\smallskip
+This is also Rudin's proof of 1.35 in disguise. His $\sum|Ba_j - Cb_j|^2 \ge 0$
+is the same ``a squared length is not negative,'' with $Ba_j - Cb_j$ playing
+the part of the leftover piece --- and his separate treatment of $B=0$
+is exactly the $\mathbf{y}=\mathbf{0}$ case set aside above.
+
+\smallskip
+A third way to say it, if you prefer algebra to pictures: the function
+$q(t) = |\mathbf{x}-t\mathbf{y}|^2$ is a quadratic in $t$ that is never
+negative, so its discriminant cannot be positive, and
+$4(\mathbf{x}\cdot\mathbf{y})^2 - 4|\mathbf{y}|^2|\mathbf{x}|^2 \le 0$. The
+three proofs are one proof: the projection is where $q$ attains its minimum,
+and the discriminant condition says that minimum is not below zero.
+
+\medskip
+\textbf{(e) The triangle inequality is a triangle.} Lay $\mathbf{y}$ head to
+tail after $\mathbf{x}$; the direct route to $\mathbf{x}+\mathbf{y}$ is no
+longer than going via the corner.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[vec] (0,0) -- (30,4);   \node[mlbl, anchor=north] at (15,2.6) {$\mathbf{x}$};
+  \draw[vec] (30,4) -- (44,20); \node[mlbl, anchor=west] at (38,11) {$\mathbf{y}$};
+  \draw[vec] (0,0) -- (44,20);  \node[mlbl, anchor=south east] at (24,13.5) {$\mathbf{x}+\mathbf{y}$};
+  \node[ptfill, minimum size=2.6pt] at (0,0) {};
+  \node[ptfill, minimum size=2.6pt] at (30,4) {};
+  \node[ptfill, minimum size=2.6pt] at (44,20) {};
+  \node[lbl, anchor=west] at (50,10) {direct route $\le$};
+  \node[lbl, anchor=west] at (50,6.5) {route via the corner};
+\end{tikzpicture}
+\end{center}
+\figcap{Part (f) is the same picture read as three \emph{points}: going from
+$\mathbf{x}$ to $\mathbf{z}$ directly beats detouring through $\mathbf{y}$.}
+
+\smallskip
+\textbf{But here the picture is not a proof, and it is worth being clear why.}
+For Schwarz the figure could be turned into an argument, because every step
+was an identity about inner products. Not so here. ``The straight path is
+shortest'' is a theorem \emph{of} Euclidean geometry, and in Rudin's
+development Euclidean geometry does not yet exist --- 1.36 has just
+\emph{defined} distance by a formula, and 1.37 is where the familiar
+properties of that formula are established for the first time. Appealing to
+the picture would assume what is being proved. The figure shows you what
+1.37(e) means; the algebra, via Schwarz, is what makes it true.
+\end{deeper}
+
+\begin{unpack}[Part (f) is the triangle inequality you will actually use]
+Parts (e) and (f) say the same thing twice, and it is worth seeing why both are
+stated. Part (e) is about \emph{vectors}: the length of a sum is at most the sum
+of the lengths. Part (f) is about \emph{points}: the distance from $\mathbf{x}$
+to $\mathbf{z}$ is at most the distance via any detour through $\mathbf{y}$.
+
+The substitution converting one into the other is worth doing once by hand.
+Setting $\mathbf{u} = \mathbf{x}-\mathbf{y}$ and
+$\mathbf{v} = \mathbf{y}-\mathbf{z}$, we have
+$\mathbf{u}+\mathbf{v} = \mathbf{x}-\mathbf{z}$, so (e) reads
+$|\mathbf{x}-\mathbf{z}| \le |\mathbf{x}-\mathbf{y}|+|\mathbf{y}-\mathbf{z}|$.
+
+Form (f) is the one that generalises. When Chapter 2 defines a metric space
+there is no addition available, so vectors cannot be summed and (e) has no
+meaning --- but distances between three points still make sense, and (f) becomes
+axiom (c) of Definition 2.15.
+\end{unpack}
+
+\ritem{1.38}{Remarks}
+Theorem 1.37(a), (b), and (f) will allow us (see Chap.\ 2) to regard $\R^k$ as a
+\emph{metric space}.\kd{This is the entire purpose of the section, stated in one
+sentence and easy to read past. Compare the three parts he names with Definition
+2.15: (a) and (b) give $d(x,y)>0$ for $x \ne y$ and $d(x,x)=0$; (f) is the
+triangle inequality. Symmetry, the remaining axiom, follows from (c) with
+$\alpha = -1$. Rudin has just verified, in advance, that $\R^k$ is an example of
+the structure Chapter 2 will study abstractly.}
+
+$\R^1$ (the set of all real numbers) is usually called \emph{the line}, or
+\emph{the real line}. Likewise, $\R^2$ is called \emph{the plane}, or \emph{the
+complex plane} (compare Definitions 1.24 and 1.36). In these two cases, the norm
+is just the absolute value of the corresponding real or complex number.
+
+\begin{pitfall}[$\R^2$ and $\C$ are the same space but not the same object]
+As metric spaces they are identical: $(a,b) \in \R^2$ and $a+bi \in \C$ have the
+same norm $\sqrt{a^2+b^2}$, so every statement about convergence, open sets or
+compactness transfers word for word.
+
+They differ in algebra. $\C$ has a multiplication making it a field (1.25);
+$\R^2$ has only the inner product, which produces a \emph{scalar}, not a vector.
+So $zw$ makes sense for $z,w \in \C$ and $\mathbf{x}\mathbf{y}$ does not for
+$\mathbf{x},\mathbf{y} \in \R^2$.
+
+The distinction matters when a theorem is stated for one and you want it for the
+other. Results resting only on the metric --- most of Chapter 2, and the
+convergence theorems of Chapter 3 --- carry across freely. Results using
+multiplication or division, such as the whole theory of power series in Chapter
+8, belong to $\C$ alone.
+\end{pitfall}
+
+\begin{recap}[The chapter proper, in one paragraph]
+$\Q$ is unfit for analysis because a bounded set can fail to have a least upper
+bound (1.1). Name that failure (1.8--1.10), develop just enough algebra to state
+what $\R$ must be (1.12--1.18), assert a field free of the failure (1.19), and
+the consequences follow at once: infima exist too (1.11), $\N$ is unbounded and
+$\Q$ is dense (1.20), and every positive real has every root (1.21). The
+remaining sections build the objects later chapters will work in --- the
+extended reals for unbounded suprema, $\C$ for Chapters 3 and 8, $\R^k$ for
+Chapter 2 onward --- and prove one inequality of lasting importance, Schwarz's
+(1.35). Nothing in the rest of the book uses more about $\R$ than 1.19. When a
+later proof says ``by completeness,'' that is what it means.
+\end{recap}

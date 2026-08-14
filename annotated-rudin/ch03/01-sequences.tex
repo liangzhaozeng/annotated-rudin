@@ -1,0 +1,462 @@
+% ============================================================
+%  Chapter 3 -- Convergent Sequences and Subsequences, 3.1-3.7
+% ============================================================
+\rchapter{3}{Numerical Sequences and Series}
+
+\begin{roadmap}[Why this chapter exists]
+Chapter 1 promised that limits would have somewhere to arrive; Chapter 2 built
+the spaces they arrive in. This chapter finally defines the arrival ---
+$p_n \to p$ --- and then spends its second half on the single most important
+special case: series, which are sequences of partial sums.
+
+\medskip
+Two theorems are the chapter's spine. \textbf{3.11} says that in $\R^k$ a
+sequence converges exactly when it is a Cauchy sequence --- convergence
+becomes an \emph{internal} property, checkable without knowing the limit.
+\textbf{3.14} says a monotonic sequence converges exactly when it is bounded.
+Both are completeness in action, and nearly every convergence test for series
+(3.24 through 3.44) is one of them wearing different clothes.
+\end{roadmap}
+
+\begin{roadmap}[How it is organized, and why in that order]
+\textbf{Rudin's own account}, from the opening paragraph: the chapter ``will
+deal primarily with sequences and series of complex numbers,'' but ``the basic
+facts about convergence are just as easily explained in a more general
+setting'' --- so the first three sections work in metric spaces, and the
+theorems proved there are inherited free by $\R$, $\C$ and $\R^k$. The same
+economy as 1.13(c) and Chapter 2.
+
+\medskip
+\centering
+\begin{tikzpicture}[scale=0.9, transform shape, node distance=4mm]
+\node[rmbox, text width=20mm] (a) {\textbf{3.1--3.20}\\sequences:\\limits, Cauchy,\\$\limsup$};
+\node[rmbox, text width=20mm, right=of a] (b) {\textbf{3.21--3.32}\\series; the\\number $e$};
+\node[rmbox, text width=20mm, right=of b] (c) {\textbf{3.33--3.46}\\tests; power\\series};
+\node[rmbox, text width=20mm, right=of c] (d) {\textbf{3.47--3.55}\\products, re-\\arrangements};
+\draw[rmarrow] (a) -- (b); \draw[rmarrow] (b) -- (c); \draw[rmarrow] (c) -- (d);
+\end{tikzpicture}
+
+\medskip
+\raggedright
+Three things to know in advance.
+
+\smallskip
+\textbf{The sequence sections are the load-bearing wall.} Everything about
+series is a statement about the sequence of partial sums, so 3.21--3.55 consume
+3.1--3.20 continuously. In particular $\limsup$ (3.16--3.17), the chapter's
+hardest definition, exists mainly so that the root test (3.33) and the radius
+of convergence (3.39) can be stated without exceptions.
+
+\smallskip
+\textbf{Completeness gets its name here.} Definition 3.12 finally introduces
+the word \emph{complete} for ``every Cauchy sequence converges,'' discharging
+the promise made in the comparison box at Definition 1.10. Two more of the
+ECNU text's six equivalent completeness statements appear as theorems in this
+chapter: monotone convergence is 3.14, and the Cauchy criterion is 3.11(c).
+
+\smallskip
+\textbf{The last section is a warning.} Rearranging a series can change its
+sum (3.54) unless the convergence is absolute (3.55). The chapter is arranged
+so that this lands last, as the reason the distinction of 3.45--3.46 was worth
+drawing at all.
+\end{roadmap}
+
+\noindent
+As the title indicates, this chapter will deal primarily with sequences and
+series of complex numbers. The basic facts about convergence, however, are just
+as easily explained in a more general setting. The first three sections will
+therefore be concerned with sequences in euclidean spaces, or even in metric
+spaces.
+
+\rsection{Convergent Sequences}
+
+\ritem{3.1}{Definition}
+A sequence $(p_n)$ in a metric space $X$ is said to \emph{converge} if there is
+a point $p \in X$ with the following property: For every $\varepsilon > 0$
+there is an integer $N$ such that $n \ge N$ implies that
+$d(p_n,p) < \varepsilon$. (Here $d$ denotes the distance in $X$.)
+
+In this case, we also say that $(p_n)$ \emph{converges to} $p$, or that $p$ is
+the \emph{limit} of $(p_n)$ [see Theorem 3.2(b)], and we write $p_n \to p$, or
+\[ \lim_{n\to\infty} p_n = p. \]
+If $(p_n)$ does not converge, it is said to \emph{diverge}.\kn{Read the
+quantifiers in the stated order: $\varepsilon$ first, then $N$. The challenge
+comes before the response, and $N$ may depend on $\varepsilon$ --- almost
+always does. Every limit argument in this book is a game of respond-to-%
+$\varepsilon$, and the bracketed reference to 3.2(b) is Rudin flagging that
+``\emph{the} limit'' needs the uniqueness proved there before the phrase is
+legitimate.}
+
+It might be well to point out that our definition of ``convergent sequence''
+depends not only on $(p_n)$ but also on $X$; for instance, the sequence
+$(1/n)$ converges in $\R^1$ (to $0$), but fails to converge in the set of all
+positive real numbers [with $d(x,y) = |x-y|$]. In cases of possible ambiguity,
+we can be more precise and specify ``convergent in $X$'' rather than
+``convergent.''\kw{The same relativity as ``open'' in 2.29, and the same cure:
+name the ambient space. The sequence $(1/n)$ has not changed; what changed is
+whether the space still contains the point it is crowding toward. Completeness
+(3.12) is exactly the property of spaces in which this failure mode ---
+converging toward a missing point --- cannot occur.}
+
+We recall that the set of points $p_n$ $(n = 1,2,3,\dots)$ is the \emph{range}
+of $(p_n)$. The range of a sequence may be a finite set, or it may be infinite.
+The sequence $(p_n)$ is said to be \emph{bounded} if its range is bounded.
+
+As examples, consider the following sequences of complex numbers (that is,
+$X = \R^2$):
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=4pt]
+  \item If $s_n = 1/n$, then $\lim_{n\to\infty} s_n = 0$; the range is
+        infinite, and the sequence is bounded.
+  \item If $s_n = n^2$, the sequence $(s_n)$ is unbounded, is divergent, and
+        has infinite range.
+  \item If $s_n = 1 + [(-1)^n/n]$, the sequence $(s_n)$ converges to $1$, is
+        bounded, and has infinite range.
+  \item If $s_n = i^n$, the sequence $(s_n)$ is divergent, is bounded, and has
+        finite range.\kn{The four powers of $i$ recur forever, so the sequence
+        visits $\{i,-1,-i,1\}$ in rotation. It diverges even though every point
+        of its range is visited infinitely often --- each of the four points is
+        a \emph{subsequential} limit (3.5), and 3.2(b) says a convergent
+        sequence can have only one.}
+  \item If $s_n = 1$ $(n = 1,2,3,\dots)$, then $(s_n)$ converges to $1$, is
+        bounded, and has finite range.
+\end{enumerate}
+
+We now summarize some important properties of convergent sequences in metric
+spaces.
+
+\ritem{3.2}{Theorem}
+\emph{Let $(p_n)$ be a sequence in a metric space $X$.}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{$(p_n)$ converges to $p \in X$ if and only if every neighborhood
+        of $p$ contains $p_n$ for all but finitely many $n$.}
+  \item \emph{If $p \in X$, $p' \in X$, and if $(p_n)$ converges to $p$ and to
+        $p'$, then $p' = p$.}
+  \item \emph{If $(p_n)$ converges, then $(p_n)$ is bounded.}
+  \item \emph{If $E \subset X$ and if $p$ is a limit point of $E$, then there
+        is a sequence $(p_n)$ in $E$ such that $p = \lim_{n\to\infty} p_n$.}
+\end{enumerate}
+
+\begin{proof}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=4pt, topsep=3pt]
+  \item Suppose $p_n \to p$ and let $V$ be a neighborhood of $p$. For some
+        $\varepsilon > 0$, the conditions $d(q,p) < \varepsilon$, $q \in X$
+        imply $q \in V$. Corresponding to this $\varepsilon$, there exists $N$
+        such that $n \ge N$ implies $d(p_n,p) < \varepsilon$. Thus $n \ge N$
+        implies $p_n \in V$.
+
+        Conversely, suppose every neighborhood of $p$ contains all but
+        finitely many of the $p_n$. Fix $\varepsilon > 0$ and let $V$ be the
+        set of all $q \in X$ such that $d(p,q) < \varepsilon$. By assumption,
+        there exists $N$ (corresponding to this $V$) such that $p_n \in V$ if
+        $n \ge N$. Thus $d(p_n,p) < \varepsilon$ if $n \ge N$; hence
+        $p_n \to p$.
+  \item Let $\varepsilon > 0$ be given. There exist integers $N$, $N'$ such
+        that
+        \begin{align*}
+          n \ge N &\quad\text{implies}\quad d(p_n,p) < \frac{\varepsilon}{2},\\
+          n \ge N' &\quad\text{implies}\quad d(p_n,p') < \frac{\varepsilon}{2}.
+        \end{align*}
+        Hence if $n \ge \max\{N,N'\}$, we have
+        \[ d(p,p') \le d(p,p_n) + d(p_n,p') < \varepsilon. \]
+        Since $\varepsilon$ was arbitrary, we conclude that
+        $d(p,p') = 0$.\kn{``Since $\varepsilon$ was arbitrary'' is a standard
+        closing move worth naming: a fixed nonnegative number smaller than
+        every positive $\varepsilon$ must be $0$ (else take
+        $\varepsilon = d(p,p')/2$). Rudin will use this silently from now on;
+        Exercise 1.5.7 of Chapter 1's exercises --- Tao states it as a lemma
+        --- is the same fact.}
+  \item Suppose $p_n \to p$. Then there is an integer $N$ such that $n > N$
+        implies $d(p_n,p) < 1$. Put
+        \[ r = \max\{1,\, d(p_1,p),\, \dots,\, d(p_N,p)\}. \]
+        Then $d(p_n,p) \le r$ for $n = 1,2,3,\dots$.\kn{The finite-maximum
+        move of 2.20 and 2.24(c) again, from the other side: the tail is
+        controlled by convergence, and only \emph{finitely many} early terms
+        remain, so their distances have a maximum. Convergence controls tails;
+        finiteness mops up beginnings.}
+  \item For each positive integer $n$, there is a point $p_n \in E$ such that
+        $d(p_n,p) < 1/n$. Given $\varepsilon > 0$, choose $N$ so that
+        $N\varepsilon > 1$. If $n > N$, it follows that
+        $d(p_n,p) < \varepsilon$. Hence $p_n \to p$.
+\end{enumerate}
+This completes the proof.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % epsilon tube picture for convergence
+  \draw[axis] (-2,0) -- (96,0);
+  \node[lbl, anchor=north] at (94,-2) {$n$};
+  % limit line and tube
+  \draw[thin] (0,14) -- (92,14);
+  \node[mlbl, anchor=east] at (-2,14) {$p$};
+  \draw[guide] (0,19) -- (92,19);
+  \draw[guide] (0,9) -- (92,9);
+  \node[mlbl, anchor=west] at (92.5,19) {$p+\varepsilon$};
+  \node[mlbl, anchor=west] at (92.5,9) {$p-\varepsilon$};
+  % terms: scattered early, inside tube after N
+  \foreach \x/\y in {4/26, 9/4, 14/22, 19/7, 24/24, 29/10, 34/20}{
+    \node[ptfill, minimum size=2.2pt] at (\x,\y) {};}
+  \foreach \x/\y in {44/16.5, 50/12, 56/15.8, 62/12.9, 68/15.1, 74/13.4, 80/14.7, 86/13.8}{
+    \node[ptfill, minimum size=2.2pt] at (\x,\y) {};}
+  \draw[guide] (39,-5) -- (39,28);
+  \node[lbl, anchor=north] at (39,-6) {$N$};
+  \node[lbl, anchor=south] at (18,29) {finitely many strays allowed};
+  \node[lbl, anchor=south] at (66,21.5) {all terms from $N$ on};
+\end{tikzpicture}
+\end{center}
+\figcap{Convergence, drawn for a real sequence: every $\varepsilon$-tube about
+$p$ traps the whole tail. Shrink $\varepsilon$ and $N$ moves right; that is the
+dependence the definition quantifies.}
+
+For sequences in $\R^k$ we can study the relation between convergence, on the
+one hand, and the algebraic operations on the other. We first consider
+sequences of complex numbers.
+
+\ritem{3.3}{Theorem}
+\emph{Suppose $(s_n)$, $(t_n)$ are complex sequences and}
+\[ \lim_{n\to\infty} s_n = s, \qquad \lim_{n\to\infty} t_n = t. \]
+\emph{Then}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item $\displaystyle\lim_{n\to\infty} (s_n+t_n) = s+t$;
+  \item $\displaystyle\lim_{n\to\infty} cs_n = cs$,\quad
+        $\displaystyle\lim_{n\to\infty} (c+s_n) = c+s$, \emph{for any number
+        $c$};
+  \item $\displaystyle\lim_{n\to\infty} s_nt_n = st$;
+  \item $\displaystyle\lim_{n\to\infty} (1/s_n) = 1/s$, \emph{provided
+        $s_n \ne 0$ $(n = 1,2,3,\dots)$ and $s \ne 0$.}
+\end{enumerate}
+
+\begin{proof}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=4pt, topsep=3pt]
+  \item Given $\varepsilon > 0$, there exist integers $N_1$, $N_2$ such that
+        \begin{align*}
+          n \ge N_1 &\quad\text{implies}\quad |s_n-s| < \frac{\varepsilon}{2},\\
+          n \ge N_2 &\quad\text{implies}\quad |t_n-t| < \frac{\varepsilon}{2}.
+        \end{align*}
+        If $N = \max\{N_1,N_2\}$, then $n \ge N$ implies
+        \[ |(s_n+t_n)-(s+t)| \le |s_n-s| + |t_n-t| < \varepsilon. \]
+        This proves (a). The proof of (b) is trivial.
+  \item[(c)] We use the identity
+        \begin{equation}
+          s_nt_n - st = (s_n-s)(t_n-t) + s(t_n-t) + t(s_n-s). \tag{3.1}
+        \end{equation}\kn{The identity is the whole proof, and it is chosen so
+        that every term on the right involves at least one \emph{error}
+        factor $s_n-s$ or $t_n-t$. Add and subtract $st_n$ (or $s_nt$) and you
+        find it. The same add-and-subtract manufacture drives the proofs of
+        4.4, 5.3(b) and the product rules everywhere.}
+        Given $\varepsilon > 0$, there are integers $N_1$, $N_2$ such that
+        \begin{align*}
+          n \ge N_1 &\quad\text{implies}\quad |s_n-s| < \sqrt{\varepsilon},\\
+          n \ge N_2 &\quad\text{implies}\quad |t_n-t| < \sqrt{\varepsilon}.
+        \end{align*}
+        If we take $N = \max\{N_1,N_2\}$, $n \ge N$ implies
+        \[ |(s_n-s)(t_n-t)| < \varepsilon, \]
+        so that
+        \[ \lim_{n\to\infty} (s_n-s)(t_n-t) = 0. \]
+        We now apply (a) and (b) to (3.1) and conclude that
+        \[ \lim_{n\to\infty} (s_nt_n - st) = 0. \]
+  \item[(d)] Choosing $m$ such that $|s_n-s| < |s|/2$ if $n \ge m$, we see
+        that
+        \[ |s_n| > \frac12|s| \qquad (n \ge m). \]\kn{The standard
+        ``stay away from zero'' step: once $s_n$ is within $|s|/2$ of $s$, it
+        cannot be nearer than $|s|/2$ to $0$ (reverse triangle inequality,
+        Exercise 1.13). Without it, $1/s_n$ could blow up even with
+        $s \ne 0$. Every quotient-limit proof in the book opens with this
+        move.}
+        Given $\varepsilon > 0$, there is an integer $N > m$ such that
+        $n \ge N$ implies
+        \[ |s_n-s| < \frac12|s|^2\varepsilon. \]
+        Hence, for $n \ge N$,
+        \[ \left|\frac{1}{s_n}-\frac{1}{s}\right|
+           = \left|\frac{s_n-s}{s_ns}\right|
+           < \frac{2}{|s|^2}|s_n-s| < \varepsilon. \]
+\end{enumerate}
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \fill[black!10] (38,0) rectangle (48,24);
+  \fill[black!10] (0,24) rectangle (38,32);
+  \fill[pattern=north east lines, pattern color=black!45]
+    (38,24) rectangle (48,32);
+  \draw[thin] (0,0) rectangle (48,32);
+  \draw[thin] (0,0) rectangle (38,24);
+  \node[mlbl] at (19,12) {$st$};
+  \node[mlbl, rotate=90] at (43,12) {$t(s_n{-}s)$};
+  \node[mlbl] at (19,28) {$s(t_n{-}t)$};
+  \node[mlbl, anchor=west] at (52,28) {$(s_n{-}s)(t_n{-}t)$};
+  \draw[thin] (49.5,28.6) -- (46,28.6);
+  \node[mlbl, anchor=north] at (19,-1.6) {$s$};
+  \node[mlbl, anchor=north] at (43,-1.6) {$s_n-s$};
+  \node[mlbl, anchor=east] at (-1.6,12) {$t$};
+  \node[mlbl, anchor=east] at (-1.6,28) {$t_n-t$};
+\end{tikzpicture}
+\end{center}
+\figcap{Identity (3.1) as areas: the outer rectangle $s_nt_n$ minus the inner
+$st$ is two thin strips plus one hatched corner --- and each of the three
+pieces carries at least one error factor. The strips are bounded${}\times{}$%
+small, the corner is small${}\times{}$small, which is why $\sqrt\varepsilon$
+suffices for it. (Drawn for real $s_n > s > 0$, $t_n > t > 0$; the identity is
+pure algebra and holds for complex sequences.)}
+
+\begin{unpack}[How these proofs are found, not just checked]
+All four parts follow one recipe, and it is the recipe for every
+$\varepsilon$-argument in the book. Write down the quantity that must be small
+--- $|(s_n+t_n)-(s+t)|$, say. Bound it by pieces you control, each going to
+$0$. Then walk the proof backwards: decide what each piece must be smaller
+than so the total is under $\varepsilon$, and let that dictate the $N$'s.
+
+The visible fingerprints of working backwards are the odd-looking thresholds:
+$\varepsilon/2$ in (a) because two errors will be added;
+$\sqrt{\varepsilon}$ in (c) because two errors will be \emph{multiplied};
+$\frac12|s|^2\varepsilon$ in (d) because the error will be divided by
+$|s_ns| > \frac12|s|^2$. None of these is guessed --- each is the final
+inequality, solved for the intermediate one. This is the same
+reverse-engineering as the choice of $h$ in 1.21.
+\end{unpack}
+
+\ritem{3.4}{Theorem}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=3pt, topsep=3pt]
+  \item \emph{Suppose $\mathbf{x}_n \in \R^k$ $(n = 1,2,3,\dots)$ and}
+        \[ \mathbf{x}_n = (\alpha_{1,n},\dots,\alpha_{k,n}). \]
+        \emph{Then $(\mathbf{x}_n)$ converges to
+        $\mathbf{x} = (\alpha_1,\dots,\alpha_k)$ if and only if}
+        \begin{equation}
+          \lim_{n\to\infty} \alpha_{j,n} = \alpha_j \qquad (1 \le j \le k).
+          \tag{3.2}
+        \end{equation}
+  \item \emph{Suppose $(\mathbf{x}_n)$, $(\mathbf{y}_n)$ are sequences in
+        $\R^k$, $(\beta_n)$ is a sequence of real numbers, and
+        $\mathbf{x}_n \to \mathbf{x}$, $\mathbf{y}_n \to \mathbf{y}$,
+        $\beta_n \to \beta$. Then}
+        \[ \lim_{n\to\infty}(\mathbf{x}_n+\mathbf{y}_n) = \mathbf{x}+\mathbf{y},
+           \qquad
+           \lim_{n\to\infty} \mathbf{x}_n\cdot\mathbf{y}_n =
+           \mathbf{x}\cdot\mathbf{y}, \qquad
+           \lim_{n\to\infty} \beta_n\mathbf{x}_n = \beta\mathbf{x}. \]
+\end{enumerate}
+
+\begin{proof}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=4pt, topsep=3pt]
+  \item If $\mathbf{x}_n \to \mathbf{x}$, the inequalities
+        \[ |\alpha_{j,n}-\alpha_j| \le |\mathbf{x}_n-\mathbf{x}|, \]
+        which follow immediately from the definition of the norm in $\R^k$,
+        show that (3.2) holds.
+
+        Conversely, if (3.2) holds, then to each $\varepsilon > 0$, there
+        corresponds an integer $N$ such that $n \ge N$ implies
+        \[ |\alpha_{j,n}-\alpha_j| < \frac{\varepsilon}{\sqrt k}
+           \qquad (1 \le j \le k). \]
+        Hence $n \ge N$ implies
+        \[ |\mathbf{x}_n-\mathbf{x}| =
+           \left\{\sum_{j=1}^{k} |\alpha_{j,n}-\alpha_j|^2\right\}^{1/2}
+           < \varepsilon, \]
+        so that $\mathbf{x}_n \to \mathbf{x}$. This proves (a).
+
+        Part (b) follows from (a) and Theorem 3.3.\kn{Part (a) is the
+        coordinatewise reduction of 2.39 again: convergence in $\R^k$ is $k$
+        convergences in $\R$, squeezed between the two norm inequalities
+        $|\alpha_j| \le |\mathbf{x}| \le \sqrt{k}\max_j|\alpha_j|$. It is why
+        the rest of the chapter can work with complex or real sequences and
+        lose nothing.}
+\end{enumerate}
+\end{proof}
+
+\rsection{Subsequences}
+
+\begin{signpost}[Why subsequences, and why now]
+A subsequence discards terms but keeps order, and the notion pays for itself
+twice. First, it converts Chapter 2's compactness into a statement about
+sequences: 3.6(a) is Bolzano--Weierstrass in sequence form, the tool that
+manufactures limits out of mere boundedness. Second, subsequential limits are
+the raw material for $\limsup$ and $\liminf$ (3.16), which the series tests
+will need. Theorem 3.7 --- the set of subsequential limits is closed --- is
+stocked for 3.17.
+\end{signpost}
+
+\ritem{3.5}{Definition}
+Given a sequence $(p_n)$, consider a sequence $(n_k)$ of positive integers
+such that $n_1 < n_2 < n_3 < \cdots$. Then the sequence $(p_{n_i})$ is called a
+\emph{subsequence} of $(p_n)$. If $(p_{n_i})$ converges, its limit is called a
+\emph{subsequential limit} of $(p_n)$.
+
+It is clear that $(p_n)$ converges to $p$ if and only if every subsequence of
+$(p_n)$ converges to $p$. We leave the details of the proof to the
+reader.\kd{One direction is trivial; the other is Exercise-%
+level but worth doing once: since $n_k \ge k$ (induction on the strictly
+increasing indices), the tail of a subsequence is trapped by the tail of the
+sequence. The statement is used constantly in the contrapositive: to show
+$(p_n)$ diverges, exhibit two subsequences with different limits --- as with
+$i^n$ in 3.1(d).}
+
+\ritem{3.6}{Theorem}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item \emph{If $(p_n)$ is a sequence in a compact metric space $X$, then some
+        subsequence of $(p_n)$ converges to a point of $X$.}
+  \item \emph{Every bounded sequence in $\R^k$ contains a convergent
+        subsequence.}
+\end{enumerate}
+
+\begin{proof}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=4pt, topsep=3pt]
+  \item Let $E$ be the range of $(p_n)$. If $E$ is finite then there is a
+        $p \in E$ and a sequence $(n_i)$ with $n_1 < n_2 < n_3 < \cdots$ such
+        that
+        \[ p_{n_1} = p_{n_2} = \cdots = p. \]
+        The subsequence $(p_{n_i})$ so obtained converges evidently to
+        $p$.\kn{The finite case is not a formality --- it is the pigeonhole:
+        infinitely many indices land on finitely many values, so some value is
+        hit infinitely often. Rudin splits by the \emph{range}, the
+        set-versus-sequence distinction he flagged at 2.7.}
+
+        If $E$ is infinite, Theorem 2.37 shows that $E$ has a limit point
+        $p \in X$. Choose $n_1$ so that $d(p,p_{n_1}) < 1$. Having chosen
+        $n_1,\dots,n_{i-1}$, we see from Theorem 2.20 that there is an integer
+        $n_i > n_{i-1}$ such that $d(p,p_{n_i}) < 1/i$. Then $(p_{n_i})$
+        converges to $p$.\kn{Theorem 2.20 --- every neighbourhood of a limit
+        point contains \emph{infinitely many} points of $E$ --- is exactly what
+        lets the index increase: within distance $1/i$ there are infinitely
+        many terms, so one of them has index beyond $n_{i-1}$. The $q \ne p$
+        clause of 2.18(b) has been earning interest since Chapter 2.}
+  \item This follows from (a) since Theorem 2.41 implies that every bounded
+        subset of $\R^k$ lies in a compact subset of $\R^k$.
+\end{enumerate}
+\end{proof}
+
+\begin{deeper}[3.6(b) is Bolzano--Weierstrass in sequence form]
+Compare 2.42: every bounded infinite \emph{set} has a limit point. Part (b) is
+the same fact retold for sequences, and it is the workhorse version --- most of
+analysis manufactures a convergent subsequence from boundedness and then works
+with it. The ECNU text lists this (\cjk{致密性定理}{the ``compactness theorem''}, its
+name for sequential compactness) as one of its six equivalent forms of
+completeness, and Tao takes
+exactly this property as his \emph{definition} of compactness (his 1.5.1).
+
+Note what the proof consumed: 2.37, hence compactness of some $k$-cell, hence
+--- through 2.40 and 2.38 --- the least-upper-bound property. Over $\Q$ the
+statement fails: the sequence $1, 1.4, 1.41, \dots$ of Chapter 1 is bounded
+with no convergent subsequence in $\Q$.
+\end{deeper}
+
+\ritem{3.7}{Theorem}
+\emph{The subsequential limits of a sequence $(p_n)$ in a metric space $X$ form
+a closed subset of $X$.}
+
+\begin{proof}
+Let $E^*$ be the set of all subsequential limits of $(p_n)$ and let $q$ be a
+limit point of $E^*$. We have to show that $q \in E^*$.
+
+Choose $n_1$ so that $p_{n_1} \ne q$. (If no such $n_1$ exists, then $E^*$ has
+only one point, and there is nothing to prove.) Put $\delta = d(q,p_{n_1})$.
+Suppose $n_1,\dots,n_{i-1}$ are chosen. Since $q$ is a limit point of $E^*$,
+there is an $x \in E^*$ with $d(x,q) < 2^{-i}\delta$. Since $x \in E^*$, there
+is an $n_i > n_{i-1}$ such that $d(x,p_{n_i}) < 2^{-i}\delta$. Thus
+\[ d(q,p_{n_i}) \le 2^{1-i}\delta \]
+for $i = 1,2,3,\dots$. This says that $(p_{n_i})$ converges to $q$. Hence
+$q \in E^*$.\kn{A two-step chase: $q$ is approximated by subsequential limits
+$x$, and each $x$ is approximated by actual terms $p_{n_i}$ --- so terms of the
+sequence approach $q$ through the middlemen, at the price of a doubled error
+$2\cdot2^{-i}\delta$. The geometric budget $2^{-i}\delta$ is chosen so the
+doubling still goes to zero. This diagonal-through-approximators pattern
+returns at 7.23.}
+\end{proof}

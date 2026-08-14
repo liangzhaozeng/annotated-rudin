@@ -1,0 +1,878 @@
+% ============================================================
+%  APPENDIX TO CHAPTER 2.  Material NOT in Rudin, imported from
+%  Tao I/II, ECNU, USTC, Yu Pin.  Numbered S2.n throughout.
+% ============================================================
+\rappendix{2}
+
+\begin{roadmap}[How to use this appendix]
+Nothing in this appendix is Rudin's text. It is imported from the four
+comparison texts and set apart at every level: the running head names the
+appendix, section heads carry a reverse-video tag, item numbers are prefixed
+\textbf{S}, and every statement names its source.
+
+\medskip
+\raggedright
+\textbf{Why import anything at all.} Rudin's Chapter 2 is thirty pages of
+topology with no payoff: every application waits for Chapter 4. He also makes
+two economies that cost the reader later --- he defines \emph{limit point}
+once and never names the two other formulations he goes on to use, and he
+proves compactness of a cell by an inlined bisection whose key step is never
+isolated as a lemma. The Chinese texts organise the same material around
+\emph{what each theorem buys}, and Tao and Yu Pin carry the metric-space
+theory past the point where Rudin stops.
+
+\medskip
+\textbf{What is here.}
+
+\smallskip
+\textbf{A. Cluster points.} Three inequivalent-looking definitions of ``limit
+point,'' proved equivalent, and the collision between the set version and the
+sequence version that Rudin's notation hides.
+
+\medskip
+\textbf{B. The completeness theorems as tools.} Nested intervals with the
+corollary Rudin omits; Heine--Borel proved through it instead of by raw
+bisection; Weierstrass twice; and a construction of the least upper bound
+\emph{from} Cauchy completeness --- the one direction Rudin never runs,
+since he takes \lub{} as an axiom.
+
+\medskip
+\textbf{C. The Heine--Borel Rudin declines.} At 2.41 he proves the
+equivalences \emph{in $\R^k$ only}. The general metric-space theorem exists
+--- compact $=$ complete $+$ totally bounded --- and it names exactly which
+property $\R^k$ was supplying.
+
+\medskip
+\textbf{D. Two notions of smallness.} Cardinality is not the only way a set
+can be small. Baire's theorem supplies the topological notion, and the two
+disagree in both directions --- with Rudin's own Cantor set as one witness.
+
+\medskip
+\textbf{E. What survives without a metric.} Which of Chapter 2 is really
+about distance, and which is about open sets alone.
+
+\medskip
+\textbf{How to read it.} Section A is worth reading before Chapter 3, because
+the confusion it settles is the one that bites at 3.5--3.6. Section B is best
+read after 2.41, as a second pass over the same theorems by different routes;
+C and D after the whole chapter. E is optional and answers the question
+``why a metric at all?'' The exercises are the last section.
+\end{roadmap}
+
+% ============================================================
+\ssection{Supplement A --- Limit points, cluster points, and a collision}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 2]
+\raggedright
+\textbf{What Rudin does.} Definition 2.18(b) fixes one meaning of
+\emph{limit point}: every neighbourhood of $p$ meets $E$ in a point other
+than $p$. Theorem 2.20 then proves a second --- every neighbourhood meets
+$E$ in \emph{infinitely many} points --- and uses it to conclude that a
+finite set has no limit points.
+
+\smallskip
+\textbf{The gap.} There is a third formulation, the one that says $p$ is the
+limit of a sequence of \emph{distinct} points of $E$, and Rudin never states
+it. He nevertheless relies on it constantly from Chapter 3 onward: every
+argument that begins ``choose a sequence in $E$ converging to $p$'' is using
+it, and every such argument silently needs the chosen points to be distinct.
+
+\smallskip
+\textbf{Where the gap bites.} Twice, and both times painfully. First at
+3.5--3.6, where Rudin passes between statements about \emph{sets} (2.42:
+an infinite subset of a compact set has a limit point) and statements about
+\emph{sequences} (3.6(b): a bounded sequence in $\R^k$ has a convergent
+subsequence) as though they were the same theorem. They are not --- a
+sequence has a range, and the range can be finite while the sequence has
+several subsequential limits. Second at 4.2, where continuity is tested
+against sequences and one must know which points those sequences may repeat.
+
+\smallskip
+\textbf{What this section supplies.} All three formulations, proved
+equivalent, with the recursion that forces distinctness written out; and the
+one-line example that separates the set notion from the sequence notion, so
+that the translation between 2.42 and 3.6(b) can be made carefully instead
+of tacitly.
+\end{roadmap}
+
+\sitem{S2.1}{Theorem}
+\emph{(Three definitions of a cluster point.) Let $E \subset \R^1$ and
+$\xi \in \R^1$. The following are equivalent.}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item \emph{Every neighbourhood of $\xi$ contains \textbf{infinitely many}
+        points of $E$.}
+  \item \emph{Every neighbourhood of $\xi$ contains a point of $E$ other than
+        $\xi$ --- Rudin's Definition 2.18(b).}
+  \item \emph{There is a sequence $(x_n)$ in $E$ whose terms are
+        \textbf{pairwise distinct} with $x_n \to \xi$.}
+\end{enumerate}
+\provenance{ECNU \cjk{聚点}{juedian} Def.\ 2, 2$'$, 2$''$ (bk.\ pp.\,151--152).
+Rudin states (b) and proves (a) as 2.20; (c) he never states.}
+
+\begin{proof}[The one implication with content]
+That (a) $\Rightarrow$ (b) and (c) $\Rightarrow$ (a) are immediate. For
+(b) $\Rightarrow$ (c), build the sequence recursively, and \emph{force}
+distinctness by shrinking the radius past the previous point: having chosen
+$x_{n-1}$, apply (b) with
+\[ \varepsilon_n = \min\Bigl\{\tfrac1n,\ |\xi - x_{n-1}|\Bigr\} \]
+to obtain $x_n \in E$ with $0 < |x_n - \xi| < \varepsilon_n$. Then
+$x_n \to \xi$, and no point can repeat, since each is strictly nearer $\xi$
+than its predecessor.
+\end{proof}
+
+\begin{unpack}[Why the recursion needs that particular radius]
+The obvious recursion --- take $|x_n - \xi| < 1/n$ --- gives convergence but
+not distinctness: nothing stops the same point being chosen twice. The extra
+clause $|\xi - x_{n-1}|$ in the minimum makes the distances strictly
+decreasing, and a strictly decreasing sequence of distances cannot repeat a
+point.
+
+This is exactly the step a reader of Rudin has to invent unaided. Theorem
+2.20 gives him ``infinitely many points in every neighbourhood''; every later
+argument that says ``choose a sequence in $E$ converging to $\xi$'' silently
+needs those points to be distinct, and that is what the recursion supplies.
+Rudin uses the fact at 2.20's corollary (a finite set has no limit points),
+at 3.6, and throughout Chapter 4.
+\end{unpack}
+
+\sitem{S2.2}{Definition}
+\emph{(Cluster point of a sequence.) $a$ is a cluster point of the sequence
+$(x_n)$ if every neighbourhood of $a$ contains $x_n$ for \textbf{infinitely
+many indices $n$} --- terms counted with repetition. Equivalently, $a$ is the
+limit of some subsequence.}
+\provenance{ECNU \S7.2 Def.\ 1 and the following \cjk{注}{note}
+(bk.\ p.\,156).}
+
+\begin{pitfall}[The set of terms is not the sequence]
+The two notions disagree, and the cleanest witness is one line. Take
+\[ x_n = \sin\frac{n\pi}{4} . \]
+As a \emph{sequence} it has five cluster points: $-1$, $-\tfrac{\sqrt2}{2}$,
+$0$, $\tfrac{\sqrt2}{2}$, $1$, each hit infinitely often. As a \emph{set},
+its range is the five-element set
+$\bigl\{-1,-\tfrac{\sqrt2}{2},0,\tfrac{\sqrt2}{2},1\bigr\}$, and a finite set
+has \textbf{no} limit points at all (Rudin's corollary to 2.20).
+
+So ``limit point'' in Chapter 2 and ``subsequential limit'' in 3.5--3.6 are
+different notions that can disagree completely. Rudin uses both words without
+ever flagging the difference, and 3.6(b) --- every bounded sequence in $\R^k$
+has a convergent subsequence --- is \emph{not} literally 2.42 applied to the
+range, because the range may be finite. The bridge is: a subsequential limit
+of $(x_n)$ is either a limit point of the range, or a value taken infinitely
+often. Rudin's proof of 3.6(b) quietly splits into exactly those two cases.
+\end{pitfall}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,0) -- (104,0);
+  \foreach \x/\lab in {8/{-1}, 30/{-\frac{\sqrt2}{2}}, 52/{0},
+                       74/{\frac{\sqrt2}{2}}, 96/{1}}{
+    \node[ptfill, minimum size=2.6pt] at (\x,0) {};
+    \node[mlbl, anchor=north] at (\x,-2.2) {$\lab$};
+    \foreach \k in {1,2,3,4}{
+      \node[ptfill, minimum size=1.7pt] at (\x,{4.5+4*\k}) {};}
+    \node[mlbl, anchor=south] at (\x,22) {$\vdots$};}
+  \node[lbl, anchor=west] at (0,27.5)
+    {\emph{as a sequence}: every value returns for infinitely many $n$};
+  \node[lbl, anchor=west] at (0,-9.5)
+    {\emph{as a set}: just these five points --- no limit point at all};
+\end{tikzpicture}
+\end{center}
+\figcap{$x_n = \sin(n\pi/4)$ has five cluster points as a sequence and none
+as a set. Multiplicity is exactly the information the range throws away ---
+which is why Rudin's 2.42 (about sets) does not directly give 3.6(b) (about
+sequences).}
+
+% ============================================================
+\ssection{Supplement B --- The completeness theorems as tools}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 2]
+\raggedright
+\textbf{What Rudin does.} He assumes the least-upper-bound property as an
+axiom (1.19) and derives everything from it in one direction: 1.20
+(Archimedes and density), 2.38 (nested compact sets), 2.40 ($k$-cells are
+compact), 2.41 (Heine--Borel in $\R^k$), 3.11 (completeness).
+
+\smallskip
+\textbf{The gap.} A one-directional development hides the fact that these
+statements are \emph{equivalent}. Chapter 1's comparison box lists six
+formulations of completeness and notes that different books axiomatise
+different ones; but a list of equivalent statements teaches nothing until
+you have seen the implications run. Rudin runs them only outward from
+\lub{}, so a reader has no way to discover that \lub{} can be recovered from
+Cauchy completeness --- or what extra hypothesis that recovery needs.
+
+\smallskip
+\textbf{Where the gap bites.} At 2.40 the crucial step --- that a nested
+family with vanishing diameters is eventually swallowed by any neighbourhood
+of its common point --- is derived inline, in the middle of a
+$k$-dimensional argument, and never named. It is needed again at 2.42, at
+3.10, and in every later bisection argument, and each time it is rebuilt from
+scratch.
+
+\smallskip
+\textbf{What this section supplies.} That step, isolated as a lemma with its
+corollary (S2.3), after which Heine--Borel is three lines (S2.4) and
+Weierstrass is four (S2.5); a proof of Bolzano--Weierstrass that uses no
+bisection at all and secretly computes $\liminf$ (S2.6); and the missing
+implication, a construction of $\sup$ from Cauchy completeness plus
+Archimedes (S2.7), which shows precisely why the Archimedean hypothesis
+cannot be dropped.
+\end{roadmap}
+
+\sitem{S2.3}{Theorem}
+\emph{(Nested intervals, with its corollary.) Let $[a_{n+1},b_{n+1}] \subset
+[a_n,b_n]$ for all $n$ and $b_n - a_n \to 0$. Then there is exactly one
+$\xi$ with $\xi \in [a_n,b_n]$ for every $n$; and moreover, for every
+$\varepsilon > 0$ there is an $N$ with}
+\[ [a_n,b_n] \subset (\xi-\varepsilon,\ \xi+\varepsilon)
+   \qquad (n > N). \]
+\provenance{ECNU \cjk{区间套定理}{nested interval thm} 7.1 and its
+\cjk{推论}{corollary} (bk.\ pp.\,150--151).}
+\begin{proof}
+The $a_n$ increase and every $b_m$ is an upper bound for them: if $m \le n$
+then $a_n \le b_n \le b_m$, and if $m > n$ then $a_n \le a_m \le b_m$. So
+$\{a_n\}$ is nonempty and bounded above, and by 1.19 it has a supremum
+$\xi$, with $a_n \le \xi \le b_n$ for every $n$. If $\xi'$ also lay in every
+$[a_n,b_n]$ then $|\xi-\xi'| \le b_n - a_n \to 0$, so $\xi' = \xi$.
+
+For the corollary, given $\varepsilon>0$ choose $N$ with
+$b_N - a_N < \varepsilon$. For $n > N$ the interval $[a_n,b_n]$ is contained
+in $[a_N,b_N]$, has length less than $\varepsilon$, and contains $\xi$;
+hence every one of its points lies within $\varepsilon$ of $\xi$.
+\end{proof}
+
+\noindent
+Rudin's 2.38 gives nonempty intersection for nested compact sets and stops
+there. The corollary --- eventually the whole interval, not merely the point,
+sits inside the neighbourhood --- is what does the work in every application
+below.\kn{The proof of the corollary is one line: $\xi \in [a_n,b_n]$ and
+$b_n - a_n \to 0$, so both endpoints are within $\varepsilon$ of $\xi$ once
+$b_n - a_n < \varepsilon$. Trivial to prove, easy to forget you need, and
+Rudin never names it --- so at 2.40 he re-derives it inline.}
+
+\begin{pitfall}[Closed is not decoration]
+The intervals must be closed. The open intervals $(0,1/n)$ are nested with
+lengths tending to $0$ and have \textbf{empty} intersection. Boundedness
+matters too: the closed sets $[n,\infty)$ are nested with empty
+intersection.
+
+Rudin's 2.38 requires compactness, which packages both hypotheses at once;
+seeing the two failures separately is what makes the packaging legible.
+\end{pitfall}
+
+\sitem{S2.4}{Theorem}
+\emph{(Heine--Borel, via nested intervals.) Every open cover of $[a,b]$ has
+a finite subcover.}
+\provenance{ECNU \cjk{有限覆盖定理}{finite covering thm} 7.3
+(bk.\ p.\,153).}
+
+\begin{proofwalk}[How this proof differs from Rudin's 2.40]
+  \item \textbf{Same start.} Suppose no finite subcover exists. Bisect
+        $[a,b]$; at least one half again admits no finite subcover. Iterate,
+        producing nested intervals with lengths $\to 0$.
+  \item \textbf{The step that is now free.} Let $\xi$ be the common point.
+        It lies in some cover element $(\alpha,\beta)$. By the
+        \emph{corollary} to S2.3, $[a_n,b_n] \subset (\alpha,\beta)$ for
+        large $n$ --- so that interval is covered by a \emph{single} member,
+        contradicting the choice of intervals with no finite subcover.
+  \item \textbf{What changed.} Rudin's 2.40 proves the same thing but derives
+        step 2 inline, in the middle of a $k$-dimensional argument, using
+        $\operatorname{diam} Q_n \to 0$. Naming the lemma first turns the
+        proof into three lines and makes visible that bisection is used only
+        to \emph{manufacture} a nested family --- any other method of
+        manufacturing one would do.
+  \item \textbf{Audit.} Closedness of $[a,b]$ enters once, in S2.3;
+        boundedness enters once, to start the bisection. Both hypotheses are
+        spent exactly where the pitfall above says they must be.
+\end{proofwalk}
+
+\begin{pitfall}[Where the theorem fails, made concrete]
+On $(0,1)$ the cover
+\[ \Bigl\{\ \Bigl(\tfrac{1}{n+1},\,1\Bigr) : n = 1,2,3,\dots \Bigr\} \]
+works and no finite subfamily does: the members increase, so a finite
+subfamily is its largest member, which omits everything below
+$\tfrac1{N+1}$. Rudin gives the analogous fact at 2.32's examples; the point
+worth keeping is the mechanism --- a totally ordered cover with no largest
+element can only be finitely reduced if one member already suffices.
+\end{pitfall}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,0) -- (104,0);
+  \node[ptopen] at (6,0) {};
+  \node[ptopen] at (98,0) {};
+  \node[mlbl, anchor=north] at (6,-1.8) {$0$};
+  \node[mlbl, anchor=north] at (98,-1.8) {$1$};
+  \foreach \y/\x in {6/52, 11/33, 16/21.5, 21/14.4, 26/10.4}{
+    \draw[seg] (\x,\y) -- (96,\y);
+    \node[ptopen, minimum size=1.6pt] at (\x,\y) {};}
+  \node[mlbl, anchor=west] at (54,6.2) {$(\tfrac12,1)$};
+  \node[mlbl, anchor=west] at (35,11.2) {$(\tfrac13,1)$};
+  \node[lbl, anchor=west] at (24,26) {$\cdots$ never reaching $0$};
+  \draw[guide] (6,-3.4) -- (6,29);
+\end{tikzpicture}
+\end{center}
+\figcap{The cover of $(0,1)$ that admits no finite subcover. The members are
+nested upward, so any finite subfamily equals its largest member and misses a
+whole interval at the left end. Compactness fails exactly at the point the
+domain is missing.}
+
+\sitem{S2.5}{Theorem}
+\emph{(Weierstrass.) Every bounded infinite subset of $\R^1$ has a cluster
+point.}
+\provenance{ECNU \cjk{聚点定理}{cluster point thm} 7.2, with two proofs
+(bk.\ pp.\,152--153).}
+\begin{proof}
+Let $E$ be infinite with $E \subset [-M,M]$. Bisect: at least one of the two
+halves contains infinitely many points of $E$, since otherwise $E$ would be
+finite. Call it $[a_1,b_1]$ and repeat, obtaining nested intervals
+$[a_n,b_n]$, each containing infinitely many points of $E$, with
+$b_n - a_n = 2M/2^{\,n} \to 0$.
+
+By S2.3 there is a point $\xi$ common to all of them. Given $\varepsilon>0$,
+the corollary to S2.3 puts $[a_n,b_n]$ inside $(\xi-\varepsilon,
+\xi+\varepsilon)$ for all large $n$; and $[a_n,b_n]$ contains infinitely
+many points of $E$. So every neighbourhood of $\xi$ contains infinitely many
+points of $E$, which is S2.1(a).
+\end{proof}
+
+\begin{deeper}[Two proofs, landing on two different definitions]
+\textbf{First proof (bisection).} $E \subset [-M,M]$; bisect, always keeping
+a half containing infinitely many points of $E$. By S2.3 and its corollary,
+every neighbourhood of the common point $\xi$ contains some $[a_n,b_n]$,
+hence infinitely many points of $E$. This lands on definition (a) of S2.1.
+
+\smallskip
+\textbf{Second proof (via sequences).} Choose pairwise distinct
+$x_n \in E$; the sequence is bounded, so some subsequence converges, say to
+$x_0$; then every neighbourhood of $x_0$ contains infinitely many of the
+$x_n$. This lands on definition (c).
+
+\smallskip
+The two proofs are the same argument in different costumes, and S2.1 is what
+lets you move between them. ECNU then states the dictionary Rudin leaves
+implicit: \emph{the sequence form of Bolzano--Weierstrass is the set form
+applied to the set of terms, with ``infinitely many points'' read as
+``infinitely many indices.''} Rudin's 2.42 and 3.6(b) sit twenty pages apart
+with no remark connecting them --- and, as the pitfall at S2.2 shows, the
+translation needs the care that remark would have supplied.
+\end{deeper}
+
+\sitem{S2.6}{Theorem}
+\emph{(Bolzano--Weierstrass without bisection.) Every bounded sequence
+$(a_n)$ of reals has a convergent subsequence.}
+\provenance{USTC \cjk{定理}{Thm} 8 (bk.\ p.\,12).}
+
+\begin{proof}[The monotone-tail proof]
+Put $\alpha_n = \inf\{a_n, a_{n+1}, \dots\}$. The sequence $(\alpha_n)$ is
+increasing and bounded above, hence converges; call the limit $\alpha$. Now
+build indices: by the definition of infimum there is $n_1$ with
+$\alpha_1 \le a_{n_1} < \alpha_1 + 1$; having chosen $n_k$, there is
+$n_{k+1} > n_k$ with
+\[ \alpha_{n_k} \le a_{n_{k+1}} < \alpha_{n_k} + \frac{1}{k+1} . \]
+Since $\alpha_{n_k} \to \alpha$, the squeeze gives $a_{n_k} \to \alpha$.
+\end{proof}
+
+\begin{deeper}[What this proof reveals that Rudin's route hides]
+Rudin reaches Bolzano--Weierstrass only through the cell machinery:
+2.40 ($k$-cells are compact) $\to$ 2.42 (infinite subsets of compact sets
+have limit points) $\to$ 3.6(b). That path makes the theorem look as though
+it \emph{needs} compactness, and in $\R^k$ it is the efficient route.
+
+On the line it needs nothing but the monotone convergence theorem. And the
+auxiliary sequence is not arbitrary: $\alpha_n = \inf_{k \ge n} a_k$ is
+precisely the quantity whose limit Rudin will call $\liminf a_n$ at 3.16. So
+this proof silently establishes something stronger than it claims ---
+\emph{the subsequential limit it produces is the lower limit} --- which is
+Rudin's 3.17(a) arriving a chapter early and for free.
+
+Keep the contrast: bisection halves the \emph{domain}, the monotone-tail
+argument shaves the \emph{index set}. Bisection generalises to $\R^k$; the
+tail argument does not, because it needs the order.
+\end{deeper}
+
+\sitem{S2.7}{Theorem}
+\emph{(The least upper bound, constructed from Cauchy completeness.) Assume
+$\R$ is Archimedean and that every Cauchy sequence of reals converges. Then
+every nonempty set bounded above has a supremum.}
+\provenance{ECNU \cjk{例}{Ex} 3 (bk.\ pp.\,154--155), the $6 \Rightarrow 1$
+step of the completeness cycle.}
+
+\begin{proofwalk}[The construction]
+  \item \textbf{Manufacture near-misses.} Let $S \ne \varnothing$ be bounded
+        above. For each $n$, the Archimedean property supplies an integer
+        $k_n$ such that $\lambda_n = k_n/n$ is an upper bound of $S$ while
+        $\lambda_n - 1/n$ is not. (Walk the multiples of $1/n$ upward until
+        they first clear $S$.)
+  \item \textbf{Show the near-misses are Cauchy.} Since $\lambda_m$ is an
+        upper bound and $\lambda_n - 1/n$ is not, some $a' \in S$ has
+        $\lambda_m \ge a' > \lambda_n - 1/n$, so
+        $\lambda_n - \lambda_m < 1/n$. By symmetry
+        $|\lambda_m - \lambda_n| < \max\{1/m,\,1/n\}$.
+  \item \textbf{Cash in completeness.} So $\lambda_n \to \lambda$ for some
+        real $\lambda$.
+  \item \textbf{Identify the limit.} $\lambda$ is an upper bound, being a
+        limit of upper bounds. And it is least: given $\delta>0$ choose $n$
+        with $1/n < \delta/2$ and $\lambda_n > \lambda - \delta/2$; since
+        $\lambda_n - 1/n$ is not an upper bound, some $a' \in S$ exceeds it,
+        hence exceeds $\lambda - \delta$.
+  \item \textbf{Audit.} The Archimedean property is spent once, in step 1;
+        completeness once, in step 3. Neither is decorative --- see the
+        pitfall.
+\end{proofwalk}
+
+\begin{deeper}[Why Rudin never does this, and why it is worth seeing]
+Rudin takes the \lub{} property as an \emph{axiom} (1.19) and derives the
+Archimedean property from it (1.20a). He therefore never shows the converse
+direction, and a reader of Rudin alone could reasonably conclude that
+``complete'' has only one meaning.
+
+It has two, and they are not the same. \emph{Cauchy completeness alone does
+not imply the \lub{} property}: there are Cauchy-complete ordered fields
+without it --- non-Archimedean ones. That is why step 1 above needs the
+Archimedean hypothesis, and it is exactly the gap Yu Pin's axiom list
+(field + order + Archimedean + nested intervals) is built to expose.
+Chapter 1's comparison box lists the equivalences; this is the proof of the
+one link that Rudin's development makes structurally invisible.
+\end{deeper}
+
+% ============================================================
+\ssection{Supplement C --- Completeness, and the Heine--Borel Rudin declines}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 2]
+\raggedright
+\textbf{What Rudin does.} Theorem 2.41 proves that for a set in $\R^k$,
+three conditions coincide: compact, closed and bounded, and every infinite
+subset has a limit point. He states the restriction to $\R^k$ emphatically,
+and Exercise 2.16 supplies a metric space where closed and bounded fails to
+give compact.
+
+\smallskip
+\textbf{The gap.} The restriction is a warning, not an explanation. A reader
+finishes 2.41 knowing that ``closed and bounded'' is the wrong condition in
+general, but not what the right one is --- and therefore not what property
+$\R^k$ was quietly contributing.
+
+\smallskip
+\textbf{Where the gap bites.} Everywhere Rudin later works in a space that is
+not $\R^k$. At 7.23 (Arzel\`a--Ascoli) he must characterise the compact
+subsets of a function space, and the characterisation is exactly the general
+theorem below --- pointwise boundedness and equicontinuity are total
+boundedness in disguise. Chapter 11's $\mathscr L^2$ is another such space.
+Without the general statement, each of these looks like a new trick.
+
+\smallskip
+\textbf{What this section supplies.} The general theorem --- compact
+$=$ complete $+$ totally bounded --- with proof, so that 2.41 decodes:
+\emph{closed} was supplying completeness and \emph{bounded} was supplying
+total boundedness, and only the second implication is special to $\R^k$.
+Also the equivalence of the two compactnesses in a metric space, which Rudin
+proves only inside $\R^k$.
+\end{roadmap}
+
+\sitem{S2.8}{Definition}
+\emph{A metric space $X$ is \textbf{complete} if every Cauchy sequence in $X$
+converges in $X$; it is \textbf{totally bounded} if for every
+$\varepsilon>0$ finitely many balls of radius $\varepsilon$ cover $X$.}
+\provenance{Yu Pin \cjk{定义}{Def} 35 (p.\,76); Tao II, Ex.\ 1.5.10
+(bk.\ p.\,26). Rudin defines completeness at 3.11 and total boundedness
+nowhere.}
+
+\sitem{S2.9}{Theorem}
+\emph{(Heine--Borel for metric spaces.) A metric space is compact if and only
+if it is complete and totally bounded.}
+\provenance{Tao II, Ex.\ 1.5.10(b),(c).}
+\begin{proof}
+Throughout, use S2.10 to read ``compact'' as ``every sequence has a
+convergent subsequence.''
+
+\emph{Compact $\Rightarrow$ totally bounded.} Given $\varepsilon>0$, the
+balls $B(x,\varepsilon)$, $x \in X$, form an open cover; a finite subcover is
+a finite family of $\varepsilon$-balls covering $X$.
+
+\emph{Compact $\Rightarrow$ complete.} Let $(x_n)$ be Cauchy. Some
+subsequence converges, say $x_{n_k} \to x$. Given $\varepsilon>0$ choose $N$
+with $d(x_n,x_m)<\varepsilon/2$ for $n,m \ge N$, and then $k$ with
+$n_k \ge N$ and $d(x_{n_k},x)<\varepsilon/2$; for $n \ge N$ the triangle
+inequality gives $d(x_n,x)<\varepsilon$. So the whole sequence converges.
+
+\emph{Complete and totally bounded $\Rightarrow$ compact.} Let $(x_n)$ be any
+sequence. Cover $X$ by finitely many balls of radius $1$; one of them
+contains $x_n$ for infinitely many $n$, giving a subsequence $S_1$ lying in
+a set of diameter at most $2$. Cover $X$ by finitely many balls of radius
+$\tfrac12$; one contains infinitely many terms of $S_1$, giving a
+subsequence $S_2 \subset S_1$ of diameter at most $1$. Continuing, we obtain
+$S_1 \supset S_2 \supset \cdots$, with $S_j$ of diameter at most $2^{2-j}$.
+
+Let $y_k$ be the $k$th term of $S_k$. For $i,j \ge k$ both $y_i$ and $y_j$
+belong to $S_k$, so $d(y_i,y_j) \le 2^{2-k}$: the diagonal sequence $(y_k)$
+is Cauchy, and by completeness it converges. It is a subsequence of
+$(x_n)$, so $X$ is sequentially compact.
+\end{proof}
+
+\begin{proofwalk}[How the proof flows]
+  \item \textbf{Choose the method.} Two properties must be produced from
+        one, and then one from two. The forward direction is cheap because
+        compactness is a hypothesis about \emph{every} cover and about
+        \emph{every} sequence, so one simply applies it to a well-chosen
+        instance. The converse is where the work is: nothing is compact yet,
+        so a convergent subsequence has to be manufactured by hand.
+  \item \textbf{Spend the cover hypothesis (forward, part one).} Apply
+        compactness to the cover by all $\varepsilon$-balls. There is
+        nothing to choose --- the cover is handed to you by the definition
+        of total boundedness itself.
+  \item \textbf{Spend the sequence hypothesis (forward, part two).} A Cauchy
+        sequence needs only \emph{one} convergent subsequence to converge
+        itself; that upgrade is the same three-line estimate as in 3.11 and
+        is the whole content of ``compact implies complete.''
+  \item \textbf{Manufacture nested pigeonholes (converse).} Total
+        boundedness gives finitely many balls at each scale, and finitely
+        many boxes holding infinitely many terms means one box holds
+        infinitely many. Halving the radius each time makes the boxes shrink
+        geometrically. This is pattern 3 of Chapter 1's strategy index ---
+        when the hypothesis is finiteness, pigeonhole.
+  \item \textbf{Take the diagonal.} No single $S_j$ converges, so no one of
+        them is the answer; the diagonal belongs to every $S_k$ from the
+        $k$th place on and is therefore Cauchy. The diagonal is what turns a
+        \emph{nested family} of subsequences into a \emph{single}
+        subsequence.
+  \item \textbf{Cash in completeness.} Cauchy becomes convergent, and only
+        here. Rudin performs the identical manoeuvre at 7.23 to extract a
+        convergent subsequence of functions.
+  \item \textbf{Audit.} Total boundedness is spent once, in step 4, to get
+        the boxes; completeness once, in step 6, to convert the diagonal's
+        Cauchy property into a limit. Neither is decorative: the sequence
+        $(1/n)$ in $(0,1]$ is totally bounded and not complete, and the unit
+        vectors of the picture below are complete and not totally bounded,
+        and neither space is compact.
+\end{proofwalk}
+
+\begin{deeper}[Reading Rudin's 2.41 through this]
+Now Rudin's restriction to $\R^k$ decodes. ``Closed and bounded'' is doing
+two separate jobs there:
+
+\smallskip
+\emph{Closed} in $\R^k$ gives \textbf{completeness} --- a closed subset of a
+complete space is complete, and $\R^k$ is complete by 3.11. \emph{Bounded}
+in $\R^k$ gives \textbf{total boundedness}, because a bounded set fits in a
+cell and a cell is chopped into finitely many pieces of any prescribed size.
+
+\smallskip
+The second implication is the one that fails elsewhere, and it fails for a
+reason with a name: in infinite dimensions, bounded does not imply totally
+bounded. Rudin's Exercise 2.16 --- the set $\{p \in \Q : 2<p^2<3\}$, closed
+and bounded in $\Q$ but not compact --- diagnoses the \emph{other} failure,
+incompleteness. Both diseases exist, and 2.41 is the statement that $\R^k$
+has neither.
+\end{deeper}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[thin] (22,14) circle (21mm);
+  \node[mlbl, anchor=south] at (22,36.4) {bounded};
+  \foreach \a/\b in {12/8, 30/7, 20/17, 33/19, 11/21, 24/25, 15/28.5,
+                     31/28, 22/6}{
+    \draw[guide] (\a,\b) circle (3.1mm);}
+  \node[lbl, anchor=west] at (48,20)
+    {infinitely many disjoint balls of};
+  \node[lbl, anchor=west] at (48,16)
+    {radius $\varepsilon$ fit inside: \emph{not}};
+  \node[lbl, anchor=west] at (48,12) {totally bounded};
+  \node[lbl, anchor=west] at (48,4)
+    {their centres form a sequence};
+  \node[lbl, anchor=west] at (48,0)
+    {with no Cauchy subsequence};
+\end{tikzpicture}
+\end{center}
+\figcap{Bounded but not totally bounded --- the failure Rudin's 2.41 rules
+out by working in $\R^k$. In $\ell^1$ the unit vectors $e^{(n)}$ are at
+mutual distance $2$, so the balls of radius $1$ about them are disjoint; the
+set is closed, bounded, and lives in a complete space, yet no subsequence
+converges. Total boundedness is precisely the hypothesis that forbids this
+picture.}
+
+\sitem{S2.10}{Theorem}
+\emph{(The two compactnesses agree.) For a metric space $X$: every open cover
+of $X$ has a finite subcover if and only if every sequence in $X$ has a
+convergent subsequence.}
+\provenance{Yu Pin, p.\,114 (both directions); Tao II, Thm 1.5.8 and
+Ex.\ 1.5.11 --- Tao \emph{defines} compactness sequentially, the mirror image
+of Rudin.}
+\begin{proof}
+\emph{Covers $\Rightarrow$ sequences.} Suppose $(x_k)$ had no convergent
+subsequence. Then no point $x$ is a subsequential limit, so each $x$ has a
+radius $r_x>0$ for which $B(x,r_x)$ contains $x_k$ for only finitely many
+indices $k$. These balls cover $X$; a finite subcover would then account for
+only finitely many indices altogether, which is absurd.
+
+\emph{Sequences $\Rightarrow$ covers.} Let $\{U_\alpha\}$ be an open cover.
+First, $X$ is totally bounded: if some $\varepsilon>0$ admitted no finite
+cover by $\varepsilon$-balls, one could choose $x_1$, then $x_2$ outside
+$B(x_1,\varepsilon)$, then $x_3$ outside the first two balls, and so on,
+producing a sequence with mutual distances at least $\varepsilon$ and hence
+no convergent subsequence.
+
+Second, the cover has a Lebesgue number (S4.19 in the Chapter 4 appendix):
+if not, then for each $n$ some $B(x_n,1/n)$ lies in no $U_\alpha$; passing
+to a convergent subsequence $x_{n_k} \to x$ and choosing $\beta$ and $r$ with
+$B(x,r) \subset U_\beta$, we get $B(x_{n_k},1/n_k) \subset B(x,r)$ for large
+$k$ --- a contradiction.
+
+Now cover $X$ by finitely many balls of radius $\delta$, a Lebesgue number.
+Each lies inside a single $U_\alpha$, and those finitely many $U_\alpha$
+cover $X$.
+\end{proof}
+
+\noindent
+Rudin proves one direction inside $\R^k$ (2.41, via 2.37) and never states
+the general equivalence.\kn{The forward direction is slick: if $(x_k)$ had no
+convergent subsequence, every tail $\{x_k : k \ge m\}$ would be closed, so
+the complements $U_m = X \setminus \{x_k : k\ge m\}$ form an open cover with
+no finite subcover. The reverse direction is the one that needs a uniform
+scale --- the Lebesgue number lemma, stated as S4.19 in the Chapter 4
+appendix, where Rudin's 4.19 needs it too.}
+
+% ============================================================
+\ssection{Supplement D --- Two notions of smallness}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 2]
+\raggedright
+\textbf{What Rudin does.} The chapter opens with cardinality (2.1--2.14) and
+closes with the Cantor set (2.44), an uncountable set that is, in his words,
+of measure zero. Size is measured by counting.
+
+\smallskip
+\textbf{The gap.} Counting is not the only measure of size, and Rudin's own
+examples show it is not the useful one for topology. $\Q$ is countable ---
+small by counting --- yet meets every interval. The Cantor set is
+uncountable --- large by counting --- yet contains no interval at all. The
+notion that separates them is nowhere in Chapter 2, though every ingredient
+for it is: closure, interior, density.
+
+\smallskip
+\textbf{Where the gap bites.} At Exercise 3.22, where Rudin poses Baire's
+theorem with no indication of what it is for; at 7.18, where the existence of
+a nowhere-differentiable continuous function looks like a lucky construction
+rather than the typical case; and in the Chapter 4 appendix, where the
+question ``can a function be continuous exactly on $\Q$?'' cannot even be
+posed without it.
+
+\smallskip
+\textbf{What this section supplies.} Cantor's theorem in general form and
+Schr\"oder--Bernstein, which make cardinality an order relation rather than a
+collection of tricks; then Baire's theorem with proof, and the table showing
+that the two notions of smallness disagree in both directions.
+\end{roadmap}
+
+\sitem{S2.11}{Theorem}
+\emph{(Cantor.) For every set $X$, there is no surjection $X \to 2^X$; in
+particular $X$ and its power set never have the same cardinality.}
+\provenance{Tao I, Thm 8.3.1 (bk.\ p.\,195). Rudin's 2.14 is the case
+$X = \N$.}
+\begin{proof}
+Let $f : X \to 2^X$ be any map and put
+\[ A = \{\,x \in X : x \notin f(x)\,\} . \]
+If $A = f(x_0)$ for some $x_0$, then $x_0 \in A$ means $x_0 \notin f(x_0) =
+A$, while $x_0 \notin A$ means $x_0 \in f(x_0) = A$. Both are impossible, so
+$A$ is not in the range of $f$.
+\end{proof}
+
+\noindent
+The proof is Rudin's 2.14 with the decimal expansions stripped away: given
+$f : X \to 2^X$, the set $A = \{x : x \notin f(x)\}$ is not $f(x)$ for any
+$x$.\kn{Rudin proves $2^{\N}$ is uncountable by a diagonal argument on
+sequences of $0$s and $1$s, which is this proof in a costume. Stated for
+general $X$ it yields an infinite ladder of cardinalities, and with it the
+question Rudin never raises --- whether anything sits strictly between
+$|\N|$ and $|\R|$. That is the continuum hypothesis, and Gödel and Cohen
+showed it is undecidable from the usual axioms.}
+
+\sitem{S2.12}{Theorem}
+\emph{(Schr\"oder--Bernstein.) If there are injections $A \to B$ and
+$B \to A$, then there is a bijection $A \to B$.}
+\provenance{Tao I, Ex.\ 8.3.3; Yu Pin p.\,38 gives a different proof by
+least fixed point.}
+\begin{proof}
+Let $f : A \to B$ and $g : B \to A$ be injections. Put
+\[ C_0 = A \setminus g(B), \qquad C_{n+1} = g\bigl(f(C_n)\bigr),
+   \qquad C = \bigcup_{n\ge0} C_n , \]
+and define
+\[ h(a) = \begin{cases}
+    f(a) & (a \in C),\\
+    g^{-1}(a) & (a \notin C).
+  \end{cases} \]
+The second line makes sense: $a \notin C$ gives $a \notin C_0$, so
+$a \in g(B)$, and $g$ is injective, so $g^{-1}(a)$ is a single point.
+
+$h$ is injective. Both $f$ and $g^{-1}$ are, so the only risk is
+$f(a) = g^{-1}(a')$ with $a \in C$, $a' \notin C$. But then $a \in C_n$ for
+some $n$ and $a' = g(f(a)) \in C_{n+1} \subset C$, a contradiction.
+
+$h$ is onto. Let $b \in B$. If $g(b) \in C$, then $g(b) \in C_{n+1}$ for some
+$n$ --- it cannot lie in $C_0$ --- so $g(b) = g(f(c))$ for some $c \in C_n$,
+whence $b = f(c) = h(c)$ by injectivity of $g$. If $g(b) \notin C$, then
+$h(g(b)) = g^{-1}(g(b)) = b$.
+\end{proof}
+
+\noindent
+This is what makes cardinality an order relation rather than a collection of
+tricks: it is antisymmetry.\kn{Rudin compares cardinalities throughout
+Chapter 2 --- ``at most countable,'' ``$E$ is equivalent to $\N$'' --- and
+never needs to state that $|A| \le |B|$ and $|B| \le |A|$ force $|A|=|B|$,
+because his cases are concrete enough to exhibit bijections directly. The
+general fact is not obvious and the proof is genuinely clever.}
+
+\sitem{S2.13}{Theorem}
+\emph{(Baire.) In a complete metric space, the intersection of countably many
+dense open sets is dense. Equivalently, a countable union of closed sets with
+empty interior has empty interior.}
+\provenance{Yu Pin \cjk{定理}{Thm} 160--161 (pp.\,296--297). Rudin gives it
+as Exercise 3.22.}
+\begin{proof}
+Let $U_1, U_2, \dots$ be dense open sets in the complete space $X$, put
+$V = \bigcap_n U_n$, and let $W$ be any nonempty open set; we must produce a
+point of $V \cap W$.
+
+Since $U_1$ is dense and open, $U_1 \cap W$ is nonempty and open, so it
+contains a closed ball $\overline B(x_1,r_1)$ with $0 < r_1 < 1$. Having
+chosen $\overline B(x_n,r_n)$, the set $U_{n+1} \cap B(x_n,r_n)$ is nonempty
+and open, so it contains a closed ball $\overline B(x_{n+1},r_{n+1})$ with
+$0 < r_{n+1} < r_n/2$.
+
+The balls are nested, so for $m > n$ we have $x_m \in \overline B(x_n,r_n)$
+and hence $d(x_m,x_n) \le r_n < 2^{-n+1}$: the centres form a Cauchy
+sequence. By completeness $x_n \to x$. For each $n$, all $x_m$ with $m \ge n$
+lie in the closed set $\overline B(x_n,r_n)$, so $x$ does too; therefore
+$x \in U_n$ for every $n$, and $x \in \overline B(x_1,r_1) \subset W$.
+\end{proof}
+
+\begin{proofwalk}[How the proof flows]
+  \item \textbf{Choose the method.} ``$V$ is dense'' means $V$ meets every
+        nonempty open $W$, so the goal is to \emph{produce a point} lying in
+        infinitely many sets at once. The only machinery that produces a
+        point from infinitely many conditions is a nested construction
+        followed by completeness --- the same shape as S2.3 and 2.38.
+  \item \textbf{Use density to move, openness to get room.} At each stage
+        density guarantees $U_{n+1}$ reaches into the ball we are standing
+        in; openness guarantees the intersection has room for a whole closed
+        ball. Both hypotheses are used at every step, and neither can be
+        dropped: a dense set that is not open, like $\Q$, leaves no room.
+  \item \textbf{Halve the radii.} Forcing $r_{n+1} < r_n/2$ makes the centres
+        Cauchy. Any summable rate would do; halving is the cheapest.
+  \item \textbf{Take \emph{closed} balls.} This is the one design choice with
+        content. The limit $x$ need not lie in any open ball $B(x_n,r_n)$,
+        but it must lie in the closed one, because closed sets contain their
+        limits (2.27). Closing the balls is what makes the intersection
+        catch the limit point.
+  \item \textbf{Cash in completeness.} The centres converge, and the limit
+        lies in every $\overline B(x_n,r_n) \subset U_n$, hence in $V$; and
+        in $\overline B(x_1,r_1) \subset W$.
+  \item \textbf{Audit.} Completeness is spent once, at step 5; density and
+        openness once per stage, at step 2; closedness of the balls once, at
+        step 4. Drop completeness and the theorem is false --- in $\Q$, the
+        sets $\Q \setminus \{q_n\}$ are dense and open with empty
+        intersection.
+\end{proofwalk}
+
+\begin{deeper}[The second notion of smallness, and how it cuts across the first]
+Call a set \emph{nowhere dense} if its closure has empty interior, and
+\emph{meagre} if it is a countable union of nowhere dense sets. Baire's
+theorem says a complete metric space is not meagre in itself --- meagre sets
+are topologically negligible.
+
+The two notions of smallness are independent, and Chapter 2 already contains
+both witnesses:
+
+\smallskip
+\begin{tabular}{@{}p{0.32\linewidth}p{0.28\linewidth}p{0.30\linewidth}@{}}
+\toprule
+\textbf{set} & \textbf{cardinality} & \textbf{topologically} \\
+\midrule
+$\Q \subset \R$        & countable --- small & dense, not meagre in itself \\
+the Cantor set (2.44)  & uncountable --- large & nowhere dense --- small \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+So the Cantor set is large by counting and negligible by topology, while
+$\Q$ is the reverse. Rudin builds the Cantor set precisely to exhibit an
+uncountable set of ``measure zero'' (his phrase at 2.44), which is a third
+notion again --- the one Chapter 11 will develop.
+
+Yu Pin's applications show what the theorem is for: no continuous function on
+$[a,b]$ can be differentiable with unbounded derivative on every
+subinterval; the indicator of $\Q$ is not a pointwise limit of continuous
+functions; and ``most'' continuous functions are nowhere differentiable, the
+qualitative form of Rudin's 7.18. The Chapter 4 appendix uses Baire again, at
+S4.5, to show no function is continuous exactly on the rationals.
+\end{deeper}
+
+% ============================================================
+\ssection{Supplement E --- What survives without a metric}
+
+\begin{roadmap}[Why this supplement belongs to Chapter 2]
+\raggedright
+\textbf{What Rudin does.} He defines everything in terms of the distance
+$d$: balls, limit points, open sets, compactness, connectedness. Theorem
+2.24 then proves that arbitrary unions and finite intersections of open sets
+are open.
+
+\smallskip
+\textbf{The gap.} 2.24 is the moment the metric stops mattering, and Rudin
+does not say so. From there to the end of the chapter --- and through 4.8,
+4.14 and 4.22 in the next --- the proofs use only the conclusions of 2.24,
+never the distance that produced them. A reader has no way to tell which
+results are really about distance and which are about open sets alone.
+
+\smallskip
+\textbf{Where the gap bites.} At 2.34 (compact implies closed), which needs a
+separation hypothesis that $\R^k$ supplies for free; at the equivalence of
+the two compactnesses (S2.10), which is genuinely metric and fails without
+it; and at every point where a reader wonders whether uniform continuity
+could be defined the same way --- it cannot, and knowing why saves a false
+generalisation.
+
+\smallskip
+\textbf{What this section supplies.} The definition that takes 2.24 as an
+axiom, and a table sorting Chapter 2 into what survives and what dies, with
+the two counterexamples that mark the boundary.
+\end{roadmap}
+
+\sitem{S2.14}{Definition}
+\emph{A \textbf{topology} on $X$ is a family $\mathcal F$ of subsets
+containing $\varnothing$ and $X$ and closed under arbitrary unions and finite
+intersections; its members are the open sets. $X$ is \textbf{Hausdorff} if
+distinct points have disjoint neighbourhoods.}
+\provenance{Tao II, \S2.5 (bk.\ pp.\,39--43); Yu Pin \cjk{定义}{Def} 78
+(p.\,130).}
+
+\begin{deeper}[Which of Rudin's Chapter 2 survives, and which dies]
+Rudin's 2.24 --- arbitrary unions and finite intersections of open sets are
+open --- is not a theorem in this setting but the \emph{definition}. Taking
+it as the definition, one can ask which of the rest survives.
+
+\smallskip
+\begin{tabular}{@{}p{0.46\linewidth}p{0.46\linewidth}@{}}
+\toprule
+\textbf{Survives with no metric} & \textbf{Needs the metric} \\
+\midrule
+closure, interior, boundary; the relative topology (2.30); continuity as
+preimages of open sets (4.8); compactness by finite subcovers; connectedness
+& Cauchy sequences and completeness; boundedness; uniform continuity;
+``compact $\Rightarrow$ sequentially compact'' \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+Two of Rudin's results fail outright. \emph{Compact implies closed} (2.34)
+needs Hausdorff: in the trivial topology $\{\varnothing, X\}$ every subset is
+compact and only two are closed. And \emph{compact implies sequentially
+compact} fails even in a Hausdorff space --- Tao's Exercise 2.5.8 constructs
+a compact ordered space containing a sequence with no convergent
+subsequence, which is exactly why S2.10 above had to say ``metric space.''
+
+Uniqueness of limits is the cleanest illustration of what Hausdorff buys:
+without it a sequence can converge to two different points at once. Rudin
+gets uniqueness free at 3.2(b) because a metric space is automatically
+Hausdorff --- take balls of radius $d(p,q)/2$.
+\end{deeper}

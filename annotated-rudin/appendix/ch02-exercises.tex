@@ -1,0 +1,268 @@
+% ============================================================
+%  APPENDIX TO CHAPTER 2 -- EXERCISES S2.1-S2.21
+%  Imported from Tao I/II, ECNU, USTC, Yu Pin.  Not Rudin's.
+% ============================================================
+\ssection{Appendix exercises}
+
+\begin{roadmap}[How these differ from Rudin's thirty]
+Rudin's own Exercises 2.1--2.30 end the chapter proper. They drill his
+vocabulary: closures, condensation points, separability, the distance
+function. These twenty-one come from the four comparison texts and do
+something his cannot --- they make the machinery \emph{pay}.
+
+\medskip
+\raggedright
+\textbf{Group I (1--10): the completeness theorems, proved with each other.}
+Rudin derives everything from the least-upper-bound axiom in one direction.
+These run the implications the other way and, in exercise 1, show what fails
+over $\Q$ --- the exercise that turns the equivalence list of Chapter 1 into
+a statement about $\R$ specifically.
+
+\medskip
+\textbf{Group II (11--16): metric spaces past Rudin's stopping point.}
+Completion, total boundedness, the contraction mapping principle, and the
+closed bounded complete set that is still not compact.
+
+\medskip
+\textbf{Group III (17--20): size.} Uncountability without a diagonal
+argument, Cantor's theorem, Schr\"oder--Bernstein, and a compact space
+containing a sequence with no convergent subsequence.
+
+\medskip
+\textbf{Group IV (21): topology as a tool.} Furstenberg's proof that there
+are infinitely many primes, using nothing but Rudin's 2.23.
+
+\medskip
+\textbf{Marked $\star$:} harder, or requiring a result from a later chapter.
+\end{roadmap}
+
+\begin{enumerate}[label=\textbf{S2.\arabic*.}, leftmargin=3.4em, itemsep=9pt,
+                  topsep=8pt, labelsep=0.5em]
+
+% ---------------- Group I ----------------
+\item Give examples showing that over the rationals, each of the following
+fails: the least-upper-bound principle; the monotone convergence theorem;
+the cluster-point (Bolzano--Weierstrass) theorem; and the Cauchy
+criterion.\kn{The exercise that gives the equivalence list of Chapter 1 its
+point. One example does all four: take rationals increasing to $\sqrt2$ ---
+say the decimal truncations. The set is bounded above with no rational
+supremum, the sequence is monotone bounded and does not converge in $\Q$, it
+is Cauchy without a limit, and its only candidate cluster point is
+irrational. That a single witness kills all four is the equivalence, seen
+from below.}
+\provenance{ECNU \cjk{习题}{Ex} 7.1 \#4 (bk.\ p.\,155).}
+
+\item Let $H = \bigl\{\bigl(\tfrac{1}{n+2}, \tfrac1n\bigr) :
+n = 1,2,3,\dots\bigr\}$. (a) Does $H$ cover $(0,1)$? (b) Can finitely many
+members of $H$ cover $\bigl(0,\tfrac12\bigr)$? (c) Can finitely many cover
+$\bigl(\tfrac{1}{100},1\bigr)$?\kn{Three questions probing exactly where
+finiteness breaks. Note that (c) succeeds while (b) fails, which isolates
+the mechanism: the trouble is never ``the set is infinite'' but ``the cover
+degenerates at a point the set does not contain.'' Rudin's cover examples at
+2.32 are one-liners with no such sub-questions.}
+\provenance{ECNU \cjk{习题}{Ex} 7.1 \#5 (bk.\ p.\,155).}
+
+\item Prove the cluster-point theorem (S2.5) using the finite covering
+theorem (S2.4).\kn{The contrapositive direction Rudin never runs. If bounded
+infinite $E$ had no cluster point, every $x \in [a,b]$ would have a
+neighbourhood meeting $E$ in finitely many points; these cover $[a,b]$, so
+finitely many do, making $E$ finite. Compactness converting ``locally
+finite'' into ``globally finite'' is the whole idea, and it recurs at 4.15.}
+\provenance{ECNU \cjk{习题}{Ex} 7.1 \#8 (bk.\ p.\,155).}
+
+\item Prove the Cauchy criterion using the cluster-point theorem.\kn{A Cauchy
+sequence is bounded, so it has a cluster point; then show the whole sequence
+converges to it, using the Cauchy condition to transfer nearness from the
+subsequence to the tail. Rudin does exactly this at 3.11, without naming the
+route. Together with exercise 3 this closes the loop of implications.}
+\provenance{ECNU \cjk{习题}{Ex} 7.1 \#9 (bk.\ p.\,155).}
+
+\item $\star$~Prove the finite covering theorem using the least-upper-bound
+principle, without bisection.\kn{The ``creeping along'' proof, and a genuinely
+different mechanism from S2.4. Let $E$ be the set of $x \in [a,b]$ such that
+$[a,x]$ admits a finite subcover, and put $c = \sup E$. Show $c \in E$ ---
+some cover element contains $c$, and it also contains points slightly left of
+$c$ --- and then that $c = b$, since otherwise the same element lets you
+creep past $c$. Keep the pattern: to prove something holds on all of
+$[a,b]$, take the supremum of where it holds and show that supremum cannot
+be interior. It reappears in the proof of the mean value theorem and in
+Chapter 5's appendix.}
+\provenance{ECNU \cjk{总练习题}{review} 7 \#2 (bk.\ p.\,160).}
+
+\item Prove that a continuous real function on $[a,b]$ is uniformly
+continuous, using the finite covering theorem.\kn{Rudin's 4.19, but assigned
+here --- and the point of assigning it here is that Chapter 2's machinery is
+already enough. Each $x$ gives $\delta_x$ for $\varepsilon/2$; the balls of
+radius $\delta_x/2$ cover $[a,b]$; take a finite subcover and let $\delta$ be
+the smallest radius. The halving is what makes two nearby points land in a
+common ball. Compare S4.19 in the Chapter 4 appendix, which names the
+$\delta$ this construction produces.}
+\provenance{ECNU \cjk{习题}{Ex} 7.1 \#11 (bk.\ p.\,155). Companion \#10:
+prove the root-existence theorem by the same method.}
+
+\item Let $(x_n)$ be monotone. Prove that if it has a cluster point, that
+cluster point is unique and equals $\sup_n x_n$ (for increasing
+$(x_n)$).\kn{Monotonicity collapses the whole cluster set to a point --- the
+sequence version of the fact that a monotone function has one-sided limits
+everywhere. Contrast with $\sin(n\pi/4)$ at S2.2, which has five: order is
+exactly what forbids returning.}
+\provenance{ECNU \cjk{习题}{Ex} 7.1 \#7 (bk.\ p.\,155).}
+
+\item Prove that the set of cluster points of the closed interval $[a,b]$ is
+$[a,b]$ itself.\kn{The concrete instance of ``$[a,b]$ is perfect,'' which
+Rudin asserts in passing at 2.44's discussion but never asks anyone to
+verify. Both inclusions need a word: every point of $[a,b]$ is approached
+from within, and no point outside is.}
+\provenance{ECNU \cjk{习题}{Ex} 7.1 \#6 (bk.\ p.\,155).}
+
+\item Sharpen the nested interval theorem: if $a_n < a_{n+1} < b_{n+1} < b_n$
+strictly for all $n$ and $b_n - a_n \to 0$, prove the common point $\xi$
+satisfies $a_n < \xi < b_n$ strictly for every $n$.\kn{S2.3 gives only
+$a_n \le \xi \le b_n$, and several later arguments need the strict version
+--- in particular any argument that must place $\xi$ in the \emph{interior}
+of every stage. Cheap to prove, easy to assume without noticing.}
+\provenance{ECNU \cjk{习题}{Ex} 7.1 \#3 (bk.\ p.\,155).}
+
+\item Construct a divergent sequence $(a_n)$ with the property that for every
+$\varepsilon > 0$ there is an $N$ such that $n > N$ implies
+$|a_{n+1} - a_n| < \varepsilon$.\kn{The pseudo-Cauchy counterexample:
+consecutive terms getting close does \emph{not} make a sequence Cauchy. The
+canonical answer is the partial sums of the harmonic series, where
+$|a_{n+1}-a_n| = 1/(n+1) \to 0$ while the sums diverge. Rudin states 3.10
+with the full $|a_n - a_m|$ and never asks why the weaker condition will not
+do --- but every student proposes it eventually.}
+\provenance{USTC Ch.\ 1 suppl.\ \#4 (bk.\ p.\,38).}
+
+% ---------------- Group II ----------------
+\item $\star$~\emph{(The completion, built by hand.)} Let $(X,d)$ be a metric
+space. Call two Cauchy sequences in $X$ equivalent if
+$d(x_n,y_n) \to 0$, write $\overline X$ for the set of equivalence classes,
+and define $\overline d\bigl([x],[y]\bigr) = \lim d(x_n,y_n)$. Prove:
+(a) the relation is an equivalence relation; (b) the limit defining
+$\overline d$ exists and is independent of representatives, and
+$\overline d$ is a metric; (c) $\overline X$ is complete; (d) $x \mapsto
+[(x,x,x,\dots)]$ embeds $X$ isometrically; (e) the image is dense in
+$\overline X$.\kn{The construction of $\R$ from $\Q$, done once in
+generality --- Rudin gives it only as Exercise 3.24 and only sketches it.
+Part (b) is where the work is: you must prove a limit exists before you can
+use it as a definition, and that is what the Cauchy hypothesis is for.
+Chapter 1's appendix builds $\R$ by cuts instead; comparing the two is the
+best available illustration that ``the'' real numbers are characterised by a
+property, not a construction.}
+\provenance{Tao II, Ex.\ 1.4.8 (bk.\ p.\,21); Yu Pin \cjk{定理}{Thm} 77
+(p.\,123) adds the universal property.}
+
+\item Prove that a metric space is compact if and only if it is complete and
+totally bounded (S2.9).\kn{For the hard direction, build nested
+subsequences: cover by finitely many balls of radius $1$ and keep one
+containing infinitely many terms; refine with radius $1/2$; and so on. The
+diagonal subsequence is Cauchy, and completeness converts it into a
+convergent one. The diagonal trick is the same one Rudin uses at 7.23 for
+Arzel\`a--Ascoli --- worth meeting here first, where it is uncluttered.}
+\provenance{Tao II, Ex.\ 1.5.10 (bk.\ p.\,26).}
+
+\item In the space $X$ of absolutely summable sequences with
+$d(a,b) = \sum_n |a_n - b_n|$, let $e^{(n)}$ be the sequence with $1$ in
+place $n$ and $0$ elsewhere. Prove that $\{e^{(n)} : n \in \N\}$ is closed
+and bounded, that $X$ is complete, and that the set is nevertheless not
+compact.\kn{Sharper than Rudin's Exercise 2.16, where compactness fails
+because $\Q$ is incomplete. Here nothing is incomplete: the failure is
+\emph{dimension}. Any two of the $e^{(n)}$ are at distance $2$, so no
+subsequence is Cauchy and no finite family of balls of radius $1$ covers the
+set. This is the picture drawn at S2.9.}
+\provenance{Tao II, Ex.\ 1.5.8 with Ex.\ 1.1.15 (bk.\ pp.\,26, 10).}
+
+\item \emph{(Contraction mapping principle.)} Let $(X,d)$ be complete and
+$T : X \to X$ satisfy $d(Tx,Ty) \le \gamma\, d(x,y)$ for some fixed
+$\gamma \in (0,1)$. Prove $T$ has exactly one fixed point. Then prove the
+refinement: if some iterate $T^r$ is a contraction, $T$ still has exactly
+one fixed point --- and check that $x \mapsto e^{-x}$ on $[0,\infty)$ is not
+a contraction although $f \circ f$ is.\kn{The first theorem in the book that
+genuinely \emph{needs} completeness: the iterates form a Cauchy sequence by
+comparison with a geometric series, and only completeness produces the
+limit. Rudin proves this at 9.23, five chapters later, for the inverse
+function theorem; the one-dimensional case is exercise S4.15 in the Chapter
+4 appendix.}
+\provenance{Yu Pin \cjk{定理}{Thm} 37 (p.\,77) and the following exercises.}
+
+\item Let $(X,d)$ be a compact metric space and $f : X \to X$. Prove:
+(a) if $d(f(x),f(y)) = d(x,y)$ for all $x,y$, then $f$ is a bijection;
+(b) if $d(f(x),f(y)) \ge d(x,y)$ for all $x,y$, then $f$ is an isometry;
+(c) if $d(f(x),f(y)) \le d(x,y)$ for all $x,y$ and $f$ is onto, then $f$ is
+an isometry.\kn{Compactness forcing rigidity. Part (b) is the surprising one
+--- a map that never decreases distances on a compact space cannot increase
+them either. All three run on the same engine: iterate $f$, extract a
+convergent subsequence, and use it to show points that looked separated must
+be reachable. Nothing in Rudin's Chapter 2 exercises has this flavour.}
+\provenance{Yu Pin, winter problem S (p.\,331).}
+
+\item On a product $Y \times Z$ of metric spaces put
+$d\bigl((y_1,z_1),(y_2,z_2)\bigr) =
+\sqrt{d_Y(y_1,y_2)^2 + d_Z(z_1,z_2)^2}$. Prove this is a metric, that the
+projections are continuous, and that $F : X \to Y \times Z$ is continuous if
+and only if both components are. Then prove that the invertible $n \times n$
+real matrices form an \emph{open} subset of all matrices and that
+$A \mapsto A^{-1}$ is continuous on it.\kn{The universal property of the
+product, which is what Rudin's 4.10 (a map into $\R^k$ is continuous iff its
+components are) is a special case of. The matrix statements are the payoff:
+openness follows because the determinant is continuous and $GL_n$ is the
+preimage of $\R \setminus \{0\}$, and continuity of inversion from Cramer's
+rule. Chapter 9 will use both without proof.}
+\provenance{Yu Pin, homework 4 A8--A12 (p.\,108).}
+
+% ---------------- Group III ----------------
+\item Prove that $\R^1$ is uncountable using nested intervals rather than a
+diagonal argument: (a) given a closed interval $J$ of positive length and any
+$x$, find a closed $I \subset J$ of positive length with $x \notin I$;
+(b) given a sequence $(x_n)$, build nested closed intervals $I_n$ with
+$x_n \notin I_n$; (c) conclude.\kn{Rudin proves uncountability twice --- by
+diagonalisation at 2.14 and, far more powerfully, as a corollary of ``perfect
+sets are uncountable'' at 2.43. This is a third proof, and the cheapest: it
+uses only S2.3. Note that it is really the same idea as 2.43, with the
+nested intervals doing what Rudin's shrinking neighbourhoods do.}
+\provenance{Yu Pin, homework 1 B7 (p.\,37).}
+
+\item Prove that any family of pairwise disjoint open intervals in $\R^1$ is
+countable.\kn{One line if you see it: each interval contains a rational, and
+disjointness makes the assignment injective. The technique --- inject an
+unknown family into $\Q$ --- is the standard way to prove countability, and
+it is exactly the argument behind Rudin's 4.30 (a monotone function has at
+most countably many discontinuities) and behind Exercise 2.29.}
+\provenance{Yu Pin, homework 1 B11 (p.\,37).}
+
+\item Prove Cantor's theorem in general: for any set $X$ there is no
+surjection $X \to 2^X$. Then prove the Schr\"oder--Bernstein theorem: if
+there are injections $A \to B$ and $B \to A$, there is a bijection
+$A \to B$.\kn{Cantor's proof is Rudin's 2.14 with the decimals removed:
+$A = \{x : x \notin f(x)\}$ is missed by every $f(x)$ --- and note its
+kinship with Russell's paradox. Schr\"oder--Bernstein is what makes
+cardinality an order relation; the slick proof partitions $A$ using
+$D_0 = B \setminus f(A)$ and $D_{n+1} = f(g(D_n))$.}
+\provenance{Tao I, Thm 8.3.1 and Ex.\ 8.3.2--8.3.3 (bk.\ pp.\,195, 198).}
+
+\item $\star$~Construct a compact topological space containing a sequence
+with no convergent subsequence.\kn{The counterexample proving that S2.10 is
+a theorem about \emph{metric} spaces and not about topological ones. Tao's
+construction well-orders $\R$, takes the union of all countable initial
+segments, adjoins a maximum, and gives the result its order topology; every
+point below the maximum has only countably many predecessors, which is what
+strands the sequence. Rudin never distinguishes the two compactnesses
+because he never leaves metric spaces.}
+\provenance{Tao II, Ex.\ 2.5.8 with 2.5.5 (bk.\ pp.\,43, 42).}
+
+% ---------------- Group IV ----------------
+\item $\star$~\emph{(Furstenberg.)} On $\Z$ call a set open if it is empty or
+a union of arithmetic progressions $U_{a,b} = \{ka+b : k \in \Z\}$ with
+$a \ge 1$. Prove: (a) this is a topology; (b) no nonempty finite set is
+open, so no set with finite complement is closed; (c) each $U_{a,b}$ is both
+open and closed; (d) $\Z \setminus \{-1,1\} = \bigcup_{p \text{ prime}}
+U_{p,0}$; (e) conclude that there are infinitely many primes.\kn{The best
+advertisement in this chapter for topology as a tool rather than a
+vocabulary. If there were finitely many primes, the union in (d) would be a
+finite union of closed sets, hence closed, so $\{-1,1\}$ would be open ---
+contradicting (b). Every step uses only Rudin's 2.23--2.24, on a space with
+no metric in sight.}
+\provenance{Yu Pin, homework 5 \cjk{娱乐问题}{recreational problem}
+(p.\,130).}
+
+\end{enumerate}

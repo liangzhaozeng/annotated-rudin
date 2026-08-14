@@ -1,0 +1,375 @@
+% ============================================================
+%  Chapter 4 -- Continuity and Compactness, 4.13-4.21
+% ============================================================
+\rsection{Continuity and Compactness}
+
+\begin{signpost}[Chapter 2's investment matures]
+Five theorems, one engine. 4.14 shows continuous images of compact sets are
+compact --- a one-paragraph proof, because 4.8 lets the compactness of the
+domain be spent directly on a pulled-back cover. Everything else in the
+section is 4.14 plus a Chapter 2 fact: boundedness (4.15, via Heine--Borel),
+attainment of extrema (4.16, via 2.28), continuity of inverse maps (4.17),
+and uniform continuity (4.19, where compactness converts infinitely many
+local $\delta$'s into one global one --- the finite-minimum move yet again,
+and Rudin says so in the proof).
+
+\smallskip
+Then the audit: 4.20--4.21 dismantle each theorem when compactness is
+removed, one counterexample per conclusion. The section is a matched pair ---
+what compactness buys, and the invoice showing nothing was free.
+\end{signpost}
+
+\ritem{4.13}{Definition}
+A mapping $\mathbf{f}$ of a set $E$ into $\R^k$ is said to be \emph{bounded}
+if there is a real number $M$ such that $|\mathbf{f}(x)| \le M$ for all
+$x \in E$.
+
+\ritem{4.14}{Theorem}
+\emph{Suppose $f$ is a continuous mapping of a compact metric space $X$ into
+a metric space $Y$. Then $f(X)$ is compact.}
+
+\begin{proof}
+Let $\{V_\alpha\}$ be an open cover of $f(X)$. Since $f$ is continuous,
+Theorem 4.8 shows that each of the sets $f^{-1}(V_\alpha)$ is open. Since $X$
+is compact, there are finitely many indices, say $\alpha_1,\dots,\alpha_n$,
+such that
+\begin{equation}
+  X \subset f^{-1}(V_{\alpha_1}) \cup \cdots \cup f^{-1}(V_{\alpha_n}).
+  \tag{4.12}
+\end{equation}
+Since $f(f^{-1}(E)) \subset E$ for every $E \subset Y$, (4.12) implies that
+\begin{equation}
+  f(X) \subset V_{\alpha_1} \cup \cdots \cup V_{\alpha_n}. \tag{4.13}
+\end{equation}
+This completes the proof.
+\end{proof}
+
+\emph{Note:} We have used the relation $f(f^{-1}(E)) \subset E$, valid for
+$E \subset Y$. If $E \subset X$, then $f^{-1}(f(E)) \supset E$; equality need
+not hold in either case.
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=28mm] (f0) at (0,20)
+    {open cover $\{V_\alpha\}$\\of $f(X)$, in $Y$};
+  \node[rmbox, text width=29mm] (f1) at (43,20)
+    {pull back: $f^{-1}(V_\alpha)$\\open cover of $X$};
+  \node[rmbox, text width=23mm] (f2) at (89,20)
+    {finitely many\\cover $X$};
+  \draw[rmarrow] (f0) -- node[lbl, anchor=south, inner sep=2.5pt] {4.8} (f1);
+  \draw[rmarrow] (f1) -- node[lbl, anchor=south, inner sep=2.5pt,
+    align=center] {$X$\\compact} (f2);
+  \node[rmbox, text width=33mm] (f3) at (43,0)
+    {push forward: the same\\finitely many $V_\alpha$ cover $f(X)$};
+  \draw[rmarrow] (f2) -- node[lbl, anchor=north west, inner sep=2.5pt]
+    {$f(f^{-1}(E)) \subset E$} (f3);
+\end{tikzpicture}
+\end{center}
+\figcap{Theorem 4.14 as a flow diagram: pull the cover back, spend
+compactness, push the finite subcover forward. Each arrow is one theorem, and
+the round trip works because $f$ is defined on \emph{all} of $X$ --- the
+push-forward inclusion needs nothing else.}
+
+We shall now deduce some consequences of Theorem 4.14.
+
+\ritem{4.15}{Theorem}
+\emph{If $\mathbf{f}$ is a continuous mapping of a compact metric space $X$
+into $\R^k$, then $\mathbf{f}(X)$ is closed and bounded. Thus, $\mathbf{f}$
+is bounded.}
+
+This follows from Theorem 2.41. The result is particularly important when $f$
+is real:
+
+\ritem{4.16}{Theorem}
+\emph{Suppose $f$ is a continuous real function on a compact metric space
+$X$, and}
+\begin{equation}
+  M = \sup_{p\in X} f(p), \qquad m = \inf_{p\in X} f(p). \tag{4.14}
+\end{equation}
+\emph{Then there exist points $p, q \in X$ such that $f(p) = M$ and
+$f(q) = m$.}
+
+The notation in (4.14) means that $M$ is the least upper bound of the set of
+all numbers $f(p)$, where $p$ ranges over $X$, and that $m$ is the greatest
+lower bound of this set of numbers.
+
+The conclusion may also be stated as follows: \emph{There exist points $p$
+and $q$ in $X$ such that $f(q) \le f(x) \le f(p)$ for all $x \in X$}; that
+is, $f$ attains its maximum (at $p$) and its minimum (at $q$).
+
+\begin{proof}
+By Theorem 4.15, $f(X)$ is a closed and bounded set of real numbers; hence
+$f(X)$ contains
+\[ M = \sup f(X) \qquad\text{and}\qquad m = \inf f(X), \]
+by Theorem 2.28.\kn{The extreme value theorem of calculus, in three
+citations: 4.14 makes the image compact, 2.41 reads that as closed and
+bounded, 2.28 puts the supremum of a closed bounded set \emph{inside} it.
+Every hard step was prepaid in Chapter 2 --- exactly as the note at 2.28
+promised. Notice the theorem gives no way to \emph{find} $p$ and $q$; pure
+existence, from compactness alone.}
+\end{proof}
+
+\ritem{4.17}{Theorem}
+\emph{Suppose $f$ is a continuous 1-1 mapping of a compact metric space $X$
+onto a metric space $Y$. Then the inverse mapping $f^{-1}$ defined on $Y$ by}
+\[ f^{-1}(f(x)) = x \qquad (x \in X) \]
+\emph{is a continuous mapping of $Y$ onto $X$.}
+
+\begin{proof}
+Applying Theorem 4.8 to $f^{-1}$ in place of $f$, we see that it suffices to
+prove that $f(V)$ is an open set in $Y$ for every open set $V$ in $X$. Fix
+such a set $V$.
+
+The complement $V^c$ of $V$ is closed in $X$, hence compact (Theorem 2.35);
+hence $f(V^c)$ is a compact subset of $Y$ (Theorem 4.14) and so is closed in
+$Y$ (Theorem 2.34). Since $f$ is one-to-one and onto, $f(V)$ is the
+complement of $f(V^c)$. Hence $f(V)$ is open.\kn{A ricochet proof: to open
+$f(V)$, close its complement. The chain closed $\to$ compact $\to$ compact
+image $\to$ closed converts domain-compactness into the openness 4.8 demands
+of $f^{-1}$ --- and each link is a Chapter 2 theorem (2.35, 4.14, 2.34).
+Bijectivity enters exactly once, to say image-of-complement is
+complement-of-image. Example 4.21 shows the whole chain snaps without
+compactness.}
+\end{proof}
+
+\ritem{4.18}{Definition}
+Let $f$ be a mapping of a metric space $X$ into a metric space $Y$. We say
+that $f$ is \emph{uniformly continuous} on $X$ if for every $\varepsilon > 0$
+there exists $\delta > 0$ such that
+\begin{equation}
+  d_Y(f(p),f(q)) < \varepsilon \tag{4.15}
+\end{equation}
+for all $p$ and $q$ in $X$ for which $d_X(p,q) < \delta$.
+
+Let us consider the differences between the concepts of continuity and of
+uniform continuity. First, uniform continuity is a property of a function on
+a set, whereas continuity can be defined at a single point. To ask whether a
+given function is uniformly continuous at a certain point is meaningless.
+Second, if $f$ is continuous on $X$, then it is possible to find, for each
+$\varepsilon > 0$ and \emph{for each point $p$ of $X$}, a number $\delta > 0$
+having the property specified in Definition 4.5. This $\delta$ depends on
+$\varepsilon$ \emph{and on $p$}. If $f$ is, however, uniformly continuous on
+$X$, then it is possible, for each $\varepsilon > 0$, to find \emph{one}
+number $\delta > 0$ which will do for \emph{all} points $p$ of
+$X$.\kw{Quantifier order is the entire difference: continuity is
+$\forall p\,\forall\varepsilon\,\exists\delta$, uniform continuity is
+$\forall\varepsilon\,\exists\delta\,\forall p$. Moving $\forall p$ past
+$\exists\delta$ strips $\delta$ of its dependence on $p$. This is the
+book's sharpest lesson in reading quantifiers, and the figure below is the
+picture to attach to it.}
+
+Evidently, every uniformly continuous function is continuous. That the two
+concepts are equivalent on compact sets follows from the next theorem.
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % curve y = 1/x-like steepening on (0, ...]
+  \draw[axis] (-2,0) -- (94,0);
+  \draw[axis] (0,-2) -- (0,34);
+  \draw[thin] plot[smooth, tension=0.8]
+    coordinates {(4,32) (8,17) (14,9.5) (24,5.5) (44,3.0) (90,1.6)};
+  \node[lbl, anchor=west] at (68,6.5) {$f(x)=1/x$ on $(0,1]$};
+  % same epsilon window at two points, different deltas
+  \draw[guide] (8,-4) -- (8,17);
+  \draw[thin, {Stealth[length=3pt]}-{Stealth[length=3pt]}] (6.9,-4) -- (9.1,-4);
+  \node[lbl, anchor=north] at (8,-5.5) {tiny $\delta$ needed};
+  \draw[guide] (44,-4) -- (44,3.0);
+  \draw[thin, {Stealth[length=3pt]}-{Stealth[length=3pt]}] (36,-4) -- (52,-4);
+  \node[lbl, anchor=north] at (44,-5.5) {generous $\delta$ suffices};
+\end{tikzpicture}
+\end{center}
+\figcap{Continuity that is not uniform: the same $\varepsilon$ of vertical
+tolerance costs ever-smaller $\delta$ as the curve steepens toward the
+missing endpoint. No single $\delta$ serves every point --- Theorem 4.20(c)
+makes this the general phenomenon on bounded non-compact sets.}
+
+\ritem{4.19}{Theorem}
+\emph{Let $f$ be a continuous mapping of a compact metric space $X$ into a
+metric space $Y$. Then $f$ is uniformly continuous on $X$.}
+
+\begin{proof}
+Let $\varepsilon > 0$ be given. Since $f$ is continuous, we can associate to
+each point $p \in X$ a positive number $\phi(p)$ such that
+\begin{equation}
+  q \in X,\ d_X(p,q) < \phi(p) \quad\text{implies}\quad
+  d_Y(f(p),f(q)) < \frac{\varepsilon}{2}. \tag{4.16}
+\end{equation}
+Let $J(p)$ be the set of all $q \in X$ for which
+\begin{equation}
+  d_X(p,q) < \tfrac12\phi(p). \tag{4.17}
+\end{equation}
+Since $p \in J(p)$, the collection of all sets $J(p)$ is an open cover of
+$X$; since $X$ is compact, there is a finite set of points $p_1,\dots,p_n$ in
+$X$, such that
+\begin{equation}
+  X \subset J(p_1) \cup \cdots \cup J(p_n). \tag{4.18}
+\end{equation}
+We put
+\begin{equation}
+  \delta = \tfrac12\min\{\phi(p_1),\dots,\phi(p_n)\}. \tag{4.19}
+\end{equation}
+Then $\delta > 0$. (This is one point where the finiteness of the covering,
+inherent in the definition of compactness, is essential. The minimum of a
+finite set of positive numbers is positive, whereas the inf of an infinite
+set of positive numbers may very well be $0$.)
+
+Now let $q$ and $p$ be points of $X$ such that $d_X(p,q) < \delta$. By
+(4.18), there is an integer $m$, $1 \le m \le n$, such that $p \in J(p_m)$;
+hence
+\begin{equation}
+  d_X(p,p_m) < \tfrac12\phi(p_m), \tag{4.20}
+\end{equation}
+and we also have
+\[ d_X(q,p_m) \le d_X(p,q) + d_X(p,p_m)
+   < \delta + \tfrac12\phi(p_m) \le \phi(p_m). \]
+Finally, (4.16) shows that therefore
+\[ d_Y(f(p),f(q)) \le d_Y(f(p),f(p_m)) + d_Y(f(q),f(p_m)) < \varepsilon. \]
+This completes the proof.
+\end{proof}
+
+An alternative proof is sketched in Exercise 4.10.
+
+\begin{proofwalk}[How the proof flows]
+  \item \textbf{Name the enemy.} Continuity hands out a private
+        $\delta$-radius $\phi(p)$ at each point; uniformity demands one
+        public $\delta$. The natural attempt --- take
+        $\inf_p \phi(p)$ --- fails because an infimum of infinitely many
+        positive numbers can be $0$ (Rudin says exactly this in the
+        parenthesis at (4.19)). The proof exists to make that infimum
+        finite.
+  \item \textbf{Turn the private radii into a cover.} Each point owns the
+        ball $J(p)$ of \emph{half} its radius; together they cover $X$.
+        Compactness reduces to finitely many centers $p_1,\dots,p_n$ --- and
+        now the minimum in (4.19) is over a finite set, hence positive. This
+        is the local-to-global conversion promised in Chapter 2's signpost,
+        performed literally.
+  \item \textbf{Why half?} The safety margin is what makes the public
+        $\delta$ work for pairs. A point $p$ lands in some $J(p_m)$, within
+        $\tfrac12\phi(p_m)$ of the center; its partner $q$ is within
+        $\delta \le \tfrac12\phi(p_m)$ more, so \emph{both} lie inside the
+        full radius $\phi(p_m)$. Without the halving, $q$ could fall just
+        outside.
+  \item \textbf{Close through the center.} Neither $p$ nor $q$ is compared
+        with the other directly --- both are compared with $p_m$, each
+        within $\varepsilon/2$, and the triangle inequality adds the halves.
+        That is why (4.16) was set up with $\varepsilon/2$: working
+        backwards, pattern 4.
+  \item \textbf{Audit.} Compactness spent once (at the finite subcover),
+        continuity spent once per point (to define $\phi$), triangle
+        inequality twice. The halving trick --- shrink each local radius so
+        that overlapping neighbours still see each other --- recurs in
+        Chapter 7 and in every partition-of-unity argument (Chapter 10).
+\end{proofwalk}
+
+We now proceed to show that compactness is essential in the hypotheses of
+Theorems 4.14, 4.15, 4.16, and 4.19.
+
+\ritem{4.20}{Theorem}
+\emph{Let $E$ be a noncompact set in $\R^1$. Then}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt]
+  \item \emph{there exists a continuous function on $E$ which is not
+        bounded;}
+  \item \emph{there exists a continuous and bounded function on $E$ which
+        has no maximum.}
+\end{enumerate}
+\emph{If, in addition, $E$ is bounded, then}
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=1pt, topsep=3pt,
+                  start=3]
+  \item \emph{there exists a continuous function on $E$ which is not
+        uniformly continuous.}
+\end{enumerate}
+
+\begin{proof}
+Suppose first that $E$ is bounded, so that there exists a limit point $x_0$
+of $E$ which is not a point of $E$.\kn{Here 2.41 is being run in reverse:
+noncompact-but-bounded forces not-closed, which hands the proof its weapon
+--- a missing limit point $x_0$. Every counterexample in the bounded case is
+built by blowing up at $x_0$; the theorem is really about how continuity on
+$E$ cannot see the hole just outside $E$.} Consider
+\begin{equation}
+  f(x) = \frac{1}{x-x_0} \qquad (x \in E). \tag{4.21}
+\end{equation}
+This is continuous on $E$ (Theorem 4.9), but evidently unbounded. To see that
+(4.21) is not uniformly continuous, let $\varepsilon > 0$ and $\delta > 0$ be
+arbitrary, and choose a point $x \in E$ such that $|x-x_0| < \delta$. Taking
+$t$ close enough to $x_0$, we can then make the difference $|f(t)-f(x)|$
+greater than $\varepsilon$, although $|t-x| < \delta$. Since this is true for
+every $\delta > 0$, $f$ is not uniformly continuous on $E$.
+
+The function $g$ given by
+\begin{equation}
+  g(x) = \frac{1}{1+(x-x_0)^2} \qquad (x \in E) \tag{4.22}
+\end{equation}
+is continuous on $E$ and is bounded, since $0 < g(x) < 1$. It is clear that
+\[ \sup_{x\in E} g(x) = 1, \]
+whereas $g(x) < 1$ for all $x \in E$. Thus $g$ has no maximum on $E$.
+
+Having proved the theorem for bounded sets $E$, let us now suppose that $E$
+is unbounded. Then $f(x) = x$ establishes (a), whereas
+\begin{equation}
+  h(x) = \frac{x^2}{1+x^2} \qquad (x \in E) \tag{4.23}
+\end{equation}
+establishes (b), since
+\[ \sup_{x\in E} h(x) = 1 \]
+and $h(x) < 1$ for all $x \in E$.
+
+Assertion (c) would be false if boundedness were omitted from the
+hypotheses. For, let $E$ be the set of all integers. Then every function
+defined on $E$ is uniformly continuous on $E$. To see this, we need merely
+take $\delta < 1$ in Definition 4.18.\kd{So the converse pattern is not
+clean: noncompactness kills boundedness and attainment outright, but uniform
+continuity survives on $\Z$ --- an unbounded, closed, noncompact set where
+every function is uniformly continuous because points cannot get close. The
+moral: (a) and (b) fail through \emph{escape} (to a missing point or to
+infinity), (c) fails only through \emph{crowding} against a missing point.
+Different failure modes, different hypotheses. Exercise 4.8 probes the same
+boundary.}
+\end{proof}
+
+We conclude this section by showing that compactness is also essential in
+Theorem 4.17.
+
+\ritem{4.21}{Example}
+Let $X$ be the half-open interval $[0,2\pi)$ on the real line, and let
+$\mathbf{f}$ be the mapping of $X$ onto the circle $Y$ consisting of all
+points whose distance from the origin is $1$, given by
+\begin{equation}
+  \mathbf{f}(t) = (\cos t, \sin t) \qquad (0 \le t < 2\pi). \tag{4.24}
+\end{equation}
+The continuity of the trigonometric functions cosine and sine, as well as
+their periodicity properties, will be established in Chap.\ 8. These results
+show that $\mathbf{f}$ is a continuous 1-1 mapping of $X$ onto $Y$.
+
+However, the inverse mapping (which exists, since $\mathbf{f}$ is one-to-one
+and onto) fails to be continuous at the point $(1,0) = \mathbf{f}(0)$. Of
+course, $X$ is not compact in this example. (It may be of interest to observe
+that $\mathbf{f}^{-1}$ fails to be continuous in spite of the fact that $Y$
+\emph{is} compact!)
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % the half-open interval
+  \draw[axis] (-2,0) -- (46,0);
+  \draw[seg] (2,0) -- (40,0);
+  \node[ptfill, minimum size=2.6pt] at (2,0) {};
+  \node[ptopen] at (40,0) {};
+  \node[mlbl, anchor=north] at (2,-2) {$0$};
+  \node[mlbl, anchor=north] at (40,-2) {$2\pi$};
+  \node[lbl, anchor=north] at (21,-6) {$X=[0,2\pi)$: the seam is open};
+  % wrap arrow
+  \draw[vec] (48,4) .. controls (54,8) .. (58,4);
+  \node[mlbl, anchor=south] at (53,8) {$\mathbf{f}$};
+  % the circle
+  \draw[thin] (74,4) circle (11mm);
+  \node[ptfill, minimum size=2.6pt] at (85,4) {};
+  \node[mlbl, anchor=west] at (86.5,4) {$(1,0)$};
+  \draw[thin, -{Stealth[length=3pt]}] (84.2,7.8) .. controls (80,11) .. (75,10.6);
+  \draw[thin, -{Stealth[length=3pt]}] (84.2,0.2) .. controls (80,-3) .. (75,-2.6);
+  \node[lbl, anchor=north] at (74,-9) {$Y$: both ends of $X$ arrive at $(1,0)$};
+\end{tikzpicture}
+\end{center}
+\figcap{Example 4.21: wrapping the half-open interval onto the circle glues
+the missing endpoint to $0$. Points just below $2\pi$ land next to $(1,0)$,
+but $\mathbf{f}^{-1}$ throws them back near $2\pi$ --- a jump of almost
+$2\pi$ across the seam. Continuity of the inverse is a property the
+\emph{domain's} compactness must fund; the target's cannot.}

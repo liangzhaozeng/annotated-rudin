@@ -1,0 +1,18 @@
+# Source textbook scans (copyrighted — kept local only)
+/rudin.pdf
+/qh.pdf
+/zkd.pdf
+/Analysis II.pdf
+/1664976801.pdf
+
+# macOS
+.DS_Store
+
+# LaTeX build artifacts
+*.log
+*.aux
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz

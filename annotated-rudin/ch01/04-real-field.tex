@@ -301,9 +301,9 @@ Hence $y^n = x$, and the proof is complete.
     {if $y^n < x$: nudge up,\\$y+h \in E$ ---\\$y$ was no upper bound};
   \node[rmbox, text width=35mm] (c2) at (60,18)
     {if $y^n > x$: step down,\\$y-k$ still bounds $E$ ---\\$y$ was not the least};
-  \draw[rmarrow] (y) -- node[lbl, anchor=south east, inner sep=2pt]
+  \draw[rmarrow] (y) -- node[lbl, anchor=east, inner sep=2pt, pos=0.72]
     {contra 1.8(i)} (c1);
-  \draw[rmarrow] (y) -- node[lbl, anchor=west, inner sep=2pt]
+  \draw[rmarrow] (y) -- node[lbl, anchor=west, inner sep=2pt, pos=0.72]
     {contra 1.8(ii)} (c2);
   \node[rmbox, text width=22mm] (c) at (38,-3) {$y^n = x$};
   \draw[rmarrow] (c1) -- (c);
@@ -429,7 +429,7 @@ Let $x > 0$ be real. Let $n_0$ be the largest integer such that $n_0 \le x$.
 (Note that the existence of $n_0$ depends on the archimedean property of
 $\R$.)\kn{Rudin flags the dependence himself, which is unusual for him and a
 signal that it matters. Without 1.20(a) there might be no integer at all
-below---or above---a given $x$, and the decimal expansion could not even
+below --- or above --- a given $x$, and the decimal expansion could not even
 start.} Having chosen $n_0, n_1, \dots, n_{k-1}$, let $n_k$ denote the largest
 integer such that
 \[ n_0 + \frac{n_1}{10} + \cdots + \frac{n_k}{10^k} \le x. \]

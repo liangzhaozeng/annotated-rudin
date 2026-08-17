@@ -1,0 +1,201 @@
+\section{引言}
+
+初等实分析中反复出现五个性质：函数在一点处可以有极限、可以连续、
+可以可导，在一个区间上可以黎曼可积，而一列函数可以收敛。每一门课程
+都会建立它们之间的若干关系——可导蕴涵连续，紧区间上的连续蕴涵可积，
+一致收敛保持连续——但每一条都是在需要它的地方顺带证明的，整幅图景
+从未被画出来。一个读完 Rudin~\cite{rudin} 的学生逐条地知道所有这些
+箭头，却很少见过它们摆在一起。
+
+本文把这幅图画出来。对每一对有序的性质，我们给出一个判定：或者是
+一条蕴涵关系连同证明，或者是一个否定的结论连同具体的反例函数。
+没有任何断言缺少其中之一。
+
+\subsection*{一点结构上的说明}
+
+五个性质中有四个是\emph{局部的}：它们是函数在一点处的性质。黎曼可积性
+不是。它是函数在一个区间上的性质，问 $f$ 在某一点处是否可积并无意义。
+若把五个性质排成一张 $5\times5$ 的表，就会在两类性质之间悄悄地
+混淆概念，因此材料分为三个部分。
+
+\begin{itemize}[leftmargin=1.6em, itemsep=2pt, topsep=4pt]
+  \item \textbf{局部理论}（\S\ref{sec:local}）：函数在一点 $p$ 处的性质。
+  \item \textbf{整体理论}（\S\ref{sec:int}）：把这些性质提升为
+        “在 $[a,b]$ 的每一点成立”，并加入可积性。
+  \item \textbf{取极限}（\S\ref{sec:lim}）：设 $f_n \to f$，
+        $f_n$ 的哪些性质会被 $f$ 继承。
+\end{itemize}
+
+取极限并不是一个独立的主题。它就是局部与整体两套理论带着一个极限
+符号被重新问了一遍，而答案改变了——这正是一致收敛这一概念被单独
+提出来的原因。
+
+\subsection*{约定与出处}
+
+形如 \emph{Rudin 4.19} 的编号引用指向 \cite{rudin}。\S\ref{sec:int}
+中用到两条关于函数振幅的引理而未加证明；它们在 \cite{annotated}
+中给出了证明——该书的附录详细展开了振幅这套工具——在
+\cite{yupin} 中亦可找到。凡与另一部标准教材的比较有启发之处，
+我们引用陶哲轩~\cite{taoI,taoII}、于品的清华讲义~\cite{yupin}
+或华东师大的教材~\cite{ecnu}。
+
+反例标号为 $\mathrm{E}1$--$\mathrm{E}12$，其完整说明集中于
+\S\ref{sec:gallery}；全文中一律以标号称呼。
+
+\subsection{五个性质的定义}
+\label{sec:defs}
+
+先把全文所用的定义固定下来。所有讨论都在 $\R$ 中进行；$E$ 表示 $\R$ 的
+子集，$f$ 表示 $E$ 上的实值函数。回忆：若 $p$ 的每个邻域都含有 $E$ 中
+异于 $p$ 的点，则称 $p$ 为 $E$ 的\emph{聚点}。
+
+\begin{definition}[极限]\label{def:limit}
+设 $p$ 是 $E$ 的聚点。记 $\lim_{x\to p} f(x) = q$，若对每个
+$\varepsilon>0$ 存在 $\delta>0$，使得
+\[ |f(x)-q| < \varepsilon \quad\text{对一切 } x \in E,\
+   0 < |x-p| < \delta . \]
+\end{definition}
+
+\begin{definition}[连续]\label{def:cont}
+设 $p \in E$。称 $f$ 在 $p$ 处\emph{连续}，若对每个 $\varepsilon>0$
+存在 $\delta>0$，使得
+\[ |f(x)-f(p)| < \varepsilon \quad\text{对一切 } x \in E,\
+   |x-p| < \delta ; \]
+若 $f$ 在 $E$ 的每一点连续，则称 $f$ 在 $E$ 上连续。
+\end{definition}
+
+两个定义恰好在两处不同，而这两处都要紧。定义~\ref{def:limit} 排除了
+$x=p$，也完全没有提到 $f(p)$——极限对函数值漠不关心，$f$ 甚至可以在
+$p$ 处没有定义。定义~\ref{def:cont} 包含了 $x=p$，并以 $f(p)$ 为目标。
+图~\ref{fig:epsdelta} 画出了这一差别。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \fill[black!8] (2,15) rectangle (44,25);
+  \draw[axis] (0,0) -- (46,0);
+  \draw[axis] (0,0) -- (0,34);
+  \draw[guide] (14,0) -- (14,32);
+  \draw[guide] (30,0) -- (30,32);
+  \draw[seg] plot[smooth] coordinates {(4,9) (12,16) (18,19.4) (21.6,20.4)};
+  \draw[seg] plot[smooth] coordinates {(22.4,20.6) (28,22) (36,26) (44,31)};
+  \node[ptopen] at (22,20) {};
+  \node[ptfill] at (22,29) {};
+  \node[mlbl, anchor=west] at (23.6,29) {$f(p)$};
+  \node[mlbl, anchor=east] at (-1.4,20) {$q$};
+  \node[mlbl, anchor=north] at (22,-1.6) {$p$};
+  \node[mlbl, anchor=north] at (14,-1.6) {\scriptsize$p{-}\delta$};
+  \node[mlbl, anchor=north] at (30,-1.6) {\scriptsize$p{+}\delta$};
+  \node[lbl, anchor=north] at (22,-8) {\textbf{极限}：不含 $x=p$};
+  \begin{scope}[xshift=64mm]
+  \fill[black!8] (2,15) rectangle (44,25);
+  \draw[axis] (0,0) -- (46,0);
+  \draw[axis] (0,0) -- (0,34);
+  \draw[guide] (14,0) -- (14,32);
+  \draw[guide] (30,0) -- (30,32);
+  \draw[seg] plot[smooth] coordinates
+    {(4,9) (12,16) (18,19.4) (22,20) (28,22) (36,26) (44,31)};
+  \node[ptfill] at (22,20) {};
+  \node[mlbl, anchor=east] at (-1.4,20) {$f(p)$};
+  \node[mlbl, anchor=north] at (22,-1.6) {$p$};
+  \node[mlbl, anchor=north] at (14,-1.6) {\scriptsize$p{-}\delta$};
+  \node[mlbl, anchor=north] at (30,-1.6) {\scriptsize$p{+}\delta$};
+  \node[lbl, anchor=north] at (22,-8) {\textbf{连续}：含 $x=p$};
+  \end{scope}
+\end{tikzpicture}
+\caption{两个定义的对照。在两幅图中，凡进入竖直 $\delta$-条的点，其函数值都必须
+落在水平 $\varepsilon$-带之内。对极限而言，点 $x=p$ 被从条中挖去，
+所以 $f(p)$（左图中画在带外）无关紧要，甚至可以没有定义；对连续而言，
+该点被包含在内，而带正是以 $f(p)$ 为中心。}
+\label{fig:epsdelta}
+\end{figure}
+
+\begin{definition}[可导]\label{def:diff}
+设 $f$ 定义在区间 $I$ 上，$p \in I$。称 $f$ 在 $p$ 处\emph{可导}，若
+\[ f'(p) \;=\; \lim_{x\to p}\ \frac{f(x)-f(p)}{x-p} \]
+作为有限极限存在——这里的极限按定义~\ref{def:limit} 施于
+$I\setminus\{p\}$ 上的差商。
+\end{definition}
+
+\begin{definition}[黎曼可积]\label{def:int}
+设 $f$ 在 $[a,b]$ 上有界。\emph{分割} $P$ 指有限点集
+$a=x_0<x_1<\dots<x_n=b$；记 $\Delta x_i = x_i-x_{i-1}$ 以及
+\[ M_i = \sup_{[x_{i-1},x_i]} f, \qquad m_i = \inf_{[x_{i-1},x_i]} f,
+   \qquad U(P,f) = \sum_i M_i\,\Delta x_i, \qquad
+   L(P,f) = \sum_i m_i\,\Delta x_i . \]
+\emph{上积分}与\emph{下积分}分别为
+$\overline{\int_a^b} f = \inf_P U(P,f)$ 与
+$\underline{\int_a^b} f = \sup_P L(P,f)$；由 $f$ 有界，二者总是存在。
+若二者相等，则称 $f$ 在 $[a,b]$ 上\emph{黎曼可积}，其公共值记为
+$\int_a^b f$。
+\end{definition}
+
+\begin{lemma}[黎曼准则]\label{lem:riemann}
+有界函数 $f$ 在 $[a,b]$ 上可积，当且仅当对每个 $\varepsilon>0$ 存在
+分割 $P$ 使 $U(P,f)-L(P,f) < \varepsilon$。
+\end{lemma}
+
+\begin{proof}
+加细分割不会抬高 $U$、也不会压低 $L$，故任一下和都不超过任一上和，
+从而 $\underline{\int} f \le \overline{\int} f$。若某个 $P$ 满足
+$U(P,f)-L(P,f)<\varepsilon$，则两个积分相差小于 $\varepsilon$；由
+$\varepsilon$ 任意，二者相等。反之若二者相等，取 $P_1$ 使 $U(P_1,f)$
+与公共值相差小于 $\varepsilon/2$，取 $P_2$ 使 $L(P_2,f)$ 与之相差小于
+$\varepsilon/2$，则它们的公共加细即合要求。
+\end{proof}
+
+\begin{definition}[收敛]\label{def:conv}
+设 $f_n$ 与 $f$ 都定义在 $E$ 上。称 $(f_n)$ \emph{逐点收敛}于 $f$，
+若对每个 $x \in E$ 有 $f_n(x)\to f(x)$；称\emph{一致收敛}，若
+\[ \sup_{x\in E}\,|f_n(x)-f(x)| \;\longrightarrow\; 0 , \]
+等价地，若对每个 $\varepsilon>0$ 存在\emph{只依赖于 $\varepsilon$}
+的 $N$，使得对一切 $n \ge N$ 与一切 $x \in E$ 同时成立
+$|f_n(x)-f(x)|<\varepsilon$。
+\end{definition}
+
+一致收敛蕴涵逐点收敛，反之不然；整个 \S\ref{sec:lim} 就是在考察二者
+之间的差距。
+
+\subsection*{蕴涵格}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=19mm] (dp) at (0,32)  {在 $p$ 处\\可导};
+  \node[rmbox, text width=19mm] (cp) at (41,32) {在 $p$ 处\\连续};
+  \node[rmbox, text width=19mm] (lp) at (82,32) {在 $p$ 处\\有极限};
+  \draw[rmarrow] (dp) -- node[lbl, anchor=south, inner sep=2.5pt]
+                          {定理 \ref{thm:dc}}
+                          node[mlbl, anchor=north, inner sep=2.5pt]
+                          {$\not\Leftarrow$ E2} (cp);
+  \draw[rmarrow] (cp) -- node[lbl, anchor=south, inner sep=2.5pt]
+                          {定理 \ref{thm:cl}}
+                          node[mlbl, anchor=north, inner sep=2.5pt]
+                          {$\not\Leftarrow$ E1} (lp);
+  \node[rmbox, text width=19mm] (dg) at (0,4)  {在 $[a,b]$ 上\\可导};
+  \node[rmbox, text width=19mm] (cg) at (41,4) {在 $[a,b]$ 上\\连续};
+  \node[rmbox, text width=19mm] (ig) at (82,4) {黎曼可积};
+  \draw[rmarrow] (dg) -- node[mlbl, anchor=north, inner sep=2.5pt]
+                          {$\not\Leftarrow$ E2} (cg);
+  \draw[rmarrow] (cg) -- node[lbl, anchor=south, inner sep=2.5pt]
+                          {定理 \ref{thm:ci}}
+                          node[mlbl, anchor=north, inner sep=2.5pt]
+                          {$\not\Leftarrow$ E5, E6} (ig);
+  \draw[rmarrow] (dp) -- node[lbl, anchor=west, inner sep=2.5pt]
+                          {每一点} (dg);
+  \draw[rmarrow] (cp) -- node[lbl, anchor=west, inner sep=2.5pt]
+                          {每一点} (cg);
+  \draw[rmarrow, dash pattern=on 3pt off 2pt] (ig) -- (lp);
+  \node[mlbl, anchor=west] at (95,18) {$\not\Rightarrow$ E5};
+\end{tikzpicture}
+\caption{局部与整体的蕴涵。实线箭头是定理；每个箭头下方的标记记录其逆命题
+的失效，并指出作为见证的函数。可积性不蕴涵任何逐点的结论：可积函数可以
+在某点没有极限（E5），也可以在一个稠密集上间断（E6）；反过来，仅有界
+也不足以保证可积（E7）。}
+\label{fig:lattice}
+\end{figure}
+
+关于图~\ref{fig:lattice} 有三点值得明说。上面一行是一条严格的链条，
+每一处的严格性都由一个具体函数见证。下面一行并不是上面一行的重复：
+可积性是真正整体的性质，通向它的箭头来自紧性而非任何逐点的条件。
+而且没有任何箭头从可积性反向指出。

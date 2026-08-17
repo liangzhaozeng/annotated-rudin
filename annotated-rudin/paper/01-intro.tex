@@ -1,0 +1,224 @@
+\section{Introduction}
+
+Five properties recur throughout elementary real analysis: a function may
+have a limit at a point, be continuous there, be differentiable there, be
+Riemann integrable on an interval, and a sequence of functions may converge.
+Every course establishes relations among them --- differentiability implies
+continuity, continuity on a compact interval implies integrability, uniform
+convergence preserves continuity --- but each relation is proved where it is
+needed, and the resulting map is never drawn. A student who has finished
+Rudin~\cite{rudin} knows all the arrows individually and has rarely seen them
+together.
+
+This note draws the map. For each ordered pair of properties we record a
+verdict: an implication with a proof, or a non-implication with a specific
+function. Nothing is asserted without one or the other.
+
+\subsection*{A structural remark}
+
+Four of the five properties are \emph{local}: they are properties of a
+function at a point. Riemann integrability is not. It is a property of a
+function on an interval, and to ask whether $f$ is integrable \emph{at} a
+point is meaningless. A single five-by-five table would silently equivocate
+between the two kinds, so the material divides into three parts.
+
+\begin{itemize}[leftmargin=1.6em, itemsep=2pt, topsep=4pt]
+  \item \textbf{The local theory} (\S\ref{sec:local}): the properties of
+        $f$ at a single point $p$.
+  \item \textbf{The global theory} (\S\ref{sec:int}): those properties
+        holding at every point of $[a,b]$, together with integrability.
+  \item \textbf{The passage to the limit} (\S\ref{sec:lim}): given
+        $f_n \to f$, which properties of the $f_n$ are inherited by $f$.
+\end{itemize}
+
+The passage to the limit is not a separate subject. It is the local and
+global theories asked a second time with a limit in front, and the answers
+change --- which is precisely the reason uniform convergence was isolated as
+a notion.
+
+\subsection*{Conventions and sources}
+
+Numbered references of the form \emph{Rudin 4.19} are to
+\cite{rudin}. Two lemmas on the oscillation of a function are used in
+\S\ref{sec:int} without proof; they are proved in
+\cite{annotated}, whose appendices develop the oscillation machinery in
+detail, and also appear in \cite{yupin}. Where a comparison with another
+standard treatment is illuminating we cite Tao~\cite{taoI,taoII}, the
+Tsinghua lectures of Yu Pin~\cite{yupin}, or the East China Normal
+University text~\cite{ecnu}.
+
+Counterexamples are labelled $\mathrm{E}1$--$\mathrm{E}12$ and collected with
+full dossiers in \S\ref{sec:gallery}; they are referred to by label
+throughout.
+
+\subsection{The five properties}
+\label{sec:defs}
+
+We fix the definitions used throughout. Everything takes place in $\R$; $E$
+denotes a subset of $\R$ and $f$ a real-valued function on $E$. Recall that
+$p$ is a \emph{limit point} of $E$ if every neighbourhood of $p$ contains a
+point of $E$ other than $p$.
+
+\begin{definition}[Limit]\label{def:limit}
+Let $p$ be a limit point of $E$. We write $\lim_{x\to p} f(x) = q$ if for
+every $\varepsilon>0$ there is a $\delta>0$ such that
+\[ |f(x)-q| < \varepsilon \quad\text{for all } x \in E
+   \text{ with } 0 < |x-p| < \delta . \]
+\end{definition}
+
+\begin{definition}[Continuity]\label{def:cont}
+Let $p \in E$. Then $f$ is \emph{continuous at $p$} if for every
+$\varepsilon>0$ there is a $\delta>0$ such that
+\[ |f(x)-f(p)| < \varepsilon \quad\text{for all } x \in E
+   \text{ with } |x-p| < \delta , \]
+and \emph{continuous on $E$} if it is continuous at every point of $E$.
+\end{definition}
+
+The two definitions differ in exactly two places, and both differences
+matter. Definition~\ref{def:limit} excludes $x=p$ and does not mention
+$f(p)$ --- the limit is indifferent to the value, and need not be defined at
+$p$ at all. Definition~\ref{def:cont} includes $x=p$ and names $f(p)$ as the
+target. Figure~\ref{fig:epsdelta} draws the difference.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % --- panel A: the limit
+  \fill[black!8] (2,15) rectangle (44,25);
+  \draw[axis] (0,0) -- (46,0);
+  \draw[axis] (0,0) -- (0,34);
+  \draw[guide] (14,0) -- (14,32);
+  \draw[guide] (30,0) -- (30,32);
+  \draw[seg] plot[smooth] coordinates {(4,9) (12,16) (18,19.4) (21.6,20.4)};
+  \draw[seg] plot[smooth] coordinates {(22.4,20.6) (28,22) (36,26) (44,31)};
+  \node[ptopen] at (22,20) {};
+  \node[ptfill] at (22,29) {};
+  \node[mlbl, anchor=west] at (23.6,29) {$f(p)$};
+  \node[mlbl, anchor=east] at (-1.4,20) {$q$};
+  \node[mlbl, anchor=north] at (22,-1.6) {$p$};
+  \node[mlbl, anchor=north] at (14,-1.6) {\scriptsize$p{-}\delta$};
+  \node[mlbl, anchor=north] at (30,-1.6) {\scriptsize$p{+}\delta$};
+  \node[lbl, anchor=north] at (22,-8) {\textbf{limit}: $x=p$ excluded};
+  % --- panel B: continuity
+  \begin{scope}[xshift=64mm]
+  \fill[black!8] (2,15) rectangle (44,25);
+  \draw[axis] (0,0) -- (46,0);
+  \draw[axis] (0,0) -- (0,34);
+  \draw[guide] (14,0) -- (14,32);
+  \draw[guide] (30,0) -- (30,32);
+  \draw[seg] plot[smooth] coordinates
+    {(4,9) (12,16) (18,19.4) (22,20) (28,22) (36,26) (44,31)};
+  \node[ptfill] at (22,20) {};
+  \node[mlbl, anchor=east] at (-1.4,20) {$f(p)$};
+  \node[mlbl, anchor=north] at (22,-1.6) {$p$};
+  \node[mlbl, anchor=north] at (14,-1.6) {\scriptsize$p{-}\delta$};
+  \node[mlbl, anchor=north] at (30,-1.6) {\scriptsize$p{+}\delta$};
+  \node[lbl, anchor=north] at (22,-8) {\textbf{continuity}: $x=p$ included};
+  \end{scope}
+\end{tikzpicture}
+\caption{The two definitions side by side. In both, whatever enters the
+vertical $\delta$-strip must leave through the horizontal
+$\varepsilon$-band. For the limit the point $x=p$ is punched out of the
+strip, so $f(p)$ --- drawn far from the band on the left --- is irrelevant
+and may even be undefined. For continuity the point is included and the band
+is centred on $f(p)$ itself.}
+\label{fig:epsdelta}
+\end{figure}
+
+\begin{definition}[Differentiability]\label{def:diff}
+Let $f$ be defined on an interval $I$ and let $p \in I$. Then $f$ is
+\emph{differentiable at $p$} if
+\[ f'(p) \;=\; \lim_{x\to p}\ \frac{f(x)-f(p)}{x-p} \]
+exists as a finite limit, in the sense of Definition~\ref{def:limit} applied
+to the difference quotient on $I\setminus\{p\}$.
+\end{definition}
+
+\begin{definition}[Riemann integrability]\label{def:int}
+Let $f$ be bounded on $[a,b]$. A \emph{partition} $P$ is a finite set
+$a=x_0<x_1<\dots<x_n=b$; write $\Delta x_i = x_i-x_{i-1}$ and
+\[ M_i = \sup_{[x_{i-1},x_i]} f, \qquad m_i = \inf_{[x_{i-1},x_i]} f,
+   \qquad U(P,f) = \sum_i M_i\,\Delta x_i, \qquad
+   L(P,f) = \sum_i m_i\,\Delta x_i . \]
+The \emph{upper} and \emph{lower integrals} are
+$\overline{\int_a^b} f = \inf_P U(P,f)$ and
+$\underline{\int_a^b} f = \sup_P L(P,f)$; these always exist because $f$ is
+bounded. If they are equal, $f$ is \emph{Riemann integrable} on $[a,b]$ and
+their common value is $\int_a^b f$.
+\end{definition}
+
+\begin{lemma}[Riemann's criterion]\label{lem:riemann}
+A bounded $f$ is integrable on $[a,b]$ if and only if for every
+$\varepsilon>0$ there is a partition $P$ with
+$U(P,f)-L(P,f) < \varepsilon$.
+\end{lemma}
+
+\begin{proof}
+Refining a partition neither raises $U$ nor lowers $L$, so every lower sum is
+at most every upper sum and
+$\underline{\int} f \le \overline{\int} f$. If some $P$ has
+$U(P,f)-L(P,f)<\varepsilon$ then the two integrals differ by less than
+$\varepsilon$, and as $\varepsilon$ was arbitrary they agree. Conversely if
+they agree, choose $P_1$ with $U(P_1,f)$ within $\varepsilon/2$ of the
+common value and $P_2$ with $L(P_2,f)$ within $\varepsilon/2$ of it; their
+common refinement works.
+\end{proof}
+
+\begin{definition}[Convergence]\label{def:conv}
+Let $f_n$ and $f$ be defined on $E$. The sequence $(f_n)$ converges to $f$
+\emph{pointwise} if $f_n(x)\to f(x)$ for every $x \in E$, and
+\emph{uniformly} if
+\[ \sup_{x\in E}\,|f_n(x)-f(x)| \;\longrightarrow\; 0 , \]
+equivalently if for every $\varepsilon>0$ there is an $N$, \emph{depending on
+$\varepsilon$ alone}, with $|f_n(x)-f(x)|<\varepsilon$ for all $n \ge N$ and
+all $x \in E$ simultaneously.
+\end{definition}
+
+Uniform convergence implies pointwise convergence and not conversely; the
+whole of \S\ref{sec:lim} is an examination of the gap between them.
+
+\subsection*{The lattice}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=19mm] (dp) at (0,32)  {differentiable\\at $p$};
+  \node[rmbox, text width=19mm] (cp) at (41,32) {continuous\\at $p$};
+  \node[rmbox, text width=19mm] (lp) at (82,32) {has a limit\\at $p$};
+  \draw[rmarrow] (dp) -- node[lbl, anchor=south, inner sep=2.5pt]
+                          {Thm \ref{thm:dc}}
+                          node[mlbl, anchor=north, inner sep=2.5pt]
+                          {$\not\Leftarrow$ E2} (cp);
+  \draw[rmarrow] (cp) -- node[lbl, anchor=south, inner sep=2.5pt]
+                          {Thm \ref{thm:cl}}
+                          node[mlbl, anchor=north, inner sep=2.5pt]
+                          {$\not\Leftarrow$ E1} (lp);
+  \node[rmbox, text width=19mm] (dg) at (0,4)  {differentiable\\on $[a,b]$};
+  \node[rmbox, text width=19mm] (cg) at (41,4) {continuous\\on $[a,b]$};
+  \node[rmbox, text width=19mm] (ig) at (82,4) {Riemann\\integrable};
+  \draw[rmarrow] (dg) -- node[mlbl, anchor=north, inner sep=2.5pt]
+                          {$\not\Leftarrow$ E2} (cg);
+  \draw[rmarrow] (cg) -- node[lbl, anchor=south, inner sep=2.5pt]
+                          {Thm \ref{thm:ci}}
+                          node[mlbl, anchor=north, inner sep=2.5pt]
+                          {$\not\Leftarrow$ E5, E6} (ig);
+  \draw[rmarrow] (dp) -- node[lbl, anchor=west, inner sep=2.5pt]
+                          {at every point} (dg);
+  \draw[rmarrow] (cp) -- node[lbl, anchor=west, inner sep=2.5pt]
+                          {at every point} (cg);
+  \draw[rmarrow, dash pattern=on 3pt off 2pt] (ig) -- (lp);
+  \node[mlbl, anchor=west] at (95,18) {$\not\Rightarrow$ E5};
+\end{tikzpicture}
+\caption{The local and global implications. Solid arrows are theorems; the label beneath each
+records the failure of its converse and names the function that witnesses it.
+Integrability implies nothing pointwise: an integrable function may lack a
+two-sided limit at a jump (E5) and may be discontinuous on a dense set (E6);
+conversely, boundedness alone is not enough for integrability (E7).}
+\label{fig:lattice}
+\end{figure}
+
+Three features of Figure~\ref{fig:lattice} are worth stating explicitly.
+The top row is a strict chain, and each strictness is witnessed by one
+explicit function. The bottom row is not the top row repeated: integrability
+is genuinely global, and the arrow into it comes from compactness rather than
+from anything pointwise. And there is no arrow back out of integrability at
+all.

@@ -1,0 +1,67 @@
+% ------------------------------------------------------------
+%  Preamble for the standalone paper.  Deliberately independent
+%  of annotated.sty: standard article apparatus, normal margins,
+%  no margin-note column, no house boxes.  Only the TikZ drawing
+%  vocabulary is carried over, so the figures survive unchanged.
+% ------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mathrsfs}
+\usepackage[margin=1.15in]{geometry}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage[hidelinks,hypertexnames=false]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,patterns}
+
+\definecolor{RuInk} {gray}{0.00}
+\definecolor{RuGrey}{gray}{0.42}
+
+\tikzset{
+  axis/.style   ={draw=RuInk, line width=0.5pt, -{Stealth[length=4pt]}},
+  seg/.style    ={draw=RuInk, line width=1.2pt},
+  thin/.style   ={draw=RuInk, line width=0.4pt},
+  guide/.style  ={draw=RuInk, line width=0.3pt,
+                  dash pattern=on 1.2pt off 1.2pt},
+  ptfill/.style ={circle, fill=RuInk, inner sep=0pt, minimum size=3.2pt},
+  ptopen/.style ={circle, draw=RuInk, line width=0.5pt, fill=white,
+                  inner sep=0pt, minimum size=3.4pt},
+  lbl/.style    ={font=\scriptsize\sffamily, inner sep=1.5pt},
+  mlbl/.style   ={font=\scriptsize, inner sep=1.5pt},
+  rmbox/.style  ={draw=RuInk, line width=0.5pt, fill=white,
+                  minimum height=11mm, inner sep=4pt, align=center,
+                  font=\footnotesize\sffamily},
+  rmarrow/.style={-{Stealth[length=4.5pt]}, draw=RuInk, line width=0.5pt}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% A short strategy paragraph before a substantial proof.  Kept as plain
+% typography rather than a boxed environment: this is a paper, not the
+% annotated edition.
+\newcommand{\idea}[1]{\par\smallskip\noindent
+  \textit{Idea of the proof.}\enspace #1\par\smallskip}
+
+% A numbered walk through the architecture of a proof, in plain
+% typography.  Used for the pillar proofs; \idea for the shorter ones.
+\newenvironment{flow}[1][How the proof runs]{%
+  \par\smallskip\noindent\textit{#1}%
+  \begin{enumerate}[leftmargin=2.1em, itemsep=2.5pt, topsep=3pt,
+                    label=\textup{(\arabic*)}]}
+  {\end{enumerate}\par\smallskip}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\1}{\mathbf{1}}
+\emergencystretch=1.2em

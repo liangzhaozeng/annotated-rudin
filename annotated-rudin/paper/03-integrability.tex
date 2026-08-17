@@ -1,0 +1,600 @@
+\section{Integrability}
+\label{sec:int}
+
+Promoting each local property to ``at every point of $[a,b]$'' brings in a
+fourth property with no pointwise form. The arrow into it comes from
+compactness.
+
+\begin{theorem}\label{thm:ci}
+If $f$ is continuous on $[a,b]$ then $f$ is Riemann integrable there.
+\end{theorem}
+
+\begin{flow}
+  \item \textit{Translate the goal.} Integrability asks that $U-L$ be small.
+        By Figure~\ref{fig:sums}, $U-L$ is the total area of the strips
+        between $\sup$ and $\inf$ over the pieces of a partition. So the goal
+        is: make every strip short at once.
+  \item \textit{Identify what would suffice.} If every subinterval of a
+        partition had oscillation below $\eta$, the total area would be at
+        most $\eta(b-a)$. So it suffices to find a mesh size on which the
+        oscillation is everywhere below $\eta$.
+  \item \textit{Notice what continuity alone does not give.} Continuity
+        supplies, at each point, a $\delta$ that works \emph{there}. Those
+        $\delta$'s could shrink to nothing as the point moves, leaving no
+        single mesh that works everywhere.
+  \item \textit{Spend compactness.} On a compact interval, continuity is
+        uniform: one $\delta$ serves every point. This is the only step that
+        uses anything about $[a,b]$ beyond its length.
+  \item \textit{Reverse-engineer the constant.} Working back from the target
+        $U-L \le \varepsilon$ and the factor $\sum \Delta x_i = b-a$, the
+        oscillation must be held below $\varepsilon/(b-a)$; that is the
+        $\eta$ to demand in step~(2).
+  \item \textit{Audit.} Compactness once, in step~(4). Nothing pointwise
+        beyond continuity, and nothing about differentiability, enters
+        anywhere.
+\end{flow}
+
+Figure~\ref{fig:ciflow} draws the dependencies among these steps.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=40mm] (cont) at (0,30)
+    {continuity: at each point,\\ a $\delta$ that works \emph{there},\\
+     possibly shrinking from\\ point to point};
+  \node[rmbox, text width=30mm] (cpt) at (58,30)
+    {$[a,b]$ compact};
+  \node[rmbox, text width=44mm] (unif) at (29,6)
+    {uniform continuity:\\ one $\delta$ serves every point};
+  \node[rmbox, text width=58mm] (end) at (29,-15)
+    {on any partition of mesh $<\delta$, every\\
+     strip has height $<\varepsilon/(b-a)$, so $U-L\le\varepsilon$};
+  \draw[rmarrow] (cont) -- node[lbl, anchor=east, inner sep=2.5pt, pos=0.5]
+    {step (3)} (unif);
+  \draw[rmarrow] (cpt) -- node[lbl, anchor=west, inner sep=2.5pt, pos=0.5]
+    {step (4)} (unif);
+  \draw[rmarrow] (unif) -- node[lbl, anchor=west, inner sep=2.5pt]
+    {steps (1), (2), (5)} (end);
+\end{tikzpicture}
+\caption{The proof of Theorem~\ref{thm:ci} as a flow chart. Continuity
+alone supplies only a pointwise $\delta$; compactness upgrades it to a
+single $\delta$ valid everywhere, and the rest is bookkeeping --- a
+partition finer than that $\delta$ holds every oscillation below
+$\varepsilon/(b-a)$. The step numbers refer to the walk above.}
+\label{fig:ciflow}
+\end{figure}
+
+\begin{proof}
+Let $\varepsilon>0$. Since $[a,b]$ is compact, $f$ is uniformly continuous,
+so there is a $\delta>0$ with $|f(x)-f(y)|<\varepsilon/(b-a)$ whenever
+$|x-y|<\delta$. Let $P$ be any partition of mesh less than $\delta$. On each
+subinterval the supremum $M_i$ and infimum $m_i$ of $f$ differ by at most
+$\varepsilon/(b-a)$, whence
+\[ U(P,f)-L(P,f) = \sum_i (M_i-m_i)\,\Delta x_i \le \varepsilon. \]
+Riemann's criterion gives integrability.
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \foreach \a/\lo/\hi in {0/16/23, 14/23/31, 28/28/34, 42/22/29,
+                          56/13/23, 70/9/15}{
+    \fill[black!13] (\a,\lo) rectangle ({\a+14},\hi);
+    \draw[thin] (\a,\lo) rectangle ({\a+14},\hi);}
+  \draw[seg] plot[smooth] coordinates
+    {(0,17) (14,23) (28,31) (42,29) (56,22) (70,13) (84,10)};
+  \draw[axis] (-2,0) -- (92,0);
+  \foreach \x in {0,14,28,42,56,70,84}{\draw[guide] (\x,0) -- (\x,36);}
+  \node[mlbl, anchor=north] at (0,-1.6)  {$a$};
+  \node[mlbl, anchor=north] at (84,-1.6) {$b$};
+  \node[lbl, anchor=west] at (26,46)
+    {each strip has height $M_i-m_i$};
+  \node[lbl, anchor=west] at (26,41)
+    {and $U(P,f)-L(P,f)$ is their total area};
+\end{tikzpicture}
+\caption{Upper and lower sums. The shaded strips are the oscillation of $f$
+over each subinterval, and their total area is exactly $U(P,f)-L(P,f)$.
+Uniform continuity bounds every strip's height by the same
+$\varepsilon/(b-a)$ once the mesh is small enough, so the total area is at
+most $\varepsilon$ regardless of how the partition is placed.}
+\label{fig:sums}
+\end{figure}
+
+The only substantial step is the passage from continuity to \emph{uniform}
+continuity, and it is the only place compactness is used; the rest is
+bookkeeping. In particular nothing pointwise beyond continuity enters, and
+differentiability plays no role.
+
+\subsection{Lebesgue's criterion}
+
+The examples below could each be settled by hand with upper and lower sums,
+which would leave the impression that integrability is a matter of luck. It
+is not.
+
+\begin{definition}[Measure zero]
+A set $E \subset \R$ has \emph{measure zero} if for every $\varepsilon>0$
+there are countably many intervals $I_1,I_2,\dots$ with
+$E \subset \bigcup_k I_k$ and $\sum_k |I_k| < \varepsilon$.
+\end{definition}
+
+The picture to keep in mind is Figure~\ref{fig:measurezero}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,0) -- (104,0);
+  \foreach \x in {8,14,17,31,44,46,60,73,74,88,95}{
+    \node[ptfill] at (\x,0) {};}
+  \foreach \a/\b in {6.4/9.6, 13/18.2, 29.8/32.2, 43/47.2, 59/61, 72/75.4,
+                     87.2/88.8, 94.4/95.6}{
+    \draw[thin] (\a,4) -- (\b,4);
+    \draw[thin] (\a,3.2) -- (\a,4.8);
+    \draw[thin] (\b,3.2) -- (\b,4.8);
+    \draw[guide] (\a,0.8) -- (\a,3.2);
+    \draw[guide] (\b,0.8) -- (\b,3.2);}
+  \node[lbl, anchor=west] at (0,10)
+    {countably many intervals, total length $<\varepsilon$};
+  \node[lbl, anchor=west] at (0,-6)
+    {the set $E$, which may be infinite and even dense};
+\end{tikzpicture}
+\caption{Measure zero. The intervals may be as numerous as one likes provided
+their lengths sum to less than $\varepsilon$, and $\varepsilon$ is arbitrary.
+Every countable set qualifies, its $k$th point being covered by an interval
+of length $\varepsilon 2^{-k-1}$; no interval of positive length does.}
+\label{fig:measurezero}
+\end{figure}
+
+For a bounded $f$ write
+\[ \omega_f(x) = \lim_{r\to 0^+}\Bigl[\sup_{|y-x|<r} f(y)
+   - \inf_{|y-x|<r} f(y)\Bigr] \]
+for the \emph{oscillation} of $f$ at $x$. We use two elementary facts, proved
+in \cite[appendices to Chapters 2 and 4]{annotated} and also in
+\cite[Lect.~21]{yupin}: $f$ is continuous at $x$ if and only if
+$\omega_f(x)=0$; and for each $\varepsilon>0$ the set
+$\Omega_\varepsilon = \{x : \omega_f(x)\ge\varepsilon\}$ is closed, so that
+the set $D$ of discontinuities of $f$ is
+$D = \bigcup_{n\ge1}\Omega_{1/n}$.
+
+\begin{theorem}[Lebesgue's criterion]\label{thm:lebesgue}
+A bounded function on $[a,b]$ is Riemann integrable if and only if its set of
+discontinuities has measure zero.
+\end{theorem}
+
+\begin{flow}
+  \item \textit{Fix the currency.} Both hypotheses are statements that
+        something is small: integrability says an \emph{area} is small,
+        measure zero says a \emph{length} is small. The proof is an exchange
+        rate between the two, and oscillation is the exchange rate ---
+        area $\approx$ oscillation $\times$ length.
+  \item \textit{Forwards: read the area as a length.} A subinterval whose
+        interior meets $\Omega_{1/n}$ has oscillation at least $1/n$, so it
+        contributes at least $(1/n)\Delta x_i$ to $U-L$. If $U-L<\eta/n$,
+        those subintervals have total length below $\eta$ --- and that is
+        literally a covering of $\Omega_{1/n}$ by short intervals.
+  \item \textit{Forwards: assemble.} Each $\Omega_{1/n}$ has measure zero,
+        and $D = \bigcup_n \Omega_{1/n}$ is a countable union of such sets,
+        hence of measure zero.
+  \item \textit{Backwards: split the partition in two.} On pieces meeting
+        $\Omega_\varepsilon$ the oscillation may be as large as $2M$, but
+        their total length is under $\varepsilon$ by hypothesis. On the rest
+        the oscillation is below $\varepsilon$, but the total length may be
+        as large as $b-a$. Either way the product is small
+        (Figure~\ref{fig:split}).
+  \item \textit{Backwards: make the second kind finite.} Off the covering,
+        every point has a neighbourhood of small oscillation; the leftover
+        set is closed and bounded, so finitely many such neighbourhoods
+        suffice and define a partition.
+  \item \textit{Audit.} $\Omega_\varepsilon$ closed is used in step~(5), to
+        know the leftover set is compact. Countability is used once, in
+        step~(3). The bound $|f|\le M$ is used once, in step~(4) --- which is
+        why the theorem needs $f$ bounded.
+\end{flow}
+
+The backward half is drawn as a flow chart in Figure~\ref{fig:lebflow}.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=58mm] (top) at (29,30)
+    {fix $\varepsilon$: the set $\Omega_\varepsilon$ is closed,\\
+     bounded, and of measure zero};
+  \node[rmbox, text width=48mm] (cover) at (29,11)
+    {finitely many open intervals of\\ total length $<\varepsilon$ cover it};
+  \node[rmbox, text width=38mm] (bad) at (-2,-13)
+    {pieces meeting the cover:\\ oscillation $\le 2M$,\\
+     total length $<\varepsilon$};
+  \node[rmbox, text width=38mm] (good) at (62,-13)
+    {remaining pieces:\\ oscillation $<\varepsilon$,\\
+     total length $\le b-a$};
+  \node[rmbox, text width=52mm] (end) at (29,-35)
+    {$U-L \le 2M\varepsilon + \varepsilon(b-a)$:\\ $f$ is integrable};
+  \draw[rmarrow] (top) -- node[lbl, anchor=west, inner sep=2.5pt]
+    {compactness} (cover);
+  \draw[rmarrow] (cover) -- node[lbl, anchor=east, inner sep=2.5pt, pos=0.45]
+    {$|f|\le M$, step (4)} (bad);
+  \draw[rmarrow] (cover) -- node[lbl, anchor=west, inner sep=2.5pt, pos=0.45]
+    {step (5)} (good);
+  \draw[rmarrow] (bad) -- node[lbl, anchor=east, inner sep=2.5pt, pos=0.55]
+    {short} (end);
+  \draw[rmarrow] (good) -- node[lbl, anchor=west, inner sep=2.5pt, pos=0.55]
+    {shallow} (end);
+\end{tikzpicture}
+\caption{The backward half of Lebesgue's criterion (measure zero
+$\Rightarrow$ integrable) as a flow chart. Every subinterval of the
+partition is of one of two kinds, and each kind contributes a small
+product to $U-L$: the pieces meeting the cover are collectively short,
+the rest uniformly shallow. The forward half runs the same exchange rate
+in reverse, reading a small area as a small length (steps (2)--(3)).}
+\label{fig:lebflow}
+\end{figure}
+
+\begin{proof}[Proof sketch]
+Suppose $f$ is integrable and fix $n$. Given $\eta>0$, choose a partition
+with $U-L<\eta/n$. Each subinterval whose interior meets $\Omega_{1/n}$
+contributes at least $(1/n)\Delta x_i$ to $U-L$, so such subintervals have
+total length below $\eta$; they cover $\Omega_{1/n}$ apart from finitely many
+partition points, which are covered by intervals of arbitrarily small total
+length. Hence each $\Omega_{1/n}$ has measure zero and so does the countable
+union $D$.
+
+Conversely, suppose $D$ has measure zero and $|f|\le M$. Fix $\varepsilon>0$.
+The set $\Omega_\varepsilon$ is closed and bounded, hence compact, and of
+measure zero, so finitely many open intervals of total length less than
+$\varepsilon$ cover it. Off their union every point has oscillation below
+$\varepsilon$, hence a neighbourhood on which $f$ varies by less than
+$\varepsilon$; compactness of the complement yields a finite subcover and
+thus a partition. Splitting $U-L$ into the subintervals of the two kinds
+bounds it by $2M\varepsilon + \varepsilon(b-a)$.
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % partition guides
+  \foreach \x in {0,19,25,50,56,81,87,104}{\draw[guide] (\x,0) -- (\x,34);}
+  % wide, shallow strips (tame pieces)
+  \foreach \a/\lo/\b/\hi in {0/15/19/19.5, 25/12/50/17, 56/17/81/21,
+                             87/13/104/17}{
+    \fill[black!8] (\a,\lo) rectangle (\b,\hi);
+    \draw[thin] (\a,\lo) rectangle (\b,\hi);}
+  % narrow, tall strips (bad pieces)
+  \foreach \a/\b in {19/25, 50/56, 81/87}{
+    \fill[black!22] (\a,4) rectangle (\b,32);
+    \draw[thin] (\a,4) rectangle (\b,32);}
+  % the function: tame arcs, violent oscillation over the bad spots
+  \draw[seg] plot[smooth] coordinates {(0,16) (9,18.5) (19,17)};
+  \draw[seg] (19,17) -- (20,31) -- (21,5) -- (22,30) -- (23,6)
+             -- (24,31) -- (25,14);
+  \draw[seg] plot[smooth] coordinates {(25,14) (37,13) (50,15.5)};
+  \draw[seg] (50,15.5) -- (51,30) -- (52,5) -- (53,31) -- (54,6)
+             -- (55,30) -- (56,18.5);
+  \draw[seg] plot[smooth] coordinates {(56,18.5) (68,20) (81,18)};
+  \draw[seg] (81,18) -- (82,31) -- (83,5) -- (84,30) -- (85,6)
+             -- (86,31) -- (87,14.5);
+  \draw[seg] plot[smooth] coordinates {(87,14.5) (95,13.5) (104,16)};
+  % axes
+  \draw[axis] (-2,0) -- (108,0);
+  \draw[axis] (0,0) -- (0,36);
+  \node[mlbl, anchor=north] at (0,-1.6) {$a$};
+  \node[mlbl, anchor=north] at (104,-1.6) {$b$};
+  \node[lbl, anchor=south] at (37,20) {the graph of $f$};
+  \draw[thin, -{Stealth[length=3pt]}] (32,19.4) -- (30.5,14.2);
+  % the bad set under the tall strips
+  \foreach \x in {20.5,22,23.5, 51.5,53,54.5, 82.5,84,85.5}{
+    \node[ptfill, minimum size=2.2pt] at (\x,-3.4) {};}
+  \node[mlbl, anchor=east] at (17.4,-3.4) {$\Omega_\varepsilon$};
+  % annotations
+  \node[lbl, anchor=west] at (-2,40)
+    {tall but narrow: oscillation up to $2M$, total width $<\varepsilon$};
+  \draw[thin, -{Stealth[length=3pt]}] (16,38) -- (21.5,33);
+  \node[lbl, anchor=west] at (30,-9)
+    {wide but shallow: oscillation $<\varepsilon$, total width $\le b-a$};
+  \draw[thin, -{Stealth[length=3pt]}] (64,-7) -- (68,16.5);
+\end{tikzpicture}
+\caption{The two kinds of subinterval in the proof of
+Theorem~\ref{thm:lebesgue}. As in Figure~\ref{fig:sums}, $U-L$ is the total
+area of the strips, one per subinterval, each just tall enough to contain
+its piece of the graph. Where the graph oscillates badly the strips are
+tall --- up to $2M$ --- but they stand exactly over the covered set
+$\Omega_\varepsilon$, so their total width is below $\varepsilon$.
+Everywhere else the strips may be wide, but each is shallower than
+$\varepsilon$. Both kinds of area are therefore small, and
+$U-L \le 2M\varepsilon + \varepsilon(b-a)$.}
+\label{fig:split}
+\end{figure}
+
+The criterion settles the integrability row at a stroke.
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{function} & \textbf{discontinuous on} & \textbf{integrable} \\
+\midrule
+step function ($\mathrm{E}5$)   & a finite set       & yes \\
+Thomae ($\mathrm{E}6$)          & $\Q$, countable    & yes \\
+Dirichlet ($\mathrm{E}7$)       & every point        & no  \\
+$x^2\sin(1/x)$ ($\mathrm{E}3$)  & no point           & yes \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+Two consequences deserve emphasis. First, $\mathrm{E}6$ (Figure~\ref{fig:thomae}) is integrable while
+discontinuous on a \emph{dense} set, so integrability is compatible with very
+bad pointwise behaviour and there is no arrow from integrability back to
+continuity. Second, $\mathrm{E}7$ is bounded and not integrable, so
+boundedness alone is insufficient.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % the levels y = 1/q
+  \foreach \y in {28, 18.67, 14}{\draw[guide] (0,\y) -- (102,\y);}
+  \node[mlbl, anchor=east] at (-1.4,28)    {$\tfrac12$};
+  \node[mlbl, anchor=east] at (-1.4,18.67) {$\tfrac13$};
+  \node[mlbl, anchor=east] at (-1.4,14)    {$\tfrac14$};
+  % an arbitrary fixed height
+  \draw[thin, dash pattern=on 2pt off 2pt] (0,16.5) -- (102,16.5);
+  \node[mlbl, anchor=west] at (103,16.5) {$\varepsilon$};
+  % axes
+  \draw[axis] (-2,0) -- (108,0);
+  \draw[axis] (0,-2) -- (0,36);
+    \node[ptfill, minimum size=2.2pt] at (50.00,28.00) {};
+    \node[ptfill, minimum size=2.2pt] at (33.33,18.67) {};
+    \node[ptfill, minimum size=2.2pt] at (66.67,18.67) {};
+    \node[ptfill, minimum size=2.2pt] at (25.00,14.00) {};
+    \node[ptfill, minimum size=2.2pt] at (75.00,14.00) {};
+    \node[ptfill, minimum size=2.2pt] at (20.00,11.20) {};
+    \node[ptfill, minimum size=2.2pt] at (40.00,11.20) {};
+    \node[ptfill, minimum size=2.2pt] at (60.00,11.20) {};
+    \node[ptfill, minimum size=2.2pt] at (80.00,11.20) {};
+    \node[ptfill, minimum size=1.5pt] at (16.67,9.33) {};
+    \node[ptfill, minimum size=1.5pt] at (83.33,9.33) {};
+    \node[ptfill, minimum size=1.5pt] at (14.29,8.00) {};
+    \node[ptfill, minimum size=1.5pt] at (28.57,8.00) {};
+    \node[ptfill, minimum size=1.5pt] at (42.86,8.00) {};
+    \node[ptfill, minimum size=1.5pt] at (57.14,8.00) {};
+    \node[ptfill, minimum size=1.5pt] at (71.43,8.00) {};
+    \node[ptfill, minimum size=1.5pt] at (85.71,8.00) {};
+    \node[ptfill, minimum size=1.5pt] at (12.50,7.00) {};
+    \node[ptfill, minimum size=1.5pt] at (37.50,7.00) {};
+    \node[ptfill, minimum size=1.5pt] at (62.50,7.00) {};
+    \node[ptfill, minimum size=1.5pt] at (87.50,7.00) {};
+    \node[ptfill, minimum size=1.5pt] at (11.11,6.22) {};
+    \node[ptfill, minimum size=1.5pt] at (22.22,6.22) {};
+    \node[ptfill, minimum size=1.5pt] at (44.44,6.22) {};
+    \node[ptfill, minimum size=1.5pt] at (55.56,6.22) {};
+    \node[ptfill, minimum size=1.5pt] at (77.78,6.22) {};
+    \node[ptfill, minimum size=1.5pt] at (88.89,6.22) {};
+    \node[ptfill, minimum size=1.5pt] at (10.00,5.60) {};
+    \node[ptfill, minimum size=1.5pt] at (30.00,5.60) {};
+    \node[ptfill, minimum size=1.5pt] at (70.00,5.60) {};
+    \node[ptfill, minimum size=1.5pt] at (90.00,5.60) {};
+    \node[ptfill, minimum size=1.5pt] at (9.09,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (18.18,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (27.27,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (36.36,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (45.45,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (54.55,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (63.64,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (72.73,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (81.82,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (90.91,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (8.33,4.67) {};
+    \node[ptfill, minimum size=1.5pt] at (41.67,4.67) {};
+    \node[ptfill, minimum size=1.5pt] at (58.33,4.67) {};
+    \node[ptfill, minimum size=1.5pt] at (91.67,4.67) {};
+    \node[ptfill, minimum size=1.5pt] at (7.69,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (15.38,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (23.08,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (30.77,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (38.46,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (46.15,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (53.85,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (61.54,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (69.23,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (76.92,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (84.62,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (92.31,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (7.14,4.00) {};
+    \node[ptfill, minimum size=1.5pt] at (21.43,4.00) {};
+    \node[ptfill, minimum size=1.5pt] at (35.71,4.00) {};
+    \node[ptfill, minimum size=1.5pt] at (64.29,4.00) {};
+    \node[ptfill, minimum size=1.5pt] at (78.57,4.00) {};
+    \node[ptfill, minimum size=1.5pt] at (92.86,4.00) {};
+    \node[ptfill, minimum size=1.5pt] at (6.67,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (13.33,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (26.67,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (46.67,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (53.33,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (73.33,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (86.67,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (93.33,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (6.25,3.50) {};
+    \node[ptfill, minimum size=1.5pt] at (18.75,3.50) {};
+    \node[ptfill, minimum size=1.5pt] at (31.25,3.50) {};
+    \node[ptfill, minimum size=1.5pt] at (43.75,3.50) {};
+    \node[ptfill, minimum size=1.5pt] at (56.25,3.50) {};
+    \node[ptfill, minimum size=1.5pt] at (68.75,3.50) {};
+    \node[ptfill, minimum size=1.5pt] at (81.25,3.50) {};
+    \node[ptfill, minimum size=1.5pt] at (93.75,3.50) {};
+  \node[mlbl, anchor=south west] at (50.8,30) {$f\bigl(\tfrac12\bigr)=\tfrac12$};
+  \node[lbl, anchor=west, align=left] at (2,34.5)
+    {only finitely many dots\\ lie above any height $\varepsilon$};
+  \draw[thin, -{Stealth[length=3pt]}] (20,30.7) -- (30,17.2);
+  \node[mlbl, anchor=north] at (0,-2)   {$0$};
+  \node[mlbl, anchor=north] at (100,-2) {$1$};
+  \node[lbl, anchor=west] at (14,-7)
+    {at every irrational the value is $0$: that part of the graph is the axis itself};
+\end{tikzpicture}
+\caption{Thomae's function $\mathrm{E}6$: the value at $p/q$ in lowest terms
+is $1/q$, and $0$ at every irrational. The dots on the level $y=1/q$ are
+exactly the fractions of denominator $q$, so the levels descend as the dots
+on them multiply: points of large denominator are numerous and low. Above
+any fixed height $\varepsilon$ (dashed) only finitely many dots remain ---
+which is why $f$ is continuous at every irrational, and why its
+discontinuities are only the rationals, a countable set. By
+Theorem~\ref{thm:lebesgue} the function is integrable.}
+\label{fig:thomae}
+\end{figure}
+
+\subsection{A derivative that is not integrable}
+
+\begin{theorem}[Volterra]\label{thm:volterra}
+There is a function $F$ on $[0,1]$, differentiable at every point, whose
+derivative is bounded but not Riemann integrable.
+\end{theorem}
+
+\begin{flow}[How the construction runs]
+  \item \textit{Decide what is needed.} A derivative whose oscillation fails
+        to vanish on a set of \emph{positive} outer length --- by
+        Theorem~\ref{thm:lebesgue}, that alone makes it non-integrable.
+  \item \textit{Build a bad set that is not null.} Run the middle-thirds
+        construction of the Cantor set, but remove intervals whose lengths
+        shrink fast enough that the remaining \emph{fat Cantor set} $K$,
+        though nowhere dense, fails to have measure zero.
+  \item \textit{Plant oscillation in every gap.} In each removed interval
+        place a scaled copy of $\mathrm{E}3$, tapered so that both it and
+        its derivative vanish at the endpoints; set $F=0$ on $K$
+        (Figure~\ref{fig:volterra}).
+  \item \textit{Check differentiability on $K$.} The taper is what makes the
+        difference quotient at a point of $K$ tend to $0$: each planted copy
+        is dominated by the square of its distance to the gap's endpoints,
+        so $F$ is differentiable on $K$ with $F'=0$ there, and $F'$ is
+        bounded. Differentiability inside the gaps is inherited from
+        $\mathrm{E}3$.
+  \item \textit{Collect.} Arbitrarily close to any point of $K$ there are
+        points where $F'$ takes values near $\pm1$, so
+        $\Omega_1 \supset K$; and $K$ does not have measure zero, so by
+        Theorem~\ref{thm:lebesgue} the derivative $F'$ is not integrable.
+\end{flow}
+
+Figure~\ref{fig:voltflow} draws the logic of the construction.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=64mm] (cons) at (30,30)
+    {the construction: a fat Cantor set $K$, nowhere\\
+     dense but not of measure zero; a tapered copy\\
+     of $\mathrm{E}3$ in each removed gap; $F=0$ on $K$};
+  \node[rmbox, text width=36mm] (diff) at (-2,3)
+    {taper: at each point of $K$\\ the difference quotient\\
+     tends to $0$; $F'$ exists\\ everywhere and is bounded};
+  \node[rmbox, text width=34mm] (osc) at (64,3)
+    {oscillation: near every\\ point of $K$, $F'$ takes\\
+     values near $\pm1$, so\\ $\Omega_1 \supset K$};
+  \node[rmbox, text width=56mm] (end) at (30,-22)
+    {$\Omega_1$ is not of measure zero, so by\\
+     Theorem~\ref{thm:lebesgue} the bounded\\
+     derivative $F'$ is not integrable};
+  \draw[rmarrow] (cons) -- node[lbl, anchor=east, inner sep=2.5pt, pos=0.45]
+    {step (4)} (diff);
+  \draw[rmarrow] (cons) -- node[lbl, anchor=west, inner sep=2.5pt, pos=0.45]
+    {step (5)} (osc);
+  \draw[rmarrow] (diff) -- node[lbl, anchor=east, inner sep=2.5pt, pos=0.55]
+    {a genuine derivative} (end);
+  \draw[rmarrow] (osc) -- node[lbl, anchor=west, inner sep=2.5pt, pos=0.55]
+    {$K$ not null} (end);
+\end{tikzpicture}
+\caption{Volterra's construction as a flow chart. The two branches are
+independent: the taper makes $F$ a genuine everywhere-differentiable
+function with bounded derivative, while the planted oscillation forces the
+discontinuity set of $F'$ to contain $K$ --- and $K$ was built not to be
+null, so Lebesgue's criterion refuses the integral. The step numbers refer
+to the walk above.}
+\label{fig:voltflow}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % stage 1
+  \draw[seg] (0,34) -- (100,34);
+  \node[lbl, anchor=west] at (104,34) {$[0,1]$};
+  % stage 2: remove a short middle interval
+  \draw[seg] (0,24) -- (44,24);  \draw[seg] (56,24) -- (100,24);
+  \draw[thin] plot[domain=45:55, samples=60]
+    (\x, {24 + 2.6*sin((\x-45)*36)});
+  \node[lbl, anchor=west] at (30,29.5)
+    {in each removed gap, a tapered copy of $\mathrm{E}3$};
+  \draw[thin, -{Stealth[length=3pt]}] (52,28.6) -- (50.5,27.3);
+  % stage 3
+  \draw[seg] (0,14) -- (18,14);  \draw[seg] (26,14) -- (44,14);
+  \draw[seg] (56,14) -- (74,14); \draw[seg] (82,14) -- (100,14);
+  \foreach \a/\b in {19/25, 75/81}{
+    \draw[thin] plot[domain=\a:\b, samples=40]
+      (\x, {14 + 1.9*sin((\x-\a)*60)});}
+  \draw[thin] plot[domain=45:55, samples=60]
+    (\x, {14 + 2.6*sin((\x-45)*36)});
+  % stage 4
+  \foreach \a/\b in {0/8, 12/18, 26/33, 37/44, 56/63, 67/74, 82/89, 93/100}{
+    \draw[seg] (\a,4) -- (\b,4);}
+  \node[lbl, anchor=west] at (104,4) {$\cdots \to K$};
+\end{tikzpicture}
+\caption{Volterra's construction. Removing middle intervals whose lengths
+shrink quickly leaves a fat Cantor set $K$ --- nowhere dense, yet not of
+measure zero. Planting a tapered copy of $\mathrm{E}3$ in every removed gap
+produces a function differentiable everywhere whose derivative oscillates at
+every point of $K$, so that $\Omega_1 \supset K$.}
+\label{fig:volterra}
+\end{figure}
+
+\begin{remark}
+Theorem~\ref{thm:volterra} is what forces the hypothesis in the Fundamental
+Theorem of Calculus. The statement ``if $F'=f$ on $[a,b]$ then
+$\int_a^b f = F(b)-F(a)$'' is false as it stands, because the integral on the
+left need not exist; one must assume $f$ integrable. Together with
+Corollary~\ref{cor:nojump} this shows the two properties are independent:
+$\mathrm{E}5$ is integrable and is not a derivative, and Volterra's $F'$ is a
+derivative and is not integrable.
+\end{remark}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % shaded lens = the intersection of the two classes
+  \begin{scope}
+    \clip (30,16) ellipse [x radius=30, y radius=16];
+    \fill[black!10] (66,16) ellipse [x radius=30, y radius=16];
+  \end{scope}
+  \draw[thin] (30,16) ellipse [x radius=30, y radius=16];
+  \draw[thin] (66,16) ellipse [x radius=30, y radius=16];
+  \node[lbl, align=center] at (20,25.5) {Riemann\\ integrable};
+  \node[lbl, align=center] at (72,25.5) {has an\\ antiderivative};
+  % the continuous functions, inside the lens
+  \draw[thin] (48,16) ellipse [x radius=10.5, y radius=5];
+  \node[lbl] at (48,16) {continuous};
+  % witnesses
+  \node[ptfill] at (16,12) {};
+  \node[mlbl, anchor=south] at (16,13.5) {E5, E6};
+  \node[ptfill] at (80,12) {};
+  \node[mlbl, anchor=south] at (80,13.5) {E12};
+  % headline
+  \node[lbl, anchor=south] at (48,36)
+    {the Fundamental Theorem of Calculus operates exactly here};
+  \draw[thin, -{Stealth[length=3pt]}] (48,35.4) -- (48,26);
+  % region descriptions
+  \node[lbl, anchor=north] at (16,-2.5) {integrable, not a derivative};
+  \node[lbl, anchor=north] at (80,-2.5) {a derivative, not integrable};
+\end{tikzpicture}
+\caption{The four conditions of Remark~\ref{rem:four} as a Venn diagram:
+each point of the picture is a single function on $[a,b]$, and each oval is
+a class of functions. The continuous functions are a small island inside
+the intersection, and the Fundamental Theorem of Calculus lives on the
+shaded lens: a function must be integrable \emph{and} a derivative before
+$\int_a^b F' = F(b)-F(a)$ can even be stated. The two marked functions show
+that neither oval contains the other: the step function $\mathrm{E}5$ and
+Thomae's function $\mathrm{E}6$ are integrable but are not derivatives
+(Corollary~\ref{cor:nojump}), while Volterra's $\mathrm{E}12$ is a
+derivative but is not integrable (Theorem~\ref{thm:volterra}).}
+\label{fig:ftc}
+\end{figure}
+
+\begin{remark}\label{rem:four}
+For a bounded $f$ on $[a,b]$ the four conditions --- $f$ continuous, $f$
+integrable, $f$ possessing an antiderivative, and $f$ both a derivative and
+integrable --- are distinct. The first implies the rest; the second and third
+are independent by the previous remark; and the fourth, their conjunction, is
+what the Fundamental Theorem requires (Figure~\ref{fig:ftc}).
+\end{remark}

@@ -1,0 +1,535 @@
+\section{可积性}
+\label{sec:int}
+
+把每个局部性质提升为“在 $[a,b]$ 的每一点成立”，就引入了第四个没有
+逐点形式的性质。通向它的箭头来自紧性。
+
+\begin{theorem}\label{thm:ci}
+若 $f$ 在 $[a,b]$ 上连续，则 $f$ 在 $[a,b]$ 上黎曼可积。
+\end{theorem}
+
+\begin{flow}[证明的脉络]
+  \item \textit{翻译目标。} 可积性要求 $U-L$ 小。由图~\ref{fig:sums}，
+        $U-L$ 就是分割各小区间上 $\sup$ 与 $\inf$ 之间那些窄条的总面积。
+        于是目标是：让每一条同时都矮。
+  \item \textit{找出充分条件。} 若分割的每个小区间上振幅都低于 $\eta$，
+        则总面积至多为 $\eta(b-a)$。因此只需找到一个分割细度，使振幅
+        处处低于 $\eta$。
+  \item \textit{看清连续性单独给不出什么。} 连续性在每一点给出一个
+        \emph{在该点}适用的 $\delta$。这些 $\delta$ 可能随点的移动而
+        缩向零，于是没有任何一个统一的细度可用。
+  \item \textit{支付紧性。} 在紧区间上连续必一致连续：一个 $\delta$
+        对每一点都适用。这是全证明中唯一用到 $[a,b]$ 除长度以外性质
+        的一步。
+  \item \textit{反推常数。} 从目标 $U-L \le \varepsilon$ 与因子
+        $\sum \Delta x_i = b-a$ 倒推，振幅须控制在 $\varepsilon/(b-a)$
+        以下；这就是第 (2) 步中要求的 $\eta$。
+  \item \textit{核账。} 紧性一次，在第 (4) 步。除连续性之外没有用到
+        任何逐点条件，也完全没有用到可导性。
+\end{flow}
+
+图~\ref{fig:ciflow} 画出这些步骤之间的依赖关系。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=40mm] (cont) at (0,30)
+    {连续性：每点各有一个只在\\ \emph{该点}附近适用的 $\delta$，\\
+     且可能随点而缩小};
+  \node[rmbox, text width=30mm] (cpt) at (58,30)
+    {$[a,b]$ 紧};
+  \node[rmbox, text width=44mm] (unif) at (29,6)
+    {一致连续：\\ 同一个 $\delta$ 对每点适用};
+  \node[rmbox, text width=58mm] (end) at (29,-15)
+    {细度 $<\delta$ 的任一分割上，每条窄条\\
+     高度都 $<\varepsilon/(b-a)$，故 $U-L\le\varepsilon$};
+  \draw[rmarrow] (cont) -- node[lbl, anchor=east, inner sep=2.5pt, pos=0.5]
+    {第 (3) 步} (unif);
+  \draw[rmarrow] (cpt) -- node[lbl, anchor=west, inner sep=2.5pt, pos=0.5]
+    {第 (4) 步} (unif);
+  \draw[rmarrow] (unif) -- node[lbl, anchor=west, inner sep=2.5pt]
+    {第 (1)、(2)、(5) 步} (end);
+\end{tikzpicture}
+\caption{定理~\ref{thm:ci} 证明的流程图。连续性单独只给出逐点的
+$\delta$；紧性把它升级为处处适用的同一个 $\delta$，其余都是记账——
+分割一旦细于这个 $\delta$，每条窄条的振幅都被压在 $\varepsilon/(b-a)$
+以下。步骤编号对应上面的证明脉络。}
+\label{fig:ciflow}
+\end{figure}
+
+\begin{proof}
+设 $\varepsilon>0$。由 $[a,b]$ 紧，$f$ 一致连续，故存在 $\delta>0$，
+使 $|x-y|<\delta$ 时 $|f(x)-f(y)|<\varepsilon/(b-a)$。取任一细度小于 $\delta$ 的分割 $P$。在每个小区间上 $f$ 的上确界 $M_i$ 与下确界 $m_i$
+之差至多为 $\varepsilon/(b-a)$，于是
+\[ U(P,f)-L(P,f) = \sum_i (M_i-m_i)\,\Delta x_i \le \varepsilon. \]
+由黎曼准则即得可积性。
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \foreach \a/\lo/\hi in {0/16/23, 14/23/31, 28/28/34, 42/22/29,
+                          56/13/23, 70/9/15}{
+    \fill[black!13] (\a,\lo) rectangle ({\a+14},\hi);
+    \draw[thin] (\a,\lo) rectangle ({\a+14},\hi);}
+  \draw[seg] plot[smooth] coordinates
+    {(0,17) (14,23) (28,31) (42,29) (56,22) (70,13) (84,10)};
+  \draw[axis] (-2,0) -- (92,0);
+  \foreach \x in {0,14,28,42,56,70,84}{\draw[guide] (\x,0) -- (\x,36);}
+  \node[mlbl, anchor=north] at (0,-1.6)  {$a$};
+  \node[mlbl, anchor=north] at (84,-1.6) {$b$};
+  \node[lbl, anchor=west] at (26,46) {每一条的高是 $M_i-m_i$，};
+  \node[lbl, anchor=west] at (26,41) {而 $U(P,f)-L(P,f)$ 是它们的总面积};
+\end{tikzpicture}
+\caption{上和与下和。阴影窄条是 $f$ 在各小区间上的振幅，其总面积恰为
+$U(P,f)-L(P,f)$。一旦分割足够细，一致连续性把每一条的高都限制在同一个
+$\varepsilon/(b-a)$ 以内，于是无论分割如何放置，总面积都不超过
+$\varepsilon$。}
+\label{fig:sums}
+\end{figure}
+
+唯一实质性的一步是从连续性过渡到\emph{一致}连续性，也是唯一用到紧性的
+地方；其余都是记账。特别地，除连续性外没有任何逐点条件进入，可导性
+也不起作用。
+
+\subsection{勒贝格准则}
+
+下面的例子本可以逐个用上下和手算处理，但那样会给人一种印象，仿佛可积性
+是碰运气的事。并非如此。
+
+\begin{definition}
+集合 $E \subset \R$ 称为\emph{零测集}，若对每个 $\varepsilon>0$ 存在
+可数多个区间 $I_1,I_2,\dots$，使 $E \subset \bigcup_k I_k$ 且
+$\sum_k |I_k| < \varepsilon$。
+\end{definition}
+
+应当记住的图像是图~\ref{fig:measurezero}。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,0) -- (104,0);
+  \foreach \x in {8,14,17,31,44,46,60,73,74,88,95}{
+    \node[ptfill] at (\x,0) {};}
+  \foreach \a/\b in {6.4/9.6, 13/18.2, 29.8/32.2, 43/47.2, 59/61, 72/75.4,
+                     87.2/88.8, 94.4/95.6}{
+    \draw[thin] (\a,4) -- (\b,4);
+    \draw[thin] (\a,3.2) -- (\a,4.8);
+    \draw[thin] (\b,3.2) -- (\b,4.8);
+    \draw[guide] (\a,0.8) -- (\a,3.2);
+    \draw[guide] (\b,0.8) -- (\b,3.2);}
+  \node[lbl, anchor=west] at (0,10)
+    {可数多个区间，总长度 $<\varepsilon$};
+  \node[lbl, anchor=west] at (0,-6)
+    {集合 $E$，可以是无限的，甚至是稠密的};
+\end{tikzpicture}
+\caption{零测集。区间的个数可以任意多，只要长度之和小于 $\varepsilon$，
+而 $\varepsilon$ 是任意的。每个可数集都满足条件：把第 $k$ 个点用长度
+$\varepsilon 2^{-k-1}$ 的区间盖住即可。任何正长度的区间都不满足。}
+\label{fig:measurezero}
+\end{figure}
+
+对有界的 $f$，记
+\[ \omega_f(x) = \lim_{r\to 0^+}\Bigl[\sup_{|y-x|<r} f(y)
+   - \inf_{|y-x|<r} f(y)\Bigr] \]
+为 $f$ 在 $x$ 处的\emph{振幅}。我们要用到两条初等事实，它们在
+\cite[第 2 章与第 4 章附录]{annotated} 中给出了证明，在
+\cite[第 21 讲]{yupin} 中亦可找到：$f$ 在 $x$ 处连续当且仅当
+$\omega_f(x)=0$；且对每个 $\varepsilon>0$，集合
+$\Omega_\varepsilon = \{x : \omega_f(x)\ge\varepsilon\}$ 是闭集，
+因而 $f$ 的间断点集为 $D = \bigcup_{n\ge1}\Omega_{1/n}$。
+
+\begin{theorem}[勒贝格准则]\label{thm:lebesgue}
+$[a,b]$ 上的有界函数黎曼可积，当且仅当它的间断点集是零测集。
+\end{theorem}
+
+\begin{flow}[证明的脉络]
+  \item \textit{确定换算单位。} 两个条件都在说某种东西小：可积性说
+        \emph{面积}小，零测说\emph{长度}小。整个证明就是二者之间的
+        汇率，而振幅正是这个汇率——面积 $\approx$ 振幅 $\times$ 长度。
+  \item \textit{正向：把面积读成长度。} 内部与 $\Omega_{1/n}$ 相交的
+        小区间振幅至少为 $1/n$，因而对 $U-L$ 的贡献至少是
+        $(1/n)\Delta x_i$。若 $U-L<\eta/n$，这些小区间的总长度就小于
+        $\eta$——而这恰好就是用短区间覆盖 $\Omega_{1/n}$。
+  \item \textit{正向：装配。} 每个 $\Omega_{1/n}$ 是零测集，而
+        $D = \bigcup_n \Omega_{1/n}$ 是其可数并，故亦为零测集。
+  \item \textit{反向：把分割一分为二。} 与 $\Omega_\varepsilon$ 相交的
+        那些小区间上振幅可大至 $2M$，但按假设它们的总长度不超过
+        $\varepsilon$；其余小区间上振幅低于 $\varepsilon$，而总长度可大至
+        $b-a$。两类的乘积都小（图~\ref{fig:split}）。
+  \item \textit{反向：让第二类只有有限多。} 在覆盖之外，每点都有一个
+        振幅很小的邻域；剩下的集合是有界闭集，故有限个这样的邻域即可
+        覆盖，并由此定出一个分割。
+  \item \textit{核账。} $\Omega_\varepsilon$ 是闭集用在第 (5) 步，
+        用来保证剩余集紧。可数性用在第 (3) 步一次。界 $|f|\le M$ 用在
+        第 (4) 步一次——这正是定理需要 $f$ 有界的原因。
+\end{flow}
+
+反向那一半画成流程图，见图~\ref{fig:lebflow}。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=58mm] (top) at (29,30)
+    {固定 $\varepsilon$：集合 $\Omega_\varepsilon$ 闭、\\
+     有界、且为零测集};
+  \node[rmbox, text width=48mm] (cover) at (29,11)
+    {有限多个总长 $<\varepsilon$ 的\\ 开区间将其覆盖};
+  \node[rmbox, text width=38mm] (bad) at (-2,-13)
+    {与覆盖相交的小区间：\\ 振幅 $\le 2M$，\\ 总长 $<\varepsilon$};
+  \node[rmbox, text width=38mm] (good) at (62,-13)
+    {其余小区间：\\ 振幅 $<\varepsilon$，\\ 总长 $\le b-a$};
+  \node[rmbox, text width=52mm] (end) at (29,-35)
+    {$U-L \le 2M\varepsilon + \varepsilon(b-a)$：\\ $f$ 可积};
+  \draw[rmarrow] (top) -- node[lbl, anchor=west, inner sep=2.5pt]
+    {紧性} (cover);
+  \draw[rmarrow] (cover) -- node[lbl, anchor=east, inner sep=2.5pt, pos=0.45]
+    {$|f|\le M$，第 (4) 步} (bad);
+  \draw[rmarrow] (cover) -- node[lbl, anchor=west, inner sep=2.5pt, pos=0.45]
+    {第 (5) 步} (good);
+  \draw[rmarrow] (bad) -- node[lbl, anchor=east, inner sep=2.5pt, pos=0.55]
+    {窄} (end);
+  \draw[rmarrow] (good) -- node[lbl, anchor=west, inner sep=2.5pt, pos=0.55]
+    {矮} (end);
+\end{tikzpicture}
+\caption{勒贝格准则反向那一半（零测 $\Rightarrow$ 可积）的流程图。
+分割的小区间只有两类，每类对 $U-L$ 的贡献都是一个小乘积：与覆盖相交
+的那些合起来很窄，其余的每一条都很矮。正向那一半把同一个汇率反着
+用：从小面积读出小长度（第 (2)–(3) 步）。}
+\label{fig:lebflow}
+\end{figure}
+
+\begin{proof}[证明概要]
+设 $f$ 可积，固定 $n$。给定 $\eta>0$，取一个分割使 $U-L<\eta/n$。内部与
+$\Omega_{1/n}$ 相交的每个小区间对 $U-L$ 的贡献至少为 $(1/n)\Delta x_i$，
+故这些小区间的总长度小于 $\eta$；除有限个分点外它们覆盖了
+$\Omega_{1/n}$，而有限个点可用总长度任意小的区间覆盖。于是每个
+$\Omega_{1/n}$ 是零测集，可数并 $D$ 亦然。
+
+反之，设 $D$ 是零测集且 $|f|\le M$。固定 $\varepsilon>0$。集合
+$\Omega_\varepsilon$ 是有界闭集，因而是紧集，且为零测集，故有限个总长度
+小于 $\varepsilon$ 的开区间可将其覆盖。在这些区间之外每点的振幅都低于
+$\varepsilon$，因而有一个邻域使 $f$ 在其上的变化小于 $\varepsilon$；
+由余集的紧性可取出有限子覆盖，从而得到一个分割。把 $U-L$ 按两类小区间
+拆开，即得其上界 $2M\varepsilon + \varepsilon(b-a)$。
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % partition guides
+  \foreach \x in {0,19,25,50,56,81,87,104}{\draw[guide] (\x,0) -- (\x,34);}
+  % wide, shallow strips (tame pieces)
+  \foreach \a/\lo/\b/\hi in {0/15/19/19.5, 25/12/50/17, 56/17/81/21,
+                             87/13/104/17}{
+    \fill[black!8] (\a,\lo) rectangle (\b,\hi);
+    \draw[thin] (\a,\lo) rectangle (\b,\hi);}
+  % narrow, tall strips (bad pieces)
+  \foreach \a/\b in {19/25, 50/56, 81/87}{
+    \fill[black!22] (\a,4) rectangle (\b,32);
+    \draw[thin] (\a,4) rectangle (\b,32);}
+  % the function
+  \draw[seg] plot[smooth] coordinates {(0,16) (9,18.5) (19,17)};
+  \draw[seg] (19,17) -- (20,31) -- (21,5) -- (22,30) -- (23,6)
+             -- (24,31) -- (25,14);
+  \draw[seg] plot[smooth] coordinates {(25,14) (37,13) (50,15.5)};
+  \draw[seg] (50,15.5) -- (51,30) -- (52,5) -- (53,31) -- (54,6)
+             -- (55,30) -- (56,18.5);
+  \draw[seg] plot[smooth] coordinates {(56,18.5) (68,20) (81,18)};
+  \draw[seg] (81,18) -- (82,31) -- (83,5) -- (84,30) -- (85,6)
+             -- (86,31) -- (87,14.5);
+  \draw[seg] plot[smooth] coordinates {(87,14.5) (95,13.5) (104,16)};
+  % axes
+  \draw[axis] (-2,0) -- (108,0);
+  \draw[axis] (0,0) -- (0,36);
+  \node[mlbl, anchor=north] at (0,-1.6) {$a$};
+  \node[mlbl, anchor=north] at (104,-1.6) {$b$};
+  \node[lbl, anchor=south] at (37,20) {$f$ 的图像};
+  \draw[thin, -{Stealth[length=3pt]}] (32,19.4) -- (30.5,14.2);
+  % the bad set under the tall strips
+  \foreach \x in {20.5,22,23.5, 51.5,53,54.5, 82.5,84,85.5}{
+    \node[ptfill, minimum size=2.2pt] at (\x,-3.4) {};}
+  \node[mlbl, anchor=east] at (17.4,-3.4) {$\Omega_\varepsilon$};
+  % annotations
+  \node[lbl, anchor=west] at (-2,40)
+    {又高又窄：振幅可达 $2M$，总宽度 $<\varepsilon$};
+  \draw[thin, -{Stealth[length=3pt]}] (16,38) -- (21.5,33);
+  \node[lbl, anchor=west] at (30,-9)
+    {又宽又矮：振幅 $<\varepsilon$，总宽度 $\le b-a$};
+  \draw[thin, -{Stealth[length=3pt]}] (64,-7) -- (68,16.5);
+\end{tikzpicture}
+\caption{定理~\ref{thm:lebesgue} 证明中的两类小区间。与图~\ref{fig:sums}
+一样，$U-L$ 是全部窄条的总面积，每个小区间一条，恰好高到装下它那一段
+图像。图像振荡剧烈之处窄条很高——可达 $2M$——但它们正好立在被覆盖的
+集合 $\Omega_\varepsilon$ 之上，总宽度小于 $\varepsilon$；其余地方窄条
+可以很宽，但每一条都矮于 $\varepsilon$。两类面积都小，故
+$U-L \le 2M\varepsilon + \varepsilon(b-a)$。}
+\label{fig:split}
+\end{figure}
+
+该准则一举定下了可积性这一行。
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{函数} & \textbf{间断点集} & \textbf{可积} \\
+\midrule
+阶梯函数 ($\mathrm{E}5$)        & 有限集         & 是 \\
+黎曼函数 ($\mathrm{E}6$)        & $\Q$，可数     & 是 \\
+狄利克雷函数 ($\mathrm{E}7$)    & 全体           & 否 \\
+$x^2\sin(1/x)$ ($\mathrm{E}3$)  & 空集           & 是 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+有两点值得强调。其一，$\mathrm{E}6$（图~\ref{fig:thomae}）可积却在一个\emph{稠密}集上间断，
+可见可积性与很差的逐点行为并不冲突，从可积性也没有任何箭头指回连续性。
+其二，$\mathrm{E}7$ 有界而不可积，故仅有界是不够的。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % the levels y = 1/q
+  \foreach \y in {28, 18.67, 14}{\draw[guide] (0,\y) -- (102,\y);}
+  \node[mlbl, anchor=east] at (-1.4,28)    {$\tfrac12$};
+  \node[mlbl, anchor=east] at (-1.4,18.67) {$\tfrac13$};
+  \node[mlbl, anchor=east] at (-1.4,14)    {$\tfrac14$};
+  % an arbitrary fixed height
+  \draw[thin, dash pattern=on 2pt off 2pt] (0,16.5) -- (102,16.5);
+  \node[mlbl, anchor=west] at (103,16.5) {$\varepsilon$};
+  % axes
+  \draw[axis] (-2,0) -- (108,0);
+  \draw[axis] (0,-2) -- (0,36);
+    \node[ptfill, minimum size=2.2pt] at (50.00,28.00) {};
+    \node[ptfill, minimum size=2.2pt] at (33.33,18.67) {};
+    \node[ptfill, minimum size=2.2pt] at (66.67,18.67) {};
+    \node[ptfill, minimum size=2.2pt] at (25.00,14.00) {};
+    \node[ptfill, minimum size=2.2pt] at (75.00,14.00) {};
+    \node[ptfill, minimum size=2.2pt] at (20.00,11.20) {};
+    \node[ptfill, minimum size=2.2pt] at (40.00,11.20) {};
+    \node[ptfill, minimum size=2.2pt] at (60.00,11.20) {};
+    \node[ptfill, minimum size=2.2pt] at (80.00,11.20) {};
+    \node[ptfill, minimum size=1.5pt] at (16.67,9.33) {};
+    \node[ptfill, minimum size=1.5pt] at (83.33,9.33) {};
+    \node[ptfill, minimum size=1.5pt] at (14.29,8.00) {};
+    \node[ptfill, minimum size=1.5pt] at (28.57,8.00) {};
+    \node[ptfill, minimum size=1.5pt] at (42.86,8.00) {};
+    \node[ptfill, minimum size=1.5pt] at (57.14,8.00) {};
+    \node[ptfill, minimum size=1.5pt] at (71.43,8.00) {};
+    \node[ptfill, minimum size=1.5pt] at (85.71,8.00) {};
+    \node[ptfill, minimum size=1.5pt] at (12.50,7.00) {};
+    \node[ptfill, minimum size=1.5pt] at (37.50,7.00) {};
+    \node[ptfill, minimum size=1.5pt] at (62.50,7.00) {};
+    \node[ptfill, minimum size=1.5pt] at (87.50,7.00) {};
+    \node[ptfill, minimum size=1.5pt] at (11.11,6.22) {};
+    \node[ptfill, minimum size=1.5pt] at (22.22,6.22) {};
+    \node[ptfill, minimum size=1.5pt] at (44.44,6.22) {};
+    \node[ptfill, minimum size=1.5pt] at (55.56,6.22) {};
+    \node[ptfill, minimum size=1.5pt] at (77.78,6.22) {};
+    \node[ptfill, minimum size=1.5pt] at (88.89,6.22) {};
+    \node[ptfill, minimum size=1.5pt] at (10.00,5.60) {};
+    \node[ptfill, minimum size=1.5pt] at (30.00,5.60) {};
+    \node[ptfill, minimum size=1.5pt] at (70.00,5.60) {};
+    \node[ptfill, minimum size=1.5pt] at (90.00,5.60) {};
+    \node[ptfill, minimum size=1.5pt] at (9.09,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (18.18,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (27.27,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (36.36,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (45.45,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (54.55,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (63.64,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (72.73,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (81.82,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (90.91,5.09) {};
+    \node[ptfill, minimum size=1.5pt] at (8.33,4.67) {};
+    \node[ptfill, minimum size=1.5pt] at (41.67,4.67) {};
+    \node[ptfill, minimum size=1.5pt] at (58.33,4.67) {};
+    \node[ptfill, minimum size=1.5pt] at (91.67,4.67) {};
+    \node[ptfill, minimum size=1.5pt] at (7.69,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (15.38,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (23.08,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (30.77,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (38.46,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (46.15,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (53.85,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (61.54,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (69.23,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (76.92,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (84.62,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (92.31,4.31) {};
+    \node[ptfill, minimum size=1.5pt] at (7.14,4.00) {};
+    \node[ptfill, minimum size=1.5pt] at (21.43,4.00) {};
+    \node[ptfill, minimum size=1.5pt] at (35.71,4.00) {};
+    \node[ptfill, minimum size=1.5pt] at (64.29,4.00) {};
+    \node[ptfill, minimum size=1.5pt] at (78.57,4.00) {};
+    \node[ptfill, minimum size=1.5pt] at (92.86,4.00) {};
+    \node[ptfill, minimum size=1.5pt] at (6.67,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (13.33,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (26.67,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (46.67,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (53.33,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (73.33,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (86.67,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (93.33,3.73) {};
+    \node[ptfill, minimum size=1.5pt] at (6.25,3.50) {};
+    \node[ptfill, minimum size=1.5pt] at (18.75,3.50) {};
+    \node[ptfill, minimum size=1.5pt] at (31.25,3.50) {};
+    \node[ptfill, minimum size=1.5pt] at (43.75,3.50) {};
+    \node[ptfill, minimum size=1.5pt] at (56.25,3.50) {};
+    \node[ptfill, minimum size=1.5pt] at (68.75,3.50) {};
+    \node[ptfill, minimum size=1.5pt] at (81.25,3.50) {};
+    \node[ptfill, minimum size=1.5pt] at (93.75,3.50) {};
+  \node[mlbl, anchor=south west] at (50.8,30) {$f\bigl(\tfrac12\bigr)=\tfrac12$};
+  \node[lbl, anchor=west, align=left] at (2,34.5)
+    {高于任一高度 $\varepsilon$ 的点\\ 只有有限多个};
+  \draw[thin, -{Stealth[length=3pt]}] (20,30.7) -- (30,17.2);
+  \node[mlbl, anchor=north] at (0,-2)   {$0$};
+  \node[mlbl, anchor=north] at (100,-2) {$1$};
+  \node[lbl, anchor=west] at (14,-7)
+    {在每个无理点函数值为 $0$：图像的其余部分就是横轴本身};
+\end{tikzpicture}
+\caption{黎曼函数 $\mathrm{E}6$：在既约分数 $p/q$ 处取值 $1/q$，在每个
+无理点取值 $0$。高度 $y=1/q$ 上的点恰是分母为 $q$ 的既约分数，于是
+层级越低点越多：分母大的点既多且低。任一固定高度 $\varepsilon$（虚线）
+之上只剩有限多个点——这正是 $f$ 在每个无理点连续的原因，也说明间断点
+恰为全体有理点，一个可数集。由定理~\ref{thm:lebesgue}，函数可积。}
+\label{fig:thomae}
+\end{figure}
+
+\subsection{一个不可积的导函数}
+
+\begin{theorem}[沃尔泰拉]\label{thm:volterra}
+存在 $[0,1]$ 上处处可导的函数 $F$，其导数有界却不黎曼可积。
+\end{theorem}
+
+\begin{flow}[构造的脉络]
+  \item \textit{要什么。} 需要一个导函数，其振幅在一个\emph{非零测}的
+        集合上不趋于零——由勒贝格准则，这就足以使它不可积。
+  \item \textit{造一个非零测的坏集。} 照通常的三分构造做康托集，但把
+        每次挖去的区间取得足够短，使剩下的\emph{胖康托集} $K$ 虽然
+        无处稠密，却不是零测集。
+  \item \textit{在每个空隙里植入振荡。} 在每个挖去的区间中放一个经过
+        缩放与削平的 $\mathrm{E}3$ 的复制品，使它与它的导数在区间端点
+        处都为零；在 $K$ 上令 $F=0$（图~\ref{fig:volterra}）。
+  \item \textit{检查处处可导。} 削平保证了在 $K$ 的每一点处差商仍趋于
+        零，故 $F$ 在那里可导且 $F'=0$；在空隙内部可导是显然的。
+  \item \textit{收账。} 在 $K$ 的每一点，任意近处都有 $F'$ 取到接近
+        $\pm1$ 的点，故 $\Omega_1 \supset K$。$K$ 不是零测集，由
+        定理~\ref{thm:lebesgue}，$F'$ 不可积。
+\end{flow}
+
+图~\ref{fig:voltflow} 画出构造的逻辑。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=64mm] (cons) at (30,30)
+    {构造：胖康托集 $K$，无处稠密却非零测；\\
+     每个挖去的空隙中放一个削平的 $\mathrm{E}3$；\\
+     在 $K$ 上令 $F=0$};
+  \node[rmbox, text width=36mm] (diff) at (-2,3)
+    {削平：在 $K$ 的每一点\\ 差商趋于 $0$；$F'$\\ 处处存在且有界};
+  \node[rmbox, text width=34mm] (osc) at (64,3)
+    {振荡：$K$ 每一点近旁\\ $F'$ 取到接近 $\pm1$\\
+     的值：$\Omega_1 \supset K$};
+  \node[rmbox, text width=56mm] (end) at (30,-22)
+    {$\Omega_1$ 不是零测集，由定理~\ref{thm:lebesgue}，\\
+     有界的导函数 $F'$ 不可积};
+  \draw[rmarrow] (cons) -- node[lbl, anchor=east, inner sep=2.5pt, pos=0.45]
+    {第 (4) 步} (diff);
+  \draw[rmarrow] (cons) -- node[lbl, anchor=west, inner sep=2.5pt, pos=0.45]
+    {第 (5) 步} (osc);
+  \draw[rmarrow] (diff) -- node[lbl, anchor=east, inner sep=2.5pt, pos=0.55]
+    {名副其实的导函数} (end);
+  \draw[rmarrow] (osc) -- node[lbl, anchor=west, inner sep=2.5pt, pos=0.55]
+    {$K$ 非零测} (end);
+\end{tikzpicture}
+\caption{沃尔泰拉构造的流程图。两条支路互相独立：削平使 $F$ 成为
+名副其实的处处可导、导数有界的函数，而植入的振荡迫使 $F'$ 的间断点集
+包含 $K$——$K$ 又被特意造成非零测，勒贝格准则于是拒绝这个积分。
+步骤编号对应上面的构造脉络。}
+\label{fig:voltflow}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[seg] (0,34) -- (100,34);
+  \node[lbl, anchor=west] at (104,34) {$[0,1]$};
+  \draw[seg] (0,24) -- (44,24);  \draw[seg] (56,24) -- (100,24);
+  \draw[thin] plot[domain=45:55, samples=60]
+    (\x, {24 + 2.6*sin((\x-45)*36)});
+  \node[lbl, anchor=west] at (30,29.5)
+    {每个挖去的空隙中放一个削平的 $\mathrm{E}3$};
+  \draw[thin, -{Stealth[length=3pt]}] (52,28.6) -- (50.5,27.3);
+  \draw[seg] (0,14) -- (18,14);  \draw[seg] (26,14) -- (44,14);
+  \draw[seg] (56,14) -- (74,14); \draw[seg] (82,14) -- (100,14);
+  \foreach \a/\b in {19/25, 75/81}{
+    \draw[thin] plot[domain=\a:\b, samples=40]
+      (\x, {14 + 1.9*sin((\x-\a)*60)});}
+  \draw[thin] plot[domain=45:55, samples=60]
+    (\x, {14 + 2.6*sin((\x-45)*36)});
+  \foreach \a/\b in {0/8, 12/18, 26/33, 37/44, 56/63, 67/74, 82/89, 93/100}{
+    \draw[seg] (\a,4) -- (\b,4);}
+  \node[lbl, anchor=west] at (104,4) {$\cdots \to K$};
+\end{tikzpicture}
+\caption{沃尔泰拉的构造。挖去长度迅速缩小的中间区间，剩下一个胖康托集
+$K$——无处稠密，却不是零测集。在每个挖去的空隙里植入一个削平的
+$\mathrm{E}3$ 的复制品，就得到一个处处可导的函数，其导数在 $K$ 的每一点
+振荡，因而 $\Omega_1 \supset K$。}
+\label{fig:volterra}
+\end{figure}
+
+\begin{remark}
+定理~\ref{thm:volterra} 正是微积分基本定理中那条假设的来由。命题
+“若 $F'=f$ 于 $[a,b]$，则 $\int_a^b f = F(b)-F(a)$”按字面是错的，
+因为左端的积分未必存在；必须假设 $f$ 可积。与推论~\ref{cor:nojump}
+合起来可见二者独立：$\mathrm{E}5$ 可积而不是导函数，沃尔泰拉的 $F'$
+是导函数而不可积。
+\end{remark}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % shaded lens = the intersection
+  \begin{scope}
+    \clip (30,16) ellipse [x radius=30, y radius=16];
+    \fill[black!10] (66,16) ellipse [x radius=30, y radius=16];
+  \end{scope}
+  \draw[thin] (30,16) ellipse [x radius=30, y radius=16];
+  \draw[thin] (66,16) ellipse [x radius=30, y radius=16];
+  \node[lbl] at (20,25.5) {黎曼可积};
+  \node[lbl] at (74,25.5) {有原函数};
+  % the continuous functions, inside the lens
+  \draw[thin] (48,16) ellipse [x radius=10.5, y radius=5];
+  \node[lbl] at (48,16) {连续};
+  % witnesses
+  \node[ptfill] at (16,12) {};
+  \node[mlbl, anchor=south] at (16,13.5) {E5, E6};
+  \node[ptfill] at (80,12) {};
+  \node[mlbl, anchor=south] at (80,13.5) {E12};
+  % headline
+  \node[lbl, anchor=south] at (48,36)
+    {微积分基本定理恰在此处运作};
+  \draw[thin, -{Stealth[length=3pt]}] (48,35.4) -- (48,26);
+  % region descriptions
+  \node[lbl, anchor=north] at (16,-2.5) {可积，但不是导函数};
+  \node[lbl, anchor=north] at (80,-2.5) {是导函数，但不可积};
+\end{tikzpicture}
+\caption{注~\ref{rem:four} 的四个条件画成文氏图：图中每个点是 $[a,b]$
+上的一个函数，每个椭圆是一类函数。连续函数是交集内部的一座小岛，而
+微积分基本定理恰好生活在阴影透镜上：一个函数必须既可积\emph{又}是
+导函数，$\int_a^b F' = F(b)-F(a)$ 这句话才说得出口。两个标出的函数
+说明两个椭圆互不包含：阶梯函数 $\mathrm{E}5$ 与黎曼函数 $\mathrm{E}6$
+可积却不是导函数（推论~\ref{cor:nojump}），沃尔泰拉的 $\mathrm{E}12$
+是导函数却不可积（定理~\ref{thm:volterra}）。}
+\label{fig:ftc}
+\end{figure}
+
+\begin{remark}\label{rem:four}
+对 $[a,b]$ 上有界的 $f$，以下四个条件互不相同：$f$ 连续；$f$ 可积；
+$f$ 有原函数；$f$ 既是导函数又可积。第一个蕴涵其余三个；第二、三个
+由上一注可知互相独立；第四个是它们的合取，也正是微积分基本定理所
+要求的（图~\ref{fig:ftc}）。
+\end{remark}

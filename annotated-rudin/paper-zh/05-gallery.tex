@@ -1,0 +1,114 @@
+\section{反例一览}
+\label{sec:gallery}
+
+全文的论证由十二个函数支撑。每一条给出定义、该函数具有的性质、
+它所缺少的性质，以及它所否定的那条蕴涵。
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+& \textbf{函数} & \textbf{否定的命题} \\
+\midrule
+$\mathrm{E}1$  & 可去间断点          & 有极限 $\Rightarrow$ 连续 \\
+$\mathrm{E}2$  & $|x|$               & 连续 $\Rightarrow$ 可导 \\
+$\mathrm{E}3$  & $x^2\sin(1/x)$      & 可导 $\Rightarrow$ $\mathscr{C}^1$ \\
+$\mathrm{E}4$  & $\sin(1/x)$         & 有界 $\Rightarrow$ 有极限 \\
+$\mathrm{E}5$  & 阶梯函数            & 可积 $\Rightarrow$ 连续 \\
+$\mathrm{E}6$  & 黎曼函数            & 可积 $\Rightarrow$ 间断点集无处稠密 \\
+$\mathrm{E}7$  & 狄利克雷函数        & 有界 $\Rightarrow$ 可积 \\
+$\mathrm{E}8$  & 魏尔斯特拉斯函数    & 连续 $\Rightarrow$ 某处可导 \\
+$\mathrm{E}9$  & $[0,1]$ 上的 $x^n$  & 逐点收敛保持连续性 \\
+$\mathrm{E}10$ & $\sin(nx)/\sqrt n$  & $\lim$ 与 $d/dx$ 可交换 \\
+$\mathrm{E}11$ & 尖峰列              & 逐点收敛保持 $\int$ \\
+$\mathrm{E}12$ & 沃尔泰拉函数        & 导函数 $\Rightarrow$ 可积 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent
+$\mathrm{E}1$ \emph{可去间断点。} $f(x)=0$（$x\ne0$），$f(0)=1$。
+在 $0$ 处极限为 $0$ 而函数值为 $1$。
+
+\smallskip\noindent
+$\mathrm{E}2$ \emph{绝对值。} $f(x)=|x|$ 处处连续；在 $0$ 处差商
+$|h|/h$ 在右侧为 $+1$、左侧为 $-1$，故 $f'(0)$ 不存在。注意 $f$ 是
+利普希茨的，可见该条件也不足以保证可导。
+
+\smallskip\noindent
+$\mathrm{E}3$ \emph{$x^2\sin(1/x)$。} 取 $f(0)=0$，由 $|f(x)|\le x^2$
+得 $f'(0)=0$；而当 $x\ne0$ 时
+\[ f'(x) = 2x\sin\tfrac1x - \cos\tfrac1x, \]
+在 $0$ 处没有极限。于是 $f$ 处处可导而 $f'$ 在 $0$ 处间断，且如
+推论~\ref{cor:nojump} 所要求的，该间断属于第二类。此函数也是
+$\mathrm{E}12$ 的构件。
+
+\smallskip\noindent
+$\mathrm{E}4$ \emph{$\sin(1/x)$。} 以 $1$ 为界而在 $0$ 处无极限：
+沿 $x_n=1/(2n\pi)$ 取值为 $0$，沿 $y_n = 1/(2n\pi+\pi/2)$ 取值为 $1$。
+它在 $0$ 处的振幅为 $2$。
+
+\smallskip\noindent
+$\mathrm{E}5$ \emph{阶梯函数。} $f=0$ 于 $[0,1)$，$f=1$ 于 $[1,2]$。
+只有一个间断点，故可积，但不连续；由推论~\ref{cor:nojump}，它也不是
+任何函数的导数。
+
+\smallskip\noindent
+$\mathrm{E}6$ \emph{黎曼函数（托梅函数）。} 在既约分数 $p/q$ 处
+$f(p/q)=1/q$，在无理点取 $0$。它在每个无理点连续、每个有理点间断，
+且因 $\Q$ 可数，由定理~\ref{thm:lebesgue} 可积，$\int_0^1 f = 0$。
+不存在恰在有理点连续的函数，所以 $\mathrm{E}6$ 没有对偶的镜像
+\cite[第 4 章附录]{annotated}。
+
+\smallskip\noindent
+$\mathrm{E}7$ \emph{狄利克雷函数。} $\1_\Q$ 有界且 $\omega_f\equiv1$，
+故处处不连续、不可积；直接看，每个上和为 $1$、每个下和为 $0$。
+
+\smallskip\noindent
+$\mathrm{E}8$ \emph{魏尔斯特拉斯函数。}
+$f(x)=\sum_{k\ge0} a^k\cos(b^k\pi x)$，其中 $0<a<1$，$b$ 为奇整数，
+$ab>1+\tfrac32\pi$。级数一致收敛，故由定理~\ref{thm:unifcont}
+$f$ 连续，而 $f$ 处处不可导。其部分和都是 $\mathscr{C}^\infty$ 的且
+一致收敛，故 $\mathrm{E}8$ 同时见证了一致收敛不保持可导性
+（定理~\ref{thm:unifdiff}）。由贝尔纲定理，$\mathscr{C}[0,1]$ 中
+某处可导的连续函数构成第一纲集，可见这种行为是典型的而非例外的。
+
+\smallskip\noindent
+$\mathrm{E}9$ \emph{$[0,1]$ 上的 $x^n$。} 每一项连续而逐点极限不连续；
+收敛不是一致的，因为对每个 $n$ 都有 $\sup_{[0,1]}|f_n-f| = 1$。
+
+\smallskip\noindent
+$\mathrm{E}10$ \emph{$\sin(nx)/\sqrt n$。} 一致收敛于 $0$，而导数
+$\sqrt n\cos(nx)$ 处处发散，故在一致收敛下 $\lim f_n' = (\lim f_n)'$
+不成立。求导把振幅乘上频率，而一致收敛只限制振幅。
+
+\smallskip\noindent
+$\mathrm{E}11$ \emph{尖峰列。} $f_n = n\1_{(0,1/n)}$，每个可积且
+$\int_0^1 f_n = 1$，逐点趋于 $0$。这一列没有可积的控制函数——在 $0$
+附近包络 $\sup_n f_n$ 约为 $1/x$——而可积的控制函数恰是控制收敛定理
+所需要的。
+
+\smallskip\noindent
+$\mathrm{E}12$ \emph{沃尔泰拉的导函数。} 即 \S\ref{sec:int} 中所构造
+函数 $F$ 的导数 $F'$：有界、按构造是导函数，却在一个无处稠密的正测度集
+上振荡，因而不黎曼可积。$F$ 本身连续、因而可积；见证缺口的是它的导数。
+
+\section{结语}
+
+三点观察概括了这幅图。
+
+局部的那条链每一环都是严格的，而见证者都很初等：$\mathrm{E}1$、
+$\mathrm{E}2$、$\mathrm{E}3$ 足以把有极限、连续、可导、连续可导
+四者两两分开。
+
+可积性不属于那条链。它是整体的，来自紧性而非任何逐点假设
+（定理~\ref{thm:ci}），并且可以用间断点集的大小给出精确刻画
+（定理~\ref{thm:lebesgue}），而描述这种大小的自然语言就是振幅。
+
+真正有意思的失效，全都是\emph{交换次序}的失效：$\lim$ 与 $\int$、
+$\lim$ 与 $\lim$、$\lim$ 与 $d/dx$。一致收敛修复了前两个，却修复不了
+第三个，因为求导恰好放大了一致性所控制的那个量。图中每一处缺口都在
+提出同一个问题：补上什么假设才能把它填平？逐点收敛加强为一致收敛，
+可以救回连续性与积分；把一致性从函数转移到导数上，可以救回求导
+（定理~\ref{thm:repair}）；把黎曼积分换成勒贝格积分，则以控制条件
+代替一致性条件，救回积分与极限的交换。

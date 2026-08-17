@@ -1,0 +1,268 @@
+\section{取极限之后}
+\label{sec:lim}
+
+设 $f_n \to f$ 于集合 $E$ 上。前几节的每个性质现在都可以问两遍：
+对 $f_n$ 问一遍，对 $f$ 问一遍。图~\ref{fig:blockc} 汇总了各项判定；
+本节其余部分将逐条证明。
+
+\begin{figure}[htbp]
+\centering
+\begin{tabular}{@{}lcc@{}}
+\toprule
+若每个 $f_n$ 具有…… & \multicolumn{2}{c}{……极限 $f$ 是否继承？} \\
+\cmidrule(l){2-3}
+ & 逐点收敛 & 一致收敛 \\
+\midrule
+连续性                              & 否 (E9)  & \textbf{是} \\
+可积性                              & 否 (E7)  & \textbf{是} \\
+$\int_a^b f = \lim_n \int_a^b f_n$  & 否 (E11) & \textbf{是} \\
+\addlinespace[3pt]
+可导性                              & 否       & \textbf{否} (E8, E10) \\
+\bottomrule
+\end{tabular}
+\caption{取极限后还剩下什么。一致收敛严格强于逐点收敛，并救回前三行；
+第四行它救不回来，因为求导把振幅乘上频率，而一致性只控制振幅。第四行
+的补救是定理~\ref{thm:repair}：改为假设导数列 $f_n'$ 一致收敛。}
+\label{fig:blockc}
+\end{figure}
+
+回忆定义~\ref{def:conv}：收敛是\emph{逐点}的，若在每点有
+$f_n(x)\to f(x)$；是\emph{一致}的，若 $\sup_E|f_n-f|\to0$，
+即同一个下标对每一点同时有效。图~\ref{fig:tube} 在 $\mathrm{E}9$ 上
+画出二者的差距。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \fill[black!9] (0,0) rectangle (52,5);
+  \draw[axis] (0,0) -- (60,0);
+  \draw[axis] (0,0) -- (0,34);
+  \draw[guide] (0,26) -- (51,26);
+  \node[mlbl, anchor=east] at (-1.4,26) {$1$};
+  \draw[thin, dash pattern=on 2pt off 2pt] (0,5) -- (56,5);
+  \node[mlbl, anchor=east] at (-1.4,5) {$\varepsilon$};
+  \foreach \p in {1.4,4,9}{
+    \draw[thin] plot[smooth, domain=0:52, samples=40]
+      (\x, {26*(\x/52)^\p});}
+  \node[mlbl, anchor=south east] at (50,20) {$x^{n}$};
+  \draw[seg] (0,0) -- (51,0);
+  \node[ptopen] at (52,0) {};
+  \node[ptfill] at (52,26) {};
+  \node[mlbl, anchor=west] at (53.6,26) {$f(1)=1$};
+  \node[mlbl, anchor=north] at (52,-1.6) {$1$};
+  \node[lbl, anchor=west] at (2,31)
+    {每条 $x^n$ 都在到达 $1$ 之前爬出阴影带};
+  \draw[thin, -{Stealth[length=3pt]}] (14,29) -- (43.5,5.8);
+  \node[lbl, anchor=west, align=left] at (58,8)
+    {极限函数周围的\\ $\varepsilon$-带};
+  \draw[thin, -{Stealth[length=3pt]}] (57.4,6.6) -- (49,2.5);
+  \node[lbl, anchor=west] at (10,-7)
+    {极限 $f$（粗线）：在 $[0,1)$ 上为 $0$，在 $x=1$ 处为 $1$};
+  \draw[thin, -{Stealth[length=3pt]}] (22,-5.6) -- (30,-0.7);
+\end{tikzpicture}
+\caption{$[0,1]$ 上的 $f_n(x)=x^n$（$\mathrm{E}9$；画出三条，$n$ 越大
+越靠下）。逐点极限 $f$——粗线图像：直到 $1$ 之前都是 $0$，随后是
+孤立的值 $1$——不连续。一致收敛要求 $n$ 大时 $x^n$ 的整条图像停留在
+$f$ 周围的阴影 $\varepsilon$-带内；而无论 $n$ 多大，图像都会在到达
+$1$ 之前爬出去，故收敛是逐点的而非一致的。}
+\label{fig:tube}
+\end{figure}
+
+\begin{theorem}\label{thm:unifcont}
+若每个 $f_n$ 连续且 $f_n \to f$ 一致收敛，则 $f$ 连续。
+\end{theorem}
+
+\begin{flow}[证明的脉络]
+  \item \textit{找出障碍。} 要比较 $f(x)$ 与 $f(x_0)$，而我们对 $f$
+        本身一无所知——它只是一个极限。
+  \item \textit{绕道。} 每个 $f_n$ \emph{是}连续的，于是借道其一：
+        从 $f(x)$ 上到 $f_n(x)$，横过到 $f_n(x_0)$，再下到 $f(x_0)$
+        （图~\ref{fig:3eps}）。
+  \item \textit{给三段定价。} 两段竖直的由收敛性变短，横的一段由 $f_n$
+        的连续性变短。共三段，故每段分得 $\varepsilon/3$。
+  \item \textit{检查选取的先后。} 一致性正是花在这里。下标 $n$ 必须在
+        $x$ \emph{之前}选定，因为横段的 $\delta$ 依赖于 $n$。一致收敛
+        允许这个次序，逐点收敛不允许——在后者中可用的 $n$ 依赖于点。
+  \item \textit{核账。} 一致性恰好用了两次，对应两段竖直；某个 $f_n$
+        的连续性用了一次。除了下标存在之外，没有用到它的任何性质，
+        这也是同一论证能证明“一致连续函数的一致极限一致连续”“有界
+        函数的一致极限有界”等命题的原因。
+\end{flow}
+
+\begin{proof}
+固定 $x_0$ 与 $\varepsilon>0$。取 $n$ 使 $\sup|f_n-f|<\varepsilon/3$，
+再取 $\delta$ 使 $|x-x_0|<\delta$ 时 $|f_n(x)-f_n(x_0)|<\varepsilon/3$。
+对这样的 $x$，
+\[ |f(x)-f(x_0)| \le |f(x)-f_n(x)|+|f_n(x)-f_n(x_0)|+|f_n(x_0)-f(x_0)|
+   < \varepsilon. \qedhere \]
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[ptfill] (a) at (0,0)   {};
+  \node[ptfill] (b) at (0,22)  {};
+  \node[ptfill] (c) at (62,22) {};
+  \node[ptfill] (d) at (62,0)  {};
+  \node[mlbl, anchor=east]  at (-2,0)  {$f(x)$};
+  \node[mlbl, anchor=east]  at (-2,22) {$f_n(x)$};
+  \node[mlbl, anchor=west]  at (64,22) {$f_n(x_0)$};
+  \node[mlbl, anchor=west]  at (64,0)  {$f(x_0)$};
+  \draw[rmarrow] (a) -- node[lbl, anchor=east, inner sep=3pt]
+    {$<\varepsilon/3$（一致）} (b);
+  \draw[rmarrow] (b) -- node[lbl, anchor=south, inner sep=3pt]
+    {$<\varepsilon/3$（$f_n$ 连续）} (c);
+  \draw[rmarrow] (c) -- node[lbl, anchor=west, inner sep=3pt]
+    {$<\varepsilon/3$（一致）} (d);
+  \draw[guide] (a) -- node[lbl, anchor=north, inner sep=3pt]
+    {待估的量：$<\varepsilon$} (d);
+\end{tikzpicture}
+\caption{$3\varepsilon$ 论证的三段。底下那条直路走不通，因为对 $f$
+一无所知；于是绕道某个 $f_n$。一致收敛的作用，正是允许这个 $n$
+在 $x$ \emph{之前}被选定，而这恰是逐点收敛做不到的。}
+\label{fig:3eps}
+\end{figure}
+
+一致性用在外侧两项上。在逐点收敛之下，每一项仍可变小，但必须先把点固定；
+而中间那项所需的 $\delta$ 又依赖于为该点选出的下标，估计因而无法闭合。
+$\mathrm{E}9$ 就是这种失效的样子。
+
+\begin{theorem}\label{thm:unifint}
+若每个 $f_n$ 在 $[a,b]$ 上黎曼可积且 $f_n\to f$ 一致收敛，则 $f$ 可积，
+且 $\int_a^b f = \lim_n \int_a^b f_n$。
+\end{theorem}
+
+\idea{一致收敛把 $f$ 关进以 $f_n$ 为中心、宽 $2\varepsilon_n$ 的水平带内。
+上、下和在这种比较下是单调的，故 $f$ 对应的窄条（图~\ref{fig:sums}）
+不高于 $f_n$ 的窄条加上这条带——而无论分割如何选取，带的贡献至多为
+$2\varepsilon_n(b-a)$。两种“小”被合并使用：一种来自 $n$，一种来自分割。}
+
+\begin{proof}
+令 $\varepsilon_n = \sup_{[a,b]}|f_n-f| \to 0$，于是
+$f_n-\varepsilon_n \le f \le f_n+\varepsilon_n$。对任一分割 $P$，
+\[ U(P,f)-L(P,f) \le U(P,f_n)-L(P,f_n)+2\varepsilon_n(b-a), \]
+先取 $n$ 再取 $P$ 便可使右端变小，从而得可积性。同样的不等式给出
+$\bigl|\int f - \int f_n\bigr| \le \varepsilon_n(b-a)$。
+\end{proof}
+
+\begin{theorem}\label{thm:unifdiff}
+一致收敛不保持可导性；而且即使极限可导，$\lim_n f_n'$ 也未必等于 $f'$。
+\end{theorem}
+
+\begin{proof}
+先证第一句。取 $\mathrm{E}8$ 的部分和：每个部分和是有限多个余弦之和，
+故为 $\mathscr{C}^\infty$，且由 M 判别法一致收敛——极限是魏尔斯特拉斯
+函数，处处不可导。所以光滑函数的一致极限可以处处不可导。
+
+再证第二句。取 $\R$ 上的 $f_n(x)=\sin(nx)/\sqrt n$（$\mathrm{E}10$，
+图~\ref{fig:wiggle}）。
+则 $\sup|f_n| = 1/\sqrt n \to 0$，故 $f_n \to 0$ 一致收敛，极限要多
+光滑有多光滑。但 $f_n'(x)=\sqrt n\cos(nx)$ 无界且在任何一点都没有极限；
+在 $x=0$ 处 $f_n'(0)=\sqrt n \to \infty$，而 $f'\equiv 0$。可见即使
+极限可导，导数列也可以不收敛于任何东西。
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,14) -- (46,14);
+  \draw[thin, dash pattern=on 2pt off 2pt] (0,17.7) -- (44,17.7);
+  \draw[thin, dash pattern=on 2pt off 2pt] (0,10.3) -- (44,10.3);
+  \node[mlbl, anchor=west] at (45,17.7) {$1/\sqrt n$};
+  \foreach \p/\amp in {2/9, 5/5.7}{
+    \draw[thin] plot[smooth, domain=0:44, samples=120]
+      (\x, {14 + \amp*sin(\p*\x*4)});}
+  \draw[seg] plot[smooth, domain=0:44, samples=120]
+    (\x, {14 + 3.7*sin(12*\x*4)});
+  \node[lbl, anchor=north] at (22,-4) {$f_n = \sin(nx)/\sqrt n \to 0$};
+  \begin{scope}[xshift=62mm]
+  \draw[axis] (0,14) -- (46,14);
+  \draw[thin, dash pattern=on 2pt off 2pt] (0,26) -- (44,26);
+  \draw[thin, dash pattern=on 2pt off 2pt] (0,2) -- (44,2);
+  \node[mlbl, anchor=west] at (45,26) {$\sqrt n$};
+  \foreach \p/\amp in {2/5, 5/8}{
+    \draw[thin] plot[smooth, domain=0:44, samples=120]
+      (\x, {14 + \amp*cos(\p*\x*4)});}
+  \draw[seg] plot[smooth, domain=0:44, samples=120]
+    (\x, {14 + 12*cos(12*\x*4)});
+  \node[lbl, anchor=north] at (22,-4) {$f_n' = \sqrt n\,\cos(nx)$ 发散};
+  \end{scope}
+\end{tikzpicture}
+\caption{一致收敛为何管不住导数。两幅图画的是同样三个函数，粗线是
+三者中 $n$ 最大的一个。左图中它最\emph{平}：振幅 $1/\sqrt n$（虚线）
+收缩得最厉害。右图是同一列函数求导之后，同一条曲线变得最\emph{陡}：
+因子 $n$ 压过了收缩，振幅 $\sqrt n$（虚线）长得最高。函数一致地小，
+对斜率毫无约束：一个波可以又短又陡。}
+\label{fig:wiggle}
+\end{figure}
+
+\begin{theorem}[Rudin 7.17]\label{thm:repair}
+设每个 $f_n$ 在 $[a,b]$ 上可导，数列 $\bigl(f_n(x_0)\bigr)$ 对某个
+$x_0\in[a,b]$ 收敛，且 $(f_n')$ 一致收敛。则 $(f_n)$ 一致收敛于某个
+$f$，且 $f'=\lim_n f_n'$。
+\end{theorem}
+
+假设被搬到了导数上，而函数本身只需在一点收敛。求导相对于一致收敛不是
+连续的运算，所以想对极限求导，就必须对导数作出假设；同样的不对称也
+解释了为什么幂级数的逐项求导需要单独一条定理，而逐项积分不需要。
+
+\begin{theorem}\label{thm:ptwise}
+逐点收敛既不保持连续性，也不保持可积性，也不保持积分的值。
+\end{theorem}
+
+\begin{proof}
+连续性的失效见 $\mathrm{E}9$。对可积性，把
+$\Q\cap[0,1]=\{q_1,q_2,\dots\}$ 排成一列，令
+$f_n = \1_{\{q_1,\dots,q_n\}}$；每个 $f_n$ 只有有限个间断点，由
+定理~\ref{thm:lebesgue} 可积，而 $f_n \to \mathrm{E}7$ 逐点收敛，
+$\mathrm{E}7$ 不可积。对积分的值，尖峰 $\mathrm{E}11$（图~\ref{fig:spikes}）满足
+$f_n \to 0$ 逐点收敛而 $\int_0^1 f_n = 1$ 对每个 $n$ 成立。
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \fill[black!7]  (0,0) rectangle (24,8);
+  \fill[black!13] (0,0) rectangle (12,16);
+  \fill[black!19] (0,0) rectangle (6,32);
+  \draw[axis] (0,0) -- (56,0);
+  \draw[axis] (0,0) -- (0,36);
+  \foreach \w/\h/\lab in {24/8/{n=1}, 12/16/{n=2}, 6/32/{n=4}}{
+    \draw[thin] (0,\h) -- (\w,\h) -- (\w,0);
+    \node[mlbl, anchor=west] at (\w+1,\h) {$\lab$};}
+  \draw[thin, dash pattern=on 2pt off 2pt] plot[smooth]
+    coordinates {(24,8) (12,16) (8,24) (6,32)};
+  \node[mlbl, anchor=east] at (-1.4,8)  {$1$};
+  \node[mlbl, anchor=east] at (-1.4,16) {$2$};
+  \node[mlbl, anchor=east] at (-1.4,32) {$4$};
+  \node[mlbl, anchor=north] at (6,-1.6)  {$\tfrac14$};
+  \node[mlbl, anchor=north] at (12,-1.6) {$\tfrac12$};
+  \node[mlbl, anchor=north] at (24,-1.6) {$1$};
+  \node[lbl, anchor=west, align=left] at (26,26)
+    {各角沿双曲线 $xy=1$ 上行：\\
+     每个尖峰的面积都是 $n \times \tfrac1n = 1$};
+  \draw[thin, -{Stealth[length=3pt]}] (25.4,24.2) -- (9.5,23);
+  \node[lbl, anchor=west] at (8,-7)
+    {对每个固定的 $x>0$，尖峰最终都落在它左边，故 $f_n(x)\to 0$};
+\end{tikzpicture}
+\caption{尖峰 $f_n = n\1_{(0,1/n)}$（$\mathrm{E}11$），每个都围出面积
+$1$：底缩到 $1/n$，高长到 $n$，右上角 $(1/n,\,n)$ 沿双曲线 $xy=1$
+上行。对每个固定的 $x>0$，尖峰最终整个落在 $x$ 左边，故 $f_n(x)\to0$
+逐点成立；然而 $\int f_n = 1$ 对每个 $n$ 都成立。质量向上逃走了，
+任何逐点的陈述都察觉不到这一点。}
+\label{fig:spikes}
+\end{figure}
+
+\begin{remark}
+不过逐点极限也并非任意。连续函数的逐点极限属于贝尔第一类，而并非每个
+函数都如此：由贝尔纲定理，狄利克雷函数 $\mathrm{E}7$ \emph{不是}任何
+连续函数列的逐点极限 \cite[第 28 讲]{yupin}。它确实是上面那列可积函数
+的逐点极限，却绝不是连续函数列的逐点极限。
+\end{remark}
+
+\begin{remark}
+定理~\ref{thm:unifint} 中的一致性假设是黎曼积分的局限，而非命题本身的
+局限。在勒贝格积分之下，只要有逐点极限并加上一个可积的控制函数，
+结论 $\int \lim = \lim \int$ 仍然成立——而这个控制条件正是尖峰
+$\mathrm{E}11$ 所明显缺少的。
+\end{remark}

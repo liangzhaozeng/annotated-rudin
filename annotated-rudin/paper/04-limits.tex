@@ -1,0 +1,302 @@
+\section{Passing to the limit}
+\label{sec:lim}
+
+Let $f_n \to f$ on a set $E$. Each property of the preceding sections may now
+be asked twice: of the $f_n$, and of $f$. Figure~\ref{fig:blockc}
+tabulates the verdicts; the rest of the section proves them.
+
+\begin{figure}[htbp]
+\centering
+\begin{tabular}{@{}lcc@{}}
+\toprule
+if every $f_n$ has\ldots & \multicolumn{2}{c}{\ldots does the limit $f$?} \\
+\cmidrule(l){2-3}
+ & pointwise conv. & uniform conv. \\
+\midrule
+continuity                          & no (E9)  & \textbf{yes} \\
+integrability                       & no (E7)  & \textbf{yes} \\
+$\int_a^b f = \lim_n \int_a^b f_n$  & no (E11) & \textbf{yes} \\
+\addlinespace[3pt]
+differentiability                   & no       & \textbf{no} (E8, E10) \\
+\bottomrule
+\end{tabular}
+\caption{What survives a limit. Uniform convergence is strictly stronger
+than pointwise convergence, and it rescues the first three rows; the fourth
+it cannot rescue, because differentiation multiplies amplitude by frequency
+and uniformity bounds only amplitude. The repair for the last row is
+Theorem~\ref{thm:repair}: assume uniform convergence of the derivatives
+$f_n'$ instead.}
+\label{fig:blockc}
+\end{figure}
+
+Recall Definition~\ref{def:conv}: convergence is \emph{pointwise} if
+$f_n(x)\to f(x)$ at each $x$, and \emph{uniform} if
+$\sup_E|f_n-f|\to0$, so that one index serves every point at once.
+Figure~\ref{fig:tube} shows the gap between the two on $\mathrm{E}9$.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \fill[black!9] (0,0) rectangle (52,5);
+  \draw[axis] (0,0) -- (60,0);
+  \draw[axis] (0,0) -- (0,34);
+  \draw[guide] (0,26) -- (51,26);
+  \node[mlbl, anchor=east] at (-1.4,26) {$1$};
+  \draw[thin, dash pattern=on 2pt off 2pt] (0,5) -- (56,5);
+  \node[mlbl, anchor=east] at (-1.4,5) {$\varepsilon$};
+  \foreach \p in {1.4,4,9}{
+    \draw[thin] plot[smooth, domain=0:52, samples=40]
+      (\x, {26*(\x/52)^\p});}
+  \node[mlbl, anchor=south east] at (50,20) {$x^{n}$};
+  \draw[seg] (0,0) -- (51,0);
+  \node[ptopen] at (52,0) {};
+  \node[ptfill] at (52,26) {};
+  \node[mlbl, anchor=west] at (53.6,26) {$f(1)=1$};
+  \node[mlbl, anchor=north] at (52,-1.6) {$1$};
+  \node[lbl, anchor=west] at (2,31)
+    {each $x^n$ climbs out of the tube before reaching $1$};
+  \draw[thin, -{Stealth[length=3pt]}] (14,29) -- (43.5,5.8);
+  \node[lbl, anchor=west, align=left] at (58,8)
+    {the $\varepsilon$-tube about\\ the limit function};
+  \draw[thin, -{Stealth[length=3pt]}] (57.4,6.6) -- (49,2.5);
+  \node[lbl, anchor=west] at (10,-7)
+    {the limit $f$ (heavy): $0$ on $[0,1)$, $1$ at $x=1$};
+  \draw[thin, -{Stealth[length=3pt]}] (22,-5.6) -- (30,-0.7);
+\end{tikzpicture}
+\caption{$f_n(x)=x^n$ on $[0,1]$ ($\mathrm{E}9$; three members drawn, later
+ones lower). The pointwise limit $f$ --- the heavy graph, $0$ up to $1$ and
+then the isolated value $1$ --- is discontinuous. Uniform convergence would
+require the whole graph of $x^n$, for large $n$, to stay inside the shaded
+$\varepsilon$-tube about $f$; however large $n$ is, the graph still climbs
+out before reaching $1$, so the convergence is pointwise but not uniform.}
+\label{fig:tube}
+\end{figure}
+
+\begin{theorem}\label{thm:unifcont}
+If each $f_n$ is continuous and $f_n \to f$ uniformly, then $f$ is
+continuous.
+\end{theorem}
+
+\begin{flow}
+  \item \textit{Locate the obstacle.} We must compare $f(x)$ with $f(x_0)$,
+        and we know nothing about $f$ directly --- it is only a limit.
+  \item \textit{Find a detour.} Each $f_n$ \emph{is} continuous, so route
+        through one: from $f(x)$ up to $f_n(x)$, across to $f_n(x_0)$, and
+        back down to $f(x_0)$ (Figure~\ref{fig:3eps}).
+  \item \textit{Price the legs.} The two vertical legs are short by
+        convergence; the horizontal leg is short by continuity of $f_n$.
+        Three legs, so each is allotted $\varepsilon/3$.
+  \item \textit{Check the order of choices.} This is where uniformity is
+        spent. The index $n$ must be fixed \emph{before} $x$ is, because the
+        $\delta$ of the horizontal leg depends on $n$. Uniform convergence
+        permits that order; pointwise convergence does not, since there the
+        admissible $n$ depends on the point.
+  \item \textit{Audit.} Uniformity is used exactly twice, for the two
+        vertical legs, and continuity of a single $f_n$ once. No property of
+        the index beyond its existence is used, which is why the same
+        argument proves the corresponding statements for uniform limits of
+        uniformly continuous or of bounded functions.
+\end{flow}
+
+\begin{proof}
+Fix $x_0$ and $\varepsilon>0$. Choose $n$ with
+$\sup|f_n-f|<\varepsilon/3$, then $\delta$ with
+$|f_n(x)-f_n(x_0)|<\varepsilon/3$ for $|x-x_0|<\delta$. For such $x$,
+\[ |f(x)-f(x_0)| \le |f(x)-f_n(x)|+|f_n(x)-f_n(x_0)|+|f_n(x_0)-f(x_0)|
+   < \varepsilon. \qedhere \]
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[ptfill] (a) at (0,0)   {};
+  \node[ptfill] (b) at (0,22)  {};
+  \node[ptfill] (c) at (58,22) {};
+  \node[ptfill] (d) at (58,0)  {};
+  \node[mlbl, anchor=east]  at (-2,0)  {$f(x)$};
+  \node[mlbl, anchor=east]  at (-2,22) {$f_n(x)$};
+  \node[mlbl, anchor=west]  at (60,22) {$f_n(x_0)$};
+  \node[mlbl, anchor=west]  at (60,0)  {$f(x_0)$};
+  \draw[rmarrow] (a) -- node[lbl, anchor=east, inner sep=3pt]
+    {$<\varepsilon/3$ (uniform)} (b);
+  \draw[rmarrow] (b) -- node[lbl, anchor=south, inner sep=3pt]
+    {$<\varepsilon/3$ ($f_n$ continuous)} (c);
+  \draw[rmarrow] (c) -- node[lbl, anchor=west, inner sep=3pt]
+    {$<\varepsilon/3$ (uniform)} (d);
+  \draw[guide] (a) -- node[lbl, anchor=north, inner sep=3pt]
+    {what we must bound: $<\varepsilon$} (d);
+\end{tikzpicture}
+\caption{The three legs of the $3\varepsilon$ argument. The direct route
+along the bottom is unavailable, since nothing is known about $f$; one
+detours through a single $f_n$. Uniform convergence is what permits that $n$
+to be chosen \emph{before} $x$, which is exactly what pointwise convergence
+would not allow.}
+\label{fig:3eps}
+\end{figure}
+
+Uniformity is used for the outer two terms. Under pointwise convergence each
+can still be made small, but only after the point has been fixed, and the
+middle term then requires a $\delta$ depending on the index chosen for that
+point; the estimate does not close. $\mathrm{E}9$ is what the failure looks
+like.
+
+\begin{theorem}\label{thm:unifint}
+If each $f_n$ is Riemann integrable on $[a,b]$ and $f_n\to f$ uniformly, then
+$f$ is integrable and $\int_a^b f = \lim_n \int_a^b f_n$.
+\end{theorem}
+
+\idea{Uniform convergence puts $f$ inside a horizontal band of width
+$2\varepsilon_n$ about $f_n$. Upper and lower sums are monotone under such a
+comparison, so the strips of Figure~\ref{fig:sums} for $f$ are no taller than
+those for $f_n$ plus the band --- and the band contributes at most
+$2\varepsilon_n(b-a)$ no matter how the partition is chosen. Two smallnesses
+are combined: one from $n$, one from the partition.}
+
+\begin{proof}
+Put $\varepsilon_n = \sup_{[a,b]}|f_n-f| \to 0$, so that
+$f_n-\varepsilon_n \le f \le f_n+\varepsilon_n$. For any partition $P$,
+\[ U(P,f)-L(P,f) \le U(P,f_n)-L(P,f_n)+2\varepsilon_n(b-a), \]
+and choosing $n$ and then $P$ suitably makes the right side small, giving
+integrability. The same inequalities bound
+$\bigl|\int f - \int f_n\bigr|$ by $\varepsilon_n(b-a)$.
+\end{proof}
+
+\begin{theorem}\label{thm:unifdiff}
+Uniform convergence does not preserve differentiability; and even when the
+limit is differentiable, $\lim_n f_n'$ need not equal $f'$.
+\end{theorem}
+
+\begin{proof}
+For the first clause, take the partial sums of $\mathrm{E}8$: each is a
+finite sum of cosines, hence $\mathscr{C}^\infty$, and by the $M$-test they
+converge uniformly --- to Weierstrass's function, which is differentiable at
+no point. So a uniform limit of smooth functions need not be differentiable
+anywhere.
+
+For the second, let $f_n(x)=\sin(nx)/\sqrt n$ on $\R$
+($\mathrm{E}10$; Figure~\ref{fig:wiggle}).
+Then $\sup|f_n| = 1/\sqrt n \to 0$, so $f_n \to 0$ uniformly and the limit
+is smooth. But $f_n'(x)=\sqrt n\cos(nx)$ is unbounded and has no limit at
+any point; at $x=0$, $f_n'(0)=\sqrt n \to \infty$ while $f'\equiv 0$. So
+even when the limit is differentiable, the derivatives may converge to
+nothing at all.
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,14) -- (46,14);
+  \draw[thin, dash pattern=on 2pt off 2pt] (0,17.7) -- (44,17.7);
+  \draw[thin, dash pattern=on 2pt off 2pt] (0,10.3) -- (44,10.3);
+  \node[mlbl, anchor=west] at (45,17.7) {$1/\sqrt n$};
+  \foreach \p/\amp in {2/9, 5/5.7}{
+    \draw[thin] plot[smooth, domain=0:44, samples=120]
+      (\x, {14 + \amp*sin(\p*\x*4)});}
+  \draw[seg] plot[smooth, domain=0:44, samples=120]
+    (\x, {14 + 3.7*sin(12*\x*4)});
+  \node[lbl, anchor=north] at (22,-4) {$f_n = \sin(nx)/\sqrt n \to 0$};
+  \begin{scope}[xshift=62mm]
+  \draw[axis] (0,14) -- (46,14);
+  \draw[thin, dash pattern=on 2pt off 2pt] (0,26) -- (44,26);
+  \draw[thin, dash pattern=on 2pt off 2pt] (0,2) -- (44,2);
+  \node[mlbl, anchor=west] at (45,26) {$\sqrt n$};
+  \foreach \p/\amp in {2/5, 5/8}{
+    \draw[thin] plot[smooth, domain=0:44, samples=120]
+      (\x, {14 + \amp*cos(\p*\x*4)});}
+  \draw[seg] plot[smooth, domain=0:44, samples=120]
+    (\x, {14 + 12*cos(12*\x*4)});
+  \node[lbl, anchor=north] at (22,-4) {$f_n' = \sqrt n\,\cos(nx)$ diverges};
+  \end{scope}
+\end{tikzpicture}
+\caption{Why uniform convergence cannot control derivatives. The same three
+functions appear in both panels, and the heavy curve is the largest $n$ of
+the three. On the left it is the \emph{flattest}: its amplitude $1/\sqrt n$
+(dashed) has collapsed furthest. On the right, after differentiating, the
+very same curve is the \emph{steepest}: the factor $n$ overwhelms the
+collapse, and its amplitude $\sqrt n$ (dashed) has grown furthest. Uniform
+smallness of a function says nothing about its slope: a wiggle may be short
+and steep at once.}
+\label{fig:wiggle}
+\end{figure}
+
+\begin{theorem}[Rudin 7.17]\label{thm:repair}
+Suppose each $f_n$ is differentiable on $[a,b]$, the sequence
+$\bigl(f_n(x_0)\bigr)$ converges for some $x_0\in[a,b]$, and $(f_n')$
+converges uniformly. Then $(f_n)$ converges uniformly to some $f$, and
+$f'=\lim_n f_n'$.
+\end{theorem}
+
+The hypothesis has moved onto the derivatives, and the functions themselves
+need only converge at one point. Differentiation is not continuous with
+respect to uniform convergence, so to differentiate a limit one must assume
+something about the derivatives; the same asymmetry is why term-by-term
+differentiation of a power series requires its own theorem while term-by-term
+integration does not.
+
+\begin{theorem}\label{thm:ptwise}
+Pointwise convergence preserves neither continuity, nor integrability, nor
+the value of the integral.
+\end{theorem}
+
+\begin{proof}
+Continuity fails by $\mathrm{E}9$. For integrability, enumerate
+$\Q\cap[0,1]=\{q_1,q_2,\dots\}$ and let $f_n = \1_{\{q_1,\dots,q_n\}}$; each
+$f_n$ has finitely many discontinuities, hence is integrable by
+Theorem~\ref{thm:lebesgue}, while $f_n \to \mathrm{E}7$ pointwise and
+$\mathrm{E}7$ is not integrable. For the integral, the spikes
+$\mathrm{E}11$ (Figure~\ref{fig:spikes}) satisfy $f_n \to 0$ pointwise with $\int_0^1 f_n = 1$ for
+every $n$.
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \fill[black!7]  (0,0) rectangle (24,8);
+  \fill[black!13] (0,0) rectangle (12,16);
+  \fill[black!19] (0,0) rectangle (6,32);
+  \draw[axis] (0,0) -- (56,0);
+  \draw[axis] (0,0) -- (0,36);
+  \foreach \w/\h/\lab in {24/8/{n=1}, 12/16/{n=2}, 6/32/{n=4}}{
+    \draw[thin] (0,\h) -- (\w,\h) -- (\w,0);
+    \node[mlbl, anchor=west] at (\w+1,\h) {$\lab$};}
+  \draw[thin, dash pattern=on 2pt off 2pt] plot[smooth]
+    coordinates {(24,8) (12,16) (8,24) (6,32)};
+  \node[mlbl, anchor=east] at (-1.4,8)  {$1$};
+  \node[mlbl, anchor=east] at (-1.4,16) {$2$};
+  \node[mlbl, anchor=east] at (-1.4,32) {$4$};
+  \node[mlbl, anchor=north] at (6,-1.6)  {$\tfrac14$};
+  \node[mlbl, anchor=north] at (12,-1.6) {$\tfrac12$};
+  \node[mlbl, anchor=north] at (24,-1.6) {$1$};
+  \node[lbl, anchor=west, align=left] at (26,26)
+    {the corners ride the hyperbola $xy=1$:\\
+     every spike has area $n \times \tfrac1n = 1$};
+  \draw[thin, -{Stealth[length=3pt]}] (25.4,24.2) -- (9.5,23);
+  \node[lbl, anchor=west] at (8,-7)
+    {at each fixed $x>0$ the spikes eventually lie to its left, so
+     $f_n(x)\to 0$};
+\end{tikzpicture}
+\caption{The spikes $f_n = n\1_{(0,1/n)}$ ($\mathrm{E}11$), each enclosing
+area $1$: as the base shrinks to $1/n$ the height grows to $n$, and the
+top-right corner $(1/n,\,n)$ rides up the hyperbola $xy=1$. At each fixed
+$x>0$ the spike eventually lies entirely to the left of $x$, so
+$f_n(x)\to0$ pointwise; yet $\int f_n = 1$ for every $n$. The mass escapes
+upward, which no pointwise statement detects.}
+\label{fig:spikes}
+\end{figure}
+
+\begin{remark}
+Pointwise limits are nonetheless not arbitrary. A pointwise limit of
+continuous functions is of Baire class one, and not every function is: the
+Dirichlet function $\mathrm{E}7$ is not a pointwise limit of continuous
+functions, by Baire's theorem \cite[Lect.~28]{yupin}. It does arise as a
+pointwise limit of the integrable functions in the proof above, but never of
+continuous ones.
+\end{remark}
+
+\begin{remark}
+The uniformity hypothesis in Theorem~\ref{thm:unifint} is a limitation of the
+Riemann integral rather than of the statement. Under the Lebesgue integral
+the conclusion $\int \lim = \lim \int$ holds under a pointwise hypothesis
+together with an integrable dominating function --- a hypothesis the spikes
+of $\mathrm{E}11$ conspicuously fail.
+\end{remark}

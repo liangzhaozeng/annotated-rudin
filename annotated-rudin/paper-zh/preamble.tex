@@ -1,0 +1,61 @@
+% ------------------------------------------------------------
+%  中文版前言部分。与英文版 paper/preamble.tex 平行，
+%  改用 ctex 处理中文排版，图形词汇原样保留。
+% ------------------------------------------------------------
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mathrsfs}
+\usepackage[margin=1.15in]{geometry}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[hidelinks,hypertexnames=false]{hyperref}
+\usetikzlibrary{arrows.meta,positioning,patterns}
+
+\definecolor{RuInk} {gray}{0.00}
+\definecolor{RuGrey}{gray}{0.42}
+
+\tikzset{
+  axis/.style   ={draw=RuInk, line width=0.5pt, -{Stealth[length=4pt]}},
+  seg/.style    ={draw=RuInk, line width=1.2pt},
+  thin/.style   ={draw=RuInk, line width=0.4pt},
+  guide/.style  ={draw=RuInk, line width=0.3pt,
+                  dash pattern=on 1.2pt off 1.2pt},
+  ptfill/.style ={circle, fill=RuInk, inner sep=0pt, minimum size=3.2pt},
+  ptopen/.style ={circle, draw=RuInk, line width=0.5pt, fill=white,
+                  inner sep=0pt, minimum size=3.4pt},
+  lbl/.style    ={font=\scriptsize, inner sep=1.5pt},
+  mlbl/.style   ={font=\scriptsize, inner sep=1.5pt},
+  rmbox/.style  ={draw=RuInk, line width=0.5pt, fill=white,
+                  minimum height=11mm, inner sep=4pt, align=center,
+                  font=\footnotesize},
+  rmarrow/.style={-{Stealth[length=4.5pt]}, draw=RuInk, line width=0.5pt}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{example}[theorem]{例}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{注}
+\renewcommand{\proofname}{证明}
+
+% 证明之前的思路段落，用普通排版而非方框——这是论文，不是评注版。
+\newcommand{\idea}[1]{\par\smallskip\noindent
+  \textbf{证明思路。}\enspace #1\par\smallskip}
+
+% 逐条走一遍证明的架构，用普通排版。
+\newenvironment{flow}[1][证明的脉络]{%
+  \par\smallskip\noindent\textbf{#1}%
+  \begin{enumerate}[leftmargin=2.4em, itemsep=2.5pt, topsep=3pt,
+                    label=\textup{(\arabic*)}]}
+  {\end{enumerate}\par\smallskip}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\1}{\mathbf{1}}
+\emergencystretch=1.2em

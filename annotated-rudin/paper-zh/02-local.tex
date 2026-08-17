@@ -1,0 +1,352 @@
+\section{局部的蕴涵}
+\label{sec:local}
+
+本节中 $p$ 始终是 $f$ 定义域的一个聚点。
+
+\begin{theorem}\label{thm:dc}
+若 $f$ 在 $p$ 处可导，则 $f$ 在 $p$ 处连续。
+\end{theorem}
+
+\begin{proof}
+对 $x \ne p$，
+\[ f(x)-f(p) = \frac{f(x)-f(p)}{x-p}\cdot(x-p). \]
+当 $x \to p$ 时第一个因子趋于 $f'(p)$，第二个趋于 $0$，故乘积趋于 $0$。
+\end{proof}
+
+证明只用到差商有\emph{某个}有限极限，并未用到该极限的具体值。因此它
+实际证明了更多一点：若差商在 $p$ 附近有界——特别地，若 $f$ 在 $p$ 处
+满足利普希茨条件——则 $f$ 在 $p$ 处连续。
+
+\begin{theorem}\label{thm:cl}
+若 $f$ 在 $p$ 处连续，则 $\lim_{x\to p} f(x)$ 存在且等于 $f(p)$。
+\end{theorem}
+
+\begin{proof}
+由定义直接得到，这里用到 $p$ 是定义域的聚点。
+\end{proof}
+
+\begin{remark}
+“$p$ 是聚点”这一假设不能去掉。在定义域的孤立点处，任何函数都自动连续，
+而 $\lim_{x\to p}f(x)$ 根本没有定义——极限的通常定义要求从定义域内
+趋近 $p$ 而不取到 $p$ 本身。这就是去心极限与非去心极限的区别；
+陶哲轩~\cite[\S9.3]{taoI} 采用非去心的约定，因而对定理~\ref{thm:cl}
+得到相应不同的表述。
+\end{remark}
+
+两个逆命题都不成立，而且代价很低：$\mathrm{E}1$ 在 $0$ 处有极限却不连续，
+$\mathrm{E}2=|x|$ 在 $0$ 处连续却不可导。由于 $|x|$ 是利普希茨的，
+定理~\ref{thm:dc} 之后所说的加强确实严格弱于可导性。
+
+\begin{theorem}[达布]\label{thm:darboux}
+若 $f$ 在 $[a,b]$ 上可导，则 $f'$ 取遍 $f'(a)$ 与 $f'(b)$ 之间的每一个值，
+无论 $f'$ 是否连续。
+\end{theorem}
+
+\begin{flow}[证明的脉络]
+  \item \textit{找出障碍。} 并未假设 $f'$ 连续，所以不能对它直接用
+        介值定理。必须另找一种机制，来产生一个使 $f'$ 取到指定值的点。
+  \item \textit{找出唯一可用的机制。} 可导函数只在导数为零处取得内部
+        极值。这只能产生值 $0$，且只能产生 $0$。
+  \item \textit{把目标搬到 $0$。} 减去斜率为 $\lambda$ 的线性函数。
+        “$f'$ 取到 $\lambda$”就变成了“$g'$ 取到 $0$”，而后者正是
+        第 (2) 步能给出的。
+  \item \textit{制造内部极值。} 符号条件 $g'(a)<0<g'(b)$ 迫使 $g$ 在
+        左端下降、在右端上升，因此它在 $[a,b]$ 上的最小值不可能在端点
+        取到。紧性保证最小值存在，第 (2) 步在该处读出 $g'=0$。
+  \item \textit{核账。} 紧性只在第 (4) 步用了一次，用来保证最小值存在。
+        可导性用了两次：在两端定符号，以及在内部极值处。$f'$ 的连续性
+        始终没有用到——这正是本定理的要点。
+\end{flow}
+
+图~\ref{fig:darbouxflow} 画出了这些步骤之间的依赖关系，
+图~\ref{fig:darboux} 则画出定理本身的几何。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=62mm] (goal) at (30,52)
+    {\textbf{目标}：找到 $(a,b)$ 中一点 $\xi$ 使 $f'(\xi)=\lambda$，\\
+     已知 $f'(a)<\lambda<f'(b)$};
+  \node[rmbox, text width=56mm] (g0) at (30,30)
+    {\textbf{倾斜之后}：找 $\xi$ 使 $g'(\xi)=0$；\\
+     条件变为 $g'(a)<0<g'(b)$};
+  \node[rmbox, text width=40mm] (ends) at (-2,5)
+    {在 $a$ 右侧紧邻处 $g$ 降到\\ $g(a)$ 以下；在 $b$ 左侧\\
+     紧邻处降到 $g(b)$ 以下};
+  \node[rmbox, text width=34mm] (min) at (64,5)
+    {$g$ 在 $[a,b]$ 上\\ 某处取得最小值};
+  \node[rmbox, text width=38mm] (int) at (30,-17)
+    {最小值落在\\ \emph{内}点 $\xi$ 处};
+  \node[rmbox, text width=44mm] (end) at (30,-36)
+    {$g'(\xi)=0$，即 $f'(\xi)=\lambda$};
+  \draw[rmarrow] (goal) -- node[lbl, anchor=west, inner sep=2.5pt]
+    {倾斜：令 $g = f-\lambda x$（第 (3) 步）} (g0);
+  \draw[rmarrow] (g0) -- node[lbl, anchor=south east, inner sep=2.5pt, pos=0.5]
+    {两端 $g'$ 的符号} (ends);
+  \draw[rmarrow] (g0) -- node[lbl, anchor=south west, inner sep=2.5pt, pos=0.5]
+    {$[a,b]$ 紧} (min);
+  \draw[rmarrow] (ends) -- node[lbl, anchor=north east, inner sep=2.5pt, pos=0.5]
+    {故不在 $a$、$b$ 处} (int);
+  \draw[rmarrow] (min) -- node[lbl, anchor=north west, inner sep=2.5pt, pos=0.5]
+    {且最小值存在} (int);
+  \draw[rmarrow] (int) -- node[lbl, anchor=west, inner sep=2.5pt]
+    {内部极值法则（第 (2) 步）} (end);
+\end{tikzpicture}
+\caption{达布定理证明的流程图：每个方框是一个陈述，每个箭头标注下一个
+陈述得以成立的理由。倾斜把目标值 $\lambda$ 换成 $0$；此后两个互相独立
+的观察在中间汇合——$g'$ 在两端的符号把 $g$ 压到两个端点值以下，紧性
+保证最小值确实存在——于是最小值存在且不在端点，只能落在内部；内部
+极值处导数必为零，再倾斜回去便得 $f'(\xi)=\lambda$。步骤编号对应上面
+的证明脉络。}
+\label{fig:darbouxflow}
+\end{figure}
+
+\begin{proof}
+设 $f'(a) < \lambda < f'(b)$，令 $g(x) = f(x)-\lambda x$，则
+$g'(a)<0<g'(b)$。由 $g'(a)<0$，在 $a$ 右侧邻近存在 $t$ 使 $g(t)<g(a)$；
+由 $g'(b)>0$，在 $b$ 左侧邻近存在 $s$ 使 $g(s)<g(b)$。于是 $g$ 在紧区间
+$[a,b]$ 上的最小值在某内点 $x$ 处取得，那里 $g'(x)=0$，即 $f'(x)=\lambda$。
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,0) -- (92,0);
+  \draw[seg] plot[smooth] coordinates
+    {(5,8) (20,11) (35,16) (50,24) (65,35) (80,49)};
+  \foreach \x/\y/\m in {20/11/0.2, 50/24/0.53, 65/35/0.73}{
+    \draw[thin] ({\x-10},{\y-10*\m}) -- ({\x+10},{\y+10*\m});
+    \node[ptfill] at (\x,\y) {};}
+  \draw[guide] (8,44) -- (34,57.8);
+  \node[mlbl, anchor=south east] at (33,57) {斜率 $\lambda$};
+  \node[mlbl, anchor=north west] at (30,9)  {$f'(a)$ 较小};
+  \node[mlbl, anchor=north west] at (60,20) {$f'(\xi)=\lambda$};
+  \node[mlbl, anchor=south east] at (63,38) {$f'(b)$ 较大};
+  \node[mlbl, anchor=north] at (5,-1.6)  {$a$};
+  \node[mlbl, anchor=north] at (80,-1.6) {$b$};
+  \node[mlbl, anchor=north] at (50,-1.6) {$\xi$};
+  \draw[guide] (5,0) -- (5,7); \draw[guide] (80,0) -- (80,47);
+  \draw[guide] (50,0) -- (50,22);
+\end{tikzpicture}
+\caption{达布定理。切线斜率沿曲线从 $f'(a)$ 变到 $f'(b)$，必然经过
+其间的每一个值 $\lambda$，尽管 $f'$ 不必连续地变化。证明并不是沿着
+斜率去追踪 $\xi$，而是把图像倾斜，使目标斜率变成水平，从而可以制造
+一个内部极值。}
+\label{fig:darboux}
+\end{figure}
+
+\begin{corollary}\label{cor:nojump}
+导函数没有第一类间断点。特别地，符号函数不是任何函数的导数。
+\end{corollary}
+
+\begin{proof}
+在第一类间断点 $x$ 处，$f'$ 的两个单侧极限都存在；又因 $f'$ 在 $x$ 处
+间断，至少有一个单侧极限——不妨设右极限 $L$——不等于 $f'(x)$。取
+$\lambda$ 严格介于 $f'(x)$ 与 $L$ 之间。由 $t \downarrow x$ 时
+$f'(t) \to L$，存在区间 $(x, x+\delta)$，在其上 $f'$ 始终靠近 $L$，
+因而取不到 $\lambda$。但对该区间中的每个 $t$，把定理~\ref{thm:darboux}
+用于 $[x,t]$，就迫使 $f'$ 在 $(x,t)$ 内取到介于 $f'(x)$ 与 $f'(t)$
+之间的每一个值——特别是 $\lambda$。矛盾。
+\end{proof}
+
+推论~\ref{cor:nojump} 说明：导函数只可能因振荡或因无界而不连续，绝不会
+因跳跃而不连续。允许出现的情形确实会发生，见 $\mathrm{E}3$：函数
+$x^2\sin(1/x)$ 处处可导，其导数在原点处振荡而无极限（图~\ref{fig:xsq}）。因此\emph{可导}与
+\emph{连续可导}是两个不同的假设，这也是 $\mathscr{C}^1$ 需要单独命名
+的原因。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (-2,0) -- (86,0);
+  \draw[guide] plot[smooth, domain=0:80, samples=60] (\x, {0.0075*\x*\x});
+  \draw[guide] plot[smooth, domain=0:80, samples=60] (\x, {-0.0075*\x*\x});
+  \draw[seg] plot[smooth] coordinates
+    {(80,42) (70,-32.3) (52,17.8) (40,-10.6) (32,6.75) (26,-4.46)
+     (21.5,3.05) (18,-2.14) (15.5,1.59) (13.5,-1.20) (12,0.95)
+     (10.8,-0.77) (9.8,0.63) (9,0)};
+  \node[mlbl, anchor=west] at (81,48) {$x^2$};
+  \node[mlbl, anchor=west] at (81,-48) {$-x^2$};
+  \node[mlbl, anchor=north] at (0,-2) {$0$};
+\end{tikzpicture}
+\caption{$\mathrm{E}3$，即函数 $x^2\sin(1/x)$，被夹在包络 $\pm x^2$ 之间。
+包络收缩得足够快，迫使 $f'(0)=0$；而振荡加快得也足够快，使 $f'$ 在原点
+没有极限：一点处的可导性对导数在该点附近的行为毫无约束。}
+\label{fig:xsq}
+\end{figure}
+
+\subsection{这个缺口有多大？}
+\label{sec:gap}
+
+定理~\ref{thm:dc} 与 \ref{thm:cl} 构成的链条是严格的，但仅说“严格”
+并没有说清楚\emph{缺的是什么}。本小节回答这个问题：每一步究竟还要
+补上什么。
+
+\subsubsection*{从有极限到连续：一个数}
+
+\begin{proposition}\label{prop:gap1}
+设 $p \in E$ 且是 $E$ 的聚点。则 $\lim_{x\to p}f(x)$ 存在，当且仅当存在
+$E$ 上的函数 $g$，使 $g$ 在 $E\setminus\{p\}$ 上与 $f$ 相同且在 $p$ 处
+连续；此时 $g(p) = \lim_{x\to p}f(x)$。
+\end{proposition}
+
+\begin{proof}
+若极限为 $q$，令 $g(p)=q$，其余处取 $g=f$；由于 $p$ 处的函数值现在落在
+每一条带内，定义~\ref{def:limit} 的 $\varepsilon$-$\delta$ 条件就变成了
+定义~\ref{def:cont} 的条件。反之，若这样的 $g$ 存在，则当 $x \ne p$ 时
+$f(x)=g(x)$，故 $f(x) \to g(p)$。
+\end{proof}
+
+可见第一步缺的只是一个数：有极限就是“至多差一个函数值的连续”，
+而 $\mathrm{E}1$ 正是这个值被取错时的样子。$f$ 在 $p$ 之外的行为
+无需作任何改动。
+
+\subsubsection*{从连续到可导：一阶}
+
+第二步缺的不是一个数，而是一\emph{阶}逼近。
+
+\begin{theorem}\label{thm:affine}
+$f$ 在 $p$ 处可导且 $f'(p)=A$，当且仅当
+\[ f(x) \;=\; f(p) + A\,(x-p) + o\bigl(|x-p|\bigr)
+   \qquad (x \to p). \]
+\end{theorem}
+
+\begin{proof}
+当 $x \ne p$ 时，把所显等式两边除以 $x-p$：它恰好是说
+$\bigl(f(x)-f(p)\bigr)/(x-p) - A \to 0$，此即定义~\ref{def:diff}。
+\end{proof}
+
+把两个性质并排来看。$p$ 处的连续性是说
+\[ f(x) = f(p) + o(1), \]
+即 $f$ 在 $p$ 附近可用一个\emph{常数}逼近，误差趋于 $0$。可导性则是说
+$f$ 可用一个\emph{仿射}函数逼近，且误差趋于 $0$ 的速度\emph{快于
+$|x-p|$}。二者之差正是一阶逼近——从几何上看，就是水平带与楔形之差（图~\ref{fig:wedge}）。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \fill[black!8] (2,16) rectangle (44,26);
+  \draw[axis] (0,0) -- (46,0);
+  \draw[seg] plot[smooth] coordinates {(4,9) (12,16) (20,20.4) (30,23) (44,29)};
+  \node[ptfill] at (22,21) {};
+  \node[mlbl, anchor=east] at (1,21) {$f(p)$};
+  \node[lbl, anchor=north] at (22,-3) {\textbf{连续}};
+  \node[lbl, anchor=north] at (22,-8) {落在任意高度的};
+  \node[lbl, anchor=north] at (22,-13) {水平带之内};
+  \begin{scope}[xshift=62mm]
+  \fill[black!8] (22,21) -- (46,33) -- (46,25) -- cycle;
+  \fill[black!8] (22,21) -- (0,10) -- (0,18) -- cycle;
+  \draw[thin] (0,14) -- (46,29);
+  \draw[axis] (0,0) -- (48,0);
+  \draw[seg] plot[smooth] coordinates {(4,9) (12,16) (20,20.4) (30,23) (44,29)};
+  \node[ptfill] at (22,21) {};
+  \node[mlbl, anchor=south east] at (44,29.6) {斜率 $A$};
+  \node[lbl, anchor=north] at (22,-3) {\textbf{可导}};
+  \node[lbl, anchor=north] at (22,-8) {落在绕切线的任意};
+  \node[lbl, anchor=north] at (22,-13) {开口的楔形之内};
+  \end{scope}
+\end{tikzpicture}
+\caption{相差一阶逼近。连续性要求图像进入关于 $f(p)$ 的每一条水平带；
+可导性要求它进入关于斜率为 $A$ 的直线的每一个\emph{楔形}——一条高度
+随 $|x-p|$ 成比例收缩的带。后者严格更强，因为随着点被逼近，目标本身
+在变窄。}
+\label{fig:wedge}
+\end{figure}
+
+\subsubsection*{中间的若干级}
+
+这个缺口并不是一步。对 $0<\alpha\le1$，若在 $p$ 附近有
+$|f(x)-f(p)| \le C|x-p|^{\alpha}$，则称 $f$ 在 $p$ 处满足
+\emph{$\alpha$ 阶赫尔德条件}；$\alpha=1$ 的情形即利普希茨条件。于是
+\[ \text{可导} \implies \text{利普希茨} \implies
+   \alpha\text{ 阶赫尔德 } (\alpha<1) \implies \text{连续}, \]
+每个蕴涵都是严格的，且每一级都有明确的见证：
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{见证} & \textbf{具有} & \textbf{缺少} \\
+\midrule
+$|x|$                & 在 $0$ 处利普希茨          & 在 $0$ 处可导 \\
+$\sqrt{|x|}$         & 在 $0$ 处 $\tfrac12$ 阶赫尔德 & 在 $0$ 处利普希茨 \\
+$1/\log(1/|x|)$      & 在 $0$ 处连续              & 任何 $\alpha>0$ 阶赫尔德 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+最后一个需要解释一句：取 $f(0)=0$，则商
+$|f(x)|/|x|^{\alpha} = 1/\bigl(|x|^{\alpha}\log(1/|x|)\bigr)$ 对每个
+$\alpha>0$ 都趋于 $\infty$，因为幂函数压过对数。故任何赫尔德条件都不
+成立，连续性确实是最低的一级（图~\ref{fig:rungs}）。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[thin] (0,0) rectangle (104,30);
+  \node[lbl, anchor=north west] at (2,29) {连续};
+  \draw[thin] (14,3) rectangle (100,25);
+  \node[lbl, anchor=north west] at (16,24) {$\alpha$ 阶赫尔德};
+  \draw[thin] (34,6) rectangle (96,20);
+  \node[lbl, anchor=north west] at (36,19) {利普希茨};
+  \draw[thin] (56,9) rectangle (92,16);
+  \node[lbl, anchor=north west] at (58,15.4) {可导};
+  \node[mlbl, anchor=west] at (2,12) {$\tfrac{1}{\log(1/|x|)}$};
+  \node[mlbl, anchor=west] at (20,12) {$\sqrt{|x|}$};
+  \node[mlbl, anchor=west] at (42,12) {$|x|$};
+  \node[mlbl, anchor=west] at (74,12) {$x^2$};
+\end{tikzpicture}
+\caption{连续与可导之间的各级，以及落在每一环中的函数。可导比连续强
+得多：三个严格包含把二者分开，而由定理~\ref{thm:baire-gap}，最内层
+的方框不只是更小，而是可以忽略的。}
+\label{fig:rungs}
+\end{figure}
+
+\subsubsection*{这个缺口极大}
+
+\begin{theorem}\label{thm:baire-gap}
+$\mathscr{C}[a,b]$ 中哪怕只在一点可导的函数构成第一纲集。因此“典型的”
+连续函数处处不可导。
+\end{theorem}
+
+这正是 $\mathrm{E}8$ 背后的贝尔纲定理式陈述，见 \cite[第 28 讲]{yupin}。
+它给出了尺度上的判定：从连续过渡到可导并非技术性的加细，而是缩到了一个
+可忽略的子类。魏尔斯特拉斯函数不是什么怪物——可导函数才是。
+
+\subsubsection*{什么能把缺口补回来}
+
+有三条标准假设可以补上它，各有代价。
+
+\begin{itemize}[leftmargin=1.6em, itemsep=2.5pt, topsep=4pt]
+  \item \emph{四个迪尼导数有限且相等。} 以 $D^{+}, D_{+}, D^{-}, D_{-}$
+        记差商的右、左上下极限，则 $f$ 在 $p$ 处可导当且仅当这四个数
+        都有限且彼此相等。这与其说是补救，不如说是改写，但它把两项
+        彼此独立的欠缺分离开来：\emph{有限}对应利普希茨式的界，
+        \emph{相等}对应方向的唯一。对 $|x|$ 在 $0$ 处，四者都有限——
+        右侧为 $+1$、左侧为 $-1$——只是不相等。
+  \item \emph{单调性。} $[a,b]$ 上的单调函数几乎处处可导（勒贝格）。
+        代价是“处处”弱化为“几乎处处”：单调性排除不了单独一个尖角，
+        只能排除一大堆。
+  \item \emph{利普希茨条件。} 由拉德马赫定理，利普希茨函数几乎处处
+        可导——同样只是几乎处处，$|x|$ 即为明证。
+\end{itemize}
+
+这里的模式值得点明：除可导性本身外，没有任何条件能买到\emph{处处}
+可导；那些自然的假设只能在一个零测集之外买到它。这与 \S\ref{sec:int}
+中勒贝格准则所做的交易如出一辙，也正是从 \cite{rudin} 第 11 章起
+“几乎处处”成为通行概念的原因。
+
+\begin{proposition}\label{prop:bdd}
+若 $\lim_{x\to p}f(x)$ 存在，则 $f$ 在 $p$ 的某个去心邻域上有界。
+\end{proposition}
+
+\begin{proof}
+在极限定义中取 $\varepsilon=1$：存在 $\delta>0$，使得在去心
+$\delta$-邻域上处处有 $|f(x)-q|<1$，从而 $|f(x)|<|q|+1$。
+\end{proof}
+
+于是这条链向下延伸一步，
+\[ \text{可导} \implies \text{连续} \implies
+   \text{有极限} \implies \text{局部有界}, \]
+三个蕴涵都是严格的；最后一个严格是因为 $\mathrm{E}4=\sin(1/x)$ 有界
+而在 $0$ 处没有极限。

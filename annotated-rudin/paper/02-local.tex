@@ -1,0 +1,397 @@
+\section{Local implications}
+\label{sec:local}
+
+Throughout this section $p$ is a limit point of the domain of $f$.
+
+\begin{theorem}\label{thm:dc}
+If $f$ is differentiable at $p$ then $f$ is continuous at $p$.
+\end{theorem}
+
+\begin{proof}
+For $x \ne p$,
+\[ f(x)-f(p) = \frac{f(x)-f(p)}{x-p}\cdot(x-p). \]
+As $x \to p$ the first factor tends to $f'(p)$ and the second to $0$, so the
+product tends to $0$.
+\end{proof}
+
+The proof uses the existence of $f'(p)$ only to know that the difference
+quotient has some finite limit. It therefore proves slightly more: if the
+difference quotient is bounded near $p$ --- in particular if $f$ satisfies a
+Lipschitz condition at $p$ --- then $f$ is continuous at $p$.
+
+\begin{theorem}\label{thm:cl}
+If $f$ is continuous at $p$ then $\lim_{x\to p} f(x)$ exists and equals
+$f(p)$.
+\end{theorem}
+
+\begin{proof}
+Immediate from the definitions, $p$ being a limit point of the domain.
+\end{proof}
+
+\begin{remark}
+The hypothesis that $p$ is a limit point cannot be dropped. At an isolated
+point of the domain every function is continuous, while $\lim_{x\to p}f(x)$
+is undefined, since the usual definition requires $p$ to be approached
+through points of the domain other than $p$ itself. This is the
+distinction between deleted and undeleted limits; Tao~\cite[\S9.3]{taoI}
+adopts the undeleted convention and obtains a correspondingly different
+statement of Theorem~\ref{thm:cl}.
+\end{remark}
+
+Both converses fail, and cheaply: $\mathrm{E}1$ has a limit at $0$ without
+being continuous there, and $\mathrm{E}2 = |x|$ is continuous at $0$ without
+being differentiable there. Since $|x|$ is Lipschitz, the hypothesis of the
+strengthening noted after Theorem~\ref{thm:dc} is genuinely weaker than
+differentiability.
+
+\begin{theorem}[Darboux]\label{thm:darboux}
+If $f$ is differentiable on $[a,b]$ then $f'$ assumes every value between
+$f'(a)$ and $f'(b)$, whether or not $f'$ is continuous.
+\end{theorem}
+
+\begin{flow}
+  \item \textit{Locate the obstacle.} $f'$ is not assumed continuous, so the
+        intermediate value theorem cannot be applied to it. Some other
+        mechanism must produce a point where $f'$ takes a prescribed value.
+  \item \textit{Find the one available mechanism.} A differentiable function
+        attains an interior extremum only where its derivative vanishes. That
+        produces the value $0$, and only the value $0$.
+  \item \textit{Move the target to $0$.} Subtract the linear function of
+        slope $\lambda$. The statement ``$f'$ takes the value $\lambda$''
+        becomes ``$g'$ takes the value $0$'', which step~(2) can deliver.
+  \item \textit{Manufacture the interior extremum.} The signs
+        $g'(a)<0<g'(b)$ force $g$ to decrease at the left end and increase at
+        the right, so its minimum over $[a,b]$ cannot be at either endpoint.
+        Compactness supplies the minimum; step~(2) reads off $g'=0$ there.
+  \item \textit{Audit.} Compactness is spent once, in step~(4), to know the
+        minimum exists. Differentiability is spent twice: at the endpoints,
+        for the signs, and at the interior extremum. Continuity of $f'$ is
+        never used --- which is the whole point.
+\end{flow}
+
+Figure~\ref{fig:darbouxflow} draws the dependencies among these steps,
+and Figure~\ref{fig:darboux} the geometry of the statement.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \node[rmbox, text width=62mm] (goal) at (30,52)
+    {\textbf{goal}: a point $\xi$ in $(a,b)$ with $f'(\xi)=\lambda$,\\
+     given $f'(a)<\lambda<f'(b)$};
+  \node[rmbox, text width=56mm] (g0) at (30,30)
+    {\textbf{after the tilt}: find $\xi$ with $g'(\xi)=0$;\\
+     the data become $g'(a)<0<g'(b)$};
+  \node[rmbox, text width=40mm] (ends) at (-2,5)
+    {just inside $a$, $g$ falls\\ below $g(a)$; just inside\\
+     $b$, it falls below $g(b)$};
+  \node[rmbox, text width=34mm] (min) at (64,5)
+    {$g$ attains a minimum\\ somewhere on $[a,b]$};
+  \node[rmbox, text width=38mm] (int) at (30,-17)
+    {the minimum lies at an\\ \emph{interior} point $\xi$};
+  \node[rmbox, text width=44mm] (end) at (30,-36)
+    {$g'(\xi)=0$, that is, $f'(\xi)=\lambda$};
+  \draw[rmarrow] (goal) -- node[lbl, anchor=west, inner sep=2.5pt]
+    {tilt: set $g = f-\lambda x$ (step 3)} (g0);
+  \draw[rmarrow] (g0) -- node[lbl, anchor=south east, inner sep=2.5pt, pos=0.5]
+    {sign of $g'$ at each end} (ends);
+  \draw[rmarrow] (g0) -- node[lbl, anchor=south west, inner sep=2.5pt, pos=0.5]
+    {$[a,b]$ compact} (min);
+  \draw[rmarrow] (ends) -- node[lbl, anchor=north east, inner sep=2.5pt, pos=0.5]
+    {so not at $a$ or $b$} (int);
+  \draw[rmarrow] (min) -- node[lbl, anchor=north west, inner sep=2.5pt, pos=0.5]
+    {and it exists} (int);
+  \draw[rmarrow] (int) -- node[lbl, anchor=west, inner sep=2.5pt]
+    {interior extremum rule (step 2)} (end);
+\end{tikzpicture}
+\caption{The Darboux proof as a flow chart: each box is a statement, and
+each arrow carries the reason the next statement follows. The tilt trades
+the target value $\lambda$ for $0$. After it, two independent observations
+meet in the middle --- the signs of $g'$ push $g$ below both endpoint
+values, and compactness makes the minimum exist at all --- so the minimum
+exists and is not at an endpoint. At an interior minimum the derivative
+must vanish, and untilting turns $g'(\xi)=0$ back into $f'(\xi)=\lambda$.
+The step numbers refer to the walk above.}
+\label{fig:darbouxflow}
+\end{figure}
+
+\begin{proof}
+Suppose $f'(a) < \lambda < f'(b)$ and set $g(x) = f(x)-\lambda x$, so that
+$g'(a)<0<g'(b)$. From $g'(a)<0$ we get $g(t)<g(a)$ for some $t$ just to the
+right of $a$, and from $g'(b)>0$ we get $g(s)<g(b)$ for some $s$ just to the
+left of $b$. Hence the minimum of $g$ over the compact interval $[a,b]$ is
+attained at an interior point $\xi$, where $g'(\xi)=0$; that is,
+$f'(\xi)=\lambda$.
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,0) -- (92,0);
+  \draw[seg] plot[smooth] coordinates
+    {(5,8) (20,11) (35,16) (50,24) (65,35) (80,49)};
+  \foreach \x/\y/\m in {20/11/0.2, 50/24/0.53, 65/35/0.73}{
+    \draw[thin] ({\x-10},{\y-10*\m}) -- ({\x+10},{\y+10*\m});
+    \node[ptfill] at (\x,\y) {};}
+  \draw[guide] (8,44) -- (34,57.8);
+  \node[mlbl, anchor=south east] at (33,57) {slope $\lambda$};
+  \node[mlbl, anchor=north west] at (30,9)  {$f'(a)$ small};
+  \node[mlbl, anchor=north west] at (60,20) {$f'(\xi)=\lambda$};
+  \node[mlbl, anchor=south east] at (63,38) {$f'(b)$ large};
+  \node[mlbl, anchor=north] at (5,-1.6)  {$a$};
+  \node[mlbl, anchor=north] at (80,-1.6) {$b$};
+  \node[mlbl, anchor=north] at (50,-1.6) {$\xi$};
+  \draw[guide] (5,0) -- (5,7); \draw[guide] (80,0) -- (80,47);
+  \draw[guide] (50,0) -- (50,22);
+\end{tikzpicture}
+\caption{Darboux's theorem. The tangent slope varies from $f'(a)$ to $f'(b)$
+along the curve and must pass through every intermediate value $\lambda$,
+even though $f'$ need not vary continuously. The proof locates $\xi$ not by
+following the slope but by tilting the graph until the target slope becomes
+horizontal, so that an interior extremum can be produced.}
+\label{fig:darboux}
+\end{figure}
+
+\begin{corollary}\label{cor:nojump}
+A derivative has no simple discontinuities. In particular the signum function
+is not the derivative of any function.
+\end{corollary}
+
+\begin{proof}
+At a simple discontinuity $x$ both one-sided limits of $f'$ exist, and
+since $f'$ is discontinuous at $x$, at least one of them --- say the
+right-hand limit $L$ --- differs from $f'(x)$. Pick $\lambda$ strictly
+between $f'(x)$ and $L$. Because $f'(t) \to L$ as $t \downarrow x$, there
+is an interval $(x, x+\delta)$ on which $f'$ stays near $L$ and therefore
+omits $\lambda$. But for each $t$ in that interval,
+Theorem~\ref{thm:darboux} applied to $[x,t]$ forces $f'$ to attain every
+value between $f'(x)$ and $f'(t)$ --- in particular $\lambda$ --- at some
+point of $(x,t)$. Contradiction.
+\end{proof}
+
+Corollary~\ref{cor:nojump} says a derivative may fail to be continuous only
+by oscillating or by becoming unbounded, never by jumping. That the permitted
+behaviour occurs is shown by $\mathrm{E}3$: the function $x^2\sin(1/x)$ is
+differentiable everywhere and its derivative oscillates without limit at the
+origin (Figure~\ref{fig:xsq}). Consequently \emph{differentiable} and \emph{continuously
+differentiable} are distinct hypotheses, which is why the class
+$\mathscr{C}^1$ requires a separate name.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (-2,0) -- (86,0);
+  \draw[guide] plot[smooth, domain=0:80, samples=60] (\x, {0.0075*\x*\x});
+  \draw[guide] plot[smooth, domain=0:80, samples=60] (\x, {-0.0075*\x*\x});
+  \draw[seg] plot[smooth] coordinates
+    {(80,42) (70,-32.3) (52,17.8) (40,-10.6) (32,6.75) (26,-4.46)
+     (21.5,3.05) (18,-2.14) (15.5,1.59) (13.5,-1.20) (12,0.95)
+     (10.8,-0.77) (9.8,0.63) (9,0)};
+  \node[mlbl, anchor=west] at (81,48) {$x^2$};
+  \node[mlbl, anchor=west] at (81,-48) {$-x^2$};
+  \node[mlbl, anchor=north] at (0,-2) {$0$};
+\end{tikzpicture}
+\caption{$\mathrm{E}3$, the function $x^2\sin(1/x)$, trapped between the
+envelopes $\pm x^2$. The envelope closes fast enough to force $f'(0)=0$,
+while the oscillation quickens fast enough that $f'$ has no limit at the
+origin: differentiability at a point says nothing about the behaviour of the
+derivative near it.}
+\label{fig:xsq}
+\end{figure}
+
+\subsection{How wide is the gap?}
+\label{sec:gap}
+
+The chain of Theorems~\ref{thm:dc} and \ref{thm:cl} is strict, but saying so
+does not say \emph{what is missing}. This subsection answers that: for each
+step, exactly what must be added.
+
+\subsubsection*{From a limit to continuity: one number}
+
+\begin{proposition}\label{prop:gap1}
+Let $p \in E$ be a limit point of $E$. Then $\lim_{x\to p}f(x)$ exists if and
+only if there is a function $g$ on $E$ with $g = f$ on $E\setminus\{p\}$ and
+$g$ continuous at $p$; and then $g(p) = \lim_{x\to p}f(x)$.
+\end{proposition}
+
+\begin{proof}
+If the limit is $q$, set $g(p)=q$ and $g=f$ elsewhere; the
+$\varepsilon$-$\delta$ condition of Definition~\ref{def:limit} becomes that
+of Definition~\ref{def:cont} because the value at $p$ now sits inside every
+band. Conversely, if such a $g$ exists, then for $x \ne p$ we have
+$f(x)=g(x)$, so $f(x) \to g(p)$.
+\end{proof}
+
+So the deficit at the first step is a single number: having a limit means
+being continuous \emph{up to one value}, and $\mathrm{E}1$ is what it looks
+like when that value is set wrongly. Nothing about $f$ away from $p$ needs to
+change.
+
+\subsubsection*{From continuity to differentiability: one order}
+
+The second step is not one number but one \emph{order of approximation}.
+
+\begin{theorem}\label{thm:affine}
+$f$ is differentiable at $p$ with $f'(p)=A$ if and only if
+\[ f(x) \;=\; f(p) + A\,(x-p) + o\bigl(|x-p|\bigr)
+   \qquad (x \to p). \]
+\end{theorem}
+
+\begin{proof}
+For $x \ne p$, divide the displayed identity by $x-p$: it says exactly that
+$\bigl(f(x)-f(p)\bigr)/(x-p) - A \to 0$, which is
+Definition~\ref{def:diff}.
+\end{proof}
+
+Now place the two properties side by side. Continuity at $p$ says
+\[ f(x) = f(p) + o(1), \]
+that is, $f$ is approximable near $p$ by a \emph{constant}, with error
+tending to $0$. Differentiability says $f$ is approximable by an
+\emph{affine} function, with error tending to $0$ \emph{faster than
+$|x-p|$}. The gap between them is one order of approximation --- and,
+geometrically, the difference between a horizontal band and a wedge
+(Figure~\ref{fig:wedge}).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % --- continuity: horizontal band
+  \fill[black!8] (2,16) rectangle (44,26);
+  \draw[axis] (0,0) -- (46,0);
+  \draw[seg] plot[smooth] coordinates {(4,9) (12,16) (20,20.4) (30,23) (44,29)};
+  \node[ptfill] at (22,21) {};
+  \node[mlbl, anchor=east] at (1,21) {$f(p)$};
+  \node[lbl, anchor=north] at (22,-3) {\textbf{continuity}};
+  \node[lbl, anchor=north] at (22,-8) {inside a horizontal band};
+  \node[lbl, anchor=north] at (22,-13) {of any height};
+  % --- differentiability: wedge
+  \begin{scope}[xshift=62mm]
+  \fill[black!8] (22,21) -- (46,33) -- (46,25) -- cycle;
+  \fill[black!8] (22,21) -- (0,10) -- (0,18) -- cycle;
+  \draw[thin] (0,14) -- (46,29);
+  \draw[axis] (0,0) -- (48,0);
+  \draw[seg] plot[smooth] coordinates {(4,9) (12,16) (20,20.4) (30,23) (44,29)};
+  \node[ptfill] at (22,21) {};
+  \node[mlbl, anchor=south east] at (44,29.6) {slope $A$};
+  \node[lbl, anchor=north] at (22,-3) {\textbf{differentiability}};
+  \node[lbl, anchor=north] at (22,-8) {inside a wedge about the};
+  \node[lbl, anchor=north] at (22,-13) {tangent, of any opening};
+  \end{scope}
+\end{tikzpicture}
+\caption{One order of approximation. Continuity requires the graph to enter
+every horizontal band about $f(p)$; differentiability requires it to enter
+every \emph{wedge} about the line of slope $A$ --- a band whose height
+shrinks in proportion to $|x-p|$. The second condition is strictly stronger
+because the target narrows as the point is approached.}
+\label{fig:wedge}
+\end{figure}
+
+\subsubsection*{The rungs in between}
+
+The gap is not a single step. For $0<\alpha\le1$ call $f$ \emph{$\alpha$-Hölder
+at $p$} if $|f(x)-f(p)| \le C|x-p|^{\alpha}$ for some constant $C$ and all
+$x$ near $p$; the case $\alpha=1$ is the Lipschitz condition. Then
+\[ \text{differentiable} \implies \text{Lipschitz} \implies
+   \alpha\text{-H\"older } (\alpha<1) \implies \text{continuous}, \]
+and every implication is strict, with an explicit witness at each rung:
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{witness} & \textbf{has} & \textbf{lacks} \\
+\midrule
+$|x|$                & Lipschitz at $0$          & differentiable at $0$ \\
+$\sqrt{|x|}$         & $\tfrac12$-Hölder at $0$  & Lipschitz at $0$ \\
+$1/\log(1/|x|)$      & continuous at $0$         & $\alpha$-Hölder for any $\alpha>0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+The last needs a word: with $f(0)=0$ the quotient
+$|f(x)|/|x|^{\alpha} = 1/\bigl(|x|^{\alpha}\log(1/|x|)\bigr)$ tends to
+$\infty$ for every $\alpha>0$, since a power beats a logarithm. So no Hölder
+condition whatever holds, and continuity really is the bottom rung (Figure~\ref{fig:rungs}).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[thin] (0,0) rectangle (104,30);
+  \node[lbl, anchor=north west] at (2,29) {continuous};
+  \draw[thin] (14,3) rectangle (100,25);
+  \node[lbl, anchor=north west] at (16,24) {$\alpha$-Hölder};
+  \draw[thin] (34,6) rectangle (96,20);
+  \node[lbl, anchor=north west] at (36,19) {Lipschitz};
+  \draw[thin] (56,9) rectangle (92,16);
+  \node[lbl, anchor=north west] at (58,15.4) {differentiable};
+  \node[mlbl, anchor=west] at (2,12) {$\tfrac{1}{\log(1/|x|)}$};
+  \node[mlbl, anchor=west] at (20,12) {$\sqrt{|x|}$};
+  \node[mlbl, anchor=west] at (42,12) {$|x|$};
+  \node[mlbl, anchor=west] at (74,12) {$x^2$};
+\end{tikzpicture}
+\caption{The rungs between continuity and differentiability, with the
+function that sits in each annulus. Differentiability is a good deal more
+than continuity: three strict inclusions separate them, and by
+Theorem~\ref{thm:baire-gap} the innermost box is not merely smaller but
+negligible.}
+\label{fig:rungs}
+\end{figure}
+
+\subsubsection*{The gap is enormous}
+
+\begin{theorem}\label{thm:baire-gap}
+The set of $f \in \mathscr{C}[a,b]$ that are differentiable at even one point
+is of first category. Consequently the generic continuous function is
+differentiable nowhere.
+\end{theorem}
+
+This is the Baire-category statement behind $\mathrm{E}8$; see
+\cite[Lect.~28]{yupin}. It settles the question of size: passing from
+continuity to differentiability is not a technical refinement but a
+restriction to a negligible subclass. Weierstrass's function is not a
+curiosity --- the differentiable functions are.
+
+\subsubsection*{What buys the gap back}
+
+Three standard hypotheses close it, each at a price.
+
+\begin{itemize}[leftmargin=1.6em, itemsep=2.5pt, topsep=4pt]
+  \item \emph{Finiteness and agreement of the four Dini derivatives.} With
+        $D^{+}, D_{+}, D^{-}, D_{-}$ the upper and lower right- and
+        left-hand limits of the difference quotient, $f$ is differentiable
+        at $p$ exactly when all four are finite and equal. This is a
+        restatement rather than a repair, but it isolates the two separate
+        deficits: \emph{finiteness} is the Lipschitz-type bound, and
+        \emph{agreement} is the choice of a single direction. For $|x|$ at
+        $0$ all four are finite --- $+1$ on the right, $-1$ on the left ---
+        and they fail only to agree.
+  \item \emph{Monotonicity.} A monotone function on $[a,b]$ is
+        differentiable almost everywhere (Lebesgue). The price is that
+        ``everywhere'' weakens to ``almost everywhere'': monotonicity cannot
+        rule out a single corner, only a large set of them.
+  \item \emph{A Lipschitz condition.} By Rademacher's theorem a Lipschitz
+        function is differentiable almost everywhere --- again only almost
+        everywhere, as $|x|$ shows.
+\end{itemize}
+
+The pattern is worth naming. Nothing short of differentiability buys
+differentiability \emph{everywhere}; the natural hypotheses buy it only off a
+null set. That is the same trade Lebesgue's criterion makes in
+\S\ref{sec:int}, and it is why ``almost everywhere'' becomes the working
+notion from Chapter 11 of \cite{rudin} onwards.
+
+\begin{proposition}\label{prop:bdd}
+If $\lim_{x\to p}f(x)$ exists then $f$ is bounded on some punctured
+neighbourhood of $p$.
+\end{proposition}
+
+\begin{proof}
+Take $\varepsilon=1$ in the definition of the limit: there is a $\delta>0$ with
+$|f(x)-q|<1$, hence $|f(x)|<|q|+1$, throughout the punctured
+$\delta$-neighbourhood.
+\end{proof}
+
+The chain therefore extends one step downward,
+\[ \text{differentiable} \implies \text{continuous} \implies
+   \text{has a limit} \implies \text{locally bounded}, \]
+with all three implications strict; the last is strict because
+$\mathrm{E}4=\sin(1/x)$ is bounded and has no limit at $0$.

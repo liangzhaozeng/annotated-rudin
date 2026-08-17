@@ -1,0 +1,132 @@
+\section{A gallery of counterexamples}
+\label{sec:gallery}
+
+Twelve functions carry the whole argument. Each entry gives the definition,
+the property the function has, the property it lacks, and the implication it
+refutes.
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+& \textbf{function} & \textbf{refutes} \\
+\midrule
+$\mathrm{E}1$  & removable spike      & limit $\Rightarrow$ continuous \\
+$\mathrm{E}2$  & $|x|$                & continuous $\Rightarrow$ differentiable \\
+$\mathrm{E}3$  & $x^2\sin(1/x)$       & differentiable $\Rightarrow$ $\mathscr{C}^1$ \\
+$\mathrm{E}4$  & $\sin(1/x)$          & bounded $\Rightarrow$ has a limit \\
+$\mathrm{E}5$  & step function        & integrable $\Rightarrow$ continuous \\
+$\mathrm{E}6$  & Thomae               & integrable $\Rightarrow$ disc.\ set nowhere dense \\
+$\mathrm{E}7$  & Dirichlet            & bounded $\Rightarrow$ integrable \\
+$\mathrm{E}8$  & Weierstrass          & continuous $\Rightarrow$ differentiable somewhere \\
+$\mathrm{E}9$  & $x^n$ on $[0,1]$     & pointwise preserves continuity \\
+$\mathrm{E}10$ & $\sin(nx)/\sqrt n$   & uniform conv.\ commutes with $d/dx$ \\
+$\mathrm{E}11$ & tall spikes          & pointwise preserves $\int$ \\
+$\mathrm{E}12$ & Volterra             & derivative $\Rightarrow$ integrable \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent
+$\mathrm{E}1$ \emph{Removable spike.} $f(x)=0$ for $x\ne0$ and $f(0)=1$. The
+limit at $0$ is $0$ and the value is $1$.
+
+\smallskip\noindent
+$\mathrm{E}2$ \emph{Absolute value.} $f(x)=|x|$ is continuous everywhere; at
+$0$ the difference quotient $|h|/h$ equals $\pm1$ according to the side, so
+$f'(0)$ does not exist. Note $f$ is Lipschitz, so that condition does not
+give differentiability either.
+
+\smallskip\noindent
+$\mathrm{E}3$ \emph{$x^2\sin(1/x)$.} With $f(0)=0$, the bound $|f(x)|\le x^2$
+gives $f'(0)=0$, while for $x\ne0$
+\[ f'(x) = 2x\sin\tfrac1x - \cos\tfrac1x, \]
+which has no limit at $0$. Thus $f$ is differentiable everywhere with $f'$
+discontinuous at $0$, the discontinuity being of the second kind as
+Corollary~\ref{cor:nojump} requires. This function is the building block of
+$\mathrm{E}12$.
+
+\smallskip\noindent
+$\mathrm{E}4$ \emph{$\sin(1/x)$.} Bounded by $1$ with no limit at $0$: along
+$x_n=1/(2n\pi)$ the values are $0$ and along $y_n = 1/(2n\pi+\pi/2)$ they are
+$1$. Its oscillation at $0$ is $2$.
+
+\smallskip\noindent
+$\mathrm{E}5$ \emph{Step function.} $f=0$ on $[0,1)$ and $f=1$ on $[1,2]$.
+Integrable, having one discontinuity, and not continuous; by
+Corollary~\ref{cor:nojump} it is also not a derivative.
+
+\smallskip\noindent
+$\mathrm{E}6$ \emph{Thomae's function.} $f(p/q)=1/q$ in lowest terms and
+$f=0$ at irrationals. Continuous at every irrational, discontinuous at every
+rational, and integrable with $\int_0^1 f = 0$ by
+Theorem~\ref{thm:lebesgue}, $\Q$ being countable. No function is continuous
+exactly at the rationals, so $\mathrm{E}6$ has no mirror image
+\cite[appendix to Chapter~4]{annotated}.
+
+\smallskip\noindent
+$\mathrm{E}7$ \emph{Dirichlet's function.} $\1_\Q$ is bounded with
+$\omega_f\equiv1$, so it is nowhere continuous and not integrable; directly,
+every upper sum is $1$ and every lower sum $0$.
+
+\smallskip\noindent
+$\mathrm{E}8$ \emph{Weierstrass's function.}
+$f(x)=\sum_{k\ge0} a^k\cos(b^k\pi x)$ with $0<a<1$, $b$ an odd integer, and
+$ab>1+\tfrac32\pi$. The series converges uniformly, so $f$ is continuous by
+Theorem~\ref{thm:unifcont}, and $f$ is differentiable at no point. Its
+partial sums are $\mathscr{C}^\infty$ and converge uniformly, so
+$\mathrm{E}8$ also witnesses that uniform convergence does not preserve
+differentiability (Theorem~\ref{thm:unifdiff}). By Baire's
+theorem the continuous functions differentiable somewhere are of first
+category in $\mathscr{C}[a,b]$, so this behaviour is typical rather than
+exceptional.
+
+\smallskip\noindent
+$\mathrm{E}9$ \emph{$x^n$ on $[0,1]$.} Each term is continuous and the
+pointwise limit is not; the convergence is not uniform, since
+$\sup_{[0,1]}|f_n-f| = 1$ for every $n$.
+
+\smallskip\noindent
+$\mathrm{E}10$ \emph{$\sin(nx)/\sqrt n$.} Converges uniformly to $0$ while
+the derivatives $\sqrt n\cos(nx)$ diverge everywhere, so the interchange
+$\lim f_n' = (\lim f_n)'$ fails under uniform convergence. Differentiation
+multiplies amplitude by frequency, and uniform convergence bounds only
+amplitude.
+
+\smallskip\noindent
+$\mathrm{E}11$ \emph{Tall spikes.} $f_n = n\1_{(0,1/n)}$, each integrable
+with $\int_0^1 f_n = 1$, tending pointwise to $0$. The sequence admits no
+integrable dominating function --- near $0$ the envelope $\sup_n f_n$ grows
+like $1/x$ --- which is exactly what dominated convergence would require.
+
+\smallskip\noindent
+$\mathrm{E}12$ \emph{Volterra's derivative.} The derivative $F'$ of the
+function constructed in \S\ref{sec:int}: bounded, a derivative by
+construction, and not Riemann integrable, because it oscillates on a nowhere
+dense set of positive measure. The function $F$ itself is continuous, hence
+integrable; it is the derivative that witnesses the gap.
+
+\section{Concluding remarks}
+
+Three observations summarise the map.
+
+The local chain is strict at every link and the witnesses are elementary:
+$\mathrm{E}1$, $\mathrm{E}2$, $\mathrm{E}3$ suffice to separate having a
+limit, continuity, differentiability, and continuous differentiability.
+
+Integrability is not part of that chain. It is global, it follows from
+compactness rather than from any pointwise hypothesis
+(Theorem~\ref{thm:ci}), and it admits an exact characterisation in terms of
+the size of the discontinuity set (Theorem~\ref{thm:lebesgue}), for which
+oscillation is the natural language.
+
+The interesting failures are all failures of interchange: of $\lim$ with
+$\int$, of $\lim$ with $\lim$, and of $\lim$ with $d/dx$. Uniform convergence
+repairs the first two and cannot repair the third, because differentiation
+amplifies precisely what uniformity controls. Each gap in the lattice invites
+the question of what hypothesis would close it: pointwise convergence
+strengthened to uniform restores continuity and the integral; uniform
+convergence transferred to the derivatives restores differentiation
+(Theorem~\ref{thm:repair}); and replacing the Riemann integral by the
+Lebesgue integral restores the interchange under a domination hypothesis in
+place of a uniformity one.

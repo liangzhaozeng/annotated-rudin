@@ -1,0 +1,99 @@
+% ============================================================
+%  Companion -- overview and the master lattice
+% ============================================================
+\rsection{What this document is}
+
+\begin{roadmap}[Five words, and the arrows between them]
+\raggedright
+\emph{Has a limit}, \emph{continuous}, \emph{differentiable},
+\emph{integrable}, \emph{convergent}. Every course in analysis uses all five,
+and the relations among them are the real content of Rudin's Chapters
+3--7 --- but they are never assembled in one place, because each is
+introduced where it is needed and the connections are made in passing.
+
+\medskip
+This document assembles them. For every ordered pair of properties it
+records a verdict: either an implication, with a proof, or a
+non-implication, with the function that kills it. Nothing is left
+ambiguous, and nothing is asserted without one or the other.
+
+\medskip
+\textbf{A structural point that shapes everything.} Four of the five
+properties are \emph{local} --- they are properties of a function at a
+point. Riemann integrability is not; it is a property of a function on a
+whole interval, and asking whether $f$ is integrable \emph{at} $p$ is
+meaningless. A single five-by-five table would quietly equivocate between
+the two. So the material splits into three blocks:
+
+\smallskip
+\textbf{Block A} --- the local properties at a point $p$.
+
+\smallskip
+\textbf{Block B} --- those properties promoted to ``at every point of
+$[a,b]$,'' together with integrability.
+
+\smallskip
+\textbf{Block C} --- what survives a limit: given $f_n \to f$, which
+properties of the $f_n$ are inherited by $f$?
+
+\medskip
+\textbf{The spine.} Block C is not a new subject. It is Blocks A and B asked
+a second time with a limit in front, and the answers change --- which is
+precisely why uniform convergence had to be invented.
+
+\medskip
+\textbf{Numbering.} Implications are \textbf{T1}--\textbf{T18} and are
+proved where they are stated. Counterexamples are \textbf{E1}--\textbf{E12};
+each has a dossier in the last section. References of the form
+\emph{S2.13} or \emph{Exercise 4.18} point into \emph{The Annotated Rudin};
+plain numbers like \emph{4.19} are Rudin's own.
+\end{roadmap}
+
+\rsection{The lattice, at a glance}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  % --- Block A : local
+  \node[rmbox, text width=20mm] (dp) at (0,34)  {differentiable\\at $p$};
+  \node[rmbox, text width=20mm] (cp) at (43,34) {continuous\\at $p$};
+  \node[rmbox, text width=20mm] (lp) at (86,34) {has a limit\\at $p$};
+  \draw[rmarrow] (dp) -- node[lbl, anchor=south, inner sep=2.5pt] {T1}
+                          node[mlbl, anchor=north, inner sep=2.5pt]
+                          {$\not\Leftarrow$ E2} (cp);
+  \draw[rmarrow] (cp) -- node[lbl, anchor=south, inner sep=2.5pt] {T2}
+                          node[mlbl, anchor=north, inner sep=2.5pt]
+                          {$\not\Leftarrow$ E1} (lp);
+  % --- Block B : global
+  \node[rmbox, text width=20mm] (dg) at (0,4)  {differentiable\\on $[a,b]$};
+  \node[rmbox, text width=20mm] (cg) at (43,4) {continuous\\on $[a,b]$};
+  \node[rmbox, text width=20mm] (ig) at (86,4) {Riemann\\integrable};
+  \draw[rmarrow] (dg) -- node[lbl, anchor=south, inner sep=2.5pt] {T7}
+                          node[mlbl, anchor=north, inner sep=2.5pt]
+                          {$\not\Leftarrow$ E2} (cg);
+  \draw[rmarrow] (cg) -- node[lbl, anchor=south, inner sep=2.5pt] {T8}
+                          node[mlbl, anchor=north, inner sep=2.5pt]
+                          {$\not\Leftarrow$ E5, E6} (ig);
+  % --- vertical links
+  \draw[rmarrow] (dp) -- node[lbl, anchor=west, inner sep=2.5pt]
+                          {at every point} (dg);
+  \draw[rmarrow] (cp) -- node[lbl, anchor=west, inner sep=2.5pt]
+                          {at every point} (cg);
+  % --- the deep failure
+  \draw[rmarrow, dash pattern=on 3pt off 2pt] (ig) -- (lp);
+  \node[mlbl, anchor=west] at (100,19) {$\not\Rightarrow$ E7};
+\end{tikzpicture}
+\end{center}
+\figcap{Blocks A and B. Solid arrows are theorems, proved below; the label
+beneath each records the failure of its converse and names the function that
+witnesses it. Bounded is not enough for integrability (E7), and integrability
+implies nothing pointwise --- an integrable function may be discontinuous on
+a dense set (E6).}
+
+\begin{signpost}[Read the diagram as three claims]
+\textbf{One:} the top row is a strict chain, and each strictness is cheap ---
+one explicit function apiece. \textbf{Two:} the bottom row is \emph{not} the
+top row repeated. Integrability is genuinely global, and the arrow into it
+comes from compactness, not from anything pointwise. \textbf{Three:} there is
+no arrow back from integrability. Integrable functions can be badly
+discontinuous, and bounded functions can fail to be integrable altogether.
+\end{signpost}

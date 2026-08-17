@@ -1,0 +1,202 @@
+% ============================================================
+%  Block B -- on an interval, and integrability
+% ============================================================
+\rsection{Block B --- on an interval}
+
+\begin{signpost}[What changes when the point is dropped]
+Promote each local property to ``at every point of $[a,b]$'' and a fourth
+property joins them: Riemann integrability, which has no pointwise form at
+all. The arrow into it does not come from anything local --- it comes from
+compactness.
+\end{signpost}
+
+\ritem{T7}{Theorem}
+\emph{If $f$ is differentiable at every point of $[a,b]$ then $f$ is
+continuous on $[a,b]$.}
+
+\begin{proof}
+T1 at each point.
+\end{proof}
+
+\ritem{T8}{Theorem}
+\emph{If $f$ is continuous on $[a,b]$ then $f$ is Riemann integrable there.}
+
+\begin{proof}
+Let $\varepsilon>0$. Since $[a,b]$ is compact, $f$ is \emph{uniformly}
+continuous (4.19), so there is $\delta>0$ with
+$|f(x)-f(y)| < \varepsilon/(b-a)$ whenever $|x-y|<\delta$. Take any partition
+$P$ of mesh less than $\delta$. On each subinterval $[x_{i-1},x_i]$ the
+supremum $M_i$ and infimum $m_i$ are attained (4.16), at points less than
+$\delta$ apart, so $M_i - m_i \le \varepsilon/(b-a)$ and
+\[ U(P,f) - L(P,f) = \sum_i (M_i-m_i)\,\Delta x_i
+   \;\le\; \frac{\varepsilon}{b-a}\sum_i \Delta x_i = \varepsilon . \]
+By Rudin's criterion 6.6, $f$ is integrable.
+\end{proof}
+
+\begin{proofwalk}[How the proof flows]
+  \item \textbf{Choose the method.} Integrability is a statement about upper
+        and lower sums being close, so the target is $U-L<\varepsilon$. That
+        is a statement about the \emph{oscillation} of $f$ on the pieces of a
+        partition, so the whole problem is: make the oscillation uniformly
+        small.
+  \item \textbf{Spend compactness --- once.} Plain continuity gives a
+        $\delta$ at each point, and those $\delta$'s could shrink to nothing
+        as the point moves. Uniform continuity is exactly the statement that
+        one $\delta$ serves everywhere, and 4.19 is where compactness is
+        spent. Everything after this is bookkeeping.
+  \item \textbf{Convert to the partition.} Mesh smaller than $\delta$ makes
+        every subinterval a place where the uniform estimate applies.
+  \item \textbf{Sum.} The $\Delta x_i$ add to $b-a$, which is why the
+        $\varepsilon/(b-a)$ was chosen in step 2 --- reverse-engineered from
+        the final line, the same way Rudin picks his constants at 1.21.
+  \item \textbf{Audit.} Compactness is spent once, in step 2; the
+        attainment of $M_i$ and $m_i$ (4.16) is a convenience, not a
+        necessity --- $\sup - \inf \le \varepsilon/(b-a)$ would follow from
+        the uniform estimate anyway. Note what is \emph{not} used: nothing
+        about differentiability, and nothing pointwise beyond continuity.
+\end{proofwalk}
+
+\rsection{Which functions are integrable}
+
+\begin{signpost}[From a gallery to a theorem]
+The examples below could each be settled by hand with upper and lower sums.
+Doing so leaves the impression that integrability is a matter of luck. It is
+not: there is an exact criterion, and it is stated in the language Chapter
+2's and Chapter 4's appendices already built.
+\end{signpost}
+
+\ritem{T9}{Definition}
+\emph{A set $E \subset \R$ has \textbf{measure zero} if for every
+$\varepsilon>0$ there are countably many intervals $I_1,I_2,\dots$ with
+$E \subset \bigcup_k I_k$ and $\sum_k |I_k| < \varepsilon$.}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,0) -- (104,0);
+  \foreach \x in {8,14,17,31,44,46,60,73,74,88,95}{
+    \node[ptfill, minimum size=2.6pt] at (\x,0) {};}
+  \foreach \a/\b in {6.4/9.6, 13/18.2, 29.8/32.2, 43/47.2, 59/61, 72/75.4,
+                     87.2/88.8, 94.4/95.6}{
+    \draw[thin] (\a,4) -- (\b,4);
+    \draw[thin] (\a,3.2) -- (\a,4.8);
+    \draw[thin] (\b,3.2) -- (\b,4.8);
+    \draw[guide] (\a,0.6) -- (\a,3.2);
+    \draw[guide] (\b,0.6) -- (\b,3.2);}
+  \node[lbl, anchor=west] at (0,10)
+    {countably many intervals, total length $<\varepsilon$};
+  \node[lbl, anchor=west] at (0,-6)
+    {the set $E$ --- may be infinite, even dense};
+\end{tikzpicture}
+\end{center}
+\figcap{Measure zero. The intervals may be as numerous as you like, so long
+as their lengths add to less than $\varepsilon$ --- and $\varepsilon$ is
+arbitrary. Every countable set qualifies: cover its $k$th point by an
+interval of length $\varepsilon/2^{k+1}$. No interval $[a,b]$ with $a<b$
+qualifies.}
+
+\ritem{T10}{Theorem}
+\emph{(Lebesgue's criterion.) A bounded $f$ on $[a,b]$ is Riemann integrable
+if and only if its set of discontinuities has measure zero.}
+
+\begin{proof}[Proof sketch]
+Recall from S2.5 and S4.5 that with
+$\Omega_\varepsilon = \{x : \omega_f(x) \ge \varepsilon\}$, each
+$\Omega_\varepsilon$ is \emph{closed} --- hence compact here --- and the
+discontinuity set is $D = \bigcup_n \Omega_{1/n}$.
+
+($\Rightarrow$) Let $f$ be integrable and fix $n$. Given $\eta>0$ choose a
+partition with $U-L < \eta/n$. Every subinterval whose interior meets
+$\Omega_{1/n}$ contributes at least $(1/n)\Delta x_i$ to $U-L$, so those
+subintervals have total length less than $\eta$. They cover
+$\Omega_{1/n}$ apart from finitely many partition points, which are covered
+by intervals of arbitrarily small total length. So each $\Omega_{1/n}$ has
+measure zero, and $D$, a countable union of such sets, does too.
+
+($\Leftarrow$) Suppose $D$ has measure zero and $|f| \le M$. Fix
+$\varepsilon>0$. Then $\Omega_{\varepsilon}$ is compact and of measure zero,
+so finitely many open intervals of total length $<\varepsilon$ cover it. Off
+their union, every point has $\omega_f < \varepsilon$, hence a neighbourhood
+on which the oscillation is below $\varepsilon$; compactness of the remaining
+closed set gives a finite subcover and so a partition on which those pieces
+each oscillate by less than $\varepsilon$. Splitting $U-L$ into the two kinds
+of subinterval bounds it by $2M\varepsilon + \varepsilon(b-a)$, which is
+arbitrarily small.
+\end{proof}
+
+\begin{deeper}[The criterion settles the whole row at once]
+Everything in the integrability row now follows by inspection of a
+discontinuity set:
+
+\smallskip
+\begin{tabular}{@{}l l l@{}}
+\toprule
+\textbf{function} & \textbf{discontinuous on} & \textbf{integrable?} \\
+\midrule
+step function (E5)   & a finite set        & yes \\
+Thomae (E6)          & $\Q$ --- countable  & yes \\
+Dirichlet (E7)       & everything          & no \\
+$x^2\sin(1/x)$ (E3)  & nowhere             & yes \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+Two things are worth dwelling on. First, E6 is integrable while being
+discontinuous on a \emph{dense} set --- so ``integrable'' is compatible with
+very bad pointwise behaviour, and there is no arrow at all from
+integrability back to continuity. Second, the machinery this proof runs on
+is not new: the closedness of $\Omega_\varepsilon$ and the decomposition
+$D = \bigcup_n \Omega_{1/n}$ are S2.5 and S4.5, proved in the appendices for
+quite different reasons. Oscillation was the right idea twice.
+\end{deeper}
+
+\ritem{T11}{Theorem}
+\emph{Bounded does not imply integrable, and integrable does not imply
+continuous anywhere in particular.}
+
+\begin{proof}
+E7 is bounded and discontinuous everywhere, so by T10 it is not integrable.
+E6 is integrable by T10 and is discontinuous at every rational.
+\end{proof}
+
+\rsection{The deepest cell: a derivative that is not integrable}
+
+\ritem{T12}{Theorem}
+\emph{(Volterra.) There is a function $F$ on $[0,1]$, differentiable at every
+point, whose derivative $F'$ is bounded but \textbf{not} Riemann integrable.}
+
+\begin{deeper}[The construction, and what it costs the Fundamental Theorem]
+The construction starts from a \emph{fat Cantor set} $K$ --- built like
+Rudin's 2.44 but removing middle intervals of rapidly shrinking length, so
+that $K$ is nowhere dense yet does \emph{not} have measure zero. On each
+interval removed one plants a scaled copy of $x^2\sin(1/x)$ (E3), tapered so
+that it and its derivative vanish at the endpoints, and sets $F=0$ on $K$.
+
+The resulting $F$ is differentiable everywhere, with $|F'| \le 1$. But at
+every point of $K$ the derivative oscillates: arbitrarily close by there are
+points where $F'$ takes values near $\pm1$. So $\Omega_1 \supset K$, and $K$
+does not have measure zero --- by T10, $F'$ is not integrable.
+
+\smallskip
+\textbf{What this costs.} Rudin's 6.21 says: if $f$ is integrable on $[a,b]$
+and $F'=f$, then $\int_a^b f = F(b)-F(a)$. Volterra's example shows the
+hypothesis ``$f$ is integrable'' cannot be dropped --- there really are
+derivatives to which the formula does not apply, because the integral on the
+left does not exist. So the two halves of the Fundamental Theorem are
+independent statements: having an antiderivative does not make a function
+integrable, and being integrable does not make a function a derivative
+(E5, a step function, is integrable and is not a derivative, by T4).
+\end{deeper}
+
+\begin{pitfall}[Four properties that sound alike]
+Keep these apart. For a bounded $f$ on $[a,b]$:
+\begin{enumerate}[label=(\alph*), leftmargin=2.2em, itemsep=2pt, topsep=3pt]
+  \item $f$ is continuous;
+  \item $f$ is Riemann integrable;
+  \item $f$ has an antiderivative;
+  \item $f$ is a derivative \emph{and} integrable, so that 6.21 applies.
+\end{enumerate}
+(a) implies all the others. (b) and (c) are independent: E5 is integrable
+with no antiderivative (T4), and Volterra's $F'$ has an antiderivative and is
+not integrable. (d) is their conjunction, and it is what the Fundamental
+Theorem actually requires.
+\end{pitfall}

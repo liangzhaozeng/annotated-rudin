@@ -1,0 +1,174 @@
+% ============================================================
+%  Block C -- what survives a limit
+% ============================================================
+\rsection{Block C --- what survives a limit}
+
+\begin{signpost}[The same questions, with a limit in front]
+Let $f_n \to f$. Each property of Blocks A and B can now be asked twice: do
+the $f_n$ have it, and does $f$? Pointwise convergence answers ``no'' almost
+every time. Uniform convergence --- Rudin's 7.7 --- was invented precisely to
+change the answers, and it changes two of the three.
+\end{signpost}
+
+\ritem{T13}{Definition}
+\emph{$f_n \to f$ \textbf{pointwise} on $E$ if $f_n(x) \to f(x)$ for each
+$x \in E$; \textbf{uniformly} if
+$\sup_{x\in E}|f_n(x)-f(x)| \to 0$ --- one $N$ serving every $x$ at once.}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,0) -- (60,0);
+  \draw[axis] (0,0) -- (0,34);
+  \draw[guide] (0,26) -- (56,26);
+  \node[mlbl, anchor=west] at (57,26) {$1$};
+  % the epsilon tube about the limit function (0 on [0,1), 1 at 1)
+  \fill[black!9] (0,0) rectangle (52,5);
+  \node[lbl, anchor=west] at (0,-9)
+    {shaded: the $\varepsilon$-tube about the limit function};
+  \foreach \p/\lab in {1.4/{n=2}, 4/{n=5}, 9/{n=15}}{
+    \draw[seg] plot[smooth, domain=0:52, samples=40]
+      (\x, {26*(\x/52)^\p});}
+  \node[mlbl, anchor=south east] at (50,20) {$x^{n}$};
+  \node[ptfill, minimum size=2.2pt] at (52,26) {};
+  \node[ptopen] at (52,0) {};
+  \node[mlbl, anchor=north] at (52,-1.6) {$1$};
+\end{tikzpicture}
+\end{center}
+\figcap{$f_n(x)=x^n$ on $[0,1]$ (E9). The pointwise limit is $0$ on $[0,1)$
+and $1$ at $1$ --- discontinuous. However large $n$ is, the graph still
+climbs out of any $\varepsilon$-tube about the limit before reaching $1$, so
+the convergence is not uniform. Continuity is lost exactly because the
+$N$ that works depends on $x$.}
+
+\ritem{T14}{Theorem}
+\emph{(Rudin 7.12.) If each $f_n$ is continuous and $f_n \to f$ uniformly,
+then $f$ is continuous.}
+
+\begin{proof}
+Fix $x_0$ and $\varepsilon>0$. Choose $n$ with
+$\sup|f_n-f| < \varepsilon/3$, then $\delta$ with
+$|f_n(x)-f_n(x_0)| < \varepsilon/3$ for $|x-x_0|<\delta$. For such $x$,
+\[ |f(x)-f(x_0)| \le |f(x)-f_n(x)| + |f_n(x)-f_n(x_0)| + |f_n(x_0)-f(x_0)|
+   < \varepsilon . \]
+\end{proof}
+
+\noindent
+The three terms are where the name ``$3\varepsilon$ argument'' comes
+from.\kn{Notice exactly what uniformity buys: the \emph{first and third}
+terms. Under pointwise convergence one can still make each of them small,
+but only after fixing the point --- and the middle term then needs a $\delta$
+depending on the $n$ that was chosen for that point, so the estimate never
+closes. E9 is what that failure looks like.}
+
+\ritem{T15}{Theorem}
+\emph{(Rudin 7.16.) If each $f_n$ is integrable on $[a,b]$ and
+$f_n \to f$ uniformly, then $f$ is integrable and}
+\[ \int_a^b f = \lim_{n\to\infty}\int_a^b f_n . \]
+
+\begin{proof}
+Put $\varepsilon_n = \sup_{[a,b]}|f_n-f| \to 0$. Then
+$f_n - \varepsilon_n \le f \le f_n + \varepsilon_n$, so for any partition
+$U(P,f)-L(P,f) \le U(P,f_n)-L(P,f_n) + 2\varepsilon_n(b-a)$. Choosing $n$
+with $2\varepsilon_n(b-a)$ small and then $P$ making the first term small
+gives integrability by 6.6. The same inequalities bound
+$\bigl|\int f - \int f_n\bigr|$ by $\varepsilon_n(b-a) \to 0$.
+\end{proof}
+
+\ritem{T16}{Theorem}
+\emph{Uniform convergence does \textbf{not} preserve differentiability, and
+even when the limit is differentiable, $\lim f_n'$ need not be $f'$.}
+
+\begin{proof}
+Take $f_n(x) = \sin(nx)/\sqrt n$ on $\R$ (E10). Then
+$\sup|f_n| = 1/\sqrt n \to 0$, so $f_n \to 0$ uniformly and the limit is as
+differentiable as anything could be. But
+$f_n'(x) = \sqrt n\,\cos(nx)$, which is unbounded and has no limit at any
+point --- at $x=0$, $f_n'(0)=\sqrt n \to \infty$ while $f' \equiv 0$.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,14) -- (46,14);
+  \foreach \p/\amp in {2/9, 5/5.7, 12/3.7}{
+    \draw[seg] plot[smooth, domain=0:44, samples=120]
+      (\x, {14 + \amp*sin(\p*\x*4)});}
+  \node[lbl, anchor=north] at (22,-4) {$f_n = \sin(nx)/\sqrt n \to 0$};
+  \begin{scope}[xshift=58mm]
+  \draw[axis] (0,14) -- (46,14);
+  \foreach \p/\amp in {2/5, 5/8, 12/12}{
+    \draw[seg] plot[smooth, domain=0:44, samples=120]
+      (\x, {14 + \amp*cos(\p*\x*4)});}
+  \node[lbl, anchor=north] at (22,-4) {$f_n' = \sqrt n\,\cos(nx)$ diverges};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\figcap{Why uniform convergence cannot control derivatives. On the left the
+amplitude collapses like $1/\sqrt n$; on the right the same functions
+differentiated, where the extra factor $n$ beats it and the amplitude grows
+like $\sqrt n$. Uniform smallness of a function says nothing about its
+slope --- a wiggle can be short and steep at the same time.}
+
+\ritem{T17}{Theorem}
+\emph{(Rudin 7.17 --- the repair.) Suppose each $f_n$ is differentiable on
+$[a,b]$, the sequence $\bigl(f_n(x_0)\bigr)$ converges for some
+$x_0 \in [a,b]$, and $(f_n')$ converges uniformly. Then $(f_n)$ converges
+uniformly to some $f$, and $f' = \lim_n f_n'$.}
+
+\noindent
+The hypothesis has moved: it is the \emph{derivatives} that must converge
+uniformly, and the functions need only converge at a single point.\kn{Read
+T16 and T17 together as one lesson. Differentiation is not continuous with
+respect to uniform convergence --- so if you want to differentiate a limit,
+you must assume something about the derivatives, not about the functions.
+The same asymmetry returns for series at 7.17's corollary, and it is why
+term-by-term differentiation of a power series (8.1) needs its own theorem
+while term-by-term integration does not.}
+
+\ritem{T18}{Theorem}
+\emph{Pointwise convergence preserves none of the three: not continuity, not
+integrability, and not the value of the integral.}
+
+\begin{proof}
+Continuity fails by E9. For integrability, enumerate
+$\Q \cap [0,1] = \{q_1,q_2,\dots\}$ and let $f_n$ be the indicator of
+$\{q_1,\dots,q_n\}$; each $f_n$ is integrable, having finitely many
+discontinuities (T10), and $f_n \to$ Dirichlet (E7) pointwise, which is not
+integrable. For the integral, take the spikes of E11: $f_n \to 0$ pointwise
+while $\int_0^1 f_n = 1$ for every $n$.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[x=1mm, y=1mm]
+  \draw[axis] (0,0) -- (56,0);
+  \draw[axis] (0,0) -- (0,32);
+  \foreach \w/\h/\lab in {24/8/{n=1}, 12/16/{n=2}, 6/32/{n=4}}{
+    \draw[thin] (0,\h) -- (\w,\h) -- (\w,0);
+    \node[mlbl, anchor=west] at (\w+1,\h) {$\lab$};}
+  \node[lbl, anchor=west] at (16,24) {each has area $1$};
+  \node[lbl, anchor=west] at (16,19.5) {and tends to $0$ at every $x$};
+\end{tikzpicture}
+\end{center}
+\figcap{The spikes $f_n = n\cdot\mathbf 1_{(0,1/n)}$ (E11). At every fixed
+$x>0$ the spike eventually moves left of $x$, so $f_n(x) \to 0$; at $x=0$ the
+value is $0$ throughout. Yet $\int f_n = 1$ always. The mass does not
+disappear --- it escapes by getting narrower and taller, which no pointwise
+statement can see.}
+
+\begin{deeper}[Two remarks the appendices already prepared]
+\textbf{Pointwise limits are not arbitrary.} It is tempting to conclude that
+pointwise convergence preserves nothing whatever. It preserves something:
+a pointwise limit of continuous functions is of Baire class $1$, and not
+every function is. Dirichlet's function is \emph{not} a pointwise limit of
+continuous functions --- proved in Chapter 2's appendix at S2.13, using
+Baire's theorem. So E7 arises as a pointwise limit of the \emph{integrable}
+$f_n$ above, but never of continuous ones.
+
+\smallskip
+\textbf{And uniform convergence is not the only repair.} T15 requires
+uniformity, but the conclusion $\int \lim = \lim \int$ survives under far
+weaker hypotheses once the Lebesgue integral is available --- dominated
+convergence needs only a pointwise limit and an integrable bound, which the
+spikes of E11 conspicuously lack. Rudin reaches that at 11.32. The
+uniformity in T15 is a limitation of the Riemann integral, not of the
+statement.
+\end{deeper}

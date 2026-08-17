@@ -1,0 +1,145 @@
+% ============================================================
+%  The cast -- twelve dossiers
+% ============================================================
+\rsection{The cast}
+
+\begin{roadmap}[Twelve functions carry the whole document]
+Each dossier gives the definition, the property the function has, the
+property it lacks, and the arrow it kills. Several are Rudin's own and are
+annotated in the main edition; those references are given.
+
+\medskip
+\raggedright
+\begin{tabular}{@{}l l l@{}}
+\toprule
+& \textbf{function} & \textbf{kills the claim that\ldots} \\
+\midrule
+E1  & removable spike            & limit $\Rightarrow$ continuous \\
+E2  & $|x|$                      & continuous $\Rightarrow$ differentiable \\
+E3  & $x^2\sin(1/x)$             & differentiable $\Rightarrow$ $\mathscr{C}^1$ \\
+E4  & $\sin(1/x)$                & bounded $\Rightarrow$ has a limit \\
+E5  & step function              & integrable $\Rightarrow$ continuous \\
+E6  & Thomae                     & integrable $\Rightarrow$ disc.\ set nowhere dense \\
+E7  & Dirichlet                  & bounded $\Rightarrow$ integrable \\
+E8  & Weierstrass                & continuous $\Rightarrow$ differentiable anywhere \\
+E9  & $x^n$ on $[0,1]$           & pointwise preserves continuity \\
+E10 & $\sin(nx)/\sqrt n$         & uniform preserves differentiability \\
+E11 & tall spikes                & pointwise preserves $\int$ \\
+E12 & Volterra                   & derivative $\Rightarrow$ integrable \\
+\bottomrule
+\end{tabular}
+\end{roadmap}
+
+\ritem{E1}{Removable spike}
+$f(x)=0$ for $x \ne 0$, $f(0)=1$. Has limit $0$ at $0$; not continuous
+there, since the limit is not the value. The cheapest possible separation,
+and the reason Rudin's limit is \emph{deleted} (S4.2).
+
+\ritem{E2}{Absolute value}
+$f(x)=|x|$. Continuous everywhere; at $0$ the difference quotient is
+$|h|/h = \pm1$ according to the side, so the one-sided derivatives are $-1$
+and $+1$ and $f'(0)$ does not exist. Note that $f$ is Lipschitz, so even
+that stronger condition does not give differentiability.
+
+\ritem{E3}{$x^2\sin(1/x)$}
+$f(x) = x^2\sin(1/x)$ for $x \ne 0$, $f(0)=0$. Then
+$|f(x)| \le x^2$ forces $f'(0) = 0$, and for $x \ne 0$
+\[ f'(x) = 2x\sin\frac1x - \cos\frac1x , \]
+which has no limit as $x \to 0$ --- the second term oscillates between $-1$
+and $1$. So $f$ is differentiable everywhere with $f'$ discontinuous at $0$;
+the discontinuity is of the second kind, as T4 requires. This function is
+also the building block of E12.
+
+\ritem{E4}{$\sin(1/x)$}
+Bounded by $1$; no limit at $0$, since $x_n = 1/(2n\pi)$ and
+$y_n=1/(2n\pi + \pi/2)$ both tend to $0$ while $f(x_n)=0$ and $f(y_n)=1$.
+Rudin's 4.27(d); the oscillatory case of the four-way taxonomy at S4.19, and
+the reason $\omega_f(0)=2$.
+
+\ritem{E5}{Step function}
+$f = 0$ on $[0,1)$, $f=1$ on $[1,2]$. Integrable --- one discontinuity, a set
+of measure zero (T10) --- and not continuous. By T4 it is also \emph{not} a
+derivative, since it has a jump. So E5 separates ``integrable'' from ``has an
+antiderivative'' in one direction, and E12 separates them in the other.
+
+\ritem{E6}{Thomae}
+$f(p/q) = 1/q$ in lowest terms, $f = 0$ at irrationals. Continuous at every
+irrational and discontinuous at every rational. Integrable by T10, because
+$\Q$ is countable and therefore of measure zero --- with $\int_0^1 f = 0$.
+Rudin's Exercise 4.18; S4.5 in the Chapter 4 appendix proves the companion
+fact that no function is continuous exactly on $\Q$, so Thomae has no mirror
+image.
+
+\ritem{E7}{Dirichlet}
+$\mathbf 1_{\Q}$. Bounded, discontinuous at every point, so
+$\omega_f \equiv 1$ and by T10 it is not integrable --- directly, every upper
+sum is $1$ and every lower sum is $0$. It is the pointwise limit of the
+integrable indicators of finite rational sets (T18) but, by Baire, \emph{not}
+of any sequence of continuous functions (S2.13).
+
+\ritem{E8}{Weierstrass}
+$f(x) = \sum_{k=0}^{\infty} a^k\cos(b^k\pi x)$ with $0<a<1$, $b$ an odd
+integer, $ab > 1 + \tfrac32\pi$. The series converges uniformly by the
+$M$-test, so $f$ is continuous (T14); it is differentiable at no point.
+Rudin's 7.18. Baire's theorem (S2.13) upgrades the example to a statement
+about the typical case: the continuous functions differentiable somewhere
+form a set of first category in $\mathscr{C}[a,b]$, so nowhere
+differentiability is the rule and E2 the exception.
+
+\ritem{E9}{$x^n$ on $[0,1]$}
+Each $f_n$ is continuous; the pointwise limit is $0$ on $[0,1)$ and $1$ at
+$1$. Convergence is not uniform, since
+$\sup_{[0,1]}|f_n - f| = 1$ for every $n$ --- take $x$ just below $1$.
+Kills ``pointwise preserves continuity'' (T18), and is the standard picture
+of a limit escaping an $\varepsilon$-tube.
+
+\ritem{E10}{$\sin(nx)/\sqrt n$}
+$\sup|f_n| = 1/\sqrt n \to 0$, so $f_n \to 0$ uniformly; but
+$f_n'(x) = \sqrt n\cos(nx)$ diverges everywhere. Kills ``uniform preserves
+differentiability'' (T16). The mechanism is worth naming: differentiating
+multiplies the amplitude by the frequency, and uniform convergence bounds
+only the amplitude.
+
+\ritem{E11}{Tall spikes}
+$f_n = n \cdot \mathbf 1_{(0,1/n)}$. Each is integrable with
+$\int_0^1 f_n = 1$; $f_n \to 0$ pointwise. Kills
+``pointwise gives $\int \lim = \lim \int$'' (T18). The functions are not
+uniformly bounded, which is exactly the hypothesis the dominated convergence
+theorem (11.32) would need.
+
+\ritem{E12}{Volterra}
+Built on a fat Cantor set $K$ --- nowhere dense, but not of measure zero ---
+by planting a tapered copy of E3 in each removed interval and setting the
+function to $0$ on $K$. The result is differentiable everywhere with bounded
+derivative, and the derivative oscillates at every point of $K$, so
+$\Omega_1 \supset K$ and by T10 the derivative is not integrable (T12).
+The single most informative example in the document: it shows the two halves
+of the Fundamental Theorem are independent, and it is why 6.21 must
+hypothesise integrability rather than deduce it.
+
+\begin{recap}[What to carry away]
+\raggedright
+\textbf{One.} The local chain is strict at every link, and the witnesses are
+cheap --- E1, E2, E3. Nothing subtle is needed to separate limit,
+continuity, differentiability, and continuous differentiability.
+
+\smallskip
+\textbf{Two.} Integrability is not part of that chain. It is global, it comes
+from compactness (T8), and it has an exact characterisation in terms of the
+size of the discontinuity set (T10) --- for which the oscillation machinery
+of S2.5 and S4.5 is precisely the right language.
+
+\smallskip
+\textbf{Three.} The interesting failures are all failures of \emph{exchange}:
+$\lim$ against $\int$, $\lim$ against $\lim$, $\lim$ against $\frac{d}{dx}$.
+Uniform convergence fixes the first two and cannot fix the third, because
+differentiation amplifies exactly what uniformity controls.
+
+\smallskip
+\textbf{Four.} Where an implication fails, ask what hypothesis would restore
+it. Pointwise $\to$ uniform restores continuity and the integral; uniform on
+the functions $\to$ uniform on the derivatives restores differentiation
+(T17); Riemann $\to$ Lebesgue restores the integral exchange under a
+domination hypothesis instead of a uniformity one. Every gap in the lattice
+is an invitation of this kind.
+\end{recap}

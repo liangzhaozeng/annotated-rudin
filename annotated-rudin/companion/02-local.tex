@@ -1,0 +1,114 @@
+% ============================================================
+%  Block A -- the local properties
+% ============================================================
+\rsection{Block A --- at a point}
+
+\begin{signpost}[What is being compared]
+Fix $p$, a limit point of the domain of $f$. Three properties are in play:
+$\lim_{x\to p}f(x)$ exists; $f$ is continuous at $p$; $f$ is differentiable
+at $p$. They form a strict chain, and the two strictnesses cost one function
+each.
+\end{signpost}
+
+\ritem{T1}{Theorem}
+\emph{If $f$ is differentiable at $p$ then $f$ is continuous at $p$.}
+
+\begin{proof}
+For $x \ne p$,
+\[ f(x)-f(p) \;=\; \frac{f(x)-f(p)}{x-p}\,\cdot\,(x-p) . \]
+As $x \to p$ the first factor tends to $f'(p)$ and the second to $0$, so the
+product tends to $0$ by the algebra of limits (4.4). Hence
+$f(x) \to f(p)$.
+\end{proof}
+
+\noindent
+This is Rudin's 5.2, and the proof is worth one remark: it uses the existence
+of $f'(p)$ only to know the quotient has \emph{some} finite limit.\kn{So the
+theorem is really ``if the difference quotient is bounded near $p$ then $f$
+is continuous at $p$'' --- differentiability is more than is needed. That
+observation is what makes the Lipschitz condition of Chapter 4's Supplement
+E the natural weakening.}
+
+\ritem{T2}{Theorem}
+\emph{If $f$ is continuous at $p$ then $\lim_{x\to p}f(x)$ exists and equals
+$f(p)$.}
+
+\begin{proof}
+Definition 4.5 says precisely this whenever $p$ is a limit point of the
+domain.
+\end{proof}
+
+\begin{pitfall}[The one place the chain is not a chain]
+At an \emph{isolated} point of the domain, $f$ is continuous automatically
+(4.6) while $\lim_{x\to p} f(x)$ is not defined at all --- Rudin's 4.1
+requires $p$ to be a limit point. So T2 needs the hypothesis, and the arrow
+in the diagram is an arrow only over limit points.
+
+This is the deleted-versus-undeleted distinction of Chapter 4's Supplement A
+(S4.2). Rudin's limit is deleted, which is exactly why continuity is not
+literally the statement ``the limit equals the value'' --- at isolated points
+there is no limit to equal it.
+\end{pitfall}
+
+\noindent
+\textbf{Both converses fail.} $\mathbf{E1}$, the removable spike, has a limit
+at $0$ and is not continuous there; $\mathbf{E2}$, $|x|$, is continuous at
+$0$ and not differentiable there.
+
+\ritem{T3}{Theorem}
+\emph{(Darboux.) If $f$ is differentiable on $[a,b]$ then $f'$ takes every
+value between $f'(a)$ and $f'(b)$ --- even though $f'$ need not be
+continuous.}
+
+\begin{proof}
+Suppose $f'(a) < \lambda < f'(b)$ and put $g(x) = f(x) - \lambda x$, so
+$g'(a) < 0 < g'(b)$. Since $g'(a)<0$, $g(t)<g(a)$ for some $t$ just right of
+$a$; since $g'(b)>0$, $g(s)<g(b)$ for some $s$ just left of $b$. So the
+minimum of the continuous $g$ on the compact $[a,b]$ (4.16) is attained at an
+interior point $x$, and there $g'(x)=0$ by 5.8 --- that is, $f'(x)=\lambda$.
+\end{proof}
+
+\ritem{T4}{Corollary}
+\emph{A derivative has no simple discontinuities. In particular the signum
+function is not the derivative of anything.}
+
+\begin{proof}
+A simple discontinuity is one at which both one-sided limits exist
+(Definition 4.26). If they existed and differed, $f'$ would omit the values
+strictly between them on either side of the point, contradicting T3; if they
+existed and agreed but differed from $f'(x)$, the same argument applies to a
+value between $f'(x)$ and the common one-sided limit.
+\end{proof}
+
+\begin{deeper}[What T3 and T4 buy, read against Chapter 4's taxonomy]
+Chapter 4's appendix opened Rudin's two kinds of discontinuity into four
+(S4.19): removable, jump, asymptotic, oscillatory. T4 says a derivative may
+suffer only the last two. It cannot jump, and it cannot have a removable
+discontinuity.
+
+$\mathbf{E3}$, the function $x^2\sin(1/x)$, shows the permitted case really
+occurs: it is differentiable everywhere, and its derivative oscillates
+without limit at $0$. So ``differentiable'' and ``continuously
+differentiable'' are genuinely different hypotheses --- which is why Rudin
+states them separately from Chapter 5 onward, and why $\mathscr{C}^1$ needs
+its own name.
+\end{deeper}
+
+\ritem{T5}{Theorem}
+\emph{If $\lim_{x\to p}f(x)$ exists then $f$ is bounded on some punctured
+neighbourhood of $p$.}
+
+\begin{proof}
+Take $\varepsilon = 1$ in Definition 4.1: there is $\delta>0$ with
+$|f(x)-q|<1$, hence $|f(x)| < |q|+1$, for all $x$ in the punctured
+$\delta$-neighbourhood.
+\end{proof}
+
+\noindent
+Boundedness is the weakest thing in this section, and it is strictly weaker
+than everything above it: $\mathbf{E4}$, $\sin(1/x)$, is bounded everywhere
+and has no limit at $0$.\kn{The chain therefore extends one step downward:
+differentiable $\Rightarrow$ continuous $\Rightarrow$ has a limit
+$\Rightarrow$ locally bounded, with all three implications strict. Rudin
+never states T5, but he uses it --- at 4.4, where the product of limits needs
+one factor bounded, and again at 5.2.}
